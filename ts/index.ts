@@ -5,7 +5,9 @@ import cors from 'cors';
 import config from 'config';
 import { tableFromSql } from './db/mysql/tool';
 
-var markdownIt = require('markdown-it'), md = new markdownIt();
+const path = require('path');
+const fs = require('fs');
+const markdownIt = require('markdown-it'), md = new markdownIt();
 
 
 (async function () {
@@ -56,6 +58,18 @@ var markdownIt = require('markdown-it'), md = new markdownIt();
         var mdresult = md.render(content);
         let result = ejs.render(html, { title: '模板页面', content: mdresult })
         resp.end(result);
+    });
+
+    app.use('/markdown', async (req: Request, resp: Response) => {
+        let html = '<!DOCTYPE html><html lang = "en"> <head> <meta charset = "UTF-8" ><title> <%- title %> </title> <style type = "text/css" >h1 {color: blue;}</style></head><body> <div></div> <%- content %> </body></html>';
+        fs.readFile("../contentmanagement/ts/dome.md", 'utf8', (err, data) => {
+            if (err) return;
+            else {
+                let mdresult = md.render(data);
+                let result = ejs.render(html, { title: '模板页面', content: mdresult });
+                resp.end(result);
+            }
+        })
     });
 
     // 监听服务
