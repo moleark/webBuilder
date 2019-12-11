@@ -1,0 +1,35 @@
+
+--模板
+TUID Template (
+    id,
+    main name char(1000),
+    main description char(1000),
+    creator ID [$user],
+    main createtTime  date not null
+);
+
+--内容
+TUID Content (
+    id,
+    main content char(1000),
+    template ID Template,
+    creator ID [$user],
+    main createtTime  date not null
+);
+
+--内容标签
+TUID Tag (
+    id,
+    main name char(1000),
+    main description char(1000),
+    creator ID [$user],
+    main createtTime date not null
+);
+
+--内容标签
+MAP ContentTag (
+    key task ID Content,
+    key field ID Tag
+);
+
+
