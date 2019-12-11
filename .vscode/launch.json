@@ -5,16 +5,11 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "type": "node",
+            "type": "chrome",
             "request": "launch",
-            "name": "Launch Program",
-            //"program": "${workspaceFolder}/out/first/index.js",
-            "program": "${workspaceFolder}/out/index.js",
-            // "program": "${workspaceFolder}/out/log4jstest.js",
-            "env": {
-                "NODE_ENV": "development"
-            },
-            // "outputCapture": "std",
+            "name": "Launch Chrome against localhost",
+            "url": "http://localhost:7798/test",
+            "webRoot": "${workspaceFolder}"
         }
     ]
 }
