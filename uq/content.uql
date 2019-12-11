@@ -2,8 +2,8 @@
 --模板
 TUID Template (
     id,
-    main name char(1000),
-    main description char(1000),
+    main name char(50),
+    main description char(100),
     creator ID [$user],
     main createtTime  date not null
 );
@@ -20,16 +20,16 @@ TUID Content (
 --内容标签
 TUID Tag (
     id,
-    main name char(1000),
-    main description char(1000),
+    main name char(50),
+    main description char(100),
     creator ID [$user],
     main createtTime date not null
 );
 
 --内容标签
 MAP ContentTag (
-    key task ID Content,
-    key field ID Tag
+    key content ID Content,
+    key tag ID Tag
 );
 
 
