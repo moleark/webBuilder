@@ -6,6 +6,11 @@ export interface UqOrder {
     SetCart: Action;
 }
 
+export interface UqContent {
+    Content: Tuid
+}
+
 export interface UQs {
     order: UqOrder;
+    webBuilder: UqContent
 }
