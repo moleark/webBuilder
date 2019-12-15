@@ -1,0 +1,8 @@
+--模板
+TUID Template (
+    id,
+    main caption char(100),
+    main author ID [$user],
+    content text,
+    stamp (create, update),
+);
