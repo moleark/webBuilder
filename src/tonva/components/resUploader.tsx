@@ -4,7 +4,7 @@ import { Image } from './image';
 import { Page } from './page';
 import { observer } from 'mobx-react';
 import { observable } from 'mobx';
-import { env } from 'tonva/tool';
+import { env } from '../tool';
 
 export interface ResUploaderProps {
     className?: string;
