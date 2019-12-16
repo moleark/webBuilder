@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { nav, Image, VPage, Prop, IconText, FA, PropGrid, LMR } from 'tonva';
+import { nav, Image, VPage, Prop, IconText, FA, PropGrid, LMR, Page } from 'tonva';
 // import { observable } from 'mobx';
 // import { observer } from 'mobx-react';
 // import { EditMeInfo } from './EditMeInfo';
@@ -12,7 +12,9 @@ export class VMe extends VPage<CMe> {
     }
     render() {
     
-        return <div>我的</div>;
+        return <Page logout={true}>
+            我的
+        </Page>;
     }
 
 
