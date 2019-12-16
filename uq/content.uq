@@ -1,0 +1,31 @@
+
+--内容
+TUID Content (
+    id,
+    main name char(50),
+    main content char(1000),
+    template ID Template,
+    creator ID [$user],
+    -- main createtTime  datetime not null,
+    stamp (create, update),
+    unique (name)
+
+);
+
+--内容标签
+TUID Tag (
+    id,
+    main name char(50),
+    main description char(100),
+    creator ID [$user],
+    main createtTime datetime not null,
+    unique(name)
+);
+
+--内容标签
+MAP ContentTag (
+    key content ID Content,
+    key tag ID Tag
+);
+
+

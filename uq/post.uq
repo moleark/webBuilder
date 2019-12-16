@@ -1,0 +1,19 @@
+-- 帖子
+TUID POST (
+    id,
+    main caption char(100),
+    main discription char(200),
+    main image ID Image,
+    main author ID [$user],
+    template ID Template,
+    content text,
+    stamp (create, update),
+);
+
+TUID IMAGE (
+    id,
+    main caption char(100),
+    main path char(100),
+    main author ID [$user],
+    stamp (create),
+);
