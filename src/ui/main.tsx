@@ -16,10 +16,9 @@ export class VMain extends VPage<CApp> {
     render = (param?: any): JSX.Element => {
         let { cMe, cPosts, cMedia, cTemplets } = this.controller;
         let faceTabs = [
-            { name: 'home', label: '帖文', icon: 'tasks', content: cPosts.tab, 
-                onShown:cPosts.loadList, notify: undefined/*store.homeCount*/ },
-            { name: 'image', label: '图片', icon: 'vcard', content: cMedia.tab, onShown:cMedia.loadList },
-            { name: 'templet', label: '模板', icon: 'vcard', content: cTemplets.tab, onShown:cTemplets.loadList },
+            { name: 'home', label: '帖文', icon: 'tasks', content: cPosts.tab, onShown: cPosts.loadList, notify: undefined/*store.homeCount*/ },
+            { name: 'image', label: '图片', icon: 'vcard', content: cMedia.tab, onShown: cMedia.loadList },
+            { name: 'templet', label: '模板', icon: 'vcard', content: cTemplets.tab, onShown: cTemplets.loadList },
             { name: 'me', label: '我的', icon: 'user', content: cMe.tab }
         ].map(v => {
             let { name, label, icon, content, notify, onShown } = v;

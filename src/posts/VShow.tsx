@@ -10,33 +10,35 @@ export class VShow extends VPage<CPosts> {
     }
 
     private page = observer(() => {
-        let {current} = this.controller;
-        let {caption, content, author, image, template, discription, $create, $update} = current;
+        let { current } = this.controller;
+        let { caption, content, author, image, template, discription, $create, $update } = current;
         let date = <span><EasyTime date={$update} /></span>;
-        let isMe =  Tuid.equ(author, this.controller.user.id);
-        let right = isMe && <button className="btn btn-sm btn-success mr-2 align-self-center" onClick={()=>this.openVPage(VEdit)}><FA name="pencil-square-o" /></button>;
-        let renderAuthor = (user:User)=>{
-            return <span>{isMe ? '[我]' : user.nick||user.name}</span>;
+        let isMe = Tuid.equ(author, this.controller.user.id);
+        let right = isMe && <button className="btn btn-sm btn-success mr-2 align-self-center" onClick={() => this.openVPage(VEdit)}><FA name="pencil-square-o" /></button>;
+        let renderAuthor = (user: User) => {
+            return <span>{isMe ? '[我]' : user.nick || user.name}</span>;
         };
         let tvImage = tv(image, (values) => {
-            return <img className="w-6c h-max-6c" src={values.path} />;
+            console.log(values, 'values')
+            return <div className="border p-2"><img className="w-3c h-3c" src={values.path} /></div>;
         }, undefined,
-        () => null);
+            () => null);
         return <Page header="帖文内容" right={right}>
             <div className="p-3">
-                <div className="mb-1 h5 px-3 py-2 bg-white">{caption}</div>
+                <div className="small text-muted p-1">标题</div>
+                <div className="mb-1 h6 px-3 py-2 bg-white">{caption}</div>
                 <LMR className="mb-3 px-3 small text-black-50" right={date}>
                     <UserView id={author} render={renderAuthor} />
                 </LMR>
-                <div className="small text-muted p-1">链接</div>
-                <LMR className="mb-3 bg-white px-3" right={tvImage}>
+                <div className="small text-muted p-1">链接描述</div>
+                <LMR className="mb-3 bg-white px-3 h6" right={tvImage}>
                     <div className="py-2">{discription}</div>
                 </LMR>
                 <div className="small text-muted p-1">内容</div>
-                <pre className="mb-3 px-3 py-4 bg-white">{content}</pre>
+                <pre className="mb-3 px-3 py-4 bg-white h6 border">{content}</pre>
                 <div className="small text-muted p-1">布局模板</div>
-                <div className="mb-3 px-3 py-2 bg-white">
-                    {tv(template, (values)=><>{values.caption}</>, undefined, ()=><small className="text-muted" >[无]</small>)}
+                <div className="mb-3 px-3 py-2 bg-white h6">
+                    {tv(template, (values) => <>{values.caption}</>, undefined, () => <small className="text-muted" >[无]</small>)}
                 </div>
             </div>
         </Page>;
