@@ -1,20 +1,56 @@
 import * as React from 'react';
-import { VPage, Page, LMR, tv, EasyTime, UserView, FA, User, Tuid } from "tonva";
+import { VPage, Page, LMR, tv, EasyTime, UserView, FA, User, Tuid, List, SearchBox } from "tonva";
 import { CPosts } from "./CPosts";
+import { observer } from 'mobx-react';
 
 export class VPickTemplate extends VPage<CPosts> {
-    private pickedId = 10;
 
     async open() {
         this.openPage(this.page);
     }
 
-    private page = () => {
-        return <Page header="选择模板" back="close">
-            <div className="p-3">
-                <button className="btn btn-primary"
-                    onClick={()=>this.controller.onPickedTemplate(this.pickedId)}>点我返回模板id={this.pickedId}</button>
-            </div>
-        </Page>
+    render(): JSX.Element {
+        return <this.page />
     }
+
+    private page = observer(() => {
+        let { templetItems, searchTemplateKey } = this.controller;
+        console.log(templetItems, 'temp')
+        let right = <SearchBox className="w-80 mt-2 mr-2"
+            size='sm'
+            onSearch={(key: string) => searchTemplateKey(key)}
+            placeholder="模板" />;
+
+        return <Page header="选择模板" back="close" right={right} onScrollBottom={this.onScrollBottom} >
+            <List items={templetItems} item={{ render: this.renderItem, onClick: this.itemClick }} />
+        </Page>
+    });
+
+    private onScrollBottom = async () => {
+        await this.controller.pageTemplate.more();
+    }
+
+    private itemClick = (item: any) => {
+        this.controller.onPickedTemplate(item.id);
+    };
+
+    private renderItem = (item: any, index: number) => {
+        return <this.itemRow {...item} />
+    };
+
+    private itemRow = observer((item: any) => {
+        console.log(item.path, 'item')
+        let { caption, path, author } = item;
+        let isMe = Tuid.equ(author, this.controller.user.id);
+        let renderAuthor = (user: User) => {
+            return <span>{isMe ? '' : user.nick || user.name}</span>;
+        };
+        let right = <div className="small text-muted text-right">
+            <div><UserView id={author} render={renderAuthor} /></div>
+        </div>;
+        return <LMR className="px-3 py-2 b-1" right={right}>
+            <b>{caption}</b>
+            <div>{path}</div>
+        </LMR>;
+    });
 }

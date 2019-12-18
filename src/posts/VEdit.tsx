@@ -8,7 +8,7 @@ import { tv } from 'tonva/CApp/cUq/reactBoxId';
 
 export class VEdit extends VPage<CPosts> {
     private form: Form;
-    async open() {
+    async open() { 
         this.openPage(this.page);
     }
 
@@ -41,10 +41,20 @@ export class VEdit extends VPage<CPosts> {
     private uiSchema: UiSchema = {
         items: {
             caption: { widget: 'text', label: '标题' },
-            discription: { widget: 'textarea', label: '链接描述', placeholder: '链接上用描述', rows: 3 } as UiInputItem,
-            content: { widget: 'textarea', label: '内容', placeholder: '请填写模板内容', rows: 8 } as UiInputItem,
-            image: { widget: 'id', label: '链接图片', pickId: this.controller.pickImage, Templet: this.imageContent } as UiIdItem,
-            template: { widget: 'id', label: '布局模板', pickId: this.controller.pickTemplate, Templet: this.templateContent } as UiIdItem,
+
+            discription: { widget: 'textarea', label: '链接描述',
+             placeholder: '链接上用描述', rows: 3 } as UiInputItem,
+
+            content: { widget: 'textarea', label: '内容',
+             placeholder: '请填写模板内容', rows: 8 } as UiInputItem,
+
+            image: { widget: 'id', label: '链接图片', 
+            pickId: this.controller.pickImage, Templet: this.imageContent } as UiIdItem,
+
+            template: { widget: 'id', label: '布局模板',
+             pickId: this.controller.pickTemplate, 
+             
+             Templet: this.templateContent } as UiIdItem,
             submit: { widget: 'button', label: '提交' }
         }
     };

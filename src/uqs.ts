@@ -11,6 +11,8 @@ export interface WebBuilder {
     Template: Tuid;
     Image: Tuid;
     Post: Tuid;
+    SearchPost: Query;
+    SearchTemplate: Query;
 }
 
 export interface UQs {
