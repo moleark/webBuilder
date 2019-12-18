@@ -17,3 +17,27 @@ TUID IMAGE (
     main author ID [$user],
     stamp (create),
 );
+
+
+
+/** 搜索我的优惠码*/
+QUERY SearchPost( key char(100))
+PAGE (
+    id bigint start 0,
+    caption char(100),
+    discription char(200),
+    image ID Image,
+    author ID [$user],
+    template ID Template,
+    content text
+) {
+    var key2 char(102);
+    set key2 = concat('%', key, '%');
+
+    PAGE select p.id, p.caption, p.discription, p.image, p.author, p.template, p.content
+    from    POST as p
+    where   p.id > $pageStart and ( p.template like key2 or p.discription like key2 or p.caption like key2 or key is null )
+    order by p.id desc
+    limit $pageSize;
+};
+
