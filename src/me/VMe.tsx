@@ -5,14 +5,14 @@ import { nav, Image, VPage, Prop, IconText, FA, PropGrid, LMR, Page } from 'tonv
 // import { EditMeInfo } from './EditMeInfo';
 // import { appConfig } from 'configuration';
 import { CMe } from './CMe';
+import { consts } from 'consts';
 
 export class VMe extends VPage<CMe> {
     async open(param?: any) {
 
     }
     render() {
-    
-        return <Page logout={true}>
+        return <Page logout={true} headerClassName={consts.headerClass}>
             我的
         </Page>;
     }

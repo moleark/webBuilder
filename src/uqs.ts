@@ -13,6 +13,11 @@ export interface WebBuilder {
     Post: Tuid;
     SearchPost: Query;
     SearchTemplate: Query;
+    SearchImage: Query;
+    AgentPost: Map;
+    WebPost: Map;
+    AssistPost: Map;
+    CustomerPost: Map;
 }
 
 export interface UQs {

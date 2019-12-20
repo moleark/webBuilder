@@ -1,10 +1,5 @@
 import * as React from 'react';
-import { observable } from 'mobx';
-import {
-    userApi, ItemSchema, StringSchema, ImageSchema, UiTextItem, UiImageItem, nav, Page,
-    Edit, UiSchema,
-    VPage, UiRadio, IdSchema, UiIdItem, Context, BoxId, tv
-} from 'tonva';
+import { Page, VPage } from 'tonva';
 import { CMe } from './CMe';
 
 export class EditMeInfo extends VPage<CMe> {

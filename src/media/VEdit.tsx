@@ -56,10 +56,10 @@ export class VEdit extends VPage<CMedia> {
         let image:any;
         let saveButton:any;
          if (this.mediaPath) {
-            image = <div className="m-3 text-center w-max-30c"><img src={this.mediaPath} /></div>;
+            image = <div className="m-3 text-center w-max-30c border"><img className="w-8c h-8c border" src={this.mediaPath} /></div>;
             saveButton = <div className="px-1 ">
                 <div className="text-content text-center">
-                    <button type="button" className="btn btn-primary mx-2" onClick={this.onAddSalesTask} >保存</button>
+                    <button type="button" className="btn btn-primary mx-2 col-11" onClick={this.onAddSalesTask} >保存</button>
                 </div>
             </div>;
          }
