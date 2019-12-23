@@ -8,7 +8,7 @@ import { tv } from 'tonva/CApp/cUq/reactBoxId';
 
 export class VEdit extends VPage<CPosts> {
     private form: Form;
-    async open() { 
+    async open() {
         this.openPage(this.page);
     }
 
@@ -18,22 +18,22 @@ export class VEdit extends VPage<CPosts> {
     }
 
     private onFormButtonClick = async (name: string, context: Context) => {
-        let {current} = this.controller;
+        let { current } = this.controller;
         let id = current && current.id;
         await this.controller.saveItem(id, context.form.data);
         this.closePage();
     }
 
-    private imageContent = (boxId:any) => {
+    private imageContent = (boxId: any) => {
         return tv(boxId, (values) => {
-            let {caption} = values;
+            let { caption } = values;
             return <>{caption}</>;
         });
     }
 
-    private templateContent = (boxId:any) => {
+    private templateContent = (boxId: any) => {
         return tv(boxId, (values) => {
-            let {caption} = values;
+            let { caption } = values;
             return <>{caption}</>;
         });
     }
@@ -42,19 +42,21 @@ export class VEdit extends VPage<CPosts> {
         items: {
             caption: { widget: 'text', label: '标题' },
 
-            discription: { widget: 'textarea', label: '链接描述',
-             placeholder: '链接上用描述', rows: 3 } as UiInputItem,
+            discription: {
+                widget: 'textarea', label: '链接描述', placeholder: '链接上用描述', rows: 3
+            } as UiInputItem,
 
-            content: { widget: 'textarea', label: '内容',
-             placeholder: '请填写模板内容', rows: 8 } as UiInputItem,
+            content: {
+                widget: 'textarea', label: '内容', placeholder: '请填写模板内容', rows: 8
+            } as UiInputItem,
 
-            image: { widget: 'id', label: '链接图片', 
-            pickId: this.controller.pickImage, Templet: this.imageContent } as UiIdItem,
+            image: {
+                widget: 'id', label: '链接图片', pickId: this.controller.pickImage, Templet: this.imageContent
+            } as UiIdItem,
 
-            template: { widget: 'id', label: '布局模板',
-             pickId: this.controller.pickTemplate, 
-             
-             Templet: this.templateContent } as UiIdItem,
+            template: {
+                widget: 'id', label: '布局模板', pickId: this.controller.pickTemplate, Templet: this.templateContent
+            } as UiIdItem,
             submit: { widget: 'button', label: '提交' }
         }
     };
@@ -72,7 +74,7 @@ export class VEdit extends VPage<CPosts> {
     }
 
     private page = observer(() => {
-        let {current} = this.controller;
+        let { current } = this.controller;
         return <Page header="编辑帖文" headerClassName={consts.headerClass}>
             <div className="mx-3">
                 <Form ref={v => this.form = v} className="my-3"
