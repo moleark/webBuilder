@@ -19,9 +19,30 @@ TUID IMAGE (
 );
 
 
+/** POST发布 */
+MAP WebPost(
+    key post ID POST,
+    author ID [$user] 
+);
+
+MAP AgentPost(
+    key post ID POST,
+    operator ID [$user] 
+);
+
+MAP AssistPost(
+    key post ID POST,
+    operator ID [$user] 
+);
+
+MAP CustomerPost(
+    key post ID POST,
+    operator ID [$user] 
+);
+
 
 /** 搜索我的优惠码*/
-QUERY SearchPost( key char(100))
+QUERY SearchPost( key char(100), author ID [$user])
 PAGE (
     id bigint start 0,
     caption char(100),
@@ -37,7 +58,28 @@ PAGE (
     PAGE select p.id, p.caption, p.discription, p.image, p.author, p.template, p.content
     from    POST as p
     where   p.id > $pageStart and ( p.template like key2 or p.discription like key2 or p.caption like key2 or key is null )
+            and ( p.author = author or author = 0 )
     order by p.id desc
     limit $pageSize;
 };
+
+
+/** 搜索我的优惠码*/
+QUERY SearchImage( key char(100))
+PAGE (
+    id bigint start 0,
+    caption char(100),
+    path char(100),
+    author ID [$user]
+) {
+    var key2 char(102);
+    set key2 = concat('%', key, '%');
+
+    PAGE select p.id, p.caption, p.path, p.author
+    from    IMAGE as p
+    where   p.id > $pageStart and ( p.caption like key2 or key is null )
+    order by p.id desc
+    limit $pageSize;
+};
+
 

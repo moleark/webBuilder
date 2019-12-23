@@ -14,7 +14,7 @@ PAGE (
     id bigint start 0,
     caption char(100),
     author ID [$user],
-    content text,
+    content text
 ) {
     var key2 char(102);
     set key2 = concat('%', key, '%');
@@ -25,4 +25,8 @@ PAGE (
     order by p.id desc
     limit $pageSize;
 };
+ 
 
+action test(a1 int, a2 int) {
+    book contenttag at(a1, a2);
+};
