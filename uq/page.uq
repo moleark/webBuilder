@@ -1,0 +1,36 @@
+-- 页面
+TUID PAGE (
+    id,
+    main name char(100),
+    main discription char(200),
+    main titel char(100),
+    main author ID [$user],
+    stamp (create, update),
+    unique(name)
+);
+
+--页面分支
+TUID BRANCH (
+    id,
+    main content text,
+    main author ID [$user],
+    stamp (create, update)
+);
+
+
+--页面分支关系
+MAP PageBranch (
+    key page ID PAGE,
+    key branch ID BRANCH,
+    order int
+);
+
+--页面修改记录
+History PageHistory (
+    date,
+    page ID PAGE,
+    object ID,
+    objectType char(20), 
+    description char(100)
+);
+
