@@ -2,8 +2,9 @@
 TUID PAGE (
     id,
     main name char(100),
+    main caption char(100),
+    main template ID Template,
     main discription char(200),
-    main titel char(100),
     main author ID [$user],
     stamp (create, update),
     unique(name)
