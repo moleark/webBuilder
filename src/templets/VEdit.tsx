@@ -27,7 +27,8 @@ export class VEdit extends VPage<CTemplets> {
     private uiSchema: UiSchema = {
         items: {
             caption: { widget: 'text', label: '标题' },
-            content: { widget: 'textarea', label: '内容', placeholder: '请填写模板内容', rows: 8 } as UiInputItem,
+            content: { widget: 'textarea', label: 'PC模板', placeholder: '请填写模板内容', rows: 8 } as UiInputItem,
+            content_mobile: { widget: 'textarea', label: '移动端模板', placeholder: '请填写模板内容', rows: 8 } as UiInputItem,
             submit: { widget: 'button', label: '提交' }
         }
     };
@@ -35,6 +36,7 @@ export class VEdit extends VPage<CTemplets> {
     private schema: Schema = [
         { name: 'caption', type: 'string', required: true },
         { name: 'content', type: 'string', required: true },
+        { name: 'content_mobile', type: 'string', required: true },
     ];
 
     render(): JSX.Element {
@@ -55,10 +57,8 @@ export class VEdit extends VPage<CTemplets> {
                     requiredFlag={true}
                 />
             </div>
-            <div className="px-1 ">
-                <div className="text-content" style={{ textAlign: "center" }}>
-                    <button type="button" className="btn btn-primary mx-2" onClick={this.onClickSaveButton} >保存</button>
-                </div>
+            <div className="text-content" style={{ textAlign: "center" }}>
+                <button type="button" className="col-12 btn btn-primary mx-2" onClick={this.onClickSaveButton} >保存</button>
             </div>
         </Page>
     })

@@ -1,11 +1,13 @@
-import { CAppBase, IConstructor, nav } from "tonva";
+import { UQs } from "./uqs";
+import { CMe } from "./me/CMe";
 import { VMain } from 'ui/main';
 import { CUqBase } from "./CBase";
-import { CMe } from "./me/CMe";
+import { CPage } from "page/CPage";
 import { CPosts } from "./posts/CPosts";
-import { UQs } from "./uqs";
 import { CMedia } from "./media/CMedia";
+import { CAppBase, IConstructor } from "tonva";
 import { CTemplets } from "./templets/CTemplets";
+import { CBranch } from "branch/CBranch";
 
 export class CApp extends CAppBase {
     get uqs(): UQs { return this._uqs };
@@ -14,6 +16,8 @@ export class CApp extends CAppBase {
     cPosts: CPosts;
     cMedia: CMedia;
     cTemplets: CTemplets;
+    cPage: CPage;
+    cBranch: CBranch;
 
     protected newC<T extends CUqBase>(type: IConstructor<T>): T {
         return new type(this);
@@ -24,6 +28,8 @@ export class CApp extends CAppBase {
         this.cPosts = this.newC(CPosts);
         this.cMedia = this.newC(CMedia);
         this.cTemplets = this.newC(CTemplets);
+        this.cPage = this.newC(CPage);
+        this.cBranch = this.newC(CBranch);
         this.showMain();
     }
 

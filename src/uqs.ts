@@ -18,6 +18,10 @@ export interface WebBuilder {
     WebPost: Map;
     AssistPost: Map;
     CustomerPost: Map;
+    PublishPost: Action;
+    WebPage: Tuid,
+    SearchWebPage: Query
+    Branch: Tuid
 }
 
 export interface UQs {
