@@ -6,9 +6,9 @@ import { CUqBase } from '../CBase';
 import { observer } from 'mobx-react';
 import { VShowPage } from './VShowPage';
 import { VEditPage } from './VEditPage';
-import { VBranch } from '../branch/VBranch';
 import { VPickTemplate } from "./VPickTemplate";
 import { Query, PageItems, nav, Context } from 'tonva';
+import { VResacModule } from './VRedactModule';
 
 // 网页
 class WebPage extends PageItems<any> {
@@ -55,6 +55,8 @@ export class CPage extends CUqBase {
     @observable pageTemplate: PageTemplate;
     @observable webPage: WebPage;
     @observable items: any[];
+    @observable itemsModule: any[];
+    @observable currentModule: any;
     @observable current: any;
 
     protected async internalStart(param: any) {
@@ -95,6 +97,28 @@ export class CPage extends CUqBase {
         this.searchPageKey("", 0);
     }
 
+    // 保存模块
+    saveItemModule = async (id: number, param: any) => {
+        param.author = this.user.id;
+        let ret = await this.uqs.webBuilder.Branch.save(id, param);
+        if (id) {
+            let item = this.itemsModule.find(v => v.id === id);
+            if (item !== undefined) {
+                _.merge(item, param);
+                item.$update = new Date();
+            }
+            this.currentModule = item;
+        }
+        else {
+            param.id = ret.id;
+            param.$create = new Date();
+            param.$update = new Date();
+            this.itemsModule.unshift(param);
+            this.currentModule = param;
+        }
+        this.searchPageKey("", 0);
+    }
+
     render = observer(() => {
         return this.renderView(VMain)
     })
@@ -102,6 +126,10 @@ export class CPage extends CUqBase {
     onAdd = () => {
         this.current = undefined;
         this.openVPage(VEditPage);
+    }
+
+    onRedact = () => {
+        this.openVPage(VResacModule);
     }
 
     onPickedTemplate = (id: number) => {
@@ -117,11 +145,27 @@ export class CPage extends CUqBase {
     loadList = async () => {
         this.searchPageKey("", 0);
         this.items = await this.uqs.webBuilder.WebPage.search('', 0, 100);
+        this.itemsModule = await this.uqs.webBuilder.Branch.search('', 0, 100);
     }
 
     showDetail = async (id: number) => {
         this.current = await this.uqs.webBuilder.WebPage.load(id);
         this.openVPage(VShowPage);
+    }
+
+    onMyContent = async () => {
+        // let a = await this.uqs.webBuilder.Branch.search('', 0, 100);
+        // for (var i = 0; i < a.length; i++) {
+        //     if (a[i].displayed == 1) {
+        //         let b = await this.uqs.webBuilder.Branch.search(a[i].displayed, 0, 100)
+        //     }
+        // }
+    }
+
+
+    showDetailModule = async (id: number) => {
+        this.currentModule = await this.uqs.webBuilder.Branch.load(id);
+        this.openVPage(VResacModule);
     }
 
 

@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { CBranch } from './CBranch';
+import { CPage } from './CPage';
 import { consts } from 'consts';
 import { observer } from 'mobx-react';
 import { VPage, Page, Form, UiSchema, UiInputItem, Schema, Context } from 'tonva';
 
-export class VEditBranch extends VPage<CBranch> {
+export class VResacModule extends VPage<CPage> {
     private form: Form;
     async open() {
         this.openPage(this.page);
@@ -16,9 +16,9 @@ export class VEditBranch extends VPage<CBranch> {
     };
 
     private onFormButtonClick = async (name: string, context: Context) => {
-        let { current } = this.controller;
-        let id = current && current.id;
-        await this.controller.saveItem(id, context.form.data);
+        let { currentModule } = this.controller;
+        let id = currentModule && currentModule.id;
+        await this.controller.saveItemModule(id, context.form.data);
         this.closePage();
     }
 
@@ -27,6 +27,7 @@ export class VEditBranch extends VPage<CBranch> {
             content: {
                 widget: 'textarea', label: '内容', placeholder: '请填写内容', rows: 3
             } as UiInputItem,
+            submit: { widget: 'button', label: '提交' }
         }
     };
 
@@ -39,11 +40,11 @@ export class VEditBranch extends VPage<CBranch> {
     }
 
     private page = observer(() => {
-        let { current } = this.controller;
+        let { currentModule } = this.controller;
         return <Page header="编辑子模块" headerClassName={consts.headerClass}>
             <div className="mx-3">
                 <Form ref={v => this.form = v} className="my-3"
-                    formData={current}
+                    formData={currentModule}
                     schema={this.schema}
                     uiSchema={this.uiSchema}
                     onButtonClick={this.onFormButtonClick}

@@ -4,7 +4,6 @@ TUID WebPage (
     main name char(100),
     main titel char(100),
     main template ID Template,
-    main branch ID Branch,
     main discription char(200),
     main author ID [$user],
     stamp (create, update),
@@ -16,7 +15,8 @@ TUID BRANCH (
     id,
     main content text,
     main author ID [$user],
-    stamp (create, update)
+    stamp (create, update),
+    main displayed text
 );
 
 
