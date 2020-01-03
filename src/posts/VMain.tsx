@@ -3,9 +3,11 @@ import { consts } from "consts";
 import { observer } from "mobx-react";
 import { VPage, Page, FA, List, LMR, EasyTime, tv, UserView, User, Tuid, SearchBox } from "tonva";
 import { CPosts } from "./CPosts";
-import { VEdit } from "./VEdit";
+import classNames from 'classnames';
+import { observable } from "mobx";
 
 export class VMain extends VPage<CPosts> {
+    @observable private flg = true;
     async open() {
     }
 
@@ -13,20 +15,40 @@ export class VMain extends VPage<CPosts> {
         return <this.page />
     }
 
+    onBtn = (e: any) => {
+        if (this.flg) {
+            this.flg = false;
+            this.controller.onAll();
+            e.target.style.marginLeft = 20 + 'px';
+        } else {
+            this.flg = true;
+            this.controller.onMy();
+            e.target.style.marginLeft = 0 + 'px';
+        }
+    }
+
     private page = observer(() => {
         let { pagePosts, onAdd, searchPostsKey } = this.controller;
-        let right = <div className="w-19c d-flex">
-            <SearchBox className="w-80 mt-1 mr-2"
+        let right = <div className="d-flex">
+            <SearchBox className="mt-1 mr-2"
                 size='sm'
-                onSearch={(key: string) => searchPostsKey(key)}
+                onSearch={(key: string) => searchPostsKey(key, "")}
                 placeholder="请输入您要查找的标题" />
             <button
                 className="btn btn-success btn-sm ml-4 mr-2 align-self-center"
                 onClick={onAdd}>
                 <FA name="plus" />
             </button></div>;
-
         return <Page header="帖文" headerClassName={consts.headerClass} right={right} onScrollBottom={this.onScrollBottom} >
+            <div className="px-3 py-2 d-flex justify-content-center">
+                <strong className={classNames("small text-right")}>我的</strong>
+                <div className="mx-2"
+                    style={{ width: '40px', height: '18px', backgroundColor: 'rgb(211, 209, 209)', borderRadius: '20px', }}>
+                    <div onClick={(e) => this.onBtn(e)}
+                        style={{ border: '1px solid #007bff', width: '20px', height: '18px', backgroundColor: '#007bff', borderRadius: '100%', }}></div>
+                </div>
+                <strong className={classNames("small")}>全部</strong>
+            </div>
             <List items={pagePosts} item={{ render: this.renderItem, onClick: this.itemClick }} />
         </Page>;
     });

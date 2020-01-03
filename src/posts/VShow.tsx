@@ -4,7 +4,6 @@ import { CPosts } from "./CPosts";
 import { VEdit } from './VEdit';
 import { observer } from 'mobx-react';
 import { consts } from 'consts';
-import { VRelease } from './VRelease ';
 
 export class VShow extends VPage<CPosts> {
     async open() {
@@ -14,7 +13,6 @@ export class VShow extends VPage<CPosts> {
     private page = observer(() => {
         let { current, onShowRelease } = this.controller;
         let { caption, content, author, image, template, discription, $create, $update } = current;
-        console.log(template,'templet')
         let date = <span><EasyTime date={$update} /></span>;
         let isMe = Tuid.equ(author, this.controller.user.id);
         let right = isMe && <button className="btn btn-sm btn-success mr-2 align-self-center" onClick={() => this.openVPage(VEdit)}><FA name="pencil-square-o" /></button>;

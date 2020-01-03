@@ -18,11 +18,10 @@ TUID IMAGE (
     stamp (create),
 );
 
-
 /** POST发布 */
 MAP WebPost(
     key post ID POST,
-    author ID [$user] 
+    operator ID [$user] 
 );
 
 MAP AgentPost(

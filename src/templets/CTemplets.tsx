@@ -6,7 +6,6 @@ import { observer } from "mobx-react";
 import { VMain } from "./VMain";
 import { VShow } from "./VShow";
 import { PageItems, Query } from "tonva";
-//import { Content } from "./model/content"
 
 // 贴文模板
 class PageTemplate extends PageItems<any> {
@@ -33,7 +32,6 @@ export class CTemplets extends CUqBase {
     @observable current: any;
 
     protected async internalStart(param: any) {
-        console.log('aaa');
     }
 
     /* 模板查询*/
@@ -42,13 +40,12 @@ export class CTemplets extends CUqBase {
         this.pageTemplate.first({ key: key });
     }
 
-    //添加任务
+    //保存
     saveItem = async (id:number, param: any) => {
         param.author = this.user.id;
         let ret = await this.uqs.webBuilder.Template.save(id, param);
         if (id) {
             let item = this.items.find(v => v.id === id);
-            // this.current = item;
             if (item !== undefined) {
                 _.merge(item, param);
                 item.$update = new Date();
