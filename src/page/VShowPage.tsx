@@ -12,14 +12,14 @@ export class VShowPage extends VPage<CPage> {
 
     private page = observer(() => {
         let { current, onRedact, itemsModule, onMyContent } = this.controller;
+        let { ...ret } = itemsModule;
+        console.log(ret,'item')
         let { titel, name, author, template, discription, $create, $update } = current;
-        console.log(itemsModule,'displayed')
         let date = <span><EasyTime date={$update} /></span>;
         let isMe = Tuid.equ(author, this.controller.user.id);
         let addModule = <div>
-            <button onClick={onMyContent}>显示</button>
         <button
-            className="btn btn-success btn-sm ml-4 mr-2 align-self-center"
+            className="btn btn-success btn-sm ml-4 mr-2 mt-2 align-self-center"
             onClick={onRedact} >
             <FA name="plus" />
         </button>
@@ -40,13 +40,13 @@ export class VShowPage extends VPage<CPage> {
                     <div className="py-2">{discription}</div>
                 </LMR>
                 <div className="small text-muted p-1">名字</div>
-                <pre className="mb-3 px-3 py-4 bg-white h4 border">{name}</pre>
+                <pre className="mb-3 px-3 py-4 bg-white h6 border">{name}</pre>
                 <div className="small text-muted p-1">布局模板</div>
                 <div className="mb-3 px-3 py-2 bg-white h6">
                     {tv(template, (values) => <>{values.caption}</>, undefined, () => <small className="text-muted" >[无]</small>)}
                 </div>
                 <LMR className="bg-white px-3 h6" right={addModule}>
-                    <div className="py-2 mt-2">子模块</div>
+                    <div className="py-2 mt-2 h6" style={{fontWeight: 700}}>子模块</div>
                 </LMR>
                 <List items={itemsModule} item={{ render: this.renderItem, onClick: this.itemClick }} />
             </div>
@@ -62,13 +62,11 @@ export class VShowPage extends VPage<CPage> {
 
     private itemRow = observer((item: any) => {
         let { author, content, $update } = item;
-        console.log(item, 'author')
         let isMe = Tuid.equ(author, this.controller.user.id);
         let renderAuthor = (user: User) => {
             return <span>{isMe ? '' : user.nick || user.name}</span>;
         };
         let right = <div className="small text-muted text-right w-6c ">
-            {/* <div className="small pt-1"><UserView id={author} render={renderAuthor} /></div> */}
             <div className="small"><EasyTime date={$update} /></div>
         </div>;
 

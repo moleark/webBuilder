@@ -24,7 +24,7 @@ TUID BRANCH (
 MAP WebPageBranch (
     key webPage ID WebPage,
     key branch ID BRANCH,
-    order int
+    sort int
 );
 
 --页面修改记录
@@ -57,3 +57,20 @@ PAGE (
     order by p.id desc
     limit $pageSize;
 };
+
+
+/** 搜索我的模块*/
+QUERY SearchBranch( _page ID webPage)
+returns ret (
+    id bigint,
+    content text,
+    author ID [$user],
+    sort int
+) {
+    into ret select b.id, b.content, b.author, p.sort
+    from    BRANCH as b
+            join WebPageBranch as p on b.id=p.branch
+    where   p.webPage = _page 
+    order by p.sort desc;
+};
+ 

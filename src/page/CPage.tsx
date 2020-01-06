@@ -129,6 +129,7 @@ export class CPage extends CUqBase {
     }
 
     onRedact = () => {
+        this.currentModule = undefined;
         this.openVPage(VResacModule);
     }
 
@@ -143,21 +144,30 @@ export class CPage extends CUqBase {
     }
 
     loadList = async () => {
-        this.searchPageKey("", 0);
+        this.searchPageKey('', 0);
         this.items = await this.uqs.webBuilder.WebPage.search('', 0, 100);
         this.itemsModule = await this.uqs.webBuilder.Branch.search('', 0, 100);
+        
+        // this.itemsModule = await this.uqs.webBuilder.SearchBranch.query({ _page: this.current.id });
+        
+        
     }
+
+
 
     showDetail = async (id: number) => {
         this.current = await this.uqs.webBuilder.WebPage.load(id);
+       
+        this.itemsModule = await this.uqs.webBuilder.SearchBranch.query({ _page: id });
+        console.log(this.itemsModule,'this.current')
         this.openVPage(VShowPage);
     }
 
     onMyContent = async () => {
-        // let a = await this.uqs.webBuilder.Branch.search('', 0, 100);
+        //  await this.uqs.webBuilder.Branch.search('', 0, 100);
         // for (var i = 0; i < a.length; i++) {
         //     if (a[i].displayed == 1) {
-        //         let b = await this.uqs.webBuilder.Branch.search(a[i].displayed, 0, 100)
+        //          await this.uqs.webBuilder.Branch.search(a[i].displayed, 0, 100)
         //     }
         // }
     }
@@ -168,6 +178,12 @@ export class CPage extends CUqBase {
         this.openVPage(VResacModule);
     }
 
+    onAddMap = async () => {
+        await this.uqs.webBuilder.WebPageBranch.add({ webPage: this.current.id, arr1: [{ branch: this.currentModule.id, sort: 1 }] });
+        let a  = await this.uqs.webBuilder.SearchBranch.query({ _page: 8 });
+        console.log(a,'aa');
+    }
+    //：{ key1: key1值, arr1:[{key2: key2值}] 
 
     tab = () => {
         return <this.render />;

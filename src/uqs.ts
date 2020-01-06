@@ -19,12 +19,14 @@ export interface WebBuilder {
     AssistPost: Map;
     CustomerPost: Map;
     PublishPost: Action;
-    WebPage: Tuid,
-    SearchWebPage: Query
-    Branch: Tuid
+    WebPage: Tuid;
+    SearchWebPage: Query;
+    Branch: Tuid;
+    WebPageBranch: Map;
+    SearchBranch: Query;
 }
 
 export interface UQs {
     order: UqOrder;
-    webBuilder: WebBuilder
+    webBuilder: WebBuilder;
 }

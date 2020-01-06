@@ -18,7 +18,9 @@ export class VResacModule extends VPage<CPage> {
     private onFormButtonClick = async (name: string, context: Context) => {
         let { currentModule } = this.controller;
         let id = currentModule && currentModule.id;
+      
         await this.controller.saveItemModule(id, context.form.data);
+        await this.controller.onAddMap()
         this.closePage();
     }
 
