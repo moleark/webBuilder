@@ -16,7 +16,7 @@ TUID BRANCH (
     main content text,
     main author ID [$user],
     stamp (create, update),
-    main displayed text
+    main branchType int
 );
 
 
@@ -24,7 +24,7 @@ TUID BRANCH (
 MAP WebPageBranch (
     key webPage ID WebPage,
     key branch ID BRANCH,
-    sort int
+    sort int,
 );
 
 --页面修改记录
@@ -59,8 +59,8 @@ PAGE (
 };
 
 
-/** 搜索我的模块*/
-QUERY SearchBranch( _page ID webPage)
+/** 搜索我的私有模块*/
+QUERY SearchPrivateBranch( _page ID webPage)
 returns ret (
     id bigint,
     content text,
@@ -73,4 +73,37 @@ returns ret (
     where   p.webPage = _page 
     order by p.sort desc;
 };
+
+/** 搜索我的全部子模块*/
+QUERY SearchBranch( key char(100))
+PAGE (
+    id bigint start 0,                                 
+    author ID [$user],
+    content text,
+    branchType int
+) {
+    var key2 char(102);
+    set key2 = concat('%', key, '%');
+
+    PAGE select p.id, p.author, p.content, p.branchType
+    from    BRANCH as p
+    where   p.id > $pageStart and ( p.content like key2 or key is null )
+            and p.branchType=0
+    order by p.id desc
+    limit $pageSize;
+};
  
+ History BrowsingHistory(
+    date,
+    object ID,
+    objectType char(20), 
+    ipAddress char(20)
+);
+
+ACTION AddBrowsingHistory(
+    object ID, 
+    objectType  char(20), 
+    ipAddress char(20)
+) {
+    history BrowsingHistory set object= object, objectType = objectType, ipAddress = ipAddress;
+};

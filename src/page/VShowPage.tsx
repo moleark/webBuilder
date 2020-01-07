@@ -11,18 +11,17 @@ export class VShowPage extends VPage<CPage> {
     }
 
     private page = observer(() => {
-        let { current, onRedact, itemsModule, onMyContent } = this.controller;
-        let { ...ret } = itemsModule;
-        console.log(ret,'item')
+        let { current, onRedact, itemsModule, onCommonalityModule } = this.controller;
         let { titel, name, author, template, discription, $create, $update } = current;
         let date = <span><EasyTime date={$update} /></span>;
         let isMe = Tuid.equ(author, this.controller.user.id);
         let addModule = <div>
-        <button
-            className="btn btn-success btn-sm ml-4 mr-2 mt-2 align-self-center"
-            onClick={onRedact} >
-            <FA name="plus" />
-        </button>
+            <strong className="py-2 mt-2 h6" onClick={() => onCommonalityModule()}>关联模块</strong>
+            <button
+                className="btn btn-success btn-sm ml-4 mr-2 mt-2 align-self-center"
+                onClick={onRedact} >
+                <FA name="plus" />
+            </button>
         </div>
         let right = isMe && <button className="btn btn-sm btn-success mr-2 align-self-center" onClick={() => this.openVPage(VEditPage)}><FA name="pencil-square-o" /></button>;
         let renderAuthor = (user: User) => {
@@ -46,9 +45,11 @@ export class VShowPage extends VPage<CPage> {
                     {tv(template, (values) => <>{values.caption}</>, undefined, () => <small className="text-muted" >[无]</small>)}
                 </div>
                 <LMR className="bg-white px-3 h6" right={addModule}>
-                    <div className="py-2 mt-2 h6" style={{fontWeight: 700}}>子模块</div>
+                    <div className="py-2 mt-2 h6" style={{ fontWeight: 700 }}>我的模块  :</div>
                 </LMR>
-                <List items={itemsModule} item={{ render: this.renderItem, onClick: this.itemClick }} />
+                {
+                    itemsModule.length > 0 ? <List items={itemsModule} item={{ render: this.renderItem }} /> : <span>[无]</span>
+                }
             </div>
         </Page>;
     })
@@ -61,17 +62,25 @@ export class VShowPage extends VPage<CPage> {
     }
 
     private itemRow = observer((item: any) => {
-        let { author, content, $update } = item;
+        let { author, sort, content, $update, branchType } = item;
         let isMe = Tuid.equ(author, this.controller.user.id);
         let renderAuthor = (user: User) => {
             return <span>{isMe ? '' : user.nick || user.name}</span>;
         };
         let right = <div className="small text-muted text-right w-6c ">
             <div className="small"><EasyTime date={$update} /></div>
+
         </div>;
 
-        return <LMR className="px-4 py-1" right={right}>
-            <b>{content}</b>
-        </LMR>;
+        return <div className="px-4 py-1" style={{ display: 'flex' }}>
+            <div className="col-11" onClick={this.itemClick}>
+                <b>{content}</b>
+                <div>{sort}</div>
+            </div>
+            <div>
+                <strong style={{ color: 'rgb(21, 161, 21)' }} onClick={() => this.controller.onRemove(item.id)}>删除</strong>
+            </div>
+
+        </div>;
     });
 }

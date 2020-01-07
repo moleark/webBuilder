@@ -53,7 +53,6 @@ export class VEditPage extends VPage<CPage> {
         { name: 'titel', type: 'string', required: true },
         { name: 'discription', type: 'string', required: false },
         { name: 'name', type: 'string', required: true },
-        // { name: 'brach', type: 'id', required: false },
         { name: 'template', type: 'id', required: true },
     ];
 

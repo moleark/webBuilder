@@ -23,6 +23,7 @@ export interface WebBuilder {
     SearchWebPage: Query;
     Branch: Tuid;
     WebPageBranch: Map;
+    SearchPrivateBranch: Query;
     SearchBranch: Query;
 }
 
