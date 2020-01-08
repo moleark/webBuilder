@@ -54,7 +54,7 @@ export class VShowPage extends VPage<CPage> {
         </Page>;
     })
     private itemClick = (item: any) => {
-        this.controller.showDetailModule(item.id);
+        this.controller.showDetailModule(item);
     }
 
     private renderItem = (item: any, index: number) => {
@@ -73,7 +73,7 @@ export class VShowPage extends VPage<CPage> {
         </div>;
 
         return <div className="px-4 py-1" style={{ display: 'flex' }}>
-            <div className="col-11" onClick={this.itemClick}>
+            <div className="col-11" onClick={() => this.itemClick(item)}>
                 <b>{content}</b>
                 <div>{sort}</div>
             </div>

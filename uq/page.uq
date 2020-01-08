@@ -64,10 +64,11 @@ QUERY SearchPrivateBranch( _page ID webPage)
 returns ret (
     id bigint,
     content text,
+    branchType int,
     author ID [$user],
     sort int
 ) {
-    into ret select b.id, b.content, b.author, p.sort
+    into ret select b.id, b.content, b.branchType, b.author, p.sort
     from    BRANCH as b
             join WebPageBranch as p on b.id=p.branch
     where   p.webPage = _page 

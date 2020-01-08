@@ -14,7 +14,7 @@ export class VShow extends VPage<CTemplets> {
         if (templet === undefined) {
             return <Page>...</Page>;
         }
-        let { caption, content, author, $create, $update, content_mobile } = templet;
+        let { caption, content, author, $create, $update, contentModule } = templet;
         let date = <span><EasyTime date={$update} /></span>;
         let isMe = Tuid.equ(author, this.controller.user.id);
         let right = isMe && <button className="btn btn-sm btn-success mr-2 align-self-center" onClick={() => this.openVPage(VEdit, templet)}><FA name="pencil-square-o" /></button>;
@@ -30,7 +30,7 @@ export class VShow extends VPage<CTemplets> {
                 <div className="small text-muted p-1">PC模板</div>
                 <pre className="mb-3 px-3 py-4 bg-white border">{content}</pre>       
                 <div className="small text-muted p-1">移动端模板</div>
-                <pre className="mb-3 px-3 py-4 bg-white">{content_mobile}</pre>
+                <pre className="mb-3 px-3 py-4 bg-white">{contentModule}</pre>
             </div>
         </Page>;
     })

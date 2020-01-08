@@ -4,6 +4,7 @@ TUID Template (
     main caption char(100),
     main author ID [$user],
     content text,
+    contentModule text,
     stamp (create, update),
 );
 
@@ -14,14 +15,15 @@ PAGE (
     id bigint start 0,
     caption char(100),
     author ID [$user],
-    content text
+    content text,
+    contentModule text
 ) {
     var key2 char(102);
     set key2 = concat('%', key, '%');
 
-    PAGE select p.id, p.caption, p.author, p.content
+    PAGE select p.id, p.caption, p.author, p.content, p.contentModule
     from    Template as p
-    where   p.id > $pageStart and ( p.caption like key2 or key is null )
+    where   p.id > $pageStart and ( p.caption like key2 or p.contentModule like key2 or p.content like key2 or key is null )
     order by p.id desc
     limit $pageSize;
 };

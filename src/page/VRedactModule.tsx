@@ -4,7 +4,6 @@ import { consts } from 'consts';
 import { observer } from 'mobx-react';
 import { VPage, Page, Form, UiSchema, UiInputItem, Schema, Context, Widget, UiCustom } from 'tonva';
 import { observable } from 'mobx';
-import { setting } from 'configuration';
 
 
 class Discount extends Widget {
@@ -16,19 +15,9 @@ class Discount extends Widget {
 
     private onChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
         let val = evt.currentTarget.value;
-        console.log(val, 'val')
         this.dateVisible = val === '0';
         this.setValue(val);
     }
-
-    // private onDateChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
-    //     let value = parseInt(evt.currentTarget.value);
-    //     if (value < 10) {
-    //         this.setValue(evt.currentTarget.value);
-    //     } else {
-    //         this.setValue(0);
-    //     }
-    // }
 
     render = () => {
         return <div className="form-control" style={{ height: 'auto' }}>
@@ -57,7 +46,6 @@ export class VResacModule extends VPage<CPage> {
     private onFormButtonClick = async (name: string, context: Context) => {
         let { currentModule } = this.controller;
         let id = currentModule && currentModule.id;
-        // if(context.form.data.discount==1)
         await this.controller.saveItemModule(id, context.form.data);
         await this.controller.onAddMap()
         this.closePage();
@@ -75,6 +63,7 @@ export class VResacModule extends VPage<CPage> {
                 widget: 'custom',
                 label: '请选择',
                 WidgetClass: Discount,
+                defaultValue: "1",
             } as UiCustom,
             submit: { widget: 'button', label: '提交' }
         }
@@ -83,7 +72,7 @@ export class VResacModule extends VPage<CPage> {
     private schema: Schema = [
         { name: 'content', type: 'string', required: true },
         { name: 'sort', type: 'number', required: true },
-        { name: 'branchType', type: 'string', required: true },
+        { name: 'branchType', type: 'number', required: true },
     ];
 
     render(): JSX.Element {

@@ -17,7 +17,7 @@ export class VPickBranch extends VPage<CPage> {
         let { searchBranch, searchBranchKey } = this.controller;
         let right = <SearchBox className="w-80 mt-2 mr-2"
             size='sm'
-            onSearch={(key: string) => searchBranchKey(key, '')}
+            onSearch={(key: string) => searchBranchKey(key)}
             placeholder="模板" />;
 
         return <Page header="选择模板" back="close" right={right} onScrollBottom={this.onScrollBottom} >

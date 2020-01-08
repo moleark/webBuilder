@@ -13,7 +13,7 @@ export class VMain extends VPage<CPage> {
     }
 
     private page = observer(() => {
-        let { onAdd, webPage, showDetail } = this.controller;
+        let { onAdd, searchwebPage } = this.controller;
         let right = <button
             className="btn btn-success btn-sm ml-4 mr-2 align-self-center"
             onClick={onAdd}
@@ -21,7 +21,7 @@ export class VMain extends VPage<CPage> {
             <FA name="plus" />
         </button>;
         return <Page header="网页" headerClassName={consts.headerClass} right={right} >
-            <List items={webPage} item={{ render: this.renderItem, onClick: this.itemClick }} />
+            <List items={searchwebPage} item={{ render: this.renderItem, onClick: this.itemClick }} />
         </Page>;
     });
 

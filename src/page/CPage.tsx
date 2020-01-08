@@ -12,7 +12,7 @@ import { VResacModule } from './VRedactModule';
 import { VPickBranch } from './VPinkBranch';
 
 // 网页
-class WebPage extends PageItems<any> {
+class SearchWebPage extends PageItems<any> {
     private searchPageQuery: Query;
     constructor(searchQuery: Query) {
         super();
@@ -68,7 +68,7 @@ class PageTemplate extends PageItems<any> {
 export class CPage extends CUqBase {
     @observable pageTemplate: PageTemplate;
     @observable searchBranch: SearchBranch;
-    @observable webPage: WebPage;
+    @observable searchwebPage: SearchWebPage;
     @observable items: any[];
     @observable itemsModule: any[];
     @observable currentModule: any;
@@ -79,8 +79,8 @@ export class CPage extends CUqBase {
 
     /* 网页查询*/
     searchPageKey = async (key: string, author: any) => {
-        this.webPage = new WebPage(this.uqs.webBuilder.SearchWebPage);
-        this.webPage.first({ key: key, author: author });
+        this.searchwebPage = new SearchWebPage(this.uqs.webBuilder.SearchWebPage);
+        this.searchwebPage.first({ key: key, author: author });
     }
 
     // 模板查询
@@ -90,9 +90,9 @@ export class CPage extends CUqBase {
     }
 
     // 子模板查询
-    searchBranchKey = async (key: string, branchType: any) => {
+    searchBranchKey = async (key: string) => {
         this.searchBranch = new SearchBranch(this.uqs.webBuilder.SearchBranch);
-        this.searchBranch.first({ key: key, branchType: 0 });
+        this.searchBranch.first({ key: key });
     }
 
     // 保存网页
@@ -100,7 +100,7 @@ export class CPage extends CUqBase {
         param.author = this.user.id;
         let ret = await this.uqs.webBuilder.WebPage.save(id, param);
         if (id) {
-            let item = this.webPage.items.find(v => v.id === id);
+            let item = this.items.find(v => v.id === id);
             if (item !== undefined) {
                 _.merge(item, param);
                 item.$update = new Date();
@@ -112,7 +112,7 @@ export class CPage extends CUqBase {
             param.id = ret.id;
             param.$create = new Date();
             param.$update = new Date();
-            this.webPage.items.unshift(param);
+            this.items.unshift(param);
             this.current = param;
         }
         this.searchPageKey("", 0);
@@ -137,7 +137,7 @@ export class CPage extends CUqBase {
             this.itemsModule.unshift(param);
             this.currentModule = param;
         }
-        this.searchBranchKey("", 1);
+        this.searchBranchKey("");
     }
 
     render = observer(() => {
@@ -175,7 +175,7 @@ export class CPage extends CUqBase {
 
     // 公共关联模块
     onCommonalityModule = async () => {
-        this.searchBranchKey('', 0);
+        this.searchBranchKey('');
         this.openVPage(VPickBranch);
     }
 
@@ -204,8 +204,9 @@ export class CPage extends CUqBase {
     }
 
     // 显示模块详情
-    showDetailModule = async (id: number) => {
-        this.currentModule = await this.uqs.webBuilder.Branch.load(id);
+    showDetailModule = async (itme: any) => {
+        this.currentModule = itme;
+        console.log(this.currentModule, itme, 'bb')
         this.openVPage(VResacModule);
     }
 
