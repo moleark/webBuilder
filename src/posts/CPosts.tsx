@@ -77,6 +77,7 @@ export class CPosts extends CUqBase {
     @observable pageMedia: PageMedia;
     @observable items: any[];
     @observable current: any;
+    @observable flg: boolean = true;
 
     protected async internalStart(param: any) {
     }
@@ -135,8 +136,13 @@ export class CPosts extends CUqBase {
     }
 
     loadList = async () => {
-        this.searchPostsKey("", nav.user);
+        if (this.flg) {
+            this.searchPostsKey("", nav.user);
+        } else {
+            this.searchPostsKey("", 0);
+        }
         this.items = await this.uqs.webBuilder.Post.search('', 0, 100);
+
     }
 
     showDetail = async (id: number) => {
@@ -171,19 +177,6 @@ export class CPosts extends CUqBase {
     publishPost = async (param: any) => {
         this.searchPostsKey("", 0);
         await this.uqs.webBuilder.PublishPost.submit({ _post: this.current.id, _operator: nav.user, tags: [{ tagName: param[0] }, { tagName: param[1] }, { tagName: param[2] }, { tagName: param[3] }] })
-    }
-
-    // addAssistPost = async () => {
-    //     this.searchPostsKey("", 0);
-    //     await this.uqs.webBuilder.AssistPost.add({ post: this.current.id, operator: nav.user });
-    // }
-
-    onMy = () => {
-        this.searchPostsKey("", nav.user);
-    }
-
-    onAll = () => {
-        this.searchPostsKey("", 0);
     }
 
     tab = () => {

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { VPage, UiSchema, Schema, UiInputItem, tv, Page, Form, Context, List, LMR, EasyTime, FA, Tuid, SearchBox } from "tonva";
+import { VPage, Page, List, LMR, EasyTime, FA, SearchBox } from "tonva";
 import { consts } from "consts";
 import { CTemplets } from "./CTemplets";
 import { observer } from "mobx-react";

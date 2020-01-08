@@ -13,16 +13,15 @@ export class VMain extends VPage<CPage> {
     }
 
     private page = observer(() => {
-        let { onAdd, webPage } = this.controller;
-        let right = <div className="d-flex">
-            <button
-                className="btn btn-success btn-sm ml-4 mr-2 align-self-center"
-                onClick={onAdd}
-            >
-                <FA name="plus" />
-            </button></div>;
+        let { onAdd, searchwebPage } = this.controller;
+        let right = <button
+            className="btn btn-success btn-sm ml-4 mr-2 align-self-center"
+            onClick={onAdd}
+        >
+            <FA name="plus" />
+        </button>;
         return <Page header="网页" headerClassName={consts.headerClass} right={right} >
-            <List items={webPage} item={{ render: this.renderItem, onClick: this.itemClick }} />
+            <List items={searchwebPage} item={{ render: this.renderItem, onClick: this.itemClick }} />
         </Page>;
     });
 
