@@ -16,8 +16,8 @@ export class VMain extends VPage<CApp> {
             { name: 'home', label: '帖文', icon: 'tasks', content: cPosts.tab, onShown: cPosts.loadList, notify: undefined/*store.homeCount*/ },
             { name: 'image', label: '图片', icon: 'vcard', content: cMedia.tab, onShown: cMedia.loadList },
             { name: 'templet', label: '模板', icon: 'vcard', content: cTemplets.tab, onShown: cTemplets.loadList },
+            { name: 'page', label: '网页', icon: 'tasks', content: cPage.tab, onShown: cPage.loadList },
             { name: 'me', label: '我的', icon: 'user', content: cMe.tab },
-            { name: 'page', label: '网页', icon: 'user', content: cPage.tab, onShown: cPage.loadList },
         ].map(v => {
             let { name, label, icon, content, notify, onShown } = v;
             return {

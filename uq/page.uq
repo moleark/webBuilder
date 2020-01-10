@@ -108,3 +108,4 @@ ACTION AddBrowsingHistory(
 ) {
     history BrowsingHistory set object= object, objectType = objectType, ipAddress = ipAddress;
 };
+

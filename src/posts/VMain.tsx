@@ -88,7 +88,7 @@ export class VMain extends VPage<CPosts> {
             return <div className="border text-center p-1 mr-4"><img className="w-3c h-3c" src={values.path} /></div>;
         }, undefined,               //w-6c h-4c mr-2 text-black-50 justify-content-center d-flex align-items-center
             () => <div className="border text-center mr-4 p-1"><FA className="w-3 p-2 h-3c text-center" name="camera" size="2x" /></div>);
-        return <LMR className="p-2 border" left={tvImage} right={right}>
+        return <LMR className="p-2 border-bottom" left={tvImage} right={right}>
             <b>{caption}</b>
             <div className="small py-1 text-muted ">{discription}</div>
         </LMR>;

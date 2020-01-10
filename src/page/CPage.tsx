@@ -73,6 +73,7 @@ export class CPage extends CUqBase {
     @observable itemsModule: any[];
     @observable currentModule: any;
     @observable current: any;
+    @observable lock: boolean = false;
 
     protected async internalStart(param: any) {
     }
@@ -179,6 +180,14 @@ export class CPage extends CUqBase {
         this.openVPage(VPickBranch);
     }
 
+    ondisplay = () => {
+        if(this.lock) {
+            this.lock = false;
+        } else {
+            this.lock = true;
+        }
+    }
+
     // 删除私有模块
     onRemove = async (id: number) => {
         await this.uqs.webBuilder.WebPageBranch.del({ webPage: this.current.id, arr1: [{ branch: id }] });
@@ -206,7 +215,6 @@ export class CPage extends CUqBase {
     // 显示模块详情
     showDetailModule = async (itme: any) => {
         this.currentModule = itme;
-        console.log(this.currentModule, itme, 'bb')
         this.openVPage(VResacModule);
     }
 

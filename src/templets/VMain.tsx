@@ -43,7 +43,7 @@ export class VMain extends VPage<CTemplets> {
     private renderItem = (item: any, index: number) => {
         let { id, caption, content, $create, $update } = item;
         let right = <small className="text-muted"><EasyTime date={$update} /></small>
-        return <LMR className="px-3 py-2 border" right={right}>
+        return <LMR className="px-3 py-2 border-bottom" right={right}>
             {caption}
         </LMR>;
     }

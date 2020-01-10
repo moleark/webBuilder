@@ -81,4 +81,6 @@ PAGE (
     limit $pageSize;
 };
 
-
+action test(a1 int, a2 int) {
+    book contenttag at(a1, a2);
+};
