@@ -3,6 +3,7 @@ import { VPage, Page, LMR, tv, EasyTime, UserView, FA, User, Tuid } from "tonva"
 import { CTemplets } from "./CTemplets";
 import { VEdit } from './VEdit';
 import { observer } from 'mobx-react';
+import { consts } from 'consts';
 
 export class VShow extends VPage<CTemplets> {
     async open() {
@@ -21,7 +22,7 @@ export class VShow extends VPage<CTemplets> {
         let renderAuthor = (user: User) => {
             return <span>{isMe ? '[我]' : user.nick || user.name}</span>;
         };
-        return <Page header="模板内容" right={right}>
+        return <Page header="模板内容" headerClassName={consts.headerClass} right={right} >
             <div className="p-3">
                 <div className="mb-1 h5 px-3 py-2 bg-white">{caption}</div>    
                 <LMR className="mb-3 px-3 small text-black-50" right={date}>

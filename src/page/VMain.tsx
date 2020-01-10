@@ -39,12 +39,12 @@ export class VMain extends VPage<CPage> {
         let renderAuthor = (user: User) => {
             return <span>{isMe ? '' : user.nick || user.name}</span>;
         };
-        let right = <div className="small text-muted text-right w-6c ">
+        let right = <div className="small text-muted text-right ">
             <div className="small pt-1"><UserView id={author} render={renderAuthor} /></div>
             <div className="small"><EasyTime date={$update} /></div>
         </div>;
 
-        return <LMR className="p-2 border" right={right}>
+        return <LMR className="p-2 px-3 border-bottom" right={right}>
             <b>{name}</b>
             <div className="small py-1 text-muted ">{titel}</div>
         </LMR>;

@@ -2,6 +2,7 @@ import * as React from 'react';
 import { VPage, Page, LMR, tv, EasyTime, UserView, FA, User, Tuid, List, SearchBox } from "tonva";
 import { CPosts } from "./CPosts";
 import { observer } from 'mobx-react';
+import { consts } from 'consts';
 
 export class VPickTemplate extends VPage<CPosts> {
 
@@ -21,7 +22,7 @@ export class VPickTemplate extends VPage<CPosts> {
             onSearch={(key: string) => searchTemplateKey(key)}
             placeholder="模板" />;
 
-        return <Page header="选择模板" back="close" right={right} onScrollBottom={this.onScrollBottom} >
+        return <Page headerClassName={consts.headerClass} header="选择模板" back="close" right={right} onScrollBottom={this.onScrollBottom} >
             <List items={pageTemplate} item={{ render: this.renderItem, onClick: this.itemClick }} />
         </Page>
     });
@@ -47,7 +48,7 @@ export class VPickTemplate extends VPage<CPosts> {
         let right = <div className="small text-muted text-right ">
             <div><UserView id={author} render={renderAuthor} /></div>
         </div>;
-        return <LMR className="px-3 py-2 text-muted border bg-white" right={right}>
+        return <LMR className="px-3 py-2 text-muted border-bottom bg-white" right={right}>
             <b>{caption}</b>
         </LMR>;
     });

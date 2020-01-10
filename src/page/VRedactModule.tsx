@@ -81,6 +81,7 @@ export class VResacModule extends VPage<CPage> {
 
     private page = observer(() => {
         let { currentModule } = this.controller;
+        console.log(currentModule,'currentModule')
         return <Page header="编辑子模块" headerClassName={consts.headerClass}>
             <div className="mx-3">
                 <Form ref={v => this.form = v} className="my-3"

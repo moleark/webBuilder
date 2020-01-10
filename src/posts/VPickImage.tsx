@@ -2,6 +2,7 @@ import * as React from 'react';
 import { VPage, Page, LMR, tv, EasyTime, UserView, FA, User, Tuid, List, SearchBox } from "tonva";
 import { CPosts } from "./CPosts";
 import { observer } from 'mobx-react';
+import { consts } from 'consts';
 
 export class VPickImage extends VPage<CPosts> {
     async open() {
@@ -18,7 +19,7 @@ export class VPickImage extends VPage<CPosts> {
             size='sm'
             onSearch={(key: string) => searchMadiaKey(key)}
             placeholder="请输入您要查找的图片标题" />;
-        return <Page header="选择图片" back="close" right={right} onScrollBottom={this.onScrollBottom}>
+        return <Page headerClassName={consts.headerClass} header="选择图片" back="close" right={right} onScrollBottom={this.onScrollBottom}>
             <List items={pageMedia} item={{ render: this.renderItem, onClick: this.itemClick }} />
         </Page>
     })
@@ -44,7 +45,7 @@ export class VPickImage extends VPage<CPosts> {
         let right = <div className="small text-muted text-right">
             <div><UserView id={author} render={renderAuthor} /></div>
         </div>;
-        return <LMR className="px-3 py-2 b-1 border" right={right}>
+        return <LMR className="px-3 py-2 b-1 border-bottom" right={right}>
             <b>{caption}</b>
             <div className="small">{path}</div>
         </LMR>;

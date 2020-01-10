@@ -2,6 +2,7 @@ import * as React from 'react';
 import { VPage, Page, LMR, tv, EasyTime, UserView, FA, User, Tuid, List, SearchBox } from "tonva";
 import { observer } from 'mobx-react';
 import { CPage } from './CPage';
+import { consts } from 'consts';
 
 export class VPickBranch extends VPage<CPage> {
 
@@ -20,7 +21,7 @@ export class VPickBranch extends VPage<CPage> {
             onSearch={(key: string) => searchBranchKey(key)}
             placeholder="模板" />;
 
-        return <Page header="选择模板" back="close" right={right} onScrollBottom={this.onScrollBottom} >
+        return <Page header="选择模板" headerClassName={consts.headerClass} back="close" right={right} onScrollBottom={this.onScrollBottom} >
             <List items={searchBranch} item={{ render: this.renderItem, onClick: this.itemClick }} />
         </Page>
     });

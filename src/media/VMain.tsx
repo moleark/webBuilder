@@ -45,10 +45,10 @@ export class VMain extends VPage<CMedia> {
     private renderItem = (item: any, index: number) => {
         let { caption, path, $create } = item;
         let right = <div className="border p-1"><img className="h-4c w-4c" src={path} /></div>;
-        return <LMR className="px-3 py-2 border" right={right}>
+        return <LMR className="px-3 py-2 border-bottom" right={right}>
             <div><b>{caption}</b></div>
             <div className="smallPath small">{path}</div>
-            <button style={{ lineHeight: '15px', width: '42px', fontSize: '12px'}} type="button" className="d-block btn btn-primary btn-sm mt-1 align-self-center text-small" onClick={this.copyClick}>拷贝</button>
+            <button style={{ fontWeight: 550, lineHeight: '18px', fontSize: '10px', color: '#0099ff', border: '1px solid #0099ff', background: 'white' }} className="strong" onClick={this.copyClick}>拷贝</button>
         </LMR >;
     }
 }

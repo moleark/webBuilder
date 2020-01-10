@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import './static/font_s1f16n5jysa/iconfont.css';
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
