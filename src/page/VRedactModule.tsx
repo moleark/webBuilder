@@ -54,7 +54,7 @@ export class VResacModule extends VPage<CPage> {
     private uiSchema: UiSchema = {
         items: {
             content: {
-                widget: 'textarea', label: '内容', placeholder: '请填写内容', rows: 3
+                widget: 'textarea', label: '内容', placeholder: '请填写内容', rows: 10
             } as UiInputItem,
             sort: {
                 widget: 'updown', label: '排序', placeholder: '请填写数字'

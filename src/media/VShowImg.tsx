@@ -26,11 +26,7 @@ export class VShowImg extends VPage<CMedia> {
                     <UserView id={author} render={renderAuthor} />
                 </LMR>
                 <div className="small text-muted p-1">链接描述</div>
-                {/* <LMR className="mb-3 bg-white px-3 h6" right={tvImage}>
-                    <div className="py-2">{discription}</div>
-                </LMR> */}
                 <div className="small text-muted p-1">内容</div>
-                {/* <pre className="mb-3 px-3 py-4 bg-white h6 border">{content}</pre> */}
                 <div className="small text-muted p-1">布局模板</div>
                 <div className="mb-3 px-3 py-2 bg-white h6">
                     {tv(template, (values) => <>{values.caption}</>, undefined, () => <small className="text-muted" >[无]</small>)}

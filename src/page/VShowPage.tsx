@@ -20,21 +20,16 @@ export class VShowPage extends VPage<CPage> {
         let date = <span><EasyTime date={$update} /></span>;
         let isMe = Tuid.equ(author, this.controller.user.id);
         let addModule = <div className="d-flex px-2 mt-1 ">
-            <div className="pl-2 pr-1 col-9 text-center" style={{ border: '1px solid #0066cc', borderRadius: '32px', color: '#0066cc' }} onClick={() => onCommonalityModule()} >
-                <strong className="h6">关联模块</strong>
-                <span style={{ fontSize: '26px', width: '30px', verticalAlign: 'bottom', }}
-                    className="iconfont icon-sousuo">
-                </span>
-            </div>
+            <button style={{ fontWeight: 550, padding:'0 5px',marginBottom:0}} onClick={() => onCommonalityModule()} className="h6 btn btn-outline-primary">关联模块</button>
             <div className="ml-4" onClick={onRedact}>
-                <i className="iconfont icon-icon--tianjia" style={{ fontSize: '30px', color: '#0066cc' }}></i>
+                <i className="iconfont icon-icon--tianjia" style={{ fontSize: '28px', color: '#0066cc' }}></i>
             </div>
         </div>
         let right = isMe && <button className="btn btn-sm btn-success mr-2 align-self-center" onClick={() => this.openVPage(VEditPage)}><FA name="pencil-square-o" /></button>;
         let renderAuthor = (user: User) => {
             return <span>{isMe ? '[我]' : user.nick || user.name}</span>;
         };
-        return <Page header={name + '详情'} headerClassName={consts.headerClass} right={right}>
+        return <Page header={name} headerClassName={consts.headerClass} right={right}>
             <div className="p-3">
                 <div className="small text-muted p-1">标题 :</div>
                 <div className="mb-1 h6 px-3 py-2 bg-white">{titel}</div>
@@ -53,7 +48,7 @@ export class VShowPage extends VPage<CPage> {
                 </div>
             </div>
             <LMR className="px-3 h6" right={addModule}>
-                <div className="py-2 h6 mb-0" style={{ color: '#0066cc' }} onClick={() => ondisplay()}>我的模块<i className="iconfont icon-jiantouarrow483"></i></div>
+                <div className="mt-2 h6 mb-0" style={{ color: '#0066cc' }} onClick={() => ondisplay()}>我的模块<i className="iconfont icon-jiantouarrow483"></i></div>
             </LMR>
             {
                 lock ?
@@ -74,12 +69,12 @@ export class VShowPage extends VPage<CPage> {
 
     private itemRow = observer((item: any) => {
         let { sort, content } = item;
-        return <div className="px-4 py-1 d-flex col-12" style={{ borderBottom: '1px dashed #dee2e6' }}>
+        return <div className="px-3 pr-4 py-1 d-flex col-12" style={{ borderBottom: '1px dashed #dee2e6' }}>
             <div className="col-11" onClick={() => this.itemClick(item)}>
-                <div>排：{sort}</div>
+                <div className="text-muted">模块：{sort}</div>
                 <div className="text-truncate" style={{ height: '20px' }}>内容：{content}</div>
             </div>
-            <div className="px-0 col-1 text-right">
+            <div className="px-0 col-1 text-right mr-1">
                 <i className="iconfont icon-shanchu" style={{ fontSize: '25px', color: '#009900' }} onClick={() => this.controller.onRemove(item.id)}></i>
             </div>
         </div>;

@@ -48,7 +48,7 @@ export class VMain extends VPage<CMedia> {
         return <LMR className="px-3 py-2 border-bottom" right={right}>
             <div><b>{caption}</b></div>
             <div className="smallPath small">{path}</div>
-            <button style={{ fontWeight: 550, lineHeight: '18px', fontSize: '10px', color: '#0099ff', border: '1px solid #0099ff', background: 'white' }} className="strong" onClick={this.copyClick}>拷贝</button>
+            <button style={{ fontWeight: 550, padding:'0 5px'}} className="mt-2 strong btn btn-outline-primary" onClick={this.copyClick}>拷贝</button>
         </LMR >;
     }
 }
