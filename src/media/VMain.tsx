@@ -20,18 +20,16 @@ export class VMain extends VPage<CMedia> {
                 size='sm'
                 onSearch={(key: string) => searchMadiaKey(key)}
                 placeholder="请输入图片标题" />
-            <button className="btn btn-success btn-sm ml-4 mr-2 align-self-center" onClick={onAddClick}>
-                <FA name="plus" />
-            </button>
+            <div onClick={onAddClick}>
+                <span className="ml-4 iconfont icon-jiahao1 mr-2"
+                    style={{ fontSize: "26px", color: "white" }}>
+                </span>
+            </div>
         </div>;
         return <Page header="图片" headerClassName={consts.headerClass} right={right} onScrollBottom={this.onScrollBottom}>
             <List items={pageMedia} item={{ render: this.renderItem }} />
         </Page>;
     })
-
-    // private itemClick = (item: any) => {
-    //     this.controller.showMedia(item.id);
-    // }
 
     private onScrollBottom = async () => {
         await this.controller.pageMedia.more();
@@ -48,7 +46,12 @@ export class VMain extends VPage<CMedia> {
         return <LMR className="px-3 py-2 border-bottom" right={right}>
             <div><b>{caption}</b></div>
             <div className="smallPath small">{path}</div>
-            <button style={{ fontWeight: 550, padding:'0 5px'}} className="mt-2 strong btn btn-outline-primary" onClick={this.copyClick}>拷贝</button>
+            <button
+                style={{ fontWeight: 550, padding: '0 5px', fontSize: '12px' }} className="mt-2 btn btn-outline-primary"
+                onClick={this.copyClick}>
+                拷贝
+            </button>
+
         </LMR >;
     }
 }

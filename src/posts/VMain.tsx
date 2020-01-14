@@ -33,11 +33,9 @@ export class VMain extends VPage<CPosts> {
                 size='sm'
                 onSearch={(key: string) => searchPostsKey(key, "")}
                 placeholder="请输入您要查找的标题" />
-            <button
-                className="btn btn-success btn-sm ml-4 mr-2 align-self-center"
-                onClick={onAdd}>
-                <FA name="plus" />
-            </button></>;
+            <div onClick={onAdd}><span className="ml-4 iconfont icon-jiahao1 mr-2" style={{ fontSize: "26px", color: "white" }}></span></div>
+        </>;
+
         return <Page header="帖文" headerClassName={consts.headerClass} right={right} onScrollBottom={this.onScrollBottom} >
             <div className="px-3 py-2 d-flex justify-content-center">
                 <div className="d-flex justify-content-center" onClick={(e) => this.onBtn()}>
@@ -58,16 +56,12 @@ export class VMain extends VPage<CPosts> {
                     <strong className={classNames("small")}>全部</strong>
                 </div>
             </div>
-            <List items={pagePosts} item={{ render: this.renderItem, onClick: this.itemClick }} />
+            <List items={pagePosts} item={{ render: this.renderItem }} />
         </Page>;
     });
 
     private onScrollBottom = async () => {
         await this.controller.pagePosts.more();
-    }
-
-    private itemClick = (item: any) => {
-        this.controller.showDetail(item.id);
     }
 
     private renderItem = (item: any, index: number) => {
@@ -80,17 +74,28 @@ export class VMain extends VPage<CPosts> {
         let renderAuthor = (user: User) => {
             return <span>{isMe ? '' : user.nick || user.name}</span>;
         };
-        let right = <div className="small text-muted text-right w-6c ">
-            <div className="small pt-1"><UserView id={author} render={renderAuthor} /></div>
-            <div className="small"><EasyTime date={$update} /></div>
-        </div>;
-        let tvImage = tv(image, (values) => {
-            return <div className="border text-center p-1 mr-4"><img className="w-3c h-3c" src={values.path} /></div>;
-        }, undefined,               //w-6c h-4c mr-2 text-black-50 justify-content-center d-flex align-items-center
-            () => <div className="border text-center mr-4 p-1"><FA className="w-3 p-2 h-3c text-center" name="camera" size="2x" /></div>);
-        return <LMR className="p-2 border-bottom" left={tvImage} right={right}>
-            <b>{caption}</b>
-            <div className="small py-1 text-muted ">{discription}</div>
-        </LMR>;
+        return <div className="px-2 d-flex p-1">
+            <div className="col-10 d-flex" onClick={() => this.controller.showDetail(item.id)}>
+                {
+                    tv(image, (values) => {
+                        return <div className="border text-center p-1 mr-4"><img className="w-3c h-3c" src={values.path} /></div>;
+                    }, undefined,               //w-6c h-4c mr-2 text-black-50 justify-content-center d-flex align-items-center
+                        () => <div className="border text-center mr-4 p-1"><FA className="w-3 p-2 h-3c text-center" name="camera" size="2x" /></div>)
+                }
+                <div>
+                    <b style={{ fontWeight: 550, fontSize: '15px' }}>{caption}</b>
+                    <div className="small py-1 text-muted ">{discription}</div>
+                </div>
+            </div>
+            <div className="small col-2 text-muted text-right px-0">
+                <button
+                    style={{ fontWeight: 550, padding: '0 5px', fontSize: '12px' }} className="mt-2 btn btn-outline-primary"
+                    onClick={() => this.controller.onPreviewPost(item.id)}
+                >预览
+                 </button>
+                <div className="small pt-1 text-truncate"><UserView id={author} render={renderAuthor} /></div>
+                <div className="small"><EasyTime date={$update} /></div>
+            </div>
+        </div>
     });
 }

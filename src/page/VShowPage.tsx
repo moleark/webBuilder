@@ -19,18 +19,23 @@ export class VShowPage extends VPage<CPage> {
         let { titel, name, author, template, discription, $create, $update } = current;
         let date = <span><EasyTime date={$update} /></span>;
         let isMe = Tuid.equ(author, this.controller.user.id);
-        let addModule = <div className="d-flex px-2 mt-1 ">
-            <button style={{ fontWeight: 550, padding:'0 5px',marginBottom:0}} onClick={() => onCommonalityModule()} className="h6 btn btn-outline-primary">关联模块</button>
-            <div className="ml-4" onClick={onRedact}>
-                <i className="iconfont icon-icon--tianjia" style={{ fontSize: '28px', color: '#0066cc' }}></i>
-            </div>
+        // let addModule = <div className="d-flex px-2 mt-1 ">
+        //     <button style={{ fontWeight: 550, padding:'0 5px',marginBottom:0}}  className="h6 btn btn-outline-primary">关联模块</button>
+        //     <div className="ml-4" >
+        //         <i className="iconfont icon-icon--tianjia" style={{ fontSize: '28px', color: '#0066cc' }}></i>
+        //     </div>
+        // </div>
+        let addModule = <div className="d-flex" style={{ color: '#0066cc' }}>
+            <div onClick={() => onCommonalityModule()}><span className="iconfont icon-tubiao106 mr-2" style={{ fontSize: "24px" }}></span></div>
+            <div onClick={onRedact}><span className="iconfont icon-icon--tianjia mr-2" style={{ fontSize: "24px" }}></span></div>
         </div>
-        let right = isMe && <button className="btn btn-sm btn-success mr-2 align-self-center" onClick={() => this.openVPage(VEditPage)}><FA name="pencil-square-o" /></button>;
+        let right = isMe && <div onClick={() => this.openVPage(VEditPage)}><span className="iconfont icon-xiugai1 mr-2" style={{ fontSize: "26px", color: "white" }}></span></div>
+
         let renderAuthor = (user: User) => {
             return <span>{isMe ? '[我]' : user.nick || user.name}</span>;
         };
         return <Page header={name} headerClassName={consts.headerClass} right={right}>
-            <div className="p-3">
+            <div className="px-3 pt-2 pb-0">
                 <div className="small text-muted p-1">标题 :</div>
                 <div className="mb-1 h6 px-3 py-2 bg-white">{titel}</div>
                 <LMR className="mb-3 px-3 small text-black-50" right={date}>
@@ -43,7 +48,7 @@ export class VShowPage extends VPage<CPage> {
                 <div className="small text-muted p-1" >名字 :</div>
                 <pre className="mb-3 px-3 py-4 bg-white h6 border">{name}</pre>
                 <div className="small text-muted p-1">布局模板 :</div>
-                <div className="mb-3 px-3 py-2 bg-white h6">
+                <div className=" px-3 py-2 bg-white h6">
                     {tv(template, (values) => <>{values.caption}</>, undefined, () => <small className="text-muted" >[无]</small>)}
                 </div>
             </div>

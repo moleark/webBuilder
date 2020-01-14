@@ -4,6 +4,8 @@ import { VMe } from './VMe';
 import { observer } from 'mobx-react';
 import { observable } from 'mobx';
 import { PageItems, Query } from 'tonva';
+import { VCompileImg } from './VCompileImg';
+import { VSetDetails } from './VSetDetails';
 
 class PageMedia extends PageItems<any> {
     private searchMediaQuery: Query;
@@ -36,6 +38,17 @@ export class CMe extends CUqBase {
 
     }
 
+    onSet = () => {
+        this.openVPage(VSetDetails)
+    }
+    onBook = async () => {
+        // await this.uqs.webBuilder.PageBrowsing
+    }
+
+    onAlterImg = () => {
+        this.current = undefined;
+        this.openVPage(VCompileImg);
+    }
     saveItem = async (id: any, param: any) => {
         param.author = this.user.id;
         let ret = await this.uqs.webBuilder.Image.save(id, param);
