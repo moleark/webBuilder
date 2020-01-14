@@ -15,7 +15,8 @@ export class VShow extends VPage<CPosts> {
         let { caption, content, author, image, template, discription, $create, $update } = current;
         let date = <span><EasyTime date={$update} /></span>;
         let isMe = Tuid.equ(author, this.controller.user.id);
-        let right = isMe && <button className="btn btn-sm btn-success mr-2 align-self-center" onClick={() => this.openVPage(VEdit)}><FA name="pencil-square-o" /></button>;
+        console.log(isMe,'isMe')
+        let right = isMe && <div onClick={() => this.openVPage(VEdit)}><span className="iconfont icon-xiugai1 mr-2" style={{ fontSize: "26px", color: "white" }}></span></div>
         let renderAuthor = (user: User) => {
             return <span>{isMe ? '[我]' : user.nick || user.name}</span>;
         };

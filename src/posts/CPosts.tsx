@@ -177,6 +177,11 @@ export class CPosts extends CUqBase {
     publishPost = async (param: any) => {
         this.searchPostsKey("", 0);
         await this.uqs.webBuilder.PublishPost.submit({ _post: this.current.id, _operator: nav.user, tags: [{ tagName: param[0] }, { tagName: param[1] }, { tagName: param[2] }, { tagName: param[3] }] })
+        this.closePage(2)
+    }
+
+    onPreviewPost = (id:number) => {
+        window.open('https://c.jkchemical.com/webBuilder/post/'+id,'_blank')
     }
 
     tab = () => {

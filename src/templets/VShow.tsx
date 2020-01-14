@@ -18,7 +18,8 @@ export class VShow extends VPage<CTemplets> {
         let { caption, content, author, $create, $update, contentModule } = templet;
         let date = <span><EasyTime date={$update} /></span>;
         let isMe = Tuid.equ(author, this.controller.user.id);
-        let right = isMe && <button className="btn btn-sm btn-success mr-2 align-self-center" onClick={() => this.openVPage(VEdit, templet)}><FA name="pencil-square-o" /></button>;
+        let right = isMe && <div onClick={() => this.openVPage(VEdit, templet)}><span className="iconfont icon-xiugai1 mr-2" style={{ fontSize: "26px", color: "white" }}></span></div>
+        // let right = isMe && <button className="btn btn-sm btn-success mr-2 align-self-center" ><FA name="pencil-square-o" /></button>;
         let renderAuthor = (user: User) => {
             return <span>{isMe ? '[我]' : user.nick || user.name}</span>;
         };

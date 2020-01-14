@@ -6,8 +6,7 @@ TUID WebPage (
     main template ID Template,
     main discription char(200),
     main author ID [$user],
-    stamp (create, update),
-    unique(name)
+    stamp (create, update)
 );
 
 --页面分支
@@ -94,18 +93,43 @@ PAGE (
     limit $pageSize;
 };
  
- History BrowsingHistory(
+ 
+ History PageBrowsingHistory(
     date,
-    object ID,
-    objectType char(20), 
+    WebPage ID,
+    ipAddress char(20),
+);
+
+ History PostBrowsingHistory(
+    date,
+    POST ID,
     ipAddress char(20)
 );
+
+
+BOOK PageBrowsing(
+    key id ID WebPage,
+    totalBrowsing bigint
+);
+
+BOOK PostBrowsing(
+    key id ID POST,
+    totalBrowsing bigint
+);
+
+
 
 ACTION AddBrowsingHistory(
     object ID, 
     objectType  char(20), 
     ipAddress char(20)
 ) {
-    history BrowsingHistory set object= object, objectType = objectType, ipAddress = ipAddress;
+   
+    if(objectType='page'){
+        history PageBrowsingHistory set WebPage = object, ipAddress = ipAddress;
+        BOOK PageBrowsing at (object) set totalBrowsing +=1;
+    } else if (objectType='post'){
+        history PostBrowsingHistory set POST = object, ipAddress = ipAddress;
+        BOOK PostBrowsing at (object) set totalBrowsing +=1;
+    }
 };
-

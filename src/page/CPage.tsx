@@ -163,6 +163,10 @@ export class CPage extends CUqBase {
         this.returnCall(this.uqs.webBuilder.Template.boxId(id));
     }
 
+    onPreviewPage = (id:number) => {
+        window.open('https://c.jkchemical.com/webBuilder/webpage/'+id,'_blank')
+    }
+
     // 网页模板
     pickTemplate = async (context: Context, name: string, value: number): Promise<any> => {
         this.searchTemplateKey("");

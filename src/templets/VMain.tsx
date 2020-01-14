@@ -19,9 +19,11 @@ export class VMain extends VPage<CTemplets> {
                 size='sm'
                 onSearch={(key: string) => searchTemplateKey(key)}
                 placeholder="请输入模板标题" />
-            <button className="btn btn-success btn-sm ml-4 mr-2 align-self-center" onClick={this.onAddClick}>
-                <FA name="plus" />
-            </button>
+            <div onClick={this.onAddClick}>
+                <span className="ml-4 iconfont icon-jiahao1 mr-2"
+                    style={{ fontSize: "26px", color: "white" }}>
+                </span>
+            </div>
         </div>;
         return <Page header="模板" headerClassName={consts.headerClass} right={right} onScrollBottom={this.onScrollBottom}>
             <List items={pageTemplate} item={{ render: this.renderItem, onClick: this.itemClick }} />
@@ -44,7 +46,12 @@ export class VMain extends VPage<CTemplets> {
         let { id, caption, content, $create, $update } = item;
         let right = <small className="text-muted"><EasyTime date={$update} /></small>
         return <LMR className="px-3 py-2 border-bottom" right={right}>
-            {caption}
+            <div>
+                <span className=" iconfont icon-mobanguanli mr-2"
+                    style={{ fontSize: "24px", verticalAlign: 'middle', color: '#0066cc' }}>
+                </span>
+                <span>{caption}</span>
+            </div>
         </LMR>;
     }
 }
