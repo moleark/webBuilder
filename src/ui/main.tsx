@@ -17,7 +17,7 @@ export class VMain extends VPage<CApp> {
             { name: 'image', label: '图片', icon: 'vcard', content: cMedia.tab, onShown: cMedia.loadList },
             { name: 'templet', label: '模板', icon: 'vcard', content: cTemplets.tab, onShown: cTemplets.loadList },
             { name: 'page', label: '网页', icon: 'tasks', content: cPage.tab, onShown: cPage.loadList },
-            { name: 'me', label: '我的', icon: 'user', content: cMe.tab },
+            { name: 'me', label: '我的', icon: 'user', content: cMe.tab, onShown: cMe.loadList },
         ].map(v => {
             let { name, label, icon, content, notify, onShown } = v;
             return {
@@ -26,6 +26,7 @@ export class VMain extends VPage<CApp> {
                 content: content,
                 notify: notify,
                 onShown: onShown,
+
             }
         });
         return <Page header={false} headerClassName={"bg-info"} >

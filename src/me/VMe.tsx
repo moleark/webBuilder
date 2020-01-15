@@ -26,7 +26,8 @@ export class VMe extends VPage<CMe> {
         this.openPageElement(<ImageUploader onSaved={this.onSaved} />)
     }
     private page = observer(() => {
-        let { pageMedia, searchMadiaKey, onAlterImg ,onSet, user } = this.controller;
+        let { pageMedia, searchMadiaKey, onAlterImg, onSet, user, PostTotal, PageTotal } = this.controller;
+        console.log(PageTotal, 1, 'PostTotal')
         let left = <div onClick={() => this.onupload()} className="border text-center mr-4 p-1">
             {
                 this.mediaPath ? <div onClick={onAlterImg} className="border p-1"><img className="h-4c w-4c" src={this.mediaPath} /></div> : <FA className="w-3 p-2 h-3c text-center" name="camera" size="2x" />
@@ -39,27 +40,21 @@ export class VMe extends VPage<CMe> {
                     <div>我的账号：{user.name}</div>
                 </div>
             </LMR>
-            <div className="bg-white py-2 d-flex px-3 mt-1" style={{justifyContent: 'space-between'}}>
-             
-                <div className="iconfont icon-tubiao- text-primary" style={{ fontSize: '20px' }}> 贴文 
-                
+            <div className="bg-white py-2 d-flex px-3 mt-1" style={{ justifyContent: 'space-between' }}>
+
+                <div className="iconfont icon-tubiao- text-primary" style={{ fontSize: '20px' }}>
+                    贴文 <div className="small">总浏览量：{PostTotal}</div>
                 </div>
                 {/* <small > 查看贴文详情</small> */}
-               
+
             </div>
-            <div className="bg-white py-2 d-flex px-3 mt-1" style={{justifyContent: 'space-between'}}>
-               
-                <p className="iconfont icon-shuangsechangyongtubiao- text-primary m-0" style={{ fontSize: '20px' }}> 网页</p>
+            <div className="bg-white py-2 d-flex px-3 mt-1" style={{ justifyContent: 'space-between' }}>
+                <p className="iconfont icon-shuangsechangyongtubiao- text-primary m-0" style={{ fontSize: '20px' }}> 网页
+                <div className="small">总浏览量：{PageTotal}</div></p>
                 {/* <small > 查看网页详情</small> */}
-              
+
             </div>
-            <div className="bg-white py-2 d-flex px-3 mt-1" style={{justifyContent: 'space-between'}}>
-               
-                <p className="iconfont icon-shuangsechangyongtubiao- text-primary m-0" style={{ fontSize: '20px' }}> 模板</p>
-                {/* <small > 查看网页详情</small> */}
-              
-            </div>
-            <div className="bg-white py-2 d-flex px-3 mt-1" style={{justifyContent: 'space-between'}} onClick={onSet}>
+            <div className="bg-white py-2 d-flex px-3 mt-1" style={{ justifyContent: 'space-between' }} onClick={onSet}>
                 <p className="iconfont icon-shuangsechangyongtubiao- text-primary m-0" style={{ fontSize: '20px' }}> 设置</p>
                 {/* <small > 查看网页详情</small> */}
             </div>

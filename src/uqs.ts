@@ -26,6 +26,7 @@ export interface WebBuilder {
     SearchPrivateBranch: Query;
     SearchBranch: Query;
     PageBrowsing: Book;
+    SearchTotalBrowsing: Query;
 }
 
 export interface UQs {
