@@ -43,7 +43,7 @@ export class VEdit extends VPage<CPosts> {
             caption: { widget: 'text', label: '标题' },
 
             discription: {
-                widget: 'textarea', label: '链接描述', placeholder: '链接上用描述', rows: 3
+                widget: 'textarea', label: '描述', placeholder: '链接上用描述', rows: 3
             } as UiInputItem,
 
             content: {
@@ -63,10 +63,10 @@ export class VEdit extends VPage<CPosts> {
 
     private schema: Schema = [
         { name: 'caption', type: 'string', required: true },
-        { name: 'discription', type: 'string', required: false },
+        { name: 'discription', type: 'string', required: true },
         { name: 'content', type: 'string', required: true },
-        { name: 'image', type: 'id', required: false },
-        { name: 'template', type: 'id', required: false },
+        { name: 'image', type: 'id', required: true },
+        { name: 'template', type: 'id', required: true },
     ];
 
     render(): JSX.Element {

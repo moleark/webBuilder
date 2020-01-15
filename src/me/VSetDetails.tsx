@@ -9,7 +9,7 @@ export class VSetDetails extends VPage<CMe> {
     }
 
     private logout = () => {
-        console.log(1)
+        console.log(this.controller.PostTotal)
         // nav.showLogout();
     }
 
@@ -20,7 +20,7 @@ export class VSetDetails extends VPage<CMe> {
                 type: 'component',
 
                 component: <div className="bg-white p-2 mb-1">
-                <span className="iconfont icon-yonggongzongliang" style={{ fontSize: '24px', verticalAlign: 'middle' }}></span> 账户信息
+                    <span className="iconfont icon-yonggongzongliang" style={{ fontSize: '24px', verticalAlign: 'middle' }}></span> 账户信息
             </div>,
                 // onClick: this.controller.showAccount
             },
@@ -28,7 +28,7 @@ export class VSetDetails extends VPage<CMe> {
             {
                 type: 'component',
                 component: <div className="bg-white p-2 mb-1">
-                <span className="iconfont icon-accountsecuriyt" style={{ fontSize: '24px', verticalAlign: 'middle' }}></span> 密码
+                    <span className="iconfont icon-accountsecuriyt" style={{ fontSize: '24px', verticalAlign: 'middle' }}></span> 密码
             </div>,
                 // onClick: this.changePassword
             },
@@ -37,7 +37,7 @@ export class VSetDetails extends VPage<CMe> {
                 type: 'component',
                 component: <div className="bg-white p-2 mb-1 text-center col-12" onClick={this.logout}>
                     <span>退出登陆</span>
-                    
+
                 </div>,
             },
             ''

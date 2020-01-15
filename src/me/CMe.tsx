@@ -3,7 +3,7 @@ import { CUqBase } from '../CBase';
 import { VMe } from './VMe';
 import { observer } from 'mobx-react';
 import { observable } from 'mobx';
-import { PageItems, Query } from 'tonva';
+import { PageItems, Query, nav } from 'tonva';
 import { VCompileImg } from './VCompileImg';
 import { VSetDetails } from './VSetDetails';
 
@@ -16,6 +16,7 @@ class PageMedia extends PageItems<any> {
     }
 
     protected async load(param: any, pageStart: any, pageSize: number): Promise<any[]> {
+
         if (pageStart === undefined) pageStart = 0;
         let ret = await this.searchMediaQuery.page(param, pageStart, pageSize);
         return ret;
@@ -29,6 +30,8 @@ export class CMe extends CUqBase {
     @observable pageMedia: PageMedia;
     @observable items: any[];
     @observable current: any;
+    @observable PostTotal: any;
+    @observable PageTotal: any;
 
     searchMadiaKey = async (key: string) => {
         this.pageMedia = new PageMedia(this.uqs.webBuilder.SearchImage);
@@ -41,9 +44,18 @@ export class CMe extends CUqBase {
     onSet = () => {
         this.openVPage(VSetDetails)
     }
-    onBook = async () => {
-        // await this.uqs.webBuilder.PageBrowsing
+
+    loadList = async () => {
+        this.PostTotal = (await this.uqs.webBuilder.SearchTotalBrowsing.query({})).ret[0].PostTotal;
+        console.log((await this.uqs.webBuilder.SearchTotalBrowsing.query({})).ret)
+        this.PageTotal = (await this.uqs.webBuilder.SearchTotalBrowsing.query({})).ret[0].PageTotal;
     }
+
+    // 查找总浏览量
+    // onTotal = async () => {
+    //     this.PostTotal = (await this.uqs.webBuilder.SearchTotalBrowsing.query({})).ret[0].PostTotal;
+    //     this.PageTotal = (await this.uqs.webBuilder.SearchTotalBrowsing.query({})).ret[0].PageTotal;
+    // }
 
     onAlterImg = () => {
         this.current = undefined;
@@ -72,6 +84,7 @@ export class CMe extends CUqBase {
 
     render = observer(() => {
         return this.renderView(VMe)
+
     })
     tab = () => this.renderView(VMe);
 }

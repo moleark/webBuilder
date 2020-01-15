@@ -31,16 +31,16 @@ export class VEditPage extends VPage<CPage> {
 
     private uiSchema: UiSchema = {
         items: {
-            titel: { widget: 'text', label: '标题' }, 
+            titel: { widget: 'text', label: '标题' },
 
             discription: {
-                widget: 'textarea', label: '链接描述', placeholder: '链接上用描述', rows: 3
+                widget: 'textarea', label: '描述', placeholder: '链接上用描述', rows: 3
             } as UiInputItem,
 
             name: {
                 widget: 'textarea', label: '名字', placeholder: '请填写模板名字', rows: 3
             } as UiInputItem,
-    
+
             template: {
                 widget: 'id', label: '布局模板', pickId: this.controller.pickTemplate, Templet: this.templateContent
             } as UiIdItem,
@@ -51,7 +51,7 @@ export class VEditPage extends VPage<CPage> {
 
     private schema: Schema = [
         { name: 'titel', type: 'string', required: true },
-        { name: 'discription', type: 'string', required: false },
+        { name: 'discription', type: 'string', required: true },
         { name: 'name', type: 'string', required: true },
         { name: 'template', type: 'id', required: true },
     ];
