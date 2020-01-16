@@ -83,9 +83,10 @@ export class CPosts extends CUqBase {
     }
 
     /* 贴文查询*/
-    searchPostsKey = async (key: string, author: any) => {
+    searchPostsKey = async (key: string, author:any) => {
         this.pagePosts = new PagePosts(this.uqs.webBuilder.SearchPost);
-        this.pagePosts.first({ key: key, author: author });
+        let a = this.flg ? nav.user : 0;
+        this.pagePosts.first({ key: key, author: a });
     }
 
     /* posts模板查询*/
@@ -180,8 +181,8 @@ export class CPosts extends CUqBase {
         this.closePage(2)
     }
 
-    onPreviewPost = (id:number) => {
-        window.open('https://c.jkchemical.com/webBuilder/post/'+id,'_blank')
+    onPreviewPost = (id: number) => {
+        window.open('https://c.jkchemical.com/webBuilder/post/' + id, '_blank')
     }
 
     tab = () => {

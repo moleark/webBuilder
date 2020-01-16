@@ -31,7 +31,7 @@ export class VMain extends VPage<CPosts> {
         let right = <>
             <SearchBox className="mt-1 w-100"
                 size='sm'
-                onSearch={(key: string) => searchPostsKey(key, "")}
+                onSearch={(key: string) => searchPostsKey(key,'')}
                 placeholder="请输入您要查找的标题" />
             <div onClick={onAdd}><span className="ml-4 iconfont icon-jiahao1 mr-2" style={{ fontSize: "26px", color: "white" }}></span></div>
         </>;
