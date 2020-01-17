@@ -25,8 +25,13 @@ export class VMain extends VPage<CTemplets> {
                 </span>
             </div>
         </div>;
+
+        let none = <div className="my-3 mx-2 text-warning">
+            <span className="text-primary" > 没有模板，请添加！</span>
+        </div>;
+
         return <Page header="模板" headerClassName={consts.headerClass} right={right} onScrollBottom={this.onScrollBottom}>
-            <List items={pageTemplate} item={{ render: this.renderItem, onClick: this.itemClick }} />
+            <List before={''} none={none} items={pageTemplate} item={{ render: this.renderItem }} />
         </Page>;
     });
 
@@ -42,16 +47,44 @@ export class VMain extends VPage<CTemplets> {
         await this.controller.pageTemplate.more();
     }
 
+    private onPreview = (id: number) => {
+        window.open('https://c.jkchemical.com/webBuilder/template/' + id, '_blank')
+    }
+
     private renderItem = (item: any, index: number) => {
         let { id, caption, content, $create, $update } = item;
-        let right = <small className="text-muted"><EasyTime date={$update} /></small>
-        return <LMR className="px-3 py-2 border-bottom" right={right}>
-            <div>
+        let right = <div>
+            <small className="text-muted"><EasyTime date={$update} /></small>
+            <button
+                style={{ fontWeight: 550, padding: '0 5px', fontSize: '12px' }} className="mt-2 btn btn-outline-primary"
+                onClick={() => this.onPreview(item.id)}
+            >预览
+                 </button>
+        </div>
+        // return <LMR className="px-3 py-2 border-bottom" right={right}>
+        //     <div>
+        //         <span className=" iconfont icon-mobanguanli mr-2"
+        //             style={{ fontSize: "24px", verticalAlign: 'middle', color: '#0066cc' }}>
+        //         </span>
+        //         <span>{caption}</span>
+        //     </div>
+        // </LMR>;
+        return <div className="col-12 py-2 ">
+            <div className="col-10 p-0" onClick={() => this.controller.showDetail(item.id)}>
                 <span className=" iconfont icon-mobanguanli mr-2"
                     style={{ fontSize: "24px", verticalAlign: 'middle', color: '#0066cc' }}>
                 </span>
                 <span>{caption}</span>
             </div>
-        </LMR>;
+            <div className="col-2 text-right p-0">
+                <small className="text-muted"><EasyTime date={$update} /></small>
+                <button
+                    style={{ fontWeight: 550, padding: '0 5px', fontSize: '12px' }} className="mt-2 btn btn-outline-primary"
+                    onClick={() => this.onPreview(item.id)}
+                >预览
+                 </button>
+            </div>
+        </div>
+
     }
 }

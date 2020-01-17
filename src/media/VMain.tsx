@@ -26,8 +26,11 @@ export class VMain extends VPage<CMedia> {
                 </span>
             </div>
         </div>;
+        let none = <div className="my-3 mx-2 text-warning">
+            <span className="text-primary" > 没有图片，请添加！</span>
+        </div>;
         return <Page header="图片" headerClassName={consts.headerClass} right={right} onScrollBottom={this.onScrollBottom}>
-            <List items={pageMedia} item={{ render: this.renderItem }} />
+            <List before={''} none={none} items={pageMedia} item={{ render: this.renderItem }} />
         </Page>;
     })
 
@@ -39,6 +42,9 @@ export class VMain extends VPage<CMedia> {
         copy(e.target.previousElementSibling.innerText)
         alert('拷贝成功')
     }
+    private preview = (path: any) => {
+        window.open(path, '_blank')
+    }
 
     private renderItem = (item: any, index: number) => {
         let { caption, path, $create } = item;
@@ -47,9 +53,16 @@ export class VMain extends VPage<CMedia> {
             <div><b>{caption}</b></div>
             <div className="smallPath small">{path}</div>
             <button
-                style={{ fontWeight: 550, padding: '0 5px', fontSize: '12px' }} className="mt-2 btn btn-outline-primary"
+                style={{ fontWeight: 550, padding: '0 5px', fontSize: '12px' }}
+                className="mt-2 btn btn-outline-primary"
                 onClick={this.copyClick}>
                 拷贝
+            </button >
+            <button style={{ fontWeight: 550, padding: '0 5px', fontSize: '12px' }}
+                className="mt-2 btn btn-outline-primary ml-2"
+                onClick={() => this.preview(item.path)}
+            >
+                预览
             </button>
 
         </LMR >;

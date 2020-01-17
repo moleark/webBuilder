@@ -10,7 +10,7 @@ import { Context, PageItems, Query, nav } from "tonva";
 import { VPickImage } from "./VPickImage";
 import { VPickTemplate } from "./VPickTemplate";
 import { VRelease } from "./VRelease ";
-import { IdCache } from "tonva/uq/tuid/idCache";
+
 
 // 贴文模板
 class PageTemplate extends PageItems<any> {
@@ -38,7 +38,7 @@ class PagePosts extends PageItems<any> {
 
     constructor(searchQuery: Query) {
         super();
-        this.firstSize = this.pageSize = 8;
+        this.firstSize = this.pageSize = 15;
         this.searchPostsQuery = searchQuery;
     }
 
@@ -83,10 +83,10 @@ export class CPosts extends CUqBase {
     }
 
     /* 贴文查询*/
-    searchPostsKey = async (key: string, author:any) => {
+    searchPostsKey = async (key: string, author: any) => {
         this.pagePosts = new PagePosts(this.uqs.webBuilder.SearchPost);
-        let a = this.flg ? nav.user : 0;
-        this.pagePosts.first({ key: key, author: a });
+        let Auser = this.flg ? nav.user : 0;
+        this.pagePosts.first({ key: key, author: Auser });
     }
 
     /* posts模板查询*/

@@ -19,8 +19,12 @@ export class VPickImage extends VPage<CPosts> {
             size='sm'
             onSearch={(key: string) => searchMadiaKey(key)}
             placeholder="请输入您要查找的图片标题" />;
+
+            let none = <div className="my-3 mx-2 text-warning">
+                            <span className="text-primary" > 没有图片，请添加！</span>
+                        </div>;           
         return <Page headerClassName={consts.headerClass} header="选择图片" back="close" right={right} onScrollBottom={this.onScrollBottom}>
-            <List items={pageMedia} item={{ render: this.renderItem, onClick: this.itemClick }} />
+            <List before={''} none={none} items={pageMedia} item={{ render: this.renderItem, onClick: this.itemClick }} />
         </Page>
     })
 

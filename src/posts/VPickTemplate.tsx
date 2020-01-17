@@ -21,9 +21,11 @@ export class VPickTemplate extends VPage<CPosts> {
             size='sm'
             onSearch={(key: string) => searchTemplateKey(key)}
             placeholder="模板" />;
-
+            let none = <div className="my-3 mx-2 text-warning">
+                            <span className="text-primary" > 没有模板，请添加！</span>
+                        </div>;
         return <Page headerClassName={consts.headerClass} header="选择模板" back="close" right={right} onScrollBottom={this.onScrollBottom} >
-            <List items={pageTemplate} item={{ render: this.renderItem, onClick: this.itemClick }} />
+            <List before={''} none={none} items={pageTemplate} item={{ render: this.renderItem, onClick: this.itemClick }} />
         </Page>
     });
 

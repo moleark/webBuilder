@@ -1,7 +1,7 @@
 import * as React from "react";
 import { consts } from "consts";
 import { observer } from "mobx-react";
-import { VPage, Page, FA, List, LMR, EasyTime, tv, UserView, User, Tuid, SearchBox } from "tonva";
+import { VPage, Page, FA, List, EasyTime, tv, UserView, User, Tuid, SearchBox } from "tonva";
 import { CPosts } from "./CPosts";
 import classNames from 'classnames';
 
@@ -31,10 +31,13 @@ export class VMain extends VPage<CPosts> {
         let right = <>
             <SearchBox className="mt-1 w-100"
                 size='sm'
-                onSearch={(key: string) => searchPostsKey(key,'')}
+                onSearch={(key: string) => searchPostsKey(key, '')}
                 placeholder="请输入您要查找的标题" />
             <div onClick={onAdd}><span className="ml-4 iconfont icon-jiahao1 mr-2" style={{ fontSize: "26px", color: "white" }}></span></div>
         </>;
+        let none = <div className="my-3 mx-2 text-warning">
+                        <span className="text-primary" > 没有贴文，请添加！</span>
+                    </div>;
 
         return <Page header="帖文" headerClassName={consts.headerClass} right={right} onScrollBottom={this.onScrollBottom} >
             <div className="px-3 py-2 d-flex justify-content-center">
@@ -56,7 +59,7 @@ export class VMain extends VPage<CPosts> {
                     <strong className={classNames("small")}>全部</strong>
                 </div>
             </div>
-            <List items={pagePosts} item={{ render: this.renderItem }} />
+            <List before={''} none={none} items={pagePosts} item={{ render: this.renderItem }} />
         </Page>;
     });
 
@@ -69,13 +72,14 @@ export class VMain extends VPage<CPosts> {
     }
 
     private itemRow = observer((item: any) => {
+        if (!this.controller.user) return;
         let { image, caption, discription, author, $create, $update } = item;
         let isMe = Tuid.equ(author, this.controller.user.id);
         let renderAuthor = (user: User) => {
             return <span>{isMe ? '' : user.nick || user.name}</span>;
         };
         return <div className="px-2 d-flex p-1">
-            <div className="col-10 d-flex" onClick={() => this.controller.showDetail(item.id)}>
+            <div className="col-10 d-flex p-0" onClick={() => this.controller.showDetail(item.id)}>
                 {
                     tv(image, (values) => {
                         return <div className="border text-center p-1 mr-4"><img className="w-3c h-3c" src={values.path} /></div>;
