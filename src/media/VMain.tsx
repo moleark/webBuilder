@@ -49,7 +49,7 @@ export class VMain extends VPage<CMedia> {
     private renderItem = (item: any, index: number) => {
         let { caption, path, $create } = item;
         let right = <div className="border p-1"><img className="h-4c w-4c" src={path} /></div>;
-        return <LMR className="px-3 py-2 border-bottom" right={right}>
+        return <LMR className="px-3 py-2 border-bottom cursor-pointer" right={right}>
             <div><b>{caption}</b></div>
             <div className="smallPath small">{path}</div>
             <button

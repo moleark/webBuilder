@@ -14,7 +14,7 @@ export class VMain extends VPage<CPage> {
 
     private page = observer(() => {
         let { onAdd, searchwebPage } = this.controller;
-        let right = <div onClick={onAdd}><span className="iconfont icon-jiahao1 mr-2" style={{ fontSize: "26px", color: "white" }}></span></div>
+        let right = <div onClick={onAdd}><span className="iconfont icon-jiahao1 mr-2 cursor-pointer" style={{ fontSize: "26px", color: "white" }}></span></div>
         return <Page header="网页" headerClassName={consts.headerClass} right={right} >
             <List items={searchwebPage} item={{ render: this.renderItem }} />
         </Page>;
@@ -42,7 +42,7 @@ export class VMain extends VPage<CPage> {
         // return <LMR className="p-2 px-3 border-bottom" right={right}>
         //     
         // </LMR>;
-        return <div className="px-2 d-flex p-1">
+        return <div className="px-2 d-flex p-1 cursor-pointer">
             <div className="col-10 d-flex" onClick={() => this.controller.showDetail(item.id)}>
                 <div>
                     <b>{name}</b>
@@ -56,8 +56,8 @@ export class VMain extends VPage<CPage> {
                 >预览
                  </button>
 
-                <div className="small pt-1 text-truncate"><UserView id={author} render={renderAuthor} /></div>
-                <div className="small"><EasyTime date={$update} /></div>
+                <div className=" small pt-1 text-truncate"><UserView id={author} render={renderAuthor} /></div>
+                <div className=" small"><EasyTime date={$update} /></div>
 
             </div>
         </div>

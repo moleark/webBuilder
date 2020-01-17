@@ -69,7 +69,7 @@ export class VMain extends VPage<CTemplets> {
         //         <span>{caption}</span>
         //     </div>
         // </LMR>;
-        return <div className="col-12 py-2 ">
+        return <div className="col-12 py-2 cursor-pointer">
             <div className="col-10 p-0" onClick={() => this.controller.showDetail(item.id)}>
                 <span className=" iconfont icon-mobanguanli mr-2"
                     style={{ fontSize: "24px", verticalAlign: 'middle', color: '#0066cc' }}>

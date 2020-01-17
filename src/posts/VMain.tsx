@@ -33,7 +33,7 @@ export class VMain extends VPage<CPosts> {
                 size='sm'
                 onSearch={(key: string) => searchPostsKey(key, '')}
                 placeholder="请输入您要查找的标题" />
-            <div onClick={onAdd}><span className="ml-4 iconfont icon-jiahao1 mr-2" style={{ fontSize: "26px", color: "white" }}></span></div>
+            <div onClick={onAdd}><span className="ml-4 iconfont icon-jiahao1 mr-2 cursor-pointer" style={{ fontSize: "26px", color: "white" }}></span></div>
         </>;
         let none = <div className="my-3 mx-2 text-warning">
                         <span className="text-primary" > 没有贴文，请添加！</span>
@@ -86,7 +86,7 @@ export class VMain extends VPage<CPosts> {
                     }, undefined,               //w-6c h-4c mr-2 text-black-50 justify-content-center d-flex align-items-center
                         () => <div className="border text-center mr-4 p-1"><FA className="w-3 p-2 h-3c text-center" name="camera" size="2x" /></div>)
                 }
-                <div>
+                <div className="cursor-pointer">
                     <b style={{ fontWeight: 550, fontSize: '15px' }}>{caption}</b>
                     <div className="small py-1 text-muted ">{discription}</div>
                 </div>
