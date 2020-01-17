@@ -6,6 +6,7 @@ import { observable } from 'mobx';
 import { PageItems, Query, nav } from 'tonva';
 import { VCompileImg } from './VCompileImg';
 import { VSetDetails } from './VSetDetails';
+import { VAbout } from './VAbout';
 
 class PageMedia extends PageItems<any> {
     private searchMediaQuery: Query;
@@ -45,17 +46,16 @@ export class CMe extends CUqBase {
         this.openVPage(VSetDetails)
     }
 
-    loadList = async () => {
-        this.PostTotal = (await this.uqs.webBuilder.SearchTotalBrowsing.query({})).ret[0].PostTotal;
-        console.log((await this.uqs.webBuilder.SearchTotalBrowsing.query({})).ret)
-        this.PageTotal = (await this.uqs.webBuilder.SearchTotalBrowsing.query({})).ret[0].PageTotal;
+    showAbout = () => {
+        this.openVPage(VAbout);
     }
 
-    // 查找总浏览量
-    // onTotal = async () => {
-    //     this.PostTotal = (await this.uqs.webBuilder.SearchTotalBrowsing.query({})).ret[0].PostTotal;
-    //     this.PageTotal = (await this.uqs.webBuilder.SearchTotalBrowsing.query({})).ret[0].PageTotal;
-    // }
+    loadList = async () => {
+        // post用浏览量
+        this.PostTotal = (await this.uqs.webBuilder.SearchTotalBrowsing.query({})).ret[0].PostTotal;
+        // page用户总浏览量
+        this.PageTotal = (await this.uqs.webBuilder.SearchTotalBrowsing.query({})).ret[0].PageTotal;
+    }
 
     onAlterImg = () => {
         this.current = undefined;

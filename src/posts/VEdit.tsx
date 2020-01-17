@@ -1,10 +1,10 @@
 import * as React from 'react';
 import _ from 'lodash';
 import { CPosts } from "./CPosts";
-import { VPage, Form, Context, UiSchema, Schema, Page, UiInputItem, UiIdItem } from "tonva";
+import { VPage, Form, Context, UiSchema, Schema, Page, UiInputItem, UiIdItem, tv } from "tonva";
 import { observer } from 'mobx-react';
 import { consts } from 'consts';
-import { tv } from 'tonva/CApp/cUq/reactBoxId';
+
 
 export class VEdit extends VPage<CPosts> {
     private form: Form;
@@ -68,7 +68,7 @@ export class VEdit extends VPage<CPosts> {
         { name: 'image', type: 'id', required: true },
         { name: 'template', type: 'id', required: true },
     ];
-
+    // ^.{3,6}$
     render(): JSX.Element {
         return <this.page />
     }
@@ -88,7 +88,7 @@ export class VEdit extends VPage<CPosts> {
             <div className="px-1 ">
                 <div className="text-content" style={{ textAlign: "center" }}>
                     <button type="button" className="btn btn-primary mx-2"
-                        onClick={this.onClickSaveButton} >保存</button>
+                        onClick={this.onClickSaveButton} >提交</button>
                 </div>
             </div>
         </Page>

@@ -47,8 +47,13 @@ export class VPickBranch extends VPage<CPage> {
         let right = <div className="small text-muted text-right ">
             <div><UserView id={author} render={renderAuthor} /></div>
         </div>;
-        return <LMR className="px-3 py-2 text-muted border bg-white" right={right}>
-            <b>{content}</b>
-        </LMR>;
+        // return <LMR className="px-3 py-2 text-muted border bg-white" right={right}>
+        //     <b style={{height:'80px'}}>{content}</b>
+        // </LMR>;
+        return <div className="px-3 py-2 text-muted col-12 border bg-white">
+            <div className="  " style={{height:'50px',overflow:'auto'}}>
+                {content}
+            </div>
+        </div>
     });
 }

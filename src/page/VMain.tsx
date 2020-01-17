@@ -56,7 +56,7 @@ export class VMain extends VPage<CPage> {
                 >预览
                  </button>
 
-                <div className="small pt-1"><UserView id={author} render={renderAuthor} /></div>
+                <div className="small pt-1 text-truncate"><UserView id={author} render={renderAuthor} /></div>
                 <div className="small"><EasyTime date={$update} /></div>
 
             </div>
