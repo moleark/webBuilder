@@ -2,11 +2,12 @@ import _ from 'lodash';
 import { CUqBase } from '../CBase';
 import { VMe } from './VMe';
 import { observer } from 'mobx-react';
-import { observable } from 'mobx';
+import { observable, isObservable } from 'mobx';
 import { PageItems, Query, nav } from 'tonva';
 import { VCompileImg } from './VCompileImg';
 import { VSetDetails } from './VSetDetails';
 import { VAbout } from './VAbout';
+import { VPostsDetails } from './VPostsDetails';
 
 class PageMedia extends PageItems<any> {
     private searchMediaQuery: Query;
@@ -33,6 +34,7 @@ export class CMe extends CUqBase {
     @observable current: any;
     @observable PostTotal: any;
     @observable PageTotal: any;
+    @observable pagePosts: any[];
 
     searchMadiaKey = async (key: string) => {
         this.pageMedia = new PageMedia(this.uqs.webBuilder.SearchImage);
@@ -61,6 +63,12 @@ export class CMe extends CUqBase {
         this.current = undefined;
         this.openVPage(VCompileImg);
     }
+
+    onPostsDetails = async() => {
+        this.openVPage(VPostsDetails);
+        // this.pagePosts = await this.uqs.webBuilder.SearchWebPage.query('',nav.user)
+    }
+
     saveItem = async (id: any, param: any) => {
         param.author = this.user.id;
         let ret = await this.uqs.webBuilder.Image.save(id, param);

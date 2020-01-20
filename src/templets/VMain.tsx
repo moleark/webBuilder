@@ -20,7 +20,7 @@ export class VMain extends VPage<CTemplets> {
                 onSearch={(key: string) => searchTemplateKey(key)}
                 placeholder="请输入模板标题" />
             <div onClick={this.onAddClick}>
-                <span className="ml-4 iconfont icon-jiahao1 mr-2"
+                <span className="ml-2 iconfont icon-jiahao1 mr-2"
                     style={{ fontSize: "26px", color: "white" }}>
                 </span>
             </div>

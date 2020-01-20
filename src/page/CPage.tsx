@@ -213,6 +213,8 @@ export class CPage extends CUqBase {
         this.current = await this.uqs.webBuilder.WebPage.load(id);
         let result = await this.uqs.webBuilder.SearchPrivateBranch.query({ _page: id });
         this.itemsModule = result.ret;
+        console.log(this.itemsModule.length,'this.itemsModule')
+        
         this.openVPage(VShowPage);
     }
 
