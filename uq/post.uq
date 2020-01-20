@@ -63,7 +63,7 @@ PAGE (
 };
 
 
-/** 搜索我的优惠码*/
+/** 搜索我的图片*/
 QUERY SearchImage( key char(100))
 PAGE (
     id bigint start 0,

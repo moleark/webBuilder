@@ -27,7 +27,7 @@ export class VMe extends VPage<CMe> {
     }
     private page = observer(() => {
 
-        let { onAlterImg, onSet, user, PostTotal, PageTotal } = this.controller;
+        let { onAlterImg, onSet, user, PostTotal, PageTotal, onPostsDetails } = this.controller;
         if (!user) return;
         let left = <div onClick={() => this.onupload()} className="ml-2 border text-center mr-4 p-1">
             {
@@ -41,16 +41,16 @@ export class VMe extends VPage<CMe> {
                     <div>我的账号：{user.name}</div>
                 </div>
             </LMR>
-            <div className="bg-white py-2 d-flex px-3 mt-1" style={{ justifyContent: 'space-between' }}>
+            <div className="bg-white py-2 d-flex px-3 mt-1" style={{ justifyContent: 'space-between' }} onClick={onPostsDetails}>
 
-                <div className="iconfont icon-yewuzongliang text-primary" style={{ fontSize: '16px' }}><span className="ml-1">贴文</span> 
-                <div className="text-muted " style={{ fontSize: '12px' }}>浏览量：{PostTotal}</div>
+                <div className="iconfont icon-yewuzongliang text-primary" style={{ fontSize: '16px' }}><span className="ml-1">贴文</span>
+                    <div className="text-muted " style={{ fontSize: '12px' }}>浏览量：{PostTotal}</div>
                 </div>
                 <div className="text-primary small" style={{ padding: ' 10px 0' }}>查看详情<span className="ml-2 iconfont icon-jiantou1" style={{ fontSize: '16px' }}></span></div>
             </div>
             <div className="bg-white py-2 d-flex px-3 mt-1" style={{ justifyContent: 'space-between' }}>
-                <p className="iconfont icon-shuangsechangyongtubiao- text-primary m-0" style={{ fontSize: '16px' }}><span className="ml-1">网页</span> 
-                <div className="text-muted " style={{ fontSize: '12px' }}>浏览量：{PageTotal}</div></p>
+                <p className="iconfont icon-shuangsechangyongtubiao- text-primary m-0" style={{ fontSize: '16px' }}><span className="ml-1">网页</span>
+                    <div className="text-muted " style={{ fontSize: '12px' }}>浏览量：{PageTotal}</div></p>
                 <div style={{ padding: ' 10px 0' }}><span className="text-primary iconfont icon-jiantou1" style={{ fontSize: '16px' }}></span></div>
 
             </div>

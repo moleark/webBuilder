@@ -4,27 +4,22 @@ import { CPage } from "./CPage";
 import { observer } from 'mobx-react';
 import { VEditPage } from './VEditPage';
 import { VPage, Page, LMR, tv, EasyTime, UserView, FA, User, Tuid, List } from "tonva";
-import { observable } from 'mobx';
 
 export class VShowPage extends VPage<CPage> {
 
     async open() {
         this.openPage(this.page);
     }
-
-
-
     private page = observer(() => {
         let { current, onRedact, itemsModule, onCommonalityModule, ondisplay, lock } = this.controller;
         let { titel, name, author, template, discription, $create, $update } = current;
+        const sortItemsModule = itemsModule.sort(function (m, n) {
+            if (m.sort < n.sort) return -1
+            else if (m.sort > n.sort) return 1
+            else return 0
+        });
         let date = <span><EasyTime date={$update} /></span>;
         let isMe = Tuid.equ(author, this.controller.user.id);
-        // let addModule = <div className="d-flex px-2 mt-1 ">
-        //     <button style={{ fontWeight: 550, padding:'0 5px',marginBottom:0}}  className="h6 btn btn-outline-primary">关联模块</button>
-        //     <div className="ml-4" >
-        //         <i className="iconfont icon-icon--tianjia" style={{ fontSize: '28px', color: '#0066cc' }}></i>
-        //     </div>
-        // </div>
         let addModule = <div className="d-flex" style={{ color: '#0066cc' }}>
             <div onClick={() => onCommonalityModule()}><span className="iconfont icon-tubiao106 mr-2" style={{ fontSize: "24px" }}></span></div>
             <div onClick={onRedact}><span className="iconfont icon-icon--tianjia mr-2" style={{ fontSize: "24px" }}></span></div>
@@ -57,10 +52,9 @@ export class VShowPage extends VPage<CPage> {
             </LMR>
             {
                 lock ?
-                    (itemsModule.length > 0 ? <List items={itemsModule} item={{ render: this.renderItem }} /> : <span className="pl-3">[无，请添加]</span>)
+                    (itemsModule.length > 0 ? <List items={sortItemsModule} item={{ render: this.renderItem }} /> : <span className="pl-3">[无，请添加]</span>)
                     : <></>
             }
-
         </Page>;
     })
     private itemClick = (item: any) => {

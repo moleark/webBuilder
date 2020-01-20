@@ -21,7 +21,7 @@ export class VMain extends VPage<CMedia> {
                 onSearch={(key: string) => searchMadiaKey(key)}
                 placeholder="请输入图片标题" />
             <div onClick={onAddClick}>
-                <span className="ml-4 iconfont icon-jiahao1 mr-2"
+                <span className="ml-2 iconfont icon-jiahao1 mr-2"
                     style={{ fontSize: "26px", color: "white" }}>
                 </span>
             </div>
