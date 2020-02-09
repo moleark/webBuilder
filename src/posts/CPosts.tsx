@@ -182,7 +182,7 @@ export class CPosts extends CUqBase {
     }
 
     onPreviewPost = (id: number) => {
-        window.open('https://c.jkchemical.com/webBuilder/post/' + id, '_blank')
+        window.open('https://tv.jkchemical.com/jk-web/post/' + id, '_blank')
     }
 
     tab = () => {
