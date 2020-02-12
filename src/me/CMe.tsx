@@ -1,13 +1,13 @@
-import _ from 'lodash';
-import { CUqBase } from '../CBase';
-import { VMe } from './VMe';
-import { observer } from 'mobx-react';
-import { observable, isObservable } from 'mobx';
-import { PageItems, Query, nav } from 'tonva';
-import { VCompileImg } from './VCompileImg';
-import { VSetDetails } from './VSetDetails';
-import { VAbout } from './VAbout';
-import { VPostsDetails } from './VPostsDetails';
+import _ from "lodash";
+import { CUqBase } from "../CBase";
+import { VMe } from "./VMe";
+import { observer } from "mobx-react";
+import { observable, isObservable } from "mobx";
+import { PageItems, Query, nav } from "tonva";
+import { VCompileImg } from "./VCompileImg";
+import { VSetDetails } from "./VSetDetails";
+import { VAbout } from "./VAbout";
+import { VPostsDetails } from "./VPostsDetails";
 
 class PageMedia extends PageItems<any> {
     private searchMediaQuery: Query;
@@ -17,8 +17,11 @@ class PageMedia extends PageItems<any> {
         this.searchMediaQuery = searchQuery;
     }
 
-    protected async load(param: any, pageStart: any, pageSize: number): Promise<any[]> {
-
+    protected async load(
+        param: any,
+        pageStart: any,
+        pageSize: number
+    ): Promise<any[]> {
         if (pageStart === undefined) pageStart = 0;
         let ret = await this.searchMediaQuery.page(param, pageStart, pageSize);
         return ret;
@@ -32,42 +35,47 @@ export class CMe extends CUqBase {
     @observable pageMedia: PageMedia;
     @observable items: any[];
     @observable current: any;
-    @observable PostTotal: any;
-    @observable PageTotal: any;
+    @observable PostTotal: any = 0;
+    @observable PageTotal: any = 0;
     @observable pagePosts: any[];
 
     searchMadiaKey = async (key: string) => {
         this.pageMedia = new PageMedia(this.uqs.webBuilder.SearchImage);
         this.pageMedia.first({ key: key });
-    }
-    protected async internalStart() {
-
-    }
+    };
+    protected async internalStart() {}
 
     onSet = () => {
-        this.openVPage(VSetDetails)
-    }
+        this.openVPage(VSetDetails);
+    };
 
     showAbout = () => {
         this.openVPage(VAbout);
-    }
+    };
 
     loadList = async () => {
         // post用浏览量
-        this.PostTotal = (await this.uqs.webBuilder.SearchTotalBrowsing.query({})).ret[0].PostTotal;
+        let postTotal = await this.uqs.webBuilder.SearchTotalBrowsing.query({});
+        if (postTotal.ret.lenth > 0) {
+            this.PostTotal = postTotal.ret[0].PostTotal;
+        }
+
         // page用户总浏览量
-        this.PageTotal = (await this.uqs.webBuilder.SearchTotalBrowsing.query({})).ret[0].PageTotal;
-    }
+        let pageTotal = await this.uqs.webBuilder.SearchTotalBrowsing.query({});
+        if (pageTotal.ret.lenth > 0) {
+            this.PageTotal = pageTotal.ret[0].PageTotal;
+        }
+    };
 
     onAlterImg = () => {
         this.current = undefined;
         this.openVPage(VCompileImg);
-    }
+    };
 
-    onPostsDetails = async() => {
+    onPostsDetails = async () => {
         this.openVPage(VPostsDetails);
         // this.pagePosts = await this.uqs.webBuilder.SearchWebPage.query('',nav.user)
-    }
+    };
 
     saveItem = async (id: any, param: any) => {
         param.author = this.user.id;
@@ -79,8 +87,7 @@ export class CMe extends CUqBase {
                 item.$update = new Date();
             }
             this.current = item;
-        }
-        else {
+        } else {
             param.id = ret.id;
             param.$create = new Date();
             param.$update = new Date();
@@ -88,11 +95,10 @@ export class CMe extends CUqBase {
             this.current = param;
         }
         this.searchMadiaKey("");
-    }
+    };
 
     render = observer(() => {
-        return this.renderView(VMe)
-
-    })
+        return this.renderView(VMe);
+    });
     tab = () => this.renderView(VMe);
 }
