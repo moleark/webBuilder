@@ -1,95 +1,21 @@
 import * as React from "react";
 import _ from "lodash";
 import { CUqBase } from "../CBase";
-import { observable, action } from "mobx";
+import { observable } from "mobx";
 import { observer } from "mobx-react";
 import { VMain } from "./VMain";
 import { VShow } from "./VShow";
 import { VEdit } from "./VEdit";
-import { Context, PageItems, Query, nav } from "tonva";
+import { Context, nav, QueryPager } from "tonva";
 import { VPickImage } from "./VPickImage";
 import { VPickTemplate } from "./VPickTemplate";
 import { VRelease } from "./VRelease ";
 import { setting } from "configuration";
 
-// 贴文模板
-class PageTemplate extends PageItems<any> {
-    private searchTemplateQuery: Query;
-    constructor(searchQuery: Query) {
-        super();
-        this.firstSize = this.pageSize = 14;
-        this.searchTemplateQuery = searchQuery;
-    }
-
-    protected async load(
-        param: any,
-        pageStart: any,
-        pageSize: number
-    ): Promise<any[]> {
-        if (pageStart === undefined) pageStart = 0;
-        let ret = await this.searchTemplateQuery.page(
-            param,
-            pageStart,
-            pageSize
-        );
-        return ret;
-    }
-    protected setPageStart(item: any): any {
-        this.pageStart = item === undefined ? 0 : item.id;
-    }
-}
-
-// 贴文
-class PagePosts extends PageItems<any> {
-    private searchPostsQuery: Query;
-
-    constructor(searchQuery: Query) {
-        super();
-        this.firstSize = this.pageSize = 15;
-        this.searchPostsQuery = searchQuery;
-    }
-
-    protected async load(
-        param: any,
-        pageStart: any,
-        pageSize: number
-    ): Promise<any[]> {
-        if (pageStart === undefined) pageStart = 0;
-        let ret = await this.searchPostsQuery.page(param, pageStart, pageSize);
-        return ret;
-    }
-
-    protected setPageStart(item: any): any {
-        this.pageStart = item === undefined ? 0 : item.id;
-    }
-}
-
-// 图片
-class PageMedia extends PageItems<any> {
-    private searchMediaQuery: Query;
-    constructor(searchQuery: Query) {
-        super();
-        this.firstSize = this.pageSize = 14;
-        this.searchMediaQuery = searchQuery;
-    }
-    protected async load(
-        param: any,
-        pageStart: any,
-        pageSize: number
-    ): Promise<any[]> {
-        if (pageStart === undefined) pageStart = 0;
-        let ret = await this.searchMediaQuery.page(param, pageStart, pageSize);
-        return ret;
-    }
-    protected setPageStart(item: any): any {
-        this.pageStart = item === undefined ? 0 : item.id;
-    }
-}
-
 export class CPosts extends CUqBase {
-    @observable pageTemplate: PageTemplate;
-    @observable pagePosts: PagePosts;
-    @observable pageMedia: PageMedia;
+    @observable pageTemplate: QueryPager<any>;
+    @observable pagePosts: QueryPager<any>;
+    @observable pageMedia: QueryPager<any>;
     @observable items: any[];
     @observable current: any;
     @observable flg: boolean = true;
@@ -98,21 +24,27 @@ export class CPosts extends CUqBase {
 
     /* 贴文查询*/
     searchPostsKey = async (key: string, author: any) => {
-        this.pagePosts = new PagePosts(this.uqs.webBuilder.SearchPost);
+        this.pagePosts = new QueryPager(this.uqs.webBuilder.SearchPost, 15, 30);
         let Auser = this.flg ? nav.user : 0;
         this.pagePosts.first({ key: key, author: Auser });
     };
 
     /* posts模板查询*/
     searchTemplateKey = async (key: string) => {
-        this.pageTemplate = new PageTemplate(
-            this.uqs.webBuilder.SearchTemplate
+        this.pageTemplate = new QueryPager(
+            this.uqs.webBuilder.SearchTemplate,
+            15,
+            30
         );
         this.pageTemplate.first({ key: key });
     };
 
     searchMadiaKey = async (key: string) => {
-        this.pageMedia = new PageMedia(this.uqs.webBuilder.SearchImage);
+        this.pageMedia = new QueryPager(
+            this.uqs.webBuilder.SearchImage,
+            15,
+            30
+        );
         this.pageMedia.first({ key: key });
     };
 

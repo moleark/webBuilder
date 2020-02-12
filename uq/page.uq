@@ -39,7 +39,7 @@ History WebPageHistory (
 /** 搜索我的*/
 QUERY SearchWebPage( key char(100), author ID [$user])
 PAGE (
-    id bigint start 0,
+    id bigint desc,
     name char(100),
     discription char(200),
     titel char(100),
@@ -51,7 +51,7 @@ PAGE (
 
     PAGE select p.id, p.name, p.discription, p.titel, p.author, p.template
     from    WebPage as p
-    where   p.id > $pageStart and ( p.titel like key2 or p.template like key2 or p.discription like key2 or p.name like key2 or key is null )
+    where   p.id < $pageStart and ( p.titel like key2 or p.template like key2 or p.discription like key2 or p.name like key2 or key is null )
             and ( p.author = author or author = 0 )
     order by p.id desc
     limit $pageSize;
@@ -77,7 +77,7 @@ returns ret (
 /** 搜索我的全部子模块*/
 QUERY SearchBranch( key char(100))
 PAGE (
-    id bigint start 0,                                 
+    id bigint desc,                               
     author ID [$user],
     content text,
     branchType int
@@ -87,7 +87,7 @@ PAGE (
 
     PAGE select p.id, p.author, p.content, p.branchType
     from    BRANCH as p
-    where   p.id > $pageStart and ( p.content like key2 or key is null )
+    where   p.id < $pageStart and ( p.content like key2 or key is null )
             and p.branchType=0
     order by p.id desc
     limit $pageSize;

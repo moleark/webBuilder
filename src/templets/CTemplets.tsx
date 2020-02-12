@@ -1,47 +1,31 @@
 import * as React from "react";
-import _ from 'lodash';
+import _ from "lodash";
 import { CUqBase } from "../CBase";
 import { observable } from "mobx";
 import { observer } from "mobx-react";
 import { VMain } from "./VMain";
 import { VShow } from "./VShow";
-import { PageItems, Query } from "tonva";
-
-// 贴文模板
-class PageTemplate extends PageItems<any> {
-    private searchTemplateQuery: Query;
-    constructor(searchQuery: Query) {
-        super();
-        this.firstSize = this.pageSize = 14;
-        this.searchTemplateQuery = searchQuery;
-    }
-
-    protected async load(param: any, pageStart: any, pageSize: number): Promise<any[]> {
-        if (pageStart === undefined) pageStart = 0;
-        let ret = await this.searchTemplateQuery.page(param, pageStart, pageSize);
-        return ret;
-    }
-    protected setPageStart(item: any): any {
-        this.pageStart = item === undefined ? 0 : item.id;
-    }
-}
+import { QueryPager } from "tonva";
 
 export class CTemplets extends CUqBase {
-    @observable pageTemplate: PageTemplate;
+    @observable pageTemplate: QueryPager<any>;
     @observable items: any[];
     @observable current: any;
 
-    protected async internalStart(param: any) {
-    }
+    protected async internalStart(param: any) {}
 
     /* 模板查询*/
     searchTemplateKey = async (key: string) => {
-        this.pageTemplate = new PageTemplate(this.uqs.webBuilder.SearchTemplate);
+        this.pageTemplate = new QueryPager(
+            this.uqs.webBuilder.SearchTemplate,
+            15,
+            30
+        );
         this.pageTemplate.first({ key: key });
-    }
+    };
 
     //保存
-    saveItem = async (id:number, param: any) => {
+    saveItem = async (id: number, param: any) => {
         param.author = this.user.id;
         let ret = await this.uqs.webBuilder.Template.save(id, param);
         if (id) {
@@ -52,8 +36,7 @@ export class CTemplets extends CUqBase {
             }
             this.current = item;
             this.closePage();
-        }
-        else {
+        } else {
             param.id = ret.id;
             param.$create = new Date();
             param.$update = new Date();
@@ -61,23 +44,23 @@ export class CTemplets extends CUqBase {
             this.current = param;
         }
         this.searchTemplateKey("");
-    }
+    };
 
     render = observer(() => {
-        return this.renderView(VMain)
-    })
+        return this.renderView(VMain);
+    });
 
     loadList = async () => {
         this.searchTemplateKey("");
-        this.items = await this.uqs.webBuilder.Template.search('', 0, 100);
-    }
+        this.items = await this.uqs.webBuilder.Template.search("", 0, 100);
+    };
 
-    showDetail = async(id:number) => {
+    showDetail = async (id: number) => {
         this.current = await this.uqs.webBuilder.Template.load(id);
         this.openVPage(VShow);
-    }
+    };
 
     tab = () => {
         return <this.render />;
-    }
+    };
 }

@@ -2,7 +2,7 @@ import { AppConfig } from "tonva";
 import logo from "../src/static/images/logo.png";
 export const appConfig: AppConfig = {
     appName: "百灵威系统工程部/webBuilder",
-    version: "1.0.8",
+    version: "1.0.10",
     tvs: {},
     oem: "百灵威"
 };

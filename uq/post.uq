@@ -43,20 +43,19 @@ MAP CustomerPost(
 /** 搜索我的优惠码*/
 QUERY SearchPost( key char(100), author ID [$user])
 PAGE (
-    id bigint start 0,
+    id bigint desc,
     caption char(100),
     discription char(200),
     image ID Image,
     author ID [$user],
-    template ID Template,
-    content text
+    template ID Template
 ) {
     var key2 char(102);
     set key2 = concat('%', key, '%');
 
-    PAGE select p.id, p.caption, p.discription, p.image, p.author, p.template, p.content
+    PAGE select p.id, p.caption, p.discription, p.image, p.author, p.template
     from    POST as p
-    where   p.id > $pageStart and ( p.template like key2 or p.discription like key2 or p.caption like key2 or key is null )
+    where   p.id < $pageStart and ( p.template like key2 or p.discription like key2 or p.caption like key2 or key is null )
             and ( p.author = author or author = 0 )
     order by p.id desc
     limit $pageSize;
@@ -66,7 +65,7 @@ PAGE (
 /** 搜索我的图片*/
 QUERY SearchImage( key char(100))
 PAGE (
-    id bigint start 0,
+    id bigint desc,
     caption char(100),
     path char(100),
     author ID [$user]
@@ -76,7 +75,7 @@ PAGE (
 
     PAGE select p.id, p.caption, p.path, p.author
     from    IMAGE as p
-    where   p.id > $pageStart and ( p.caption like key2 or key is null )
+    where   p.id < $pageStart and ( p.caption like key2 or key is null )
     order by p.id desc
     limit $pageSize;
 };
