@@ -16,7 +16,15 @@ MAP hitted (
     key ip ID IP,
 );
 
-ACTION hit (
+BOOK Hot (
+    KEY post ID,
+    hits INT,
+    sumHits INT,
+
+    index hits (hits)
+);
+
+ACTION hit ver 0.1 (
     ARR oneHit (
         tick INT,
         ip varchar(20),
@@ -29,7 +37,66 @@ ACTION hit (
         IF not exists(select a.post from hitted as a where a.post=post and a.ip=ipId) {
             HISTORY hits DATE=from_unixtime(tick) SET ip=ipId, post=post;
             BOOK hitted at(post, ipId);
+            BOOK hot at (post) set sumHits+=1;
         }
     }
 };
 
+QUERY hotPosts() 
+RETURNS ret (
+    hits bigint,
+    post ID,
+    caption char(100),
+    discription char(200),
+    image ID Image,
+    imagePath char(100),
+    author ID [$user],
+    create INT,
+    update INT,
+) {
+    INTO ret SELECT 
+        a.hits, a.post, b.caption, b.discription, b.image, c.path as imagePath, b.author,
+        unix_timestamp(b.[$create]) as create, unix_timestamp(b.[$update]) as update
+        FROM Hot as a
+            left join Post as b on a.post = b.id
+            left join IMage as c on b.image = c.id
+        WHERE a.post>0
+        ORDER BY a.hits DESC
+        LIMIT 1000;
+};
+
+ACTION calcHot () {
+    VAR lastCalcTick INT;
+    VAR calcTick INT;
+    SET calcTick = unix_timestamp();
+    SETTING 'lastHotCalcTick' INT to lastCalcTick;
+    IF lastCalcTick is null {
+        SET lastCalcTick = 0;
+    }
+    FOREACH (VAR post ID, hit INT
+        OF SELECT gPost as post, COUNT(1) as hit
+            FROM hits as a
+	        WHERE a.DATE>=FROM_UNIXTIME(lastCalcTick)
+                AND a.DATE<FROM_UNIXTIME(calcTick)
+	        GROUP BY (a.post) as gPost)
+    {
+        BOOK hot at(post) set hits+=hit;
+    }
+
+    var weekTick INT;
+    SET weekTick = 7*24*3600;
+
+    IF (lastCalcTick>=weekTick) {
+        FOREACH (VAR post1 ID, hit1 INT
+            OF SELECT gPost as post1, COUNT(1) as hit1
+                FROM hits as a
+                WHERE a.DATE>=FROM_UNIXTIME(lastCalcTick-weekTick) 
+                    AND a.DATE<FROM_UNIXTIME(calcTick-weekTick)
+                GROUP BY (a.post) as gPost)
+        {
+            BOOK hot at(post1) set hits-=hit1;
+        }
+    }
+
+    SETTING 'lastHotCalcTick' INT = calcTick;
+};
