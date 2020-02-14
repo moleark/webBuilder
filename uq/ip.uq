@@ -1,0 +1,35 @@
+TUID ip (
+    id small,
+    ip varchar(20),
+
+    unique (ip),
+);
+
+HISTORY hits (
+    DATE,
+    ip ID IP,
+    post ID,
+);
+
+MAP hitted (
+    key post ID,
+    key ip ID IP,
+);
+
+ACTION hit (
+    ARR oneHit (
+        tick INT,
+        ip varchar(20),
+        post BIGINT
+    )
+) {
+    foreach oneHit {
+        var ipId ID;
+        TUID ip INTO ipId unique(ip);
+        IF not exists(select a.post from hitted as a where a.post=post and a.ip=ipId) {
+            HISTORY hits DATE=from_unixtime(tick) SET ip=ipId, post=post;
+            BOOK hitted at(post, ipId);
+        }
+    }
+};
+
