@@ -7,7 +7,6 @@ import { PageItems, Query, nav } from "tonva";
 import { VCompileImg } from "./VCompileImg";
 import { VSetDetails } from "./VSetDetails";
 import { VAbout } from "./VAbout";
-import { VPostsDetails } from "./VPostsDetails";
 
 class PageMedia extends PageItems<any> {
     private searchMediaQuery: Query;
@@ -43,7 +42,7 @@ export class CMe extends CUqBase {
         this.pageMedia = new PageMedia(this.uqs.webBuilder.SearchImage);
         this.pageMedia.first({ key: key });
     };
-    protected async internalStart() {}
+    protected async internalStart() { }
 
     onSet = () => {
         this.openVPage(VSetDetails);
@@ -56,13 +55,16 @@ export class CMe extends CUqBase {
     loadList = async () => {
         // post用浏览量
         let postTotal = await this.uqs.webBuilder.SearchTotalBrowsing.query({});
-        if (postTotal.ret.lenth > 0) {
+        
+        if (postTotal.ret.length && (postTotal.ret.length > 0)) {
+            console.log(1)
             this.PostTotal = postTotal.ret[0].PostTotal;
+            console.log(this.PostTotal, 777)
         }
 
         // page用户总浏览量
         let pageTotal = await this.uqs.webBuilder.SearchTotalBrowsing.query({});
-        if (pageTotal.ret.lenth > 0) {
+        if (pageTotal.ret.length && (pageTotal.ret.length > 0)) {
             this.PageTotal = pageTotal.ret[0].PageTotal;
         }
     };
@@ -70,11 +72,6 @@ export class CMe extends CUqBase {
     onAlterImg = () => {
         this.current = undefined;
         this.openVPage(VCompileImg);
-    };
-
-    onPostsDetails = async () => {
-        this.openVPage(VPostsDetails);
-        // this.pagePosts = await this.uqs.webBuilder.SearchWebPage.query('',nav.user)
     };
 
     saveItem = async (id: any, param: any) => {
