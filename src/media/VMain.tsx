@@ -25,14 +25,26 @@ export class VMain extends VPage<CMedia> {
                     style={{ fontSize: "26px", color: "white" }}>
                 </span>
             </div>
-        </div>;
+		</div>;
+		let {items} = pageMedia;
         let none = <div className="my-3 mx-2 text-warning">
-            <span className="text-primary" > 没有图片，请添加！</span>
+            <span className="text-primary" >无图片</span>
         </div>;
         return <Page header="图片" headerClassName={consts.headerClass} right={right} onScrollBottom={this.onScrollBottom}>
-            <List before={''} none={none} items={pageMedia} item={{ render: this.renderItem }} />
+			<div className="mx-3">
+			<div className="row row-cols-2 row-cols-sm-3 row-cols-md-4">
+				{
+					items? items.map((v, index) => {
+						return this.renderItem(v, index)
+					})
+					:
+					none
+				}
+			</div>
+			</div>
         </Page>;
-    })
+        // <List before={''} none={none} items={pageMedia} item={{ render: this.renderItem }} />
+	})
 
     private onScrollBottom = async () => {
         await this.controller.pageMedia.more();
@@ -47,24 +59,37 @@ export class VMain extends VPage<CMedia> {
     }
 
     private renderItem = (item: any, index: number) => {
-        let { caption, path, $create } = item;
-        let right = <div className="border p-1"><img className="h-4c w-4c" src={path} /></div>;
-        return <LMR className="px-3 py-2 border-bottom cursor-pointer" right={right}>
-            <div><b>{caption}</b></div>
-            <div className="smallPath small">{path}</div>
+		let { caption, path, $create } = item;
+		let imgStyle = {
+			backgroundImage: `url(${path})`,
+		}
+		//let right = <div className="border p-1"><img className="h-4c w-4c" src={path} /></div>;
+		
+		let right = <div className="d-flex align-items-center bg-white rounded" onClick={() => this.preview(item.path)}>
+			<div className="w-100 h-100 bg-center-img h-min-12c" style={imgStyle}>
+			</div>
+		</div>;
+
+        return <div key={index} className="col px-3 py-2 border-bottom cursor-pointer text-center">
+            <div className="pb-2">{caption}</div>
+			{right}
+
+            <div className="smallPath small pt-2">{path}</div>
             <button
                 style={{ fontWeight: 550, padding: '0 5px', fontSize: '12px' }}
                 className="mt-2 btn btn-outline-primary"
                 onClick={this.copyClick}>
                 拷贝
             </button >
-            <button style={{ fontWeight: 550, padding: '0 5px', fontSize: '12px' }}
-                className="mt-2 btn btn-outline-primary ml-2"
-                onClick={() => this.preview(item.path)}
-            >
-                预览
-            </button>
 
-        </LMR >;
-    }
+		</div>;
+		/*
+            <button style={{ fontWeight: 550, padding: '0 5px', fontSize: '12px' }}
+			className="mt-2 btn btn-outline-primary ml-2"
+			onClick={() => this.preview(item.path)}
+		>
+			预览
+		</button>
+		*/
+}
 }

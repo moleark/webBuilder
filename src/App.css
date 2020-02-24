@@ -26,6 +26,15 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+.bg-center-img {
+	border-style:none;
+	border-width:0;
+	background-size:contain;
+	background-position: center; 
+	background-repeat: no-repeat;
+}
+
 .jk-cart {
   display: flex;
   align-items: center;
