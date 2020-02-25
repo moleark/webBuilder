@@ -1,4 +1,4 @@
-import { Tuid, Map, Query, Action, Sheet, Book } from "tonva";
+import { Tuid, Map, Query, Action, Sheet, Book, Tag } from "tonva";
 
 export interface UqOrder {
     //a: Tuid;
@@ -27,6 +27,7 @@ export interface WebBuilder {
     SearchBranch: Query;
     PageBrowsing: Book;
     SearchTotalBrowsing: Query;
+    Test1: Tag;
 }
 
 export interface UQs {
