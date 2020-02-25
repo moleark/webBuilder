@@ -132,29 +132,39 @@ export class VMain extends VPage<CPosts> {
             return <span>{isMe ? "" : user.nick || user.name}</span>;
         };
         return (
-            <div className="px-3 py-3 d-flex">
+            <div className="px-3 d-flex">
                 <div
                     className="col-10 d-flex p-0"
                     onClick={() => this.controller.showDetail(item.id)}
                 >
+					<div className="mr-4 my-2 w-5c w-min-5c h-5c h-min-5c">
                     {tv(
                         image,
-                        values => {
-                            return (<div className="text-center mr-2">
-                                <img className="w-3c h-3c" src={values.path} />
-                            </div>
-                            );
-                        },
+                        values => <img
+                                        className="w-100 h-100"
+                                        src={values.path}
+                                    />,
                         undefined, //w-6c h-4c mr-2 text-black-50 justify-content-center d-flex align-items-center
                         () => (
-                            <div className="mr-4 d-flex align-items-center justify-content-center w-3c w-min-3c h-3c  bg-light border rounded">
-                                <FA className="text-info" name="camera" size="lg" />
+							<div className="d-flex align-items-center h-100
+								justify-content-center bg-light border rounded">
+                                <FA
+                                    className="text-info"
+									name="camera"
+									size="lg"
+                                />
                             </div>
                         )
                     )}
-                    <div className="cursor-pointer ">
-                        <b>{caption}</b>
-                        <div className="small py-1 text-muted " style={{ height: "27px", overflow: "hidden" }}  >
+					</div>
+                    <div className="cursor-pointer py-3">
+                        <b>
+                            {caption}
+                        </b>
+                        <div
+                            className="small py-1 text-muted "
+                            style={{ height: "27px", overflow: "hidden" }}
+                        >
                             {discription}
                         </div>
                         <div className="d-flex small">
@@ -167,9 +177,9 @@ export class VMain extends VPage<CPosts> {
                         </div>
                     </div>
                 </div>
-                <div className="small col-2 col-xs-2 text-muted text-right">
+                <div className="small col-2 text-muted text-right pt-3">
                     <button
-                        className="mt-2 btn btn-outline-primary small bin-justified"
+                        className="btn btn-outline-primary"
                         onClick={() => this.controller.onPreviewPost(item.id)}
                     >
                         预览
