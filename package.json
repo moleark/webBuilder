@@ -27,10 +27,7 @@
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
     "react-scripts": "3.3.0",
-<<<<<<< HEAD
-=======
     "tonva": "^1.2.11",
->>>>>>> fb73ee5936680e1b7eaa8975a035055457d49cc5
     "typescript": "^3.7.3"
   },
   "scripts": {
