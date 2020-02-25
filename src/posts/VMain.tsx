@@ -17,7 +17,7 @@ import { CPosts } from "./CPosts";
 import classNames from "classnames";
 
 export class VMain extends VPage<CPosts> {
-    async open() {}
+    async open() { }
 
     render(): JSX.Element {
         return <this.page />;
@@ -92,19 +92,18 @@ export class VMain extends VPage<CPosts> {
                                     }}
                                 ></div>
                             ) : (
-                                <div
-                                    style={{
-                                        border: "1px solid #007bff",
-                                        marginLeft: "20px",
-                                        width: "20px",
-                                        height: "18px",
-                                        backgroundColor: "#007bff",
-                                        borderRadius: "100%"
-                                    }}
-                                ></div>
-                            )}
+                                    <div
+                                        style={{ border: "1px solid #007bff", width: "20px", height: "18px", backgroundColor: "#007bff", borderRadius: "100%" }}
+                                    ></div>
+                                )}
                         </div>
                         <strong className={classNames("small")}>全部</strong>
+                        <strong
+                            onClick={this.controller.cApp.cTag.showTag}
+                            className={classNames("small")}
+                        >
+                            标签
+                        </strong>
                     </div>
                 </div>
                 <List
@@ -141,50 +140,36 @@ export class VMain extends VPage<CPosts> {
                     {tv(
                         image,
                         values => {
-                            return (
-                                <div className="text-center mr-4">
-                                    <img
-                                        className="w-3c h-3c"
-                                        src={values.path}
-                                    />
-                                </div>
+                            return (<div className="text-center mr-2">
+                                <img className="w-3c h-3c" src={values.path} />
+                            </div>
                             );
                         },
                         undefined, //w-6c h-4c mr-2 text-black-50 justify-content-center d-flex align-items-center
                         () => (
-							<div className="mr-4 d-flex align-items-center 
-								justify-content-center w-3c w-min-3c h-3c  bg-light border rounded">
-                                <FA
-                                    className="text-info"
-									name="camera"
-									size="lg"
-                                />
+                            <div className="mr-4 d-flex align-items-center justify-content-center w-3c w-min-3c h-3c  bg-light border rounded">
+                                <FA className="text-info" name="camera" size="lg" />
                             </div>
                         )
                     )}
                     <div className="cursor-pointer ">
-                        <b>
-                            {caption}
-                        </b>
-                        <div
-                            className="small py-1 text-muted "
-                            style={{ height: "27px", overflow: "hidden" }}
-                        >
+                        <b>{caption}</b>
+                        <div className="small py-1 text-muted " style={{ height: "27px", overflow: "hidden" }}  >
                             {discription}
                         </div>
-						<div className="d-flex small">
-							<div className="pt-1 text-truncate">
-								<UserView id={author} render={renderAuthor} />
-							</div>
-							<div className="">
-								<EasyTime date={$update} />
-							</div>
-						</div>
+                        <div className="d-flex small">
+                            <div className="pt-1 text-truncate">
+                                <UserView id={author} render={renderAuthor} />
+                            </div>
+                            <div className="">
+                                <EasyTime date={$update} />
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div className="small col-2 text-muted text-right px-0">
+                <div className="small col-2 col-xs-2 text-muted text-right">
                     <button
-                        className="mt-2 btn btn-outline-primary"
+                        className="mt-2 btn btn-outline-primary small bin-justified"
                         onClick={() => this.controller.onPreviewPost(item.id)}
                     >
                         预览

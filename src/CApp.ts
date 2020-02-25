@@ -8,6 +8,7 @@ import { CMedia } from "./media/CMedia";
 import { CAppBase, IConstructor } from "tonva";
 import { CTemplets } from "./templets/CTemplets";
 import { setting } from "configuration";
+import { CTag } from "tag/CTag";
 
 export class CApp extends CAppBase {
     get uqs(): UQs {
@@ -19,6 +20,7 @@ export class CApp extends CAppBase {
     cMedia: CMedia;
     cTemplets: CTemplets;
     cPage: CPage;
+    cTag: CTag;
 
     protected newC<T extends CUqBase>(type: IConstructor<T>): T {
         return new type(this);
@@ -37,6 +39,7 @@ export class CApp extends CAppBase {
         this.cMedia = this.newC(CMedia);
         this.cTemplets = this.newC(CTemplets);
         this.cPage = this.newC(CPage);
+        this.cTag = this.newC(CTag);
         this.showMain();
     }
 
