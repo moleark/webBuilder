@@ -133,7 +133,7 @@ export class VMain extends VPage<CPosts> {
             return <span>{isMe ? "" : user.nick || user.name}</span>;
         };
         return (
-            <div className="px-2 d-flex p-1">
+            <div className="px-3 py-3 d-flex">
                 <div
                     className="col-10 d-flex p-0"
                     onClick={() => this.controller.showDetail(item.id)}
@@ -162,7 +162,7 @@ export class VMain extends VPage<CPosts> {
                         )
                     )}
                     <div className="cursor-pointer ">
-                        <b style={{ fontWeight: 550, fontSize: "15px" }}>
+                        <b>
                             {caption}
                         </b>
                         <div
@@ -171,26 +171,23 @@ export class VMain extends VPage<CPosts> {
                         >
                             {discription}
                         </div>
+						<div className="d-flex small">
+							<div className="pt-1 text-truncate">
+								<UserView id={author} render={renderAuthor} />
+							</div>
+							<div className="">
+								<EasyTime date={$update} />
+							</div>
+						</div>
                     </div>
                 </div>
                 <div className="small col-2 text-muted text-right px-0">
                     <button
-                        style={{
-                            fontWeight: 550,
-                            padding: "0 5px",
-                            fontSize: "12px"
-                        }}
                         className="mt-2 btn btn-outline-primary"
                         onClick={() => this.controller.onPreviewPost(item.id)}
                     >
                         预览
                     </button>
-                    <div className="small pt-1 text-truncate">
-                        <UserView id={author} render={renderAuthor} />
-                    </div>
-                    <div className="small">
-                        <EasyTime date={$update} />
-                    </div>
                 </div>
             </div>
         );

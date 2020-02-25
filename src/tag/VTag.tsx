@@ -1,5 +1,5 @@
 import * as React from "react";
-import { VPage, Page, Schema, UiTagSingle, Edit, Form } from "tonva";
+import { VPage, Page, Schema, UiTagSingle, Edit, Form, UiButton } from "tonva";
 import { CTag } from "./CTag";
 import { consts } from "consts";
 import { observer } from "mobx-react";
@@ -25,7 +25,7 @@ export class VTag extends VPage<CTag> {
                     label: "提交",
                     widget: "button",
                     className: "btn btn-primary"
-                }
+                } as UiButton
             }
         };
         return (
@@ -35,7 +35,7 @@ export class VTag extends VPage<CTag> {
                     className="p-3"
                     schema={this.schema}
                     uiSchema={uiSchema}
-                    formData={{ b: 3, c: "2\n4" }}
+                    formData={{ b: 3, c: "2|4" }}
                     fieldLabelSize={2}
                 />
             </Page>

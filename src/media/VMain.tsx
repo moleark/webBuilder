@@ -2,7 +2,7 @@ import * as React from "react";
 import { consts } from "consts";
 import { CMedia } from "./CMedia";
 import { observer } from "mobx-react";
-import { VPage, Page, FA, List, LMR, EasyTime, SearchBox } from "tonva";
+import { VPage, Page, FA, List, LMR, EasyTime, SearchBox, Loading } from "tonva";
 import copy from 'copy-to-clipboard';
 
 export class VMain extends VPage<CMedia> {
@@ -26,20 +26,25 @@ export class VMain extends VPage<CMedia> {
                 </span>
             </div>
 		</div>;
-		let {items} = pageMedia;
-        let none = <div className="my-3 mx-2 text-warning">
-            <span className="text-primary" >无图片</span>
-        </div>;
+		let {items, loading} = pageMedia;
+		let divItems:any;
+		if (items === undefined) {
+			divItems = (loading === true)?
+				<div className="m-5"><Loading /></div>
+				:
+				<div className="my-3 mx-2 text-warning">
+					<span className="text-primary" >[无图片]</span>
+				</div>;
+		}
+		else {
+			divItems = items.map((v, index) => {
+				return this.renderItem(v, index)
+			});
+		}
         return <Page header="图片" headerClassName={consts.headerClass} right={right} onScrollBottom={this.onScrollBottom}>
 			<div className="mx-3">
 			<div className="row row-cols-2 row-cols-sm-3 row-cols-md-4">
-				{
-					items? items.map((v, index) => {
-						return this.renderItem(v, index)
-					})
-					:
-					none
-				}
+				{divItems}
 			</div>
 			</div>
         </Page>;
