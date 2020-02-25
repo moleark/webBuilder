@@ -19,7 +19,7 @@ export class VTag extends VPage<CTag> {
                 b: {
                     label: "单选Radio",
                     widget: "tagSingle",
-                    valuesView: this.controller.values1.view //list: this.controller.tagText2Values
+                    valuesView: this.controller.Test1.view //list: this.controller.tagText2Values
                 } as UiTagSingle,
                 submit: {
                     label: "提交",

@@ -142,7 +142,7 @@ export class VMain extends VPage<CPosts> {
                         image,
                         values => {
                             return (
-                                <div className="text-center p-1 mr-4">
+                                <div className="text-center mr-4">
                                     <img
                                         className="w-3c h-3c"
                                         src={values.path}
@@ -152,11 +152,12 @@ export class VMain extends VPage<CPosts> {
                         },
                         undefined, //w-6c h-4c mr-2 text-black-50 justify-content-center d-flex align-items-center
                         () => (
-                            <div className=" text-center mr-4 p-1">
+							<div className="mr-4 d-flex align-items-center 
+								justify-content-center w-3c w-min-3c h-3c  bg-light border rounded">
                                 <FA
-                                    className="w-3 p-2 h-3c text-center"
-                                    name="camera"
-                                    size="2x"
+                                    className="text-info"
+									name="camera"
+									size="lg"
                                 />
                             </div>
                         )
