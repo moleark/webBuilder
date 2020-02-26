@@ -30,7 +30,7 @@ export class VMain extends VPage<CPosts> {
                     className="mt-1 w-100"
                     size="sm"
                     onSearch={(key: string) => searchPostsKey(key, "")}
-                    placeholder="查找标题"
+                    placeholder={this.t('searchpost')}
                 />
                 <div onClick={onAdd}>
                     <span
@@ -42,7 +42,7 @@ export class VMain extends VPage<CPosts> {
         );
         let none = (
             <div className="my-3 mx-2">
-                <span className="text-muted small">[无贴文]</span>
+                <span className="text-muted small">[{this.t('noposts')}]</span>
             </div>
         );
         let hreader:any = this.t('post')
@@ -59,26 +59,15 @@ export class VMain extends VPage<CPosts> {
                         onClick={e => this.onBtn()}
                     >
                         <strong className={classNames("small text-right")}>
-                            我的
+                            {this.t('me')}
                         </strong>
                         <div
                             className="mx-2"
-                            style={{
-                                width: "40px",
-                                height: "18px",
-                                backgroundColor: "rgb(211, 209, 209)",
-                                borderRadius: "20px"
-                            }}
+                            style={{ width: "40px", height: "18px", backgroundColor: "rgb(211, 209, 209)",  borderRadius: "20px" }}
                         >
                             {this.controller.flg ? (
                                 <div
-                                    style={{
-                                        border: "1px solid #007bff",
-                                        width: "20px",
-                                        height: "18px",
-                                        backgroundColor: "#007bff",
-                                        borderRadius: "100%"
-                                    }}
+                                    style={{ border: "1px solid #007bff",  width: "20px", height: "18px", backgroundColor: "#007bff", borderRadius: "100%"}}
                                 ></div>
                             ) : (
                                     <div
@@ -86,7 +75,9 @@ export class VMain extends VPage<CPosts> {
                                     ></div>
                                 )}
                         </div>
-                        <strong className={classNames("small")}>全部</strong>
+                        <strong className={classNames("small")}>
+                            {this.t('all')}
+                        </strong>
                     </div>
                 </div>
                 <List
@@ -175,7 +166,9 @@ export class VMain extends VPage<CPosts> {
 							className="btn btn-sm btn-outline-primary"
 							onClick={() => this.controller.onPreviewPost(item.id)}
 						>
-							<span className="d-none d-sm-inline">&ensp;</span>预览<span className="d-none d-sm-inline">&ensp;</span>
+							<span className="d-none d-sm-inline">&ensp;</span>
+                            {this.t('preview')}
+                            <span className="d-none d-sm-inline">&ensp;</span>
 						</button>
 					</div>
                 </div>

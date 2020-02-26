@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { VPage, Page, LMR, tv, EasyTime, UserView, FA, User, Tuid, List, SearchBox } from "tonva";
+import { VPage, Page, LMR, List, SearchBox } from "tonva";
 import { CPosts } from "./CPosts";
 import { observer } from 'mobx-react';
 import { consts } from 'consts';
@@ -20,12 +20,22 @@ export class VPickTemplate extends VPage<CPosts> {
         let right = <SearchBox className="w-80 mt-2 mr-2"
             size='sm'
             onSearch={(key: string) => searchTemplateKey(key)}
-            placeholder="模板" />;
+            placeholder={this.t('selecttemplate')} />;
         let none = <div className="my-3 mx-2 text-warning">
-            <span className="text-primary" > 没有模板，请添加！</span>
+            <span className="text-primary" > {this.t('notemplate')}</span>
         </div>;
-        return <Page headerClassName={consts.headerClass} header="选择模板" back="close" right={right} onScrollBottom={this.onScrollBottom} >
-            <List before={''} none={none} items={pageTemplate} item={{ render: this.renderItem, onClick: this.itemClick }} />
+        return <Page
+            headerClassName={consts.headerClass}
+            header={this.t('selectpicture')}
+            back="close"
+            right={right}
+            onScrollBottom={this.onScrollBottom}
+        >
+            <List
+                before={''} none={none}
+                items={pageTemplate}
+                item={{ render: this.renderItem, onClick: this.itemClick }}
+            />
         </Page>
     });
 

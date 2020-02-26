@@ -31,21 +31,21 @@ export class VEditPage extends VPage<CPage> {
 
     private uiSchema: UiSchema = {
         items: {
-            titel: { widget: 'text', label: '标题' },
+            titel: { widget: 'text', label: this.t('titel') },
 
             discription: {
-                widget: 'textarea', label: '描述', placeholder: '链接上用描述', rows: 3
+                widget: 'textarea', label: this.t('describe'), placeholder: this.t('describe'), rows: 3
             } as UiInputItem,
 
             name: {
-                widget: 'textarea', label: '名字', placeholder: '请填写模板名字', rows: 3
+                widget: 'textarea', label: this.t('name'), placeholder: this.t('name'), rows: 3
             } as UiInputItem,
 
             template: {
-                widget: 'id', label: '布局模板', pickId: this.controller.pickTemplate, Templet: this.templateContent
+                widget: 'id', label: this.t('templete'), pickId: this.controller.pickTemplate, Templet: this.templateContent
             } as UiIdItem,
 
-            submit: { widget: 'button', label: '提交' }
+            submit: { widget: 'button', label: this.t('submit') }
         }
     };
 
@@ -62,7 +62,7 @@ export class VEditPage extends VPage<CPage> {
 
     private page = observer(() => {
         let { current } = this.controller;
-        return <Page header="编辑网页" headerClassName={consts.headerClass}>
+        return <Page header={this.t('editorpage')} headerClassName={consts.headerClass}>
             <div className="mx-3">
                 <Form ref={v => this.form = v} className="my-3"
                     formData={current}
@@ -75,7 +75,7 @@ export class VEditPage extends VPage<CPage> {
             <div className="px-1 ">
                 <div className="text-content" style={{ textAlign: "center" }}>
                     <button type="button" className="btn btn-primary mx-2"
-                        onClick={this.onClickSaveButton} >保存</button>
+                        onClick={this.onClickSaveButton} >{this.t('submit')}</button>
                 </div>
             </div>
         </Page>

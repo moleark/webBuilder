@@ -64,9 +64,7 @@ class Discount extends Widget {
                     {this.publicList.map((v, index) => {
                         let { value, name, title } = v;
                         return <div key={index} className="my-1 mx-3">
-                            <input type="checkbox" value={value}
-                                name={name} defaultChecked={value === this.value}
-                            /> {title} &nbsp;
+                            <input type="checkbox" value={value} name={name} defaultChecked={value === this.value} /> {title} &nbsp;
                             </div>
                     })}
                 </div>}
@@ -88,10 +86,10 @@ export class VRelease extends VPage<CPosts>  {
         items: {
             discount: {
                 widget: 'custom',
-                label: '请选择',
+                label: this.t('pleaseselect'),
                 WidgetClass: Discount,
             } as UiCustom,
-            submit: { widget: 'button', label: '提交', className: 'btn btn-primary w-8c' },
+            submit: { widget: 'button', label: this.t('submit'), className: 'btn btn-primary w-8c' },
         }
     }
     private onFormButtonClick = async (name: string, context: Context) => {
@@ -99,7 +97,7 @@ export class VRelease extends VPage<CPosts>  {
         let data = _.clone(context.data);
         let { discount } = data;
         let arr = [];
-        for(let i = 0; i < discount.length; i++) {
+        for (let i = 0; i < discount.length; i++) {
             arr.push(discount[i].id)
         }
         publishPost(arr);
@@ -107,7 +105,7 @@ export class VRelease extends VPage<CPosts>  {
     }
 
     private page = () => {
-        return <Page header="发布" headerClassName={consts.headerClass} >
+        return <Page header={this.t('publish')} headerClassName={consts.headerClass} >
             <Form className="my-3 mx-3"
                 schema={schema}
                 uiSchema={this.uiSchema}

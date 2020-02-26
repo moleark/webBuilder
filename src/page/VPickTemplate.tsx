@@ -19,9 +19,9 @@ export class VPickTemplate extends VPage<CPage> {
         let right = <SearchBox className="w-80 mt-2 mr-2"
             size='sm'
             onSearch={(key: string) => searchTemplateKey(key)}
-            placeholder="模板" />;
+            placeholder={this.t('templete')} />;
 
-        return <Page header="选择模板" back="close" right={right} onScrollBottom={this.onScrollBottom} >
+        return <Page header={this.t('selecttemplate')} back="close" right={right} onScrollBottom={this.onScrollBottom} >
             <List items={pageTemplate} item={{ render: this.renderItem, onClick: this.itemClick }} />
         </Page>
     });

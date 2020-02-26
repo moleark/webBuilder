@@ -16,7 +16,7 @@ export class EditMeInfo extends VPage<CMe> {
     private uiSchema: UiSchema = {
         items: {
             // nick: { widget: 'text', label: '别名', placeholder: '好的别名更方便记忆' } as UiTextItem,
-            icon: { widget: 'image', label: '头像' } as UiImageItem,
+            icon: { widget: 'image', label: this.t('headportrait') } as UiImageItem,
         }
     }
 
@@ -27,7 +27,7 @@ export class EditMeInfo extends VPage<CMe> {
             nick: nick,
             icon: icon,
         };
-        
+
     }
 
     private onItemChanged = async (itemSchema: ItemSchema, newValue: any, preValue: any) => {
@@ -39,8 +39,8 @@ export class EditMeInfo extends VPage<CMe> {
     }
 
     private page = () => {
-       let { schema, uiSchema, data, onItemChanged } = this;
-        return <Page header="个人信息">
+        let { schema, uiSchema, data, onItemChanged } = this;
+        return <Page header={this.t('personalinformation')}>
             <Edit schema={schema} uiSchema={uiSchema}
                 data={data}
                 onItemChanged={onItemChanged} />

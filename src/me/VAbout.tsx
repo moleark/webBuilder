@@ -12,7 +12,7 @@ export class VAbout extends VPage<CMe> {
     }
     private page = () => {
         // let { appName, logo } = setting.sales;
-        let header: any = <div>关于{setting.appName}</div>
+        let header: any = <div>{this.t('about')}{setting.appName}</div>
         // let links: any = <div className="sep-product-select" style={{ width: "80%", margin: " 0 auto 0 auto" }} />
         return <Page header={header} headerClassName={setting.pageHeaderCss} >
             <div className="bg-white text-center" style={{ height: '100%' }} >
@@ -23,7 +23,7 @@ export class VAbout extends VPage<CMe> {
                     <strong><span className="mr-3">{setting.appName} APP</span></strong>
                 </div>
                 <div className="flex-fill text-center mb-5">
-                    <span className="text-muted mr-3">版本 {appConfig.version}</span>
+                    <span className="text-muted mr-3">{this.t('version')} {appConfig.version}</span>
                 </div>
                 {/* {
                     (this.version && this.version !== appConfig.version) && <>
@@ -36,7 +36,7 @@ export class VAbout extends VPage<CMe> {
                 } */}
 
                 <div className="small text-muted text-center" style={{ width: "100%", position: "absolute", bottom: "4%" }} >
-                    <div className="py-2 h6 text-primary small">《隐私政策》</div>
+                    <div className="py-2 h6 text-primary small">《{this.t('privacypolicy')}》</div>
                 </div>
             </div>
         </Page >

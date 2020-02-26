@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { nav, Image, VPage, Prop, ImageUploader, FA, PropGrid, LMR, Page } from 'tonva';
+import { nav, Image, VPage, LMR, Page } from 'tonva';
 import { CMe } from './CMe';
 import { consts } from 'consts';
 import { observable } from 'mobx';
@@ -23,24 +23,16 @@ export class VMe extends VPage<CMe> {
         return <this.page />
     }
 
-    // private onupload = () => {
-    //     this.openPageElement(<ImageUploader onSaved={this.onSaved} />)
-    // }
     private page = observer(() => {
 
         let { onSet, user, PostTotal, PageTotal, cApp } = this.controller;
         PageTotal = PageTotal ? PageTotal : 0;
         PostTotal = PostTotal ? PostTotal : 0;
         if (!user) return;
-        // let left = <div className="ml-2 border text-center mr-4 p-1">
-        //     {
-        //         this.mediaPath ? <div onClick={onAlterImg} className="border p-1"><img className="h-4c w-4c" src={this.mediaPath} /></div> : <FA className="w-3 p-2 h-3c text-center" name="camera" size="2x" />
-        //     }
-        // </div>
+
         let left = <Image className="ml-2 border text-center w-3c h-3c mx-3" src={user.icon} />
         let right = <div className=" mt-3"><span className="iconfont icon-jiantou1 text-primary px-3"></span></div>
-        //let right = <FA className="align-self-end" name="angle-right" />
-        return <Page header="我的" headerClassName={consts.headerClass}>
+        return <Page header={this.t('me')} headerClassName={consts.headerClass}>
             <LMR
                 left={left}
                 className="bg-white py-2 border-bottom"
@@ -51,10 +43,10 @@ export class VMe extends VPage<CMe> {
                     <div className="small pt-1"><span className="text-muted">ID：</span> {user.id > 10000 ? user.id : String(user.id + 10000).substr(1)}</div>
                 </div>
             </LMR>
-            {branch("贴文", PostTotal, "icon-yewuzongliang", undefined)}
-            {branch("网页", PageTotal, "icon-shuangsechangyongtubiao-", undefined)}
-            {branch("标签", PageTotal, "icon-shuangsechangyongtubiao-", cApp.cTag.showTag)}
-            {branch("设置", null, "icon-shezhi3 ", onSet)}
+            {branch(this.t('post'), PostTotal, "icon-yewuzongliang", undefined)}
+            {branch(this.t('page'), PageTotal, "icon-shuangsechangyongtubiao-", undefined)}
+            {branch(this.t('tag'), PageTotal, "icon-shuangsechangyongtubiao-", cApp.cTag.showTag)}
+            {branch(this.t('set'), null, "icon-shezhi3 ", onSet)}
         </Page>;
     })
 }

@@ -29,24 +29,27 @@ export class VShowPage extends VPage<CPage> {
         let divUser = this.controller.cApp.renderUser(author.id);
         return <Page header={name} headerClassName={consts.headerClass} right={right}>
             <div className="px-3 pt-2 pb-0">
-                <div className="small text-muted p-1">标题 :</div>
+                <div className="small text-muted p-1">{this.t('titel')} :</div>
                 <div className="mb-1 h6 px-3 py-2 bg-white">{titel}</div>
                 <LMR className="mb-3 px-3 small text-black-50" right={date}>
                     {divUser}
                 </LMR>
-                <div className="small text-muted p-1" >链接描述 :</div>
+                <div className="small text-muted p-1" >{this.t('describe')}:</div>
                 <LMR className="mb-3 bg-white px-3 h6">
                     <div className="py-2">{discription}</div>
                 </LMR>
-                <div className="small text-muted p-1" >名字 :</div>
+                <div className="small text-muted p-1" >{this.t('name')} :</div>
                 <pre className="mb-3 px-3 py-4 bg-white h6 border">{name}</pre>
-                <div className="small text-muted p-1">布局模板 :</div>
+                <div className="small text-muted p-1">{this.t('templete')}:</div>
                 <div className=" px-3 py-2 bg-white h6">
                     {tv(template, (values) => <>{values.caption}</>, undefined, () => <small className="text-muted" >[无]</small>)}
                 </div>
             </div>
             <LMR className="px-3 h6" right={addModule}>
-                <div className="mt-2 h6 mb-0" style={{ color: '#0066cc' }} onClick={() => ondisplay()}>我的模块<i className="iconfont icon-jiantouarrow483"></i></div>
+                <div className="mt-2 h6 mb-0" style={{ color: '#0066cc' }} onClick={() => ondisplay()}>
+                    {this.t('mymodule')}
+                    <i className="iconfont icon-jiantouarrow483"></i>
+                </div>
             </LMR>
             {
                 lock ?
@@ -68,8 +71,8 @@ export class VShowPage extends VPage<CPage> {
         let { sort, content } = item;
         return <div className="px-3 pr-4 py-1 d-flex col-12" style={{ borderBottom: '1px dashed #dee2e6' }}>
             <div className="col-11" onClick={() => this.itemClick(item)}>
-                <div className="text-muted">模块：{sort}</div>
-                <div className="text-truncate" style={{ height: '20px' }}>内容：{content}</div>
+                <div className="text-muted">{this.t('module')}：{sort}</div>
+                <div className="text-truncate" style={{ height: '20px' }}>{this.t('content')}：{content}</div>
             </div>
             <div className="px-0 col-1 text-right mr-1">
                 <i className="iconfont icon-shanchu" style={{ fontSize: '25px', color: '#009900' }} onClick={() => this.controller.onRemove(item.id)}></i>
