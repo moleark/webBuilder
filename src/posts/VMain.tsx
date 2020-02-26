@@ -59,7 +59,7 @@ export class VMain extends VPage<CPosts> {
 
         return (
             <Page
-                header="帖文"
+                header={this.t('post')}
                 headerClassName={consts.headerClass}
                 right={right}
                 onScrollBottom={this.onScrollBottom}
