@@ -17,7 +17,7 @@ import { CPosts } from "./CPosts";
 import classNames from "classnames";
 
 export class VMain extends VPage<CPosts> {
-    async open() {}
+    async open() { }
 
     render(): JSX.Element {
         return <this.page />;
@@ -92,19 +92,18 @@ export class VMain extends VPage<CPosts> {
                                     }}
                                 ></div>
                             ) : (
-                                <div
-                                    style={{
-                                        border: "1px solid #007bff",
-                                        marginLeft: "20px",
-                                        width: "20px",
-                                        height: "18px",
-                                        backgroundColor: "#007bff",
-                                        borderRadius: "100%"
-                                    }}
-                                ></div>
-                            )}
+                                    <div
+                                        style={{ border: "1px solid #007bff", width: "20px", height: "18px", backgroundColor: "#007bff", borderRadius: "100%" }}
+                                    ></div>
+                                )}
                         </div>
                         <strong className={classNames("small")}>全部</strong>
+                        <strong
+                            onClick={this.controller.cApp.cTag.showTag}
+                            className={classNames("small")}
+                        >
+                            标签
+                        </strong>
                     </div>
                 </div>
                 <List
