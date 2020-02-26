@@ -42,7 +42,8 @@ export class CApp extends CAppBase {
         this.setRes(res);
 
         let userLoader = async (userId: number): Promise<any> => {
-            return userId + ' * ';
+            let model = await this.uqs.hr.SearchEmployeeByid.query({ _id: userId });
+            return model?.ret?.[0];
         }
         this.userCache = new UserCache(userLoader);
 
