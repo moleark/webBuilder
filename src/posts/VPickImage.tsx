@@ -18,13 +18,18 @@ export class VPickImage extends VPage<CPosts> {
         let right = <SearchBox className="w-80 mt-2 mr-2"
             size='sm'
             onSearch={(key: string) => searchMadiaKey(key)}
-            placeholder="请输入您要查找的图片标题" />;
+            placeholder={this.t('selectpicture')} />;
 
-            let none = <div className="my-3 mx-2 text-warning">
-                            <span className="text-primary" > 没有图片，请添加！</span>
-                        </div>;           
-        return <Page headerClassName={consts.headerClass} header="选择图片" back="close" right={right} onScrollBottom={this.onScrollBottom}>
-            <List before={''} none={none} items={pageMedia} item={{ render: this.renderItem, onClick: this.itemClick }} />
+        let none = <div className="my-3 mx-2 text-warning">
+            <span className="text-primary" > {this.t('nopicture')}！</span>
+        </div>;
+        return <Page headerClassName={consts.headerClass} header={this.t('selectpicture')} back="close" right={right} onScrollBottom={this.onScrollBottom}>
+            <List
+                before={''}
+                none={none}
+                items={pageMedia}
+                item={{ render: this.renderItem, onClick: this.itemClick }}
+            />
         </Page>
     })
 
@@ -42,13 +47,7 @@ export class VPickImage extends VPage<CPosts> {
 
     private itemRow = observer((item: any) => {
         let { caption, author, path } = item;
-        let isMe = Tuid.equ(author, this.controller.user.id);
-        let renderAuthor = (user: User) => {
-            return <span>{isMe ? '' : user.nick || user.name}</span>;
-        };
-        let right = <div className="small text-muted text-right">
-            <div><UserView id={author} render={renderAuthor} /></div>
-        </div>;
+        let right = this.controller.cApp.renderUser(author.id);
         return <LMR className="px-3 py-2 b-1 border-bottom" right={right}>
             <b>{caption}</b>
             <div className="small">{path}</div>

@@ -54,18 +54,18 @@ export class VResacModule extends VPage<CPage> {
     private uiSchema: UiSchema = {
         items: {
             content: {
-                widget: 'textarea', label: '内容', placeholder: '请填写内容', rows: 10
+                widget: 'textarea', label: this.t('content'), placeholder: this.t('content'), rows: 10
             } as UiInputItem,
             sort: {
-                widget: 'updown', label: '排序', placeholder: '请填写数字'
+                widget: 'updown', label: this.t('sort'), placeholder: this.t('sort')
             } as UiInputItem,
             branchType: {
                 widget: 'custom',
-                label: '请选择',
+                label: this.t('pleaseselect'),
                 WidgetClass: Discount,
                 defaultValue: "1",
             } as UiCustom,
-            submit: { widget: 'button', label: '提交' }
+            submit: { widget: 'button', label: this.t('submit') }
         }
     };
 
@@ -81,8 +81,8 @@ export class VResacModule extends VPage<CPage> {
 
     private page = observer(() => {
         let { currentModule } = this.controller;
-        console.log(currentModule,'currentModule')
-        return <Page header="编辑子模块" headerClassName={consts.headerClass}>
+        console.log(currentModule, 'currentModule')
+        return <Page header={this.t('editorsubmodule')} headerClassName={consts.headerClass}>
             <div className="mx-3">
                 <Form ref={v => this.form = v} className="my-3"
                     formData={currentModule}
@@ -95,7 +95,7 @@ export class VResacModule extends VPage<CPage> {
             <div className="px-1 ">
                 <div className="text-content" style={{ textAlign: "center" }}>
                     <button type="button" className="btn btn-primary mx-2"
-                        onClick={this.onClickSaveButton} >保存</button>
+                        onClick={this.onClickSaveButton} >{this.t('submit')}</button>
                 </div>
             </div>
         </Page>

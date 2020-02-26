@@ -1,18 +1,7 @@
 import * as React from "react";
 import { consts } from "consts";
 import { observer } from "mobx-react";
-import {
-    VPage,
-    Page,
-    FA,
-    List,
-    EasyTime,
-    tv,
-    UserView,
-    User,
-    Tuid,
-    SearchBox
-} from "tonva";
+import { VPage, Page, FA, List, EasyTime, tv, SearchBox } from "tonva";
 import { CPosts } from "./CPosts";
 import classNames from "classnames";
 
@@ -41,7 +30,7 @@ export class VMain extends VPage<CPosts> {
                     className="mt-1 w-100"
                     size="sm"
                     onSearch={(key: string) => searchPostsKey(key, "")}
-                    placeholder="请输入您要查找的标题"
+                    placeholder={this.t('searchpost')}
                 />
                 <div onClick={onAdd}>
                     <span
@@ -53,10 +42,10 @@ export class VMain extends VPage<CPosts> {
         );
         let none = (
             <div className="my-3 mx-2">
-                <span className="text-muted small">[无贴文]</span>
+                <span className="text-muted small">[{this.t('noposts')}]</span>
             </div>
         );
-
+        let hreader:any = this.t('post')
         return (
             <Page
                 header={this.t('post')}
@@ -70,26 +59,15 @@ export class VMain extends VPage<CPosts> {
                         onClick={e => this.onBtn()}
                     >
                         <strong className={classNames("small text-right")}>
-                            我的
+                            {this.t('me')}
                         </strong>
                         <div
                             className="mx-2"
-                            style={{
-                                width: "40px",
-                                height: "18px",
-                                backgroundColor: "rgb(211, 209, 209)",
-                                borderRadius: "20px"
-                            }}
+                            style={{ width: "40px", height: "18px", backgroundColor: "rgb(211, 209, 209)",  borderRadius: "20px" }}
                         >
                             {this.controller.flg ? (
                                 <div
-                                    style={{
-                                        border: "1px solid #007bff",
-                                        width: "20px",
-                                        height: "18px",
-                                        backgroundColor: "#007bff",
-                                        borderRadius: "100%"
-                                    }}
+                                    style={{ border: "1px solid #007bff",  width: "20px", height: "18px", backgroundColor: "#007bff", borderRadius: "100%"}}
                                 ></div>
                             ) : (
                                     <div
@@ -97,12 +75,8 @@ export class VMain extends VPage<CPosts> {
                                     ></div>
                                 )}
                         </div>
-                        <strong className={classNames("small")}>全部</strong>
-                        <strong
-                            onClick={this.controller.cApp.cTag.showTag}
-                            className={classNames("small")}
-                        >
-                            标签
+                        <strong className={classNames("small")}>
+                            {this.t('all')}
                         </strong>
                     </div>
                 </div>
@@ -127,12 +101,6 @@ export class VMain extends VPage<CPosts> {
     private itemRow = observer((item: any) => {
         if (!this.controller.user) return;
         let { image, caption, discription, author, $update, $create } = item;
-		let isMe = Tuid.equ(author, this.controller.user.id);
-		/*
-        let renderAuthor = (user: User) => {
-            return <span>{isMe ? "" : user.nick || user.name}</span>;
-		};
-		*/
 		let $c:Date = $create, $u:Date = $update;
 		let now = Date.now(), create=$c.getTime(), update=$u.getTime();
 		let updated: boolean;
@@ -147,8 +115,8 @@ export class VMain extends VPage<CPosts> {
 			let uYear = $u.getFullYear(), uMonth = $u.getMonth(), uDate = $u.getDate();
 			updated = cYear !== uYear || cMonth !== uMonth || cDate !== uDate;
 		}
-		//let divUser = <UserView id={author} render={renderAuthor} />;
-		let divUser = this.controller.cApp.renderUser(author);
+
+        let divUser = this.controller.cApp.renderUser(author.id);
         return (
             <div className="pl-2 pl-sm-3 pr-2 pr-sm-3 pt-2 pb-3 d-flex">
                 <div
@@ -198,7 +166,9 @@ export class VMain extends VPage<CPosts> {
 							className="btn btn-sm btn-outline-primary"
 							onClick={() => this.controller.onPreviewPost(item.id)}
 						>
-							<span className="d-none d-sm-inline">&ensp;</span>预览<span className="d-none d-sm-inline">&ensp;</span>
+							<span className="d-none d-sm-inline">&ensp;</span>
+                            {this.t('preview')}
+                            <span className="d-none d-sm-inline">&ensp;</span>
 						</button>
 					</div>
                 </div>

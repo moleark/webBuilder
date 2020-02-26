@@ -19,18 +19,15 @@ export class VShow extends VPage<CTemplets> {
         let date = <span><EasyTime date={$update} /></span>;
         let isMe = Tuid.equ(author, this.controller.user.id);
         let right = isMe && <div onClick={() => this.openVPage(VEdit, templet)}><span className="iconfont icon-xiugai1 mr-2" style={{ fontSize: "26px", color: "white" }}></span></div>
-        // let right = isMe && <button className="btn btn-sm btn-success mr-2 align-self-center" ><FA name="pencil-square-o" /></button>;
-        let renderAuthor = (user: User) => {
-            return <span>{isMe ? '[我]' : user.nick || user.name}</span>;
-        };
+        let divUser = this.controller.cApp.renderUser(author.id);
         return <Page header="模板内容" headerClassName={consts.headerClass} right={right} >
             <div className="p-3">
-                <div className="mb-1 h5 px-3 py-2 bg-white">{caption}</div>    
+                <div className="mb-1 h5 px-3 py-2 bg-white">{caption}</div>
                 <LMR className="mb-3 px-3 small text-black-50" right={date}>
-                    <UserView id={author} render={renderAuthor} />
-                </LMR>                
+                    {divUser}
+                </LMR>
                 <div className="small text-muted p-1">PC模板</div>
-                <pre className="mb-3 px-3 py-4 bg-white border">{content}</pre>       
+                <pre className="mb-3 px-3 py-4 bg-white border">{content}</pre>
                 <div className="small text-muted p-1">移动端模板</div>
                 <pre className="mb-3 px-3 py-4 bg-white">{contentModule}</pre>
             </div>

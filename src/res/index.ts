@@ -1,7 +1,6 @@
-import { en } from "./en";
-import { zh } from "./zh";
+import { en, zh } from "./en";
 
 export const res = {
-	$zh: zh,
-	$en: en,
+    $zh: zh,
+    $en: en,
 }

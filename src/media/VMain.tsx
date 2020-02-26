@@ -19,36 +19,35 @@ export class VMain extends VPage<CMedia> {
             <SearchBox className="w-80 mt-1 mr-2"
                 size='sm'
                 onSearch={(key: string) => searchMadiaKey(key)}
-                placeholder="请输入图片标题" />
+                placeholder={this.t('searchpicture')} />
             <div onClick={onAddClick}>
                 <span className="ml-2 iconfont icon-jiahao1 mr-2"
                     style={{ fontSize: "26px", color: "white" }}>
                 </span>
             </div>
-		</div>;
-		let {items, loading} = pageMedia;
-		let divItems:any;
-		if (!items) {
-			divItems = (loading === true)?
-				<div className="m-5"><Loading /></div>
-				:
-				<div className="my-3 mx-2 text-warning">
-					<span className="text-primary" >[无图片]</span>
-				</div>;
-		}
-		else {
-			divItems = items.map((v, index) => {
-				return this.renderItem(v, index)
-			});
-		}
-        return <Page header="图片" headerClassName={consts.headerClass} right={right} onScrollBottom={this.onScrollBottom}>
+        </div>;
+        let { items, loading } = pageMedia;
+        let divItems: any;
+        if (!items) {
+            divItems = (loading === true) ?
+                <div className="m-5"><Loading /></div>
+                :
+                <div className="my-3 mx-2 text-warning">
+                    <span className="text-primary" >{this.t('nopicture')}</span>
+                </div>;
+        }
+        else {
+            divItems = items.map((v, index) => {
+                return this.renderItem(v, index)
+            });
+        }
+        return <Page header={this.t('picture')} headerClassName={consts.headerClass} right={right} onScrollBottom={this.onScrollBottom}>
             <div className="mx-3">
                 <div className="row row-cols-2 row-cols-sm-3 row-cols-md-4">
                     {divItems}
                 </div>
             </div>
         </Page>;
-        // <List before={''} none={none} items={pageMedia} item={{ render: this.renderItem }} />
     })
 
     private onScrollBottom = async () => {
@@ -57,7 +56,7 @@ export class VMain extends VPage<CMedia> {
 
     private copyClick = (e: any) => {
         copy(e.target.previousElementSibling.innerText)
-        alert('拷贝成功')
+        alert(this.t('copysuccess'))
     }
     private preview = (path: any) => {
         window.open(path, '_blank')
@@ -84,17 +83,9 @@ export class VMain extends VPage<CMedia> {
                 style={{ fontWeight: 550, padding: '0 5px', fontSize: '12px' }}
                 className="mt-2 btn btn-outline-primary"
                 onClick={this.copyClick}>
-                拷贝
+                {this.t('copy')}
             </button >
-
         </div>;
-		/*
-            <button style={{ fontWeight: 550, padding: '0 5px', fontSize: '12px' }}
-			className="mt-2 btn btn-outline-primary ml-2"
-			onClick={() => this.preview(item.path)}
-		>
-			预览
-		</button>
-		*/
+
     }
 }

@@ -21,7 +21,7 @@ export class VEdit extends VPage<CMedia> {
     }
 
     private get mediaId() { return this.media && this.media.id; }
-    private getMediaPath(resId:string):string { return nav.resUrl + (resId.substr(1)) }
+    private getMediaPath(resId: string): string { return nav.resUrl + (resId.substr(1)) }
 
     private onFormButtonClick = async (name: string, context: Context) => {
         let param = _.clone(context.form.data);
@@ -32,8 +32,8 @@ export class VEdit extends VPage<CMedia> {
 
     private uiSchema: UiSchema = {
         items: {
-            caption: { widget: 'text', label: '标题', placeholder: '图片标题' } as UiInputItem,
-            submit: { widget: 'button', label: '提交' }
+            caption: { widget: 'text', label: this.t('title') } as UiInputItem,
+            submit: { widget: 'button', label: this.t('submit') }
         }
     };
 
@@ -41,8 +41,8 @@ export class VEdit extends VPage<CMedia> {
         { name: 'caption', type: 'string', required: true },
     ];
 
-    private onSaved = (resId:string):Promise<void> => {
-        this.mediaPath= this.getMediaPath(resId);
+    private onSaved = (resId: string): Promise<void> => {
+        this.mediaPath = this.getMediaPath(resId);
         this.closePage();
         return;
     }
@@ -53,23 +53,23 @@ export class VEdit extends VPage<CMedia> {
     }
 
     private page = observer(() => {
-        let image:any;
-        let saveButton:any;
-         if (this.mediaPath) {
+        let image: any;
+        let saveButton: any;
+        if (this.mediaPath) {
             image = <div className="m-3 text-center w-max-30c border"><img className="w-8c h-8c border" src={this.mediaPath} /></div>;
             saveButton = <div className="px-1 ">
                 <div className="text-content text-center">
-                    <button type="button" className="btn btn-primary mx-2 col-11" onClick={this.onAddSalesTask} >保存</button>
+                    <button type="button" className="btn btn-primary mx-2 col-11" onClick={this.onAddSalesTask} >{this.t('save')}</button>
                 </div>
             </div>;
-         }
-         else {
+        }
+        else {
             image = <div className="text-content text-center">
-                <button className="btn btn-primary" onClick={this.onUpload}>上传图片</button>
+                <button className="btn btn-primary" onClick={this.onUpload}>{this.t('uploadpicture')}</button>
             </div>;
-         }
+        }
 
-        return <Page header="编辑图片" headerClassName={consts.headerClass}>
+        return <Page header={this.t('editorpicture')} headerClassName={consts.headerClass}>
             <div className="mx-3">
                 <Form ref={v => this.form = v} className="my-3"
                     formData={this.media}

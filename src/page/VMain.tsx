@@ -15,14 +15,10 @@ export class VMain extends VPage<CPage> {
     private page = observer(() => {
         let { onAdd, searchwebPage } = this.controller;
         let right = <div onClick={onAdd}><span className="iconfont icon-jiahao1 mr-2 cursor-pointer" style={{ fontSize: "26px", color: "white" }}></span></div>
-        return <Page header="网页" headerClassName={consts.headerClass} right={right} >
+        return <Page header={this.t('page')} headerClassName={consts.headerClass} right={right} >
             <List items={searchwebPage} item={{ render: this.renderItem }} />
         </Page>;
     });
-
-    // private itemClick = (item: any) => {
-    //     this.controller.showDetail(item.id);
-    // }
 
     private renderItem = (item: any, index: number) => {
         return <this.itemRow {...item} />
@@ -30,18 +26,7 @@ export class VMain extends VPage<CPage> {
 
     private itemRow = observer((item: any) => {
         let { author, name, $update, titel } = item;
-        let isMe = Tuid.equ(author, this.controller.user.id);
-        let renderAuthor = (user: User) => {
-            return <span>{isMe ? '' : user.nick || user.name}</span>;
-        };
-        let right = <div className="small text-muted text-right ">
-            <div className="small pt-1"><UserView id={author} render={renderAuthor} /></div>
-            <div className="small"><EasyTime date={$update} /></div>
-        </div>;
-
-        // return <LMR className="p-2 px-3 border-bottom" right={right}>
-        //     
-        // </LMR>;
+        let divUser = this.controller.cApp.renderUser(author.id);
         return <div className="px-2 d-flex p-1 cursor-pointer">
             <div className="col-10 d-flex" onClick={() => this.controller.showDetail(item.id)}>
                 <div>
@@ -53,12 +38,10 @@ export class VMain extends VPage<CPage> {
                 <button
                     style={{ fontWeight: 550, padding: '0 5px', fontSize: '12px' }} className="mt-2 btn btn-outline-primary"
                     onClick={() => this.controller.onPreviewPage(item.id)}
-                >预览
-                 </button>
-
-                <div className=" small pt-1 text-truncate"><UserView id={author} render={renderAuthor} /></div>
+                >{this.t('preview')}
+                </button>
+                <div className=" small pt-1 text-truncate">{divUser}</div>
                 <div className=" small"><EasyTime date={$update} /></div>
-
             </div>
         </div>
     });

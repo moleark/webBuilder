@@ -40,24 +40,24 @@ export class VEdit extends VPage<CPosts> {
 
     private uiSchema: UiSchema = {
         items: {
-            caption: { widget: 'text', label: '标题' },
+            caption: { widget: 'text', label: this.t('title') },
 
             discription: {
-                widget: 'textarea', label: '描述', placeholder: '链接上用描述', rows: 3
+                widget: 'textarea', label: this.t('describe'), placeholder: this.t('describe'), rows: 3
             } as UiInputItem,
 
             content: {
-                widget: 'textarea', label: '内容', placeholder: '请填写模板内容', rows: 8
+                widget: 'textarea', label: this.t('content'), placeholder: this.t('content'), rows: 8
             } as UiInputItem,
 
             image: {
-                widget: 'id', label: '链接图片', pickId: this.controller.pickImage, Templet: this.imageContent
+                widget: 'id', label: this.t('picture'), pickId: this.controller.pickImage, Templet: this.imageContent
             } as UiIdItem,
 
             template: {
-                widget: 'id', label: '布局模板', pickId: this.controller.pickTemplate, Templet: this.templateContent
+                widget: 'id', label: this.t('template'), pickId: this.controller.pickTemplate, Templet: this.templateContent
             } as UiIdItem,
-            submit: { widget: 'button', label: '提交' }
+            submit: { widget: 'button', label: this.t('submit') }
         }
     };
 
@@ -75,7 +75,7 @@ export class VEdit extends VPage<CPosts> {
 
     private page = observer(() => {
         let { current } = this.controller;
-        return <Page header="编辑帖文" headerClassName={consts.headerClass}>
+        return <Page header={this.t('editorpost')} headerClassName={consts.headerClass}>
             <div className="mx-3">
                 <Form ref={v => this.form = v} className="my-3"
                     formData={current}
@@ -88,7 +88,7 @@ export class VEdit extends VPage<CPosts> {
             <div className="px-1 ">
                 <div className="text-content" style={{ textAlign: "center" }}>
                     <button type="button" className="btn btn-primary mx-2"
-                        onClick={this.onClickSaveButton} >提交</button>
+                        onClick={this.onClickSaveButton} >{this.t('submit')}</button>
                 </div>
             </div>
         </Page>

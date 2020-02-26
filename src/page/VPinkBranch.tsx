@@ -19,9 +19,9 @@ export class VPickBranch extends VPage<CPage> {
         let right = <SearchBox className="w-80 mt-2 mr-2"
             size='sm'
             onSearch={(key: string) => searchBranchKey(key)}
-            placeholder="模板" />;
+            placeholder={this.t('templete')} />;
 
-        return <Page header="选择模板" headerClassName={consts.headerClass} back="close" right={right} onScrollBottom={this.onScrollBottom} >
+        return <Page header={this.t('selecttemplate')} headerClassName={consts.headerClass} back="close" right={right} onScrollBottom={this.onScrollBottom} >
             <List items={searchBranch} item={{ render: this.renderItem, onClick: this.itemClick }} />
         </Page>
     });
@@ -39,19 +39,10 @@ export class VPickBranch extends VPage<CPage> {
     };
 
     private itemRow = observer((item: any) => {
-        let { author, content } = item;
-        let isMe = Tuid.equ(author, this.controller.user.id);
-        let renderAuthor = (user: User) => {
-            return <span>{isMe ? '' : user.nick || user.name}</span>;
-        };
-        let right = <div className="small text-muted text-right ">
-            <div><UserView id={author} render={renderAuthor} /></div>
-        </div>;
-        // return <LMR className="px-3 py-2 text-muted border bg-white" right={right}>
-        //     <b style={{height:'80px'}}>{content}</b>
-        // </LMR>;
+        let { content } = item;
+
         return <div className="px-3 py-2 text-muted col-12 border bg-white">
-            <div className="  " style={{height:'50px',overflow:'auto'}}>
+            <div className="  " style={{ height: '50px', overflow: 'auto' }}>
                 {content}
             </div>
         </div>
