@@ -127,10 +127,12 @@ export class VMain extends VPage<CPosts> {
     private itemRow = observer((item: any) => {
         if (!this.controller.user) return;
         let { image, caption, discription, author, $update, $create } = item;
-        let isMe = Tuid.equ(author, this.controller.user.id);
+		let isMe = Tuid.equ(author, this.controller.user.id);
+		/*
         let renderAuthor = (user: User) => {
             return <span>{isMe ? "" : user.nick || user.name}</span>;
 		};
+		*/
 		let $c:Date = $create, $u:Date = $update;
 		let now = Date.now(), create=$c.getTime(), update=$u.getTime();
 		let updated: boolean;
@@ -145,6 +147,8 @@ export class VMain extends VPage<CPosts> {
 			let uYear = $u.getFullYear(), uMonth = $u.getMonth(), uDate = $u.getDate();
 			updated = cYear !== uYear || cMonth !== uMonth || cDate !== uDate;
 		}
+		//let divUser = <UserView id={author} render={renderAuthor} />;
+		let divUser = this.controller.cApp.renderUser(author);
         return (
             <div className="pl-2 pl-sm-3 pr-2 pr-sm-3 pt-2 pb-3 d-flex">
                 <div
@@ -171,20 +175,10 @@ export class VMain extends VPage<CPosts> {
                         )
                     )}
 					</div>
-                    <div className="cursor-pointer">
-                        <b>
-                            {caption}
-                        </b>
-                        <div
-                            className="small pt-1 text-muted overflow-hidden"
-                        >
-                            {discription}
-                        </div>
-						<div className="d-flex small">
-							<div className="pt-1 text-truncate">
-								<UserView id={author} render={renderAuthor} />
-							</div>
-						</div>
+                    <div className="cursor-pointer d-flex flex-column">
+						<div><b>{caption}</b></div>
+                        <div className="small pt-1 text-muted flex-fill">{discription}</div>
+						<div className="small pt-1">{divUser}</div>
                     </div>
                 </div>
                 <div className="small col-2 text-muted px-0 d-flex flex-column">
@@ -204,7 +198,7 @@ export class VMain extends VPage<CPosts> {
 							className="btn btn-sm btn-outline-primary"
 							onClick={() => this.controller.onPreviewPost(item.id)}
 						>
-							&ensp;预览&ensp;
+							<span className="d-none d-sm-inline">&ensp;</span>预览<span className="d-none d-sm-inline">&ensp;</span>
 						</button>
 					</div>
                 </div>
