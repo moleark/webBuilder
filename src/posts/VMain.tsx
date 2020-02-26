@@ -48,7 +48,7 @@ export class VMain extends VPage<CPosts> {
         let hreader:any = this.t('post')
         return (
             <Page
-                header={hreader}
+                header={this.t('post')}
                 headerClassName={consts.headerClass}
                 right={right}
                 onScrollBottom={this.onScrollBottom}
