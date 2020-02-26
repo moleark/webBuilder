@@ -10,6 +10,8 @@ import { CAppBase, IConstructor, UserCache } from "tonva";
 import { CTemplets } from "./templets/CTemplets";
 import { setting } from "configuration";
 import { CTag } from "tag/CTag";
+import { observer } from 'mobx-react';
+import { res } from 'res';
 
 export class CApp extends CAppBase {
     get uqs(): UQs {
@@ -37,6 +39,8 @@ export class CApp extends CAppBase {
             setting.previewUrl = "https://tv.jkchemical.com/jk-web";
 		}
 		
+		this.setRes(res);
+
 		let userLoader = async (userId:number):Promise<any> => {
 			return userId + ' * ';
 		}
@@ -55,9 +59,13 @@ export class CApp extends CAppBase {
         this.openVPage(VMain, initTabName);
 	}
 	
-	renderUser(userId: number):JSX.Element {
-		let val = this.userCache.getValue(userId);
-		if (!val) return;
-		return <>{val}</>;
+	renderUser(userId:number) {
+		return <this._renderUser userId={userId} />;
 	}
+	
+	private _renderUser = observer((props: {userId: number}):JSX.Element => {
+		let val = this.userCache.getValue(props.userId);
+		if (!val) return;
+		return <span style={{color: '#99f'}}>{val}</span>;
+	});
 }
