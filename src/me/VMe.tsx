@@ -35,7 +35,7 @@ export class VMe extends VPage<CMe> {
         //         this.mediaPath ? <div onClick={onAlterImg} className="border p-1"><img className="h-4c w-4c" src={this.mediaPath} /></div> : <FA className="w-3 p-2 h-3c text-center" name="camera" size="2x" />
         //     }
         // </div>
-        let left = <Image className="ml-2 border text-center mr-4 p-1" src={user.icon} />
+        let left = <Image className="ml-2 border text-center mr-4 p-1 w-4c h-4c" src={user.icon} />
         let right = <div style={{ padding: '10px' }}><span className="iconfont icon-jiantou1" style={{ fontSize: '20px' }}></span></div>
         //let right = <FA className="align-self-end" name="angle-right" />
         return <Page header="我的" headerClassName={consts.headerClass}>
@@ -50,8 +50,9 @@ export class VMe extends VPage<CMe> {
                 </div>
             </LMR>
             <div className="bg-white py-2 d-flex px-3 mt-1" style={{ justifyContent: 'space-between' }}>
-
-                <div className="iconfont icon-yewuzongliang text-primary" style={{ fontSize: '16px' }}><span className="ml-1">贴文</span>
+                <div className="h3 iconfont icon-yewuzongliang text-primary">
+					<span className="iconfont icon-yewuzongliang" />
+					<span className="ml-1">贴文</span>
                     <div className="text-muted " style={{ fontSize: '12px' }}>浏览量：{PostTotal}</div>
                 </div>
                 <div className="text-primary small" style={{ padding: ' 10px 0' }}><span className="ml-2 iconfont icon-jiantou1" style={{ fontSize: '16px' }}></span></div>

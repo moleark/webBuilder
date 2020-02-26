@@ -127,18 +127,32 @@ export class VMain extends VPage<CPosts> {
 
     private itemRow = observer((item: any) => {
         if (!this.controller.user) return;
-        let { image, caption, discription, author, $update } = item;
+        let { image, caption, discription, author, $update, $create } = item;
         let isMe = Tuid.equ(author, this.controller.user.id);
         let renderAuthor = (user: User) => {
             return <span>{isMe ? "" : user.nick || user.name}</span>;
-        };
+		};
+		let $c:Date = $create, $u:Date = $update;
+		let now = Date.now(), create=$c.getTime(), update=$u.getTime();
+		let updated: boolean;
+		if (update === create) {
+			updated = false;
+		}
+		else if (now - create < 24*3600*1000) {
+			updated = true;
+		}
+		else {
+			let cYear = $c.getFullYear(), cMonth = $c.getMonth(), cDate = $c.getDate();
+			let uYear = $u.getFullYear(), uMonth = $u.getMonth(), uDate = $u.getDate();
+			updated = cYear !== uYear || cMonth !== uMonth || cDate !== uDate;
+		}
         return (
-            <div className="px-3 d-flex">
+            <div className="pl-2 pr-3 d-flex">
                 <div
                     className="col-10 d-flex p-0"
                     onClick={() => this.controller.showDetail(item.id)}
                 >
-					<div className="mr-4 my-2 w-5c w-min-5c h-5c h-min-5c">
+					<div className="mr-3 my-2 w-5c w-min-5c h-5c h-min-5c">
                     {tv(
                         image,
                         values => <img
@@ -172,19 +186,29 @@ export class VMain extends VPage<CPosts> {
 							<div className="pt-1 text-truncate">
 								<UserView id={author} render={renderAuthor} />
 							</div>
-							<div className="">
-								<EasyTime date={$update} />
-							</div>
 						</div>
                     </div>
                 </div>
-                <div className="small col-2 text-muted text-right pt-3">
-                    <button
-                        className="btn btn-outline-primary"
-                        onClick={() => this.controller.onPreviewPost(item.id)}
-                    >
-                        预览
-                    </button>
+                <div className="small col-2 text-muted py-2 px-0 d-flex flex-column">
+					<div className="flex-fill text-right">
+						<div>
+							<EasyTime date={$create} />
+						</div>
+						{
+							updated === true && <div>
+								<FA name="pencil-square-o"/> <EasyTime date={$update} />
+							</div>
+						}
+					</div>
+
+					<div className="text-right">
+						<button
+							className="btn btn-sm btn-outline-primary"
+							onClick={() => this.controller.onPreviewPost(item.id)}
+						>
+							&emsp;预览&emsp;
+						</button>
+					</div>
                 </div>
             </div>
         );

@@ -28,7 +28,7 @@ export class VMain extends VPage<CMedia> {
 		</div>;
 		let {items, loading} = pageMedia;
 		let divItems:any;
-		if (items === undefined) {
+		if (!items) {
 			divItems = (loading === true)?
 				<div className="m-5"><Loading /></div>
 				:

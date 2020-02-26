@@ -16,7 +16,7 @@ export class CPosts extends CUqBase {
     @observable pageTemplate: QueryPager<any>;
     @observable pagePosts: QueryPager<any>;
     @observable pageMedia: QueryPager<any>;
-    @observable items: any[];
+    //@observable items: any[];
     @observable current: any;
     @observable flg: boolean = true;
 
@@ -84,12 +84,15 @@ export class CPosts extends CUqBase {
     }
 
     loadList = async () => {
+		this.searchPostsKey("", this.flg? nav.user : 0);
+		/*
         if (this.flg) {
             this.searchPostsKey("", nav.user);
         } else {
             this.searchPostsKey("", 0);
-        }
-        this.items = await this.uqs.webBuilder.Post.search("", 0, 100);
+		}
+		*/
+        //this.items = await this.uqs.webBuilder.Post.search("", 0, 100);
     };
 
     showDetail = async (id: number) => {
