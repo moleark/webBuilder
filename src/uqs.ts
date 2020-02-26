@@ -1,9 +1,6 @@
 import { Tuid, Map, Query, Action, Sheet, Book, Tag } from "tonva";
 
-export interface UqOrder {
-    //a: Tuid;
-    //b: Tuid;
-    SetCart: Action;
+export interface UqHr {
 }
 
 export interface WebBuilder {
@@ -31,6 +28,6 @@ export interface WebBuilder {
 }
 
 export interface UQs {
-    order: UqOrder;
+    hr: UqHr;
     webBuilder: WebBuilder;
 }

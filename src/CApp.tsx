@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { UQs } from "./uqs";
 import { CMe } from "./me/CMe";
 import { VMain } from "ui/main";
@@ -5,7 +6,7 @@ import { CUqBase } from "./CBase";
 import { CPage } from "page/CPage";
 import { CPosts } from "./posts/CPosts";
 import { CMedia } from "./media/CMedia";
-import { CAppBase, IConstructor } from "tonva";
+import { CAppBase, IConstructor, UserCache } from "tonva";
 import { CTemplets } from "./templets/CTemplets";
 import { setting } from "configuration";
 import { CTag } from "tag/CTag";
@@ -20,7 +21,9 @@ export class CApp extends CAppBase {
     cMedia: CMedia;
     cTemplets: CTemplets;
     cPage: CPage;
-    cTag: CTag;
+	cTag: CTag;
+	
+	private userCache: UserCache<any>;
 
     protected newC<T extends CUqBase>(type: IConstructor<T>): T {
         return new type(this);
@@ -32,7 +35,12 @@ export class CApp extends CAppBase {
             setting.previewUrl = "https://web.jkchemical.com";
         } else {
             setting.previewUrl = "https://tv.jkchemical.com/jk-web";
-        }
+		}
+		
+		let userLoader = async (userId:number):Promise<any> => {
+			return userId + ' * ';
+		}
+		this.userCache = new UserCache(userLoader);
 
         this.cMe = this.newC(CMe);
         this.cPosts = this.newC(CPosts);
@@ -45,5 +53,11 @@ export class CApp extends CAppBase {
 
     showMain(initTabName?: string) {
         this.openVPage(VMain, initTabName);
-    }
+	}
+	
+	renderUser(userId: number):JSX.Element {
+		let val = this.userCache.getValue(userId);
+		if (!val) return;
+		return <>{val}</>;
+	}
 }
