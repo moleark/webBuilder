@@ -45,7 +45,6 @@ export class VMain extends VPage<CPosts> {
                 <span className="text-muted small">[{this.t('noposts')}]</span>
             </div>
         );
-        let hreader:any = this.t('post')
         return (
             <Page
                 header={this.t('post')}
@@ -99,24 +98,30 @@ export class VMain extends VPage<CPosts> {
     };
 
     private itemRow = observer((item: any) => {
-        if (!this.controller.user) return;
+		let {user} = this.controller;
+        if (!user) return;
         let { image, caption, discription, author, $update, $create } = item;
 		let $c:Date = $create, $u:Date = $update;
-		let now = Date.now(), create=$c.getTime(), update=$u.getTime();
-		let updated: boolean;
-		if (update === create) {
-			updated = false;
-		}
-		else if (now - create < 24*3600*1000) {
-			updated = true;
-		}
-		else {
-			let cYear = $c.getFullYear(), cMonth = $c.getMonth(), cDate = $c.getDate();
-			let uYear = $u.getFullYear(), uMonth = $u.getMonth(), uDate = $u.getDate();
-			updated = cYear !== uYear || cMonth !== uMonth || cDate !== uDate;
+		let updated: boolean = false;
+		if ($c && $u) {
+			let now = Date.now(), create=$c.getTime(), update=$u.getTime();
+			if (update === create) {
+				updated = false;
+			}
+			else if (now - create < 24*3600*1000) {
+				updated = true;
+			}
+			else {
+				let cYear = $c.getFullYear(), cMonth = $c.getMonth(), cDate = $c.getDate();
+				let uYear = $u.getFullYear(), uMonth = $u.getMonth(), uDate = $u.getDate();
+				updated = cYear !== uYear || cMonth !== uMonth || cDate !== uDate;
+			}
 		}
 
-        let divUser = this.controller.cApp.renderUser(author.id);
+		let divUser = user.id === author.id?
+			<span className="text-warning">[自己]</span>
+			: 
+			this.controller.cApp.renderUser(author.id);
         return (
             <div className="pl-2 pl-sm-3 pr-2 pr-sm-3 pt-2 pb-3 d-flex">
                 <div

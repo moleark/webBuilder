@@ -65,9 +65,17 @@ export class CApp extends CAppBase {
     }
 
     private _renderUser = observer((props: { userId: number }): JSX.Element => {
-        let val = this.userCache.getValue(props.userId);
-        let strongid = props.userId.toString();
-        if (!val) { return <span className="author">{strongid}</span> };
+		let {userId} = props;
+        let val = this.userCache.getValue(userId);
+        switch (typeof val) {
+		case 'undefined':
+		case 'number':
+			return <span className="author">{userId}</span> 
+		};
         return <span className="author">{val.name}</span>;
-    });
+	});
+	
+	useUser(userId: number) {
+		this.userCache.use(userId);
+	}
 }

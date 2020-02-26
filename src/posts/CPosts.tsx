@@ -26,7 +26,10 @@ export class CPosts extends CUqBase {
     searchPostsKey = async (key: string, author: any) => {
         this.pagePosts = new QueryPager(this.uqs.webBuilder.SearchPost, 15, 30);
         let Auser = this.flg ? nav.user : 0;
-        this.pagePosts.first({ key: key, author: Auser });
+		await this.pagePosts.first({ key: key, author: Auser });
+		for (let item of this.pagePosts.items) {
+			this.cApp.useUser(item.author);
+		}
     };
 
     /* posts模板查询*/
