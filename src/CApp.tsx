@@ -11,6 +11,7 @@ import { CTemplets } from "./templets/CTemplets";
 import { setting } from "configuration";
 import { CTag } from "tag/CTag";
 import { observer } from 'mobx-react';
+import { res } from 'res';
 
 export class CApp extends CAppBase {
     get uqs(): UQs {
@@ -38,11 +39,11 @@ export class CApp extends CAppBase {
             setting.previewUrl = "https://tv.jkchemical.com/jk-web";
         }
 
-        let userLoader = async (userId: number): Promise<any> => {
-            let model = await this.uqs.hr.SearchEmployeeByid.query({ _id: userId });
-            return model?.ret?.[0];
-        }
+        this.setRes(res);
 
+        let userLoader = async (userId: number): Promise<any> => {
+            return userId + ' * ';
+        }
         this.userCache = new UserCache(userLoader);
 
         this.cMe = this.newC(CMe);
