@@ -41,7 +41,7 @@ export class VMain extends VPage<CPosts> {
                     className="mt-1 w-100"
                     size="sm"
                     onSearch={(key: string) => searchPostsKey(key, "")}
-                    placeholder="请输入您要查找的标题"
+                    placeholder="查找标题"
                 />
                 <div onClick={onAdd}>
                     <span
@@ -121,12 +121,6 @@ export class VMain extends VPage<CPosts> {
     private itemRow = observer((item: any) => {
         if (!this.controller.user) return;
         let { image, caption, discription, author, $update, $create } = item;
-		let isMe = Tuid.equ(author, this.controller.user.id);
-		/*
-        let renderAuthor = (user: User) => {
-            return <span>{isMe ? "" : user.nick || user.name}</span>;
-		};
-		*/
 		let $c:Date = $create, $u:Date = $update;
 		let now = Date.now(), create=$c.getTime(), update=$u.getTime();
 		let updated: boolean;
@@ -141,8 +135,8 @@ export class VMain extends VPage<CPosts> {
 			let uYear = $u.getFullYear(), uMonth = $u.getMonth(), uDate = $u.getDate();
 			updated = cYear !== uYear || cMonth !== uMonth || cDate !== uDate;
 		}
-		//let divUser = <UserView id={author} render={renderAuthor} />;
-		let divUser = this.controller.cApp.renderUser(author);
+
+        let divUser = this.controller.cApp.renderUser(author.id);
         return (
             <div className="pl-2 pl-sm-3 pr-2 pr-sm-3 pt-2 pb-3 d-flex">
                 <div

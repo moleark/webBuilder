@@ -16,14 +16,14 @@ export class VPickTemplate extends VPage<CPosts> {
 
     private page = observer(() => {
         let { pageTemplate, searchTemplateKey } = this.controller;
-        
+
         let right = <SearchBox className="w-80 mt-2 mr-2"
             size='sm'
             onSearch={(key: string) => searchTemplateKey(key)}
             placeholder="模板" />;
-            let none = <div className="my-3 mx-2 text-warning">
-                            <span className="text-primary" > 没有模板，请添加！</span>
-                        </div>;
+        let none = <div className="my-3 mx-2 text-warning">
+            <span className="text-primary" > 没有模板，请添加！</span>
+        </div>;
         return <Page headerClassName={consts.headerClass} header="选择模板" back="close" right={right} onScrollBottom={this.onScrollBottom} >
             <List before={''} none={none} items={pageTemplate} item={{ render: this.renderItem, onClick: this.itemClick }} />
         </Page>
@@ -43,12 +43,9 @@ export class VPickTemplate extends VPage<CPosts> {
 
     private itemRow = observer((item: any) => {
         let { caption, author } = item;
-        let isMe = Tuid.equ(author, this.controller.user.id);
-        let renderAuthor = (user: User) => {
-            return <span>{isMe ? '' : user.nick || user.name}</span>;
-        };
+        let divUser = this.controller.cApp.renderUser(author.id);
         let right = <div className="small text-muted text-right ">
-            <div><UserView id={author} render={renderAuthor} /></div>
+            <div>{divUser}</div>
         </div>;
         return <LMR className="px-3 py-2 text-muted border-bottom bg-white" right={right}>
             <b>{caption}</b>

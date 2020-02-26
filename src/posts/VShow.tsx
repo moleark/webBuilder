@@ -15,11 +15,8 @@ export class VShow extends VPage<CPosts> {
         let { caption, content, author, image, template, discription, $create, $update } = current;
         let date = <span><EasyTime date={$update} /></span>;
         let isMe = Tuid.equ(author, this.controller.user.id);
-        console.log(isMe,'isMe')
         let right = isMe && <div onClick={() => this.openVPage(VEdit)}><span className="iconfont icon-xiugai1 mr-2" style={{ fontSize: "26px", color: "white" }}></span></div>
-        let renderAuthor = (user: User) => {
-            return <span>{isMe ? '[我]' : user.nick || user.name}</span>;
-        };
+        let divUser = this.controller.cApp.renderUser(author.id);
         let tvImage = tv(image, (values) => {
             return <div className="border p-2"><img className="w-3c h-3c" src={values.path} /></div>;
         }, undefined,
@@ -29,7 +26,7 @@ export class VShow extends VPage<CPosts> {
                 <div className="small text-muted p-1">标题</div>
                 <div className="mb-1 h6 px-3 py-2 bg-white">{caption}</div>
                 <LMR className="mb-3 px-3 small text-black-50" right={date}>
-                    <UserView id={author} render={renderAuthor} />
+                    {divUser} />
                 </LMR>
                 <div className="small text-muted p-1">链接描述</div>
                 <LMR className="mb-3 bg-white px-3 h6" right={tvImage}>

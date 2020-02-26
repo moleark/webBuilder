@@ -30,18 +30,7 @@ export class VMain extends VPage<CPage> {
 
     private itemRow = observer((item: any) => {
         let { author, name, $update, titel } = item;
-        let isMe = Tuid.equ(author, this.controller.user.id);
-        let renderAuthor = (user: User) => {
-            return <span>{isMe ? '' : user.nick || user.name}</span>;
-        };
-        let right = <div className="small text-muted text-right ">
-            <div className="small pt-1"><UserView id={author} render={renderAuthor} /></div>
-            <div className="small"><EasyTime date={$update} /></div>
-        </div>;
-
-        // return <LMR className="p-2 px-3 border-bottom" right={right}>
-        //     
-        // </LMR>;
+        let divUser = this.controller.cApp.renderUser(author.id);
         return <div className="px-2 d-flex p-1 cursor-pointer">
             <div className="col-10 d-flex" onClick={() => this.controller.showDetail(item.id)}>
                 <div>
@@ -55,10 +44,8 @@ export class VMain extends VPage<CPage> {
                     onClick={() => this.controller.onPreviewPage(item.id)}
                 >预览
                  </button>
-
-                <div className=" small pt-1 text-truncate"><UserView id={author} render={renderAuthor} /></div>
+                <div className=" small pt-1 text-truncate">{divUser}</div>
                 <div className=" small"><EasyTime date={$update} /></div>
-
             </div>
         </div>
     });

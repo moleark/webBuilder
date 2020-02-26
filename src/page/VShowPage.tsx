@@ -26,15 +26,13 @@ export class VShowPage extends VPage<CPage> {
         </div>
         let right = isMe && <div onClick={() => this.openVPage(VEditPage)}><span className="iconfont icon-xiugai1 mr-2" style={{ fontSize: "26px", color: "white" }}></span></div>
 
-        let renderAuthor = (user: User) => {
-            return <span>{isMe ? '[我]' : user.nick || user.name}</span>;
-        };
+        let divUser = this.controller.cApp.renderUser(author.id);
         return <Page header={name} headerClassName={consts.headerClass} right={right}>
             <div className="px-3 pt-2 pb-0">
                 <div className="small text-muted p-1">标题 :</div>
                 <div className="mb-1 h6 px-3 py-2 bg-white">{titel}</div>
                 <LMR className="mb-3 px-3 small text-black-50" right={date}>
-                    <UserView id={author} render={renderAuthor} />
+                    {divUser}
                 </LMR>
                 <div className="small text-muted p-1" >链接描述 :</div>
                 <LMR className="mb-3 bg-white px-3 h6">

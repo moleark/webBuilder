@@ -13,17 +13,15 @@ export class VShowImg extends VPage<CMedia> {
         let { current } = this.controller;
         let { caption, path, author, image, template, discription, $create, $update } = current;
         let date = <span><EasyTime date={$update} /></span>;
-        let isMe = Tuid.equ(author, this.controller.user.id);  
+        let isMe = Tuid.equ(author, this.controller.user.id);
         let right = isMe && <button className="btn btn-sm btn-success mr-2 align-self-center"><FA name="pencil-square-o" /></button>;
-        let renderAuthor = (user: User) => {
-            return <span>{isMe ? '[我]' : user.nick || user.name}</span>;
-        };
+        let divUser = this.controller.cApp.renderUser(author.id);
         return <Page header="编辑图片" headerClassName={consts.headerClass} right={right}>
             <div className="p-3">
                 <div className="small text-muted p-1">标题</div>
                 <div className="mb-1 h6 px-3 py-2 bg-white">{caption}</div>
                 <LMR className="mb-3 px-3 small text-black-50" right={date}>
-                    <UserView id={author} render={renderAuthor} />
+                    {divUser}
                 </LMR>
                 <div className="small text-muted p-1">链接描述</div>
                 <div className="small text-muted p-1">内容</div>

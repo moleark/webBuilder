@@ -40,14 +40,8 @@ export class VPickTemplate extends VPage<CPage> {
 
     private itemRow = observer((item: any) => {
         let { caption, author } = item;
-        let isMe = Tuid.equ(author, this.controller.user.id);
-        let renderAuthor = (user: User) => {
-            return <span>{isMe ? '' : user.nick || user.name}</span>;
-        };
-        let right = <div className="small text-muted text-right ">
-            <div><UserView id={author} render={renderAuthor} /></div>
-        </div>;
-        return <LMR className="px-3 py-2 text-muted border bg-white" right={right}>
+        let divUser = this.controller.cApp.renderUser(author.id);
+        return <LMR className="px-3 py-2 text-muted border bg-white" right={divUser}>
             <b>{caption}</b>
         </LMR>;
     });
