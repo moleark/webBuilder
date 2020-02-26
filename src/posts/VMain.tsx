@@ -52,8 +52,8 @@ export class VMain extends VPage<CPosts> {
             </>
         );
         let none = (
-            <div className="my-3 mx-2 text-warning">
-                <span className="text-primary"> 没有贴文，请添加！</span>
+            <div className="my-3 mx-2">
+                <span className="text-muted small">[无贴文]</span>
             </div>
         );
 
@@ -140,12 +140,12 @@ export class VMain extends VPage<CPosts> {
 			updated = cYear !== uYear || cMonth !== uMonth || cDate !== uDate;
 		}
         return (
-            <div className="pl-2 pr-3 d-flex">
+            <div className="pl-2 pl-sm-3 pr-2 pr-sm-3 pt-2 pb-3 d-flex">
                 <div
-                    className="col-10 d-flex p-0"
+                    className="col-10 d-flex px-0"
                     onClick={() => this.controller.showDetail(item.id)}
                 >
-					<div className="mr-3 my-2 w-5c w-min-5c h-5c h-min-5c">
+					<div className="mr-3 w-5c w-min-5c h-5c h-min-5c">
                     {tv(
                         image,
                         values => <img
@@ -165,13 +165,12 @@ export class VMain extends VPage<CPosts> {
                         )
                     )}
 					</div>
-                    <div className="cursor-pointer py-3">
+                    <div className="cursor-pointer">
                         <b>
                             {caption}
                         </b>
                         <div
-                            className="small py-1 text-muted "
-                            style={{ height: "27px", overflow: "hidden" }}
+                            className="small pt-1 text-muted overflow-hidden"
                         >
                             {discription}
                         </div>
@@ -182,13 +181,13 @@ export class VMain extends VPage<CPosts> {
 						</div>
                     </div>
                 </div>
-                <div className="small col-2 text-muted py-2 px-0 d-flex flex-column">
+                <div className="small col-2 text-muted px-0 d-flex flex-column">
 					<div className="flex-fill text-right">
-						<div>
+						<div className=" d-none d-sm-block">
 							<EasyTime date={$create} />
 						</div>
 						{
-							updated === true && <div>
+							updated === true && <div className=" d-none d-sm-block">
 								<FA name="pencil-square-o"/> <EasyTime date={$update} />
 							</div>
 						}
@@ -199,7 +198,7 @@ export class VMain extends VPage<CPosts> {
 							className="btn btn-sm btn-outline-primary"
 							onClick={() => this.controller.onPreviewPost(item.id)}
 						>
-							&emsp;预览&emsp;
+							&ensp;预览&ensp;
 						</button>
 					</div>
                 </div>
