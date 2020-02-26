@@ -98,12 +98,6 @@ export class VMain extends VPage<CPosts> {
                                 )}
                         </div>
                         <strong className={classNames("small")}>全部</strong>
-                        <strong
-                            onClick={this.controller.cApp.cTag.showTag}
-                            className={classNames("small")}
-                        >
-                            标签
-                        </strong>
                     </div>
                 </div>
                 <List

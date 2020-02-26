@@ -28,7 +28,7 @@ export class VMe extends VPage<CMe> {
     // }
     private page = observer(() => {
 
-        let { onAlterImg, onSet, user, PostTotal, PageTotal, } = this.controller;
+        let { onSet, user, PostTotal, PageTotal, cApp } = this.controller;
         PageTotal = PageTotal ? PageTotal : 0;
         PostTotal = PostTotal ? PostTotal : 0;
         if (!user) return;
@@ -53,6 +53,7 @@ export class VMe extends VPage<CMe> {
             </LMR>
             {branch("贴文", PostTotal, "icon-yewuzongliang", undefined)}
             {branch("网页", PageTotal, "icon-shuangsechangyongtubiao-", undefined)}
+            {branch("标签", PageTotal, "icon-shuangsechangyongtubiao-", cApp.cTag.showTag)}
             {branch("设置", null, "icon-shezhi3 ", onSet)}
         </Page>;
     })
