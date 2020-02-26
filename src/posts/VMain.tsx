@@ -1,18 +1,7 @@
 import * as React from "react";
 import { consts } from "consts";
 import { observer } from "mobx-react";
-import {
-    VPage,
-    Page,
-    FA,
-    List,
-    EasyTime,
-    tv,
-    UserView,
-    User,
-    Tuid,
-    SearchBox
-} from "tonva";
+import { VPage, Page, FA, List, EasyTime, tv, SearchBox } from "tonva";
 import { CPosts } from "./CPosts";
 import classNames from "classnames";
 
@@ -56,10 +45,10 @@ export class VMain extends VPage<CPosts> {
                 <span className="text-muted small">[无贴文]</span>
             </div>
         );
-
+        let hreader:any = this.t('post')
         return (
             <Page
-                header="帖文"
+                header={hreader}
                 headerClassName={consts.headerClass}
                 right={right}
                 onScrollBottom={this.onScrollBottom}

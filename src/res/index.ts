@@ -1,5 +1,6 @@
-import { en } from "./en";
+import { en, zh } from "./en";
 
 export const res = {
-	$en: en,
+    $zh: zh,
+    $en: en,
 }
