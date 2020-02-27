@@ -1,25 +1,44 @@
 import * as React from 'react';
 import { CPosts } from './CPosts';
-import { VPage, Page, Widget, UiSchema, UiCustom, Form, Schema, Context } from 'tonva';
+import { VPage, Page, Widget, UiSchema, UiCustom, Form, Schema, Context, setRes } from 'tonva';
 import { consts } from 'consts';
-import { observe, observable } from 'mobx';
-import _, { List } from "lodash"
+import { observable } from 'mobx';
+import _ from "lodash"
 
 interface ReleaseType {
     id: string
     list: any[];
 }
 
+const res:{[prop:string]:string|any} = {
+	sales: '内部销售',
+	agent: '轻代理',
+	privateSite: '内部网站',
+	publicSite: '公开网站',
+	$en: {
+		sales: 'Sales',
+		agent: 'Agent',
+		privateSite: 'Private Site',
+		publicSite: 'Public Site',
+	}
+};
+
+const tt = setRes(res, res);
+/*
+function tt(str:string):string {
+	return res[str] || str
+}*/
+
 class Discount extends Widget {
 
     @observable dateVisible = false;
     private result: ReleaseType[] = observable.array([], { deep: true });
     private list = [
-        { value: 1, title: '内部销售', name: 'a', checked: true },
-        { value: 2, title: '轻代理', name: 'a', checked: false },
-        { value: 3, title: '内部网页', name: 'a', checked: false },
+        { value: 1, title: tt('sales'), name: 'a', checked: true },
+        { value: 2, title: tt('agent'), name: 'a', checked: false },
+        { value: 3, title: tt('privateSite'), name: 'a', checked: false },
         {
-            value: 4, title: '公开网页', name: 'a', checked: false,
+            value: 4, title: tt('publicSite'), name: 'a', checked: false,
             subList: [
                 { value: 5, title: 'a', name: 'a', checked: true },
                 { value: 6, title: 'b', name: 'a', checked: false },
