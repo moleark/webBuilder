@@ -45,7 +45,8 @@ MAP PostPublish(
     agent   smallint, 
     assist  smallint, 
     openweb smallint, 
-    operator ID [$user] 
+    operator ID [$user],
+    update DATETIME
 );
 
 
@@ -118,7 +119,7 @@ Action test(a1 int, a2 int) {
 };
 
 ACTION PublishPost(
-    _post ID POST, 
+    _post ID POST , 
     arr tags ( 
         tagName int
     )
@@ -138,5 +139,5 @@ ACTION PublishPost(
         }
     }
     book PostPublish at(_post) 
-    set web=_web, agent=_agent, assist=_assist, openweb=_openweb, operator = $user;
+    set web=_web, agent=_agent, assist=_assist, openweb=_openweb, operator = $user, update = now();
 };

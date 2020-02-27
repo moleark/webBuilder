@@ -154,7 +154,7 @@ export class VMain extends VPage<CPosts> {
 							{divUser}
 							&ensp;<EasyTime date={$create} />
 							{updated === true && <>&ensp;
-								<FA name="pencil-square-o"/> <EasyTime date={$update} />
+								<FA name="pencil-square-o"/><EasyTime date={$update} />
 							</>}
 						</div>
                     </div>

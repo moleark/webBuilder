@@ -1,44 +1,44 @@
 import * as React from 'react';
 import { CPosts } from './CPosts';
-import { VPage, Page, Widget, UiSchema, UiCustom, Form, Schema, Context } from 'tonva';
+import { VPage, Page, Widget, UiSchema, UiCustom, Form, Schema, Context, setRes } from 'tonva';
 import { consts } from 'consts';
-import { observe, observable } from 'mobx';
-import _, { List } from "lodash"
+import { observable } from 'mobx';
+import _ from "lodash"
 
 interface ReleaseType {
     id: string
     list: any[];
 }
 
+const res: { [prop: string]: string | any } = {
+    sales: '内部销售',
+    agent: '轻代理',
+    privateSite: '内部网站',
+    publicSite: '公开网站',
+    $en: {
+        sales: 'Sales',
+        agent: 'Agent',
+        privateSite: 'Private Site',
+        publicSite: 'Public Site',
+    }
+};
+
+const tt = setRes(res, res);
+
+
 class Discount extends Widget {
     @observable dateVisible = false;
     private result: ReleaseType[] = observable.array([], { deep: true });
     private list = [
-        { value: 1, title: '内部销售', name: 'a', checked: true },
-        { value: 2, title: '轻代理', name: 'a', checked: false },
-        { value: 3, title: '内部网页', name: 'a', checked: false },
-        {
-            value: 4, title: '公开网页', name: 'a', checked: false,
-            subList: [
-                { value: 5, title: 'a', name: 'a', checked: true },
-                { value: 6, title: 'b', name: 'a', checked: false },
-                { value: 7, title: 'c', name: 'a', checked: false },
-                { value: 8, title: 'd', name: 'a', checked: false }
-            ]
-        }
-    ];
-
-    private publicList = [
-        { value: 5, title: 'a', name: 'a', checked: true },
-        { value: 6, title: 'b', name: 'a', checked: undefined },
-        { value: 7, title: 'c', name: 'a', checked: undefined },
-        { value: 8, title: 'd', name: 'a', checked: undefined }
+        { value: 1, title: tt('sales'), name: 'a', checked: true },
+        { value: 2, title: tt('agent'), name: 'a', checked: true },
+        { value: 3, title: tt('privateSite'), name: 'a', checked: true },
+        { value: 4, title: tt('publicSite'), name: 'a', checked: true },
     ];
 
     private onChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
         let val = evt.currentTarget.value;
         let sel = evt.currentTarget.checked;
-        // this.dateVisible = val === '4' && sel === true;
         if (sel) {
             let a: ReleaseType = { id: val, list: undefined }
             this.result.push(a);
@@ -48,28 +48,21 @@ class Discount extends Widget {
         }
         this.setValue(this.result);
     }
+
     render = () => {
+
         return <div className="form-control" style={{ height: 'auto' }}>
             {this.list.map((v, index) => {
                 let { value, name, title } = v;
+
                 return <div key={index} className="my-1 mx-3">
                     <label>
-                        <input type="checkbox" value={value} name={name} defaultChecked={value === this.value} onChange={this.onChange} /> {title} &nbsp;
-                    </label>
+                        <input type="checkbox" value={value}
+                            name={name} defaultChecked={value === this.value}
+                            onChange={this.onChange} /> {title} &nbsp;
+					</label>
                 </div>
             })}
-            <div className="d-flex">
-                {this.dateVisible && <div className="my-1 mx-3 d-flex">
-                    {this.publicList.map((v, index) => {
-                        let { value, name, title } = v;
-                        return <div key={index} className="my-1 mx-3">
-                            <label>
-                                <input type="checkbox" value={value} name={name} defaultChecked={value === this.value} /> {title} &nbsp;
-                            </label>
-                        </div>
-                    })}
-                </div>}
-            </div>
         </div>
     };
 }
@@ -102,7 +95,6 @@ export class VRelease extends VPage<CPosts>  {
             arr.push(discount[i].id)
         }
         publishPost(arr);
-
     }
 
     private page = () => {
