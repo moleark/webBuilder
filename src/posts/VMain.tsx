@@ -36,14 +36,18 @@ export class VMain extends VPage<CPosts> {
 	}
 
 	private renderMeAllToggle() {
-		let cnButton = 'btn btn-outline-success btn-sm';
+		let cnButton = ['btn', 'btn-outline-success', 'btn-sm', 'text-nowrap'];
 		return <div className="px-2 d-flex align-items-center">
 			<div className="btn-group btn-group-toggle" data-toggle="buttons">
 				<label className={classNames(cnButton, {active: this.isMe})}>
-					<input type="radio" name="options" value="me" defaultChecked={true} onChange={this.onMeAll} /> {this.t('me')}
+					<input type="radio" name="options" value="me" defaultChecked={true} onChange={this.onMeAll} />
+					<span className="d-inline d-sm-none">{this.t('me-sm')}</span>
+					<span className="d-none d-sm-inline">{this.t('me')}</span>
 				</label>
 				<label className={classNames(cnButton, {active: !this.isMe})}>
-					<input type="radio" name="options" value="all" defaultChecked={false} onChange={this.onMeAll}/> {this.t('all')}
+					<input type="radio" name="options" value="all" defaultChecked={false} onChange={this.onMeAll}/>
+					<span className="d-inline d-sm-none">{this.t('all-sm')}</span>
+					<span className="d-none d-sm-inline">{this.t('all')}</span>
 				</label>
 			</div>
 		</div>

@@ -20,7 +20,16 @@ export class CPosts extends CUqBase {
     @observable current: any;
     @observable isMe: boolean = true;
 
-    protected async internalStart(param: any) {}
+    protected async internalStart(param: any) {
+		this.setRes({
+			'me-sm': 'm',
+			'all-sm': 'A',
+			$zh: {
+				'me-sm': '我',
+				'all-sm': '全',
+			}
+		});
+	}
 
 	setMe(isMe:boolean) {
 		this.isMe = isMe;

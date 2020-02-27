@@ -48,7 +48,8 @@ export class CApp extends CAppBase {
         this.userCache = new UserCache(userLoader);
 
         this.cMe = this.newC(CMe);
-        this.cPosts = this.newC(CPosts);
+		this.cPosts = this.newC(CPosts);
+		await this.cPosts.start();
         this.cMedia = this.newC(CMedia);
         this.cTemplets = this.newC(CTemplets);
         this.cPage = this.newC(CPage);
