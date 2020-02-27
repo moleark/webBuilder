@@ -11,7 +11,6 @@ interface ReleaseType {
 }
 
 class Discount extends Widget {
-
     @observable dateVisible = false;
     private result: ReleaseType[] = observable.array([], { deep: true });
     private list = [
@@ -54,9 +53,9 @@ class Discount extends Widget {
             {this.list.map((v, index) => {
                 let { value, name, title } = v;
                 return <div key={index} className="my-1 mx-3">
-                    <input type="checkbox" value={value}
-                        name={name} defaultChecked={value === this.value}
-                        onChange={this.onChange} /> {title} &nbsp;
+                    <label>
+                        <input type="checkbox" value={value} name={name} defaultChecked={value === this.value} onChange={this.onChange} /> {title} &nbsp;
+                    </label>
                 </div>
             })}
             <div className="d-flex">
@@ -64,8 +63,10 @@ class Discount extends Widget {
                     {this.publicList.map((v, index) => {
                         let { value, name, title } = v;
                         return <div key={index} className="my-1 mx-3">
-                            <input type="checkbox" value={value} name={name} defaultChecked={value === this.value} /> {title} &nbsp;
-                            </div>
+                            <label>
+                                <input type="checkbox" value={value} name={name} defaultChecked={value === this.value} /> {title} &nbsp;
+                            </label>
+                        </div>
                     })}
                 </div>}
             </div>

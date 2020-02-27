@@ -11,10 +11,10 @@ export class VMain extends VPage<CApp> {
     // }
 
     render = (param?: any): JSX.Element => {
-        let { cMe, cPosts, cMedia, cTemplets, cPage } = this.controller;
+        let { cMe, cPosts, cMedia, cPage } = this.controller;
         let faceTabs = [
             { name: 'home', label: this.t('post'), icon: 'tasks', content: cPosts.tab, onShown: cPosts.loadList, notify: undefined/*store.homeCount*/ },
-            { name: 'image', label: this.t('picture'), icon: 'vcard', content: cMedia.tab, onShown: cMedia.loadList },
+            { name: 'image', label: this.t('picture-o'), icon: 'vcard', content: cMedia.tab, onShown: cMedia.loadList },
             //{ name: 'templet', label: '模板', icon: 'vcard', content: cTemplets.tab, onShown: cTemplets.loadList },
             { name: 'page', label: this.t('page'), icon: 'tasks', content: cPage.tab, onShown: cPage.loadList },
             { name: 'me', label: this.t('me'), icon: 'user', content: cMe.tab, onShown: cMe.loadList },
