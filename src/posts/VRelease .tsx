@@ -131,7 +131,8 @@ export class VRelease extends VPage<CPosts>  {
                 schema={schema}
                 uiSchema={this.uiSchema}
                 onButtonClick={this.onFormButtonClick}
-                requiredFlag={false} />
+				requiredFlag={false}
+				fieldLabelSize={2} />
         </Page>
     }
 }

@@ -56,17 +56,18 @@ export class VEdit extends VPage<CPosts> {
 
             template: {
                 widget: 'id', label: this.t('template'), pickId: this.controller.pickTemplate, Templet: this.templateContent
-            } as UiIdItem,
-            submit: { widget: 'button', label: this.t('submit') }
+			} as UiIdItem,
+
+			submit: { widget: 'button', label: this.t('submit') }
         }
     };
 
     private schema: Schema = [
         { name: 'caption', type: 'string', required: true },
-        { name: 'discription', type: 'string', required: true },
+        { name: 'discription', type: 'string', required: false },
         { name: 'content', type: 'string', required: true },
         { name: 'image', type: 'id', required: true },
-        { name: 'template', type: 'id', required: true },
+        // { name: 'template', type: 'id', required: true },
     ];
     // ^.{3,6}$
     render(): JSX.Element {

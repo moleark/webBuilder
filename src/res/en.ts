@@ -1,9 +1,9 @@
 export const en = {
     post: 'Post',
-    noposts: 'No posts',
-    editorpost: 'Editor Post',
+    noposts: 'None',
+    editorpost: 'Edit',
     searchpost: 'Search post',
-    postdetailed: 'Post detailed',
+    postdetailed: 'Detail',
     title: 'Title',
     describe: 'Describe',
     content: 'Content',

@@ -52,21 +52,21 @@ export class VMain extends VPage<CPosts> {
     private page = observer(() => {
         let { pagePosts, onAdd, searchPostsKey } = this.controller;
         let right = (
-            <>
+            <div className="d-flex align-items-center">
 				{this.renderMeAllToggle()}
                 <SearchBox
-                    className="mt-1 w-100"
+                    className=""
                     size="sm"
                     onSearch={(key: string) => searchPostsKey(key, "")}
                     placeholder={this.t('searchpost')}
                 />
                 <div onClick={onAdd}>
                     <span
-                        className="ml-3 iconfont icon-jiahao1 mr-2 cursor-pointer"
-                        style={{ fontSize: "26px", color: "white" }}
+                        className="mx-2 iconfont icon-jiahao1 cursor-pointer"
+                        style={{ fontSize: "1.7rem", color: "white" }}
                     ></span>
                 </div>
-            </>
+            </div>
         );
         let none = (
             <div className="my-3 mx-2">
@@ -126,7 +126,7 @@ export class VMain extends VPage<CPosts> {
         return (
             <div className="pl-2 pl-sm-3 pr-2 pr-sm-3 pt-2 pb-3 d-flex">
                 <div
-                    className="d-flex flex-fill"
+                    className="d-flex flex-fill cursor-pointer"
                     onClick={() => this.controller.showDetail(item.id)}
                 >
 					<div className="mr-3 w-5c w-min-5c h-5c h-min-5c">
@@ -147,7 +147,7 @@ export class VMain extends VPage<CPosts> {
                         )
                     )}
 					</div>
-                    <div className="cursor-pointer d-flex flex-column">
+                    <div className="d-flex flex-column">
 						<div><b>{caption}</b></div>
                         <div className="small pt-1 flex-fill">{discription}</div>
 						<div className="small pt-1 text-muted">

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { VPage, Page, LMR, tv, EasyTime, Tuid } from "tonva";
+import { VPage, Page, LMR, tv, EasyTime, Tuid, FA } from "tonva";
 import { CPosts } from "./CPosts";
 import { VEdit } from './VEdit';
 import { observer } from 'mobx-react';
@@ -12,34 +12,38 @@ export class VShow extends VPage<CPosts> {
 
     private page = observer(() => {
         let { current, onShowRelease } = this.controller;
-        let { caption, content, author, image, template, discription, $create, $update } = current;
+        let { id, caption, content, author, image, template, discription, $create, $update } = current;
         let date = <span><EasyTime date={$update} /></span>;
         let isMe = Tuid.equ(author, this.controller.user.id);
-        let right = isMe && <div onClick={() => this.openVPage(VEdit)}><span className="iconfont icon-xiugai1 mr-2" style={{ fontSize: "26px", color: "white" }}></span></div>
+		let right = isMe && <div onClick={() => this.openVPage(VEdit)}>
+			<span className="iconfont icon-xiugai1 mr-2 text-white" style={{fontSize:'1.7rem'}}></span>
+		</div>;
+
         let divUser = this.controller.cApp.renderUser(author.id);
         let tvImage = tv(image, (values) => {
-            return <div className="border p-2"><img className="w-3c h-3c" src={values.path} /></div>;
+            return <div className="border rounded p-2 mr-3"><img className="w-4c h-4c" src={values.path} /></div>;
         }, undefined,
             () => null);
         return <Page header={this.t('postdetailed')} headerClassName={consts.headerClass} right={right}>
-            <div className="p-3">
-                <div className="small text-muted p-1">{this.t('title')}</div>
-                <div className="mb-1 h6 px-3 py-2 bg-white">{caption}</div>
-                <LMR className="mb-3 px-3 small text-black-50" right={date}>
-                    {divUser} />
+            <div className="px-3">
+				<LMR className="my-3 small text-black-50" right={date}>
+                    {divUser}
                 </LMR>
-                <div className="small text-muted p-1">{this.t('describe')}</div>
-                <LMR className="mb-3 bg-white px-3 h6" right={tvImage}>
-                    <div className="py-2">{discription}</div>
-                </LMR>
-                <div className="small text-muted p-1">{this.t('content')}</div>
-                <pre className="mb-3 px-3 py-4 bg-white h6 border">{content}</pre>
-                <div className="small text-muted p-1">{this.t('template')}</div>
-                <div className="mb-3 px-3 py-2 bg-white h6">
-                    {tv(template, (values) => <>{values.caption}</>, undefined, () => <small className="text-muted" >[无]</small>)}
-                </div>
-                <div>
-                    <button className="col-12 btn btn-sm btn-primary" onClick={() => onShowRelease()}>
+				<LMR left={tvImage} right={<div className="ml-2 text-right">
+						<button
+							className="btn btn-sm btn-outline-primary"
+							onClick={() => this.controller.onPreviewPost(id)}
+						>
+							<FA name="tv" />
+						</button>
+					</div>
+				}>
+					<div><b>{caption}</b></div>
+					<div>{discription}</div>
+				</LMR>
+                <pre className="my-3 px-3 py-4 bg-white border rounded">{content}</pre>
+                <div className="text-center">
+                    <button className="btn btn-primary w-12c" onClick={() => onShowRelease()}>
                         {this.t('publish')}
                     </button>
                 </div>
