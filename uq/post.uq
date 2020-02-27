@@ -110,20 +110,19 @@ Action test(a1 int, a2 int) {
 
 ACTION PublishPost(
     _post ID POST , 
-    _operator ID [$user],
     arr tags ( 
         tagName int
     )
 ) {
     foreach tags {
         if( tagName = 1 ){
-            book AssistPost at(_post) set operator = _operator;
+            book AssistPost at(_post) set operator = $user;
         }else  if( tagName = 2 ){
-            book AgentPost at(_post) set operator = _operator;
+            book AgentPost at(_post) set operator = $user;
         }else  if( tagName = 3 ){
-            book WebPost at(_post) set operator = _operator;
+            book WebPost at(_post) set operator = $user;
         }else  if( tagName = 4 ){
-            book CustomerPost at(_post) set operator = _operator;
+            book CustomerPost at(_post) set operator = $user;
         }
     }
 };
