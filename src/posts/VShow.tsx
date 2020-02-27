@@ -15,9 +15,9 @@ export class VShow extends VPage<CPosts> {
         let { id, caption, content, author, image, template, discription, $create, $update } = current;
         let date = <span><EasyTime date={$update} /></span>;
         let isMe = Tuid.equ(author, this.controller.user.id);
-		let right = isMe && <div onClick={() => this.openVPage(VEdit)}>
-			<span className="iconfont icon-xiugai1 mr-2 text-white" style={{fontSize:'1.7rem'}}></span>
-		</div>;
+        let right = isMe && <div onClick={() => this.openVPage(VEdit)}>
+            <span className="iconfont icon-xiugai1 mr-2 text-white" style={{ fontSize: '1.7rem' }}></span>
+        </div>;
 
         let divUser = this.controller.cApp.renderUser(author.id);
         let tvImage = tv(image, (values) => {
@@ -26,21 +26,21 @@ export class VShow extends VPage<CPosts> {
             () => null);
         return <Page header={this.t('postdetailed')} headerClassName={consts.headerClass} right={right}>
             <div className="px-3">
-				<LMR className="my-3 small text-black-50" right={date}>
+                <LMR className="my-3 small text-black-50" right={date}>
                     {divUser}
                 </LMR>
-				<LMR left={tvImage} right={<div className="ml-2 text-right">
-						<button
-							className="btn btn-sm btn-outline-primary"
-							onClick={() => this.controller.onPreviewPost(id)}
-						>
-							<FA name="tv" />
-						</button>
-					</div>
-				}>
-					<div><b>{caption}</b></div>
-					<div>{discription}</div>
-				</LMR>
+                <LMR left={tvImage} right={<div className="ml-2 text-right">
+                    <button
+                        className="btn btn-sm btn-outline-primary"
+                        onClick={() => this.controller.onPreviewPost(id)}
+                    >
+                        <FA name="tv" />
+                    </button>
+                </div>
+                }>
+                    <div><b>{caption}</b></div>
+                    <div>{discription}</div>
+                </LMR>
                 <pre className="my-3 px-3 py-4 bg-white border rounded">{content}</pre>
                 <div className="text-center">
                     <button className="btn btn-primary w-12c" onClick={() => onShowRelease()}>

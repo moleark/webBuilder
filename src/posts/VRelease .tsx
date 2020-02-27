@@ -12,27 +12,23 @@ interface ReleaseType {
 }
 */
 
-const res:{[prop:string]:string|any} = {
-	sales: '内部销售',
-	agent: '轻代理',
-	privateSite: '内部网站',
-	publicSite: '公开网站',
-	$en: {
-		sales: 'Sales',
-		agent: 'Agent',
-		privateSite: 'Private Site',
-		publicSite: 'Public Site',
-	}
+const res: { [prop: string]: string | any } = {
+    sales: '内部销售',
+    agent: '轻代理',
+    privateSite: '内部网站',
+    publicSite: '公开网站',
+    $en: {
+        sales: 'Sales',
+        agent: 'Agent',
+        privateSite: 'Private Site',
+        publicSite: 'Public Site',
+    }
 };
 
 const tt = setRes(res, res);
-/*
-function tt(str:string):string {
-	return res[str] || str
-}*/
+
 
 class Discount extends Widget {
-
     @observable dateVisible = false;
     //private result: ReleaseType[] = observable.array([], { deep: true });
     private publicList = [
@@ -45,48 +41,39 @@ class Discount extends Widget {
     private onChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
         let val = evt.currentTarget.value;
         let sel = evt.currentTarget.checked;
-		// this.dateVisible = val === '4' && sel === true;
-		let result:any = this.value || {};
+        // this.dateVisible = val === '4' && sel === true;
+        let result: any = this.value || {};
         result[val] = sel;
         this.setValue(result);
     }
+
     render = () => {
-		let list = [
-			{ value: 1, title: tt('sales'), name: 'a', checked: this.value['1'] },
-			{ value: 2, title: tt('agent'), name: 'a', checked: this.value['2'] },
-			{ value: 3, title: tt('privateSite'), name: 'a', checked: this.value['3'] },
-			{
-				value: 4, title: tt('publicSite'), name: 'a', checked: this.value['4'],
-				subList: [
-					{ value: 5, title: 'a', name: 'a', checked: true },
-					{ value: 6, title: 'b', name: 'a', checked: false },
-					{ value: 7, title: 'c', name: 'a', checked: false },
-					{ value: 8, title: 'd', name: 'a', checked: false }
-				]
-			}
-		];
+        let list = [
+            { value: 1, title: tt('sales'), name: 'a', checked: this.value['1'] },
+            { value: 2, title: tt('agent'), name: 'a', checked: this.value['2'] },
+            { value: 3, title: tt('privateSite'), name: 'a', checked: this.value['3'] },
+            {
+                value: 4, title: tt('publicSite'), name: 'a', checked: this.value['4'],
+                subList: [
+                    { value: 5, title: 'a', name: 'a', checked: true },
+                    { value: 6, title: 'b', name: 'a', checked: false },
+                    { value: 7, title: 'c', name: 'a', checked: false },
+                    { value: 8, title: 'd', name: 'a', checked: false }
+                ]
+            }
+        ];
 
         return <div className="form-control" style={{ height: 'auto' }}>
             {list.map((v, index) => {
                 let { value, name, title, checked } = v;
                 return <div key={index} className="my-1 mx-3">
-					<label>
-						<input type="checkbox" value={value}
-							name={name} defaultChecked={checked}
-							onChange={this.onChange} /> {title} &nbsp;
+                    <label>
+                        <input type="checkbox" value={value}
+                            name={name} defaultChecked={checked}
+                            onChange={this.onChange} /> {title} &nbsp;
 					</label>
                 </div>
             })}
-            <div className="d-flex">
-                {this.dateVisible && <div className="my-1 mx-3 d-flex">
-                    {this.publicList.map((v, index) => {
-                        let { value, name, title } = v;
-                        return <div key={index} className="my-1 mx-3">
-                            <input type="checkbox" value={value} name={name} defaultChecked={value === this.value} /> {title} &nbsp;
-                            </div>
-                    })}
-                </div>}
-            </div>
         </div>
     };
 }
@@ -122,22 +109,22 @@ export class VRelease extends VPage<CPosts>  {
     }
 
     private page = () => {
-		let def = {
-			discount: {
-				"1": true,
-				"2": true,
-				"3": true,
-				"4": true
-			}
-		};
+        let def = {
+            discount: {
+                "1": true,
+                "2": true,
+                "3": true,
+                "4": true
+            }
+        };
         return <Page header={this.t('publish')} headerClassName={consts.headerClass} >
             <Form className="my-3 mx-3"
                 schema={schema}
                 uiSchema={this.uiSchema}
                 onButtonClick={this.onFormButtonClick}
-				requiredFlag={false}
-				fieldLabelSize={2}
-				formData={def} />
+                requiredFlag={false}
+                fieldLabelSize={2}
+                formData={def} />
         </Page>
     }
 }

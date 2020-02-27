@@ -105,7 +105,8 @@ export class VMain extends VPage<CPosts> {
     private itemRow = observer((item: any) => {
 		let {user} = this.controller;
         if (!user) return;
-        let { image, caption, discription, author, $update, $create } = item;
+        let { image, caption, discription, author, $update, $create, web, agent,assist,openweb } = item;
+
 		let $c:Date = $create, $u:Date = $update;
 		let updated: boolean = false;
 		if ($c && $u) {
@@ -157,10 +158,15 @@ export class VMain extends VPage<CPosts> {
 						<div className="small pt-1 text-muted">
 							{divUser}
 							&ensp;<EasyTime date={$create} />
-							{updated === true && <>&ensp;
-								<FA name="pencil-square-o"/><EasyTime date={$update} />
-							</>}
+							{updated === true && <>&ensp;<FA name="pencil-square-o"/><EasyTime date={$update} /></>}       
 						</div>
+                        <div className="small pt-1" style={{  overflow: "hidden" }}>
+                            {(web+agent+assist+openweb)>0?<span  className="mr-1 text-muted">发布：</span>:<></>}
+                            {web===1?<span className="mr-1 text-primary">内部网</span>:<></>}
+                            {agent===1?<span className="mr-1 text-primary">轻代理</span>:<></>}
+                            {assist===1?<span className="mr-1 text-primary">销售员</span>:<></>}
+                            {openweb===1?<span className="mr-1 text-primary">公开网</span>:<></>}
+                        </div>
                     </div>
                 </div>
                 <div className="small text-muted px-0 d-flex flex-column">

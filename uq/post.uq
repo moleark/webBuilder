@@ -39,6 +39,16 @@ MAP CustomerPost(
     operator ID [$user] 
 );
 
+MAP PostPublish(
+    key post ID POST,
+    web     smallint,
+    agent   smallint, 
+    assist  smallint, 
+    openweb smallint, 
+    operator ID [$user],
+    update DATETIME
+);
+
 
 /** 搜索我的优惠码*/
 QUERY SearchPost( key char(100), author ID [$user])
@@ -50,13 +60,19 @@ PAGE (
     author ID [$user],
     template ID Template,
 	[$update] DATETIME,
-	[$create] DATETIME
+	[$create] DATETIME,
+    web     smallint,
+    agent   smallint, 
+    assist  smallint, 
+    openweb smallint
 ) {
     var key2 char(102);
     set key2 = concat('%', key, '%');
 
-    PAGE select p.id, p.caption, p.discription, p.image, p.author, p.template, p.[$update], p.[$create]
+    PAGE select p.id, p.caption, p.discription, p.image, p.author, p.template, p.[$update], p.[$create],
+                ifnull(ph.web, 0) as web, ifnull(ph.agent,0) as agent, ifnull( ph.assist,0) as assist, ifnull( ph.openweb ,0) as openweb
     from    POST as p
+            left join PostPublish as ph on p.id = ph.post
     where   p.id < $pageStart and ( p.template like key2 or p.discription like key2 or p.caption like key2 or key is null )
             and ( p.author = author or author = 0 )
     order by p.id desc
@@ -114,15 +130,20 @@ ACTION PublishPost(
         tagName int
     )
 ) {
+
+    var _web smallint = 0, _agent smallint = 0, _assist smallint = 0, _openweb smallint = 0; 
+ 
     foreach tags {
         if( tagName = 1 ){
-            book AssistPost at(_post) set operator = $user;
-        }else  if( tagName = 2 ){
-            book AgentPost at(_post) set operator = $user;
-        }else  if( tagName = 3 ){
-            book WebPost at(_post) set operator = $user;
-        }else  if( tagName = 4 ){
-            book CustomerPost at(_post) set operator = $user;
+            set _web = 1;
+        }else if( tagName = 2 ){
+            set _agent = 1;
+        }else if( tagName = 3 ){
+            set _assist = 1;
+        }else if( tagName = 4 ){
+            set _openweb = 1;
         }
     }
+    book PostPublish at(_post) 
+    set web=_web, agent=_agent, assist=_assist, openweb=_openweb, operator = $user, update = now();
 };
