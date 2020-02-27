@@ -9,7 +9,7 @@ import { VEdit } from "./VEdit";
 import { Context, nav, QueryPager } from "tonva";
 import { VPickImage } from "./VPickImage";
 import { VPickTemplate } from "./VPickTemplate";
-import { VRelease } from "./VRelease ";
+import { VRelease } from "./VRelease";
 import { setting } from "configuration";
 
 export class CPosts extends CUqBase {

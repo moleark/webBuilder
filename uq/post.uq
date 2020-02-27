@@ -10,14 +10,6 @@ TUID POST (
     stamp (create, update),
 );
 
-TUID IMAGE (
-    id,
-    main caption char(100),
-    main path char(100),
-    main author ID [$user],
-    stamp (create),
-);
-
 /** POST发布 */
 MAP WebPost(
     key post ID POST,
@@ -49,8 +41,15 @@ MAP PostPublish(
     update DATETIME
 );
 
+MAP PostPublishProduct(
+    key product ID product,
+    key post ID POST,
+    operator ID [$user],
+    update DATETIME
+);
 
-/** 搜索我的优惠码*/
+
+/** 搜索帖文*/
 QUERY SearchPost( key char(100), author ID [$user])
 PAGE (
     id bigint desc,
@@ -101,38 +100,14 @@ PAGE (
     limit $pageSize;
 };
 
-
-/** 搜索我的图片*/
-QUERY SearchImage( key char(100))
-PAGE (
-    id bigint desc,
-    caption char(100),
-    path char(100),
-    author ID [$user]
-) {
-    var key2 char(102);
-    set key2 = concat('%', key, '%');
-
-    PAGE select p.id, p.caption, p.path, p.author
-    from    IMAGE as p
-    where   p.id < $pageStart and ( p.caption like key2 or key is null )
-    order by p.id desc
-    limit $pageSize;
-};
-
-Action test(a1 int, a2 int) {
-    book contenttag at(a1, a2);
-};
-
+/** 搜索发布帖文*/
 ACTION PublishPost(
     _post ID POST , 
     arr tags ( 
         tagName int
     )
 ) {
-
     var _web smallint = 0, _agent smallint = 0, _assist smallint = 0, _openweb smallint = 0; 
- 
     foreach tags {
         if( tagName = 1 ){
             set _web = 1;
@@ -147,3 +122,18 @@ ACTION PublishPost(
     book PostPublish at(_post) 
     set web=_web, agent=_agent, assist=_assist, openweb=_openweb, operator = $user, update = now();
 };
+
+
+/** 发布帖文到产品*/
+ACTION PublishPostForProduct(
+    _post ID POST , 
+    _product ID Product
+) {
+    book PostPublishProduct at(_product, _post) set operator = $user, update = now();
+};
+
+
+Action test(a1 int, a2 int) {
+    book contenttag at(a1, a2);
+};
+

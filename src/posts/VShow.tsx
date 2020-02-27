@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { VPage, Page, LMR, tv, EasyTime, Tuid } from "tonva";
+import { VPage, Page, LMR, tv, EasyTime, Tuid, FA } from "tonva";
 import { CPosts } from "./CPosts";
 import { VEdit } from './VEdit';
 import { observer } from 'mobx-react';
@@ -16,11 +16,11 @@ export class VShow extends VPage<CPosts> {
         let date = <span><EasyTime date={$update} /></span>;
         let isMe = Tuid.equ(author, this.controller.user.id);
 
-        let eidet = isMe && <span className="cursor-pointer iconfont icon-xiugai1 mr-2 text-white" onClick={() => this.openVPage(VEdit)} style={{ fontSize: '1.7rem' }}></span>;
+        let eidet = isMe && <span className="cursor-pointer iconfont icon-xiugai1 mr-2 text-white" onClick={() => this.openVPage(VEdit)} style={{ fontSize: '1.5rem' }}></span>;
         let right = <div>
             {eidet}
-            <span className="cursor-pointer mr-2 text-white" style={{ fontSize: '1.7rem' }} onClick={() => onShowRelease()}>
-                {this.t('publish')}
+            <span className="cursor-pointer mx-3 text-white" style={{ fontSize: '1.5rem' }} onClick={() => onShowRelease()}>
+                <FA name="send-o" />
             </span>
         </div>;
         /**
