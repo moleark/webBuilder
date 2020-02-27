@@ -168,25 +168,7 @@ export class VMain extends VPage<CPosts> {
                             {openweb===1?<span className="mr-1 text-primary">公开网</span>:<></>}
                         </div>
                     </div>
-                </div>
-                <div className="small text-muted px-0 d-flex flex-column">
-					<div className="flex-fill text-right">
-						<div className=" d-none d-sm-block">
-							
-						</div>
-						{
-						}
-					</div>
-
-					<div className="text-right">
-						<button
-							className="btn btn-sm btn-outline-primary"
-							onClick={() => this.controller.onPreviewPost(item.id)}
-						>
-							<FA name="tv" />
-						</button>
-					</div>
-                </div>
+                </div>        
             </div>
         );
     });

@@ -21,47 +21,38 @@ export class CPosts extends CUqBase {
     @observable isMe: boolean = true;
 
     protected async internalStart(param: any) {
-		this.setRes({
-			'me-sm': 'm',
-			'all-sm': 'A',
-			$zh: {
-				'me-sm': '我',
-				'all-sm': '全',
-			}
-		});
-	}
+        this.setRes({
+            'me-sm': 'm',
+            'all-sm': 'A',
+            $zh: {
+                'me-sm': '我',
+                'all-sm': '全',
+            }
+        });
+    }
 
-	setMe(isMe:boolean) {
-		this.isMe = isMe;
-		this.loadList();
-	}
+    setMe(isMe: boolean) {
+        this.isMe = isMe;
+        this.loadList();
+    }
 
     /* 贴文查询*/
     searchPostsKey = async (key: string, author: any) => {
         this.pagePosts = new QueryPager(this.uqs.webBuilder.SearchPost, 15, 30);
+        this.pagePosts.setEachItem((item: any) => {
+            this.cApp.useUser(item.author);
+        });
         let Auser = this.isMe ? nav.user : 0;
-		await this.pagePosts.first({ key: key, author: Auser });
-		for (let item of this.pagePosts.items) {
-			this.cApp.useUser(item.author);
-		}
+        await this.pagePosts.first({ key: key, author: Auser });
     };
-
     /* posts模板查询*/
     searchTemplateKey = async (key: string) => {
-        this.pageTemplate = new QueryPager(
-            this.uqs.webBuilder.SearchTemplate,
-            15,
-            30
-        );
+        this.pageTemplate = new QueryPager(this.uqs.webBuilder.SearchTemplate, 15, 30);
         this.pageTemplate.first({ key: key });
     };
 
     searchMadiaKey = async (key: string) => {
-        this.pageMedia = new QueryPager(
-            this.uqs.webBuilder.SearchImage,
-            15,
-            30
-        );
+        this.pageMedia = new QueryPager(this.uqs.webBuilder.SearchImage, 15, 30);
         this.pageMedia.first({ key: key });
     };
 
@@ -101,15 +92,7 @@ export class CPosts extends CUqBase {
     }
 
     loadList = async () => {
-		this.searchPostsKey("", this.isMe? nav.user : 0);
-		/*
-        if (this.flg) {
-            this.searchPostsKey("", nav.user);
-        } else {
-            this.searchPostsKey("", 0);
-		}
-		*/
-        //this.items = await this.uqs.webBuilder.Post.search("", 0, 100);
+        this.searchPostsKey("", this.isMe ? nav.user : 0);
     };
 
     showDetail = async (id: number) => {
@@ -117,11 +100,7 @@ export class CPosts extends CUqBase {
         this.openVPage(VShow);
     };
 
-    pickImage = async (
-        context: Context,
-        name: string,
-        value: number
-    ): Promise<any> => {
+    pickImage = async (context: Context, name: string, value: number): Promise<any> => {
         this.searchMadiaKey("");
         return await this.vCall(VPickImage);
     };
@@ -131,11 +110,7 @@ export class CPosts extends CUqBase {
         this.returnCall(this.uqs.webBuilder.Image.boxId(id));
     };
 
-    pickTemplate = async (
-        context: Context,
-        name: string,
-        value: number
-    ): Promise<any> => {
+    pickTemplate = async (context: Context, name: string, value: number): Promise<any> => {
         this.searchTemplateKey("");
         return await this.vCall(VPickTemplate);
     };
