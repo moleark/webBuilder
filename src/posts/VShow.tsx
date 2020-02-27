@@ -15,9 +15,14 @@ export class VShow extends VPage<CPosts> {
         let { id, caption, content, author, image, template, discription, $create, $update } = current;
         let date = <span><EasyTime date={$update} /></span>;
         let isMe = Tuid.equ(author, this.controller.user.id);
-        let right = isMe && <div onClick={() => this.openVPage(VEdit)}>
-            <span className="iconfont icon-xiugai1 mr-2 text-white" style={{ fontSize: '1.7rem' }}></span>
-        </div>;
+        let right = isMe && <div className="d-flex align-items-center">
+				<button className="mr-2 btn btn-sm btn-success" onClick={() => this.openVPage(VEdit)}>
+            		<FA name="pencil-square-o" /> 编辑
+        		</button>
+				<button className="mr-2 btn btn-sm btn-info" onClick={() => this.openVPage(VEdit)}>
+            		<FA name="external-link" /> 发布
+        		</button>
+		</div>;
 
         let divUser = this.controller.cApp.renderUser(author.id);
         let tvImage = tv(image, (values) => {
