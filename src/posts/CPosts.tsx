@@ -44,6 +44,11 @@ export class CPosts extends CUqBase {
         });
         let Auser = this.isMe ? nav.user : 0;
         await this.pagePosts.first({ key: key, author: Auser });
+		/*
+		for (let item of this.pagePosts.items) {
+			this.cApp.useUser(item.author);
+		}
+		*/
     };
     /* posts模板查询*/
     searchTemplateKey = async (key: string) => {
