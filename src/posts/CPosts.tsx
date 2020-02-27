@@ -18,14 +18,19 @@ export class CPosts extends CUqBase {
     @observable pageMedia: QueryPager<any>;
     //@observable items: any[];
     @observable current: any;
-    @observable flg: boolean = true;
+    @observable isMe: boolean = true;
 
     protected async internalStart(param: any) {}
+
+	setMe(isMe:boolean) {
+		this.isMe = isMe;
+		this.loadList();
+	}
 
     /* 贴文查询*/
     searchPostsKey = async (key: string, author: any) => {
         this.pagePosts = new QueryPager(this.uqs.webBuilder.SearchPost, 15, 30);
-        let Auser = this.flg ? nav.user : 0;
+        let Auser = this.isMe ? nav.user : 0;
 		await this.pagePosts.first({ key: key, author: Auser });
 		for (let item of this.pagePosts.items) {
 			this.cApp.useUser(item.author);
@@ -87,7 +92,7 @@ export class CPosts extends CUqBase {
     }
 
     loadList = async () => {
-		this.searchPostsKey("", this.flg? nav.user : 0);
+		this.searchPostsKey("", this.isMe? nav.user : 0);
 		/*
         if (this.flg) {
             this.searchPostsKey("", nav.user);

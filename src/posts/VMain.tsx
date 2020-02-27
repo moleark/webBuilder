@@ -4,15 +4,18 @@ import { observer } from "mobx-react";
 import { VPage, Page, FA, List, EasyTime, tv, SearchBox } from "tonva";
 import { CPosts } from "./CPosts";
 import classNames from "classnames";
+import { observable } from "mobx";
 
 export class VMain extends VPage<CPosts> {
+	@observable private isMe:boolean = true;
+
     async open() { }
 
     render(): JSX.Element {
         return <this.page />;
     }
 
-    onBtn = () => {
+    //onBtn = () => {
 		/*
         if (this.controller.flg) {
             this.controller.flg = false;
@@ -22,14 +25,35 @@ export class VMain extends VPage<CPosts> {
             this.controller.loadList();
 		}
 		*/
-		this.controller.flg = !this.controller.flg;
-		this.controller.loadList();
-    };
+		//this.controller.isMe = !this.controller.isMe;
+		//this.controller.loadList();
+	//};
+	
+	private onMeAll = (evt: React.ChangeEvent<HTMLInputElement>) => {
+		this.isMe = evt.currentTarget.value === 'me';
+		//this.controller.changeMeAll();
+		this.controller.setMe(this.isMe)
+	}
+
+	private renderMeAllToggle() {
+		let cnButton = 'btn btn-outline-success btn-sm';
+		return <div className="px-2 d-flex align-items-center">
+			<div className="btn-group btn-group-toggle" data-toggle="buttons">
+				<label className={classNames(cnButton, {active: this.isMe})}>
+					<input type="radio" name="options" value="me" defaultChecked={true} onChange={this.onMeAll} /> {this.t('me')}
+				</label>
+				<label className={classNames(cnButton, {active: !this.isMe})}>
+					<input type="radio" name="options" value="all" defaultChecked={false} onChange={this.onMeAll}/> {this.t('all')}
+				</label>
+			</div>
+		</div>
+	}
 
     private page = observer(() => {
         let { pagePosts, onAdd, searchPostsKey } = this.controller;
         let right = (
             <>
+				{this.renderMeAllToggle()}
                 <SearchBox
                     className="mt-1 w-100"
                     size="sm"
@@ -56,33 +80,6 @@ export class VMain extends VPage<CPosts> {
                 right={right}
                 onScrollBottom={this.onScrollBottom}
             >
-                <div className="px-3 py-2 d-flex justify-content-center">
-                    <div
-                        className="d-flex cursor-pointer justify-content-center"
-                        onClick={e => this.onBtn()}
-                    >
-                        <strong className={classNames("small text-right")}>
-                            {this.t('me')}
-                        </strong>
-                        <div
-                            className="mx-2"
-                            style={{ width: "40px", height: "18px", backgroundColor: "rgb(211, 209, 209)",  borderRadius: "20px" }}
-                        >
-                            {this.controller.flg ? (
-                                <div
-                                    style={{ border: "1px solid #007bff",  width: "20px", height: "18px", backgroundColor: "#007bff", borderRadius: "100%"}}
-                                ></div>
-                            ) : (
-                                    <div
-                                        style={{ border: "1px solid #007bff", width: "20px", height: "18px", backgroundColor: "#007bff", borderRadius: "100%" }}
-                                    ></div>
-                                )}
-                        </div>
-                        <strong className={classNames("small")}>
-                            {this.t('all')}
-                        </strong>
-                    </div>
-                </div>
                 <List
                     before={""}
                     none={none}
@@ -135,10 +132,8 @@ export class VMain extends VPage<CPosts> {
 					<div className="mr-3 w-5c w-min-5c h-5c h-min-5c">
                     {tv(
                         image,
-                        values => <img
-                                        className="w-100 h-100"
-                                        src={values.path}
-                                    />,
+						values => <div className="w-100 h-100 bg-center-img h-max-6c border rounded" 
+							style={{backgroundImage: 'url(' + values.path + ')'}}></div>,
                         undefined, //w-6c h-4c mr-2 text-black-50 justify-content-center d-flex align-items-center
                         () => (
 							<div className="d-flex align-items-center h-100
@@ -190,4 +185,30 @@ export class VMain extends VPage<CPosts> {
 <span className="d-none d-sm-inline">&ensp;</span>
 {this.t('preview')}
 <span className="d-none d-sm-inline">&ensp;</span>
+                    <div
+                        className="d-flex cursor-pointer justify-content-center"
+                        onClick={e => this.onBtn()}
+                    >
+                        <strong className={classNames("small text-right")}>
+                            {this.t('me')}
+                        </strong>
+                        <div
+                            className="mx-2"
+                            style={{ width: "40px", height: "18px", backgroundColor: "rgb(211, 209, 209)",  borderRadius: "20px" }}
+                        >
+                            {this.controller.isMe ? (
+                                <div
+                                    style={{ border: "1px solid #007bff",  width: "20px", height: "18px", backgroundColor: "#007bff", borderRadius: "100%"}}
+                                ></div>
+                            ) : (
+                                    <div
+                                        style={{ border: "1px solid #007bff", width: "20px", height: "18px", backgroundColor: "#007bff", borderRadius: "100%" }}
+                                    ></div>
+                                )}
+                        </div>
+                        <strong className={classNames("small")}>
+                            {this.t('all')}
+                        </strong>
+                    </div>
+
 */
