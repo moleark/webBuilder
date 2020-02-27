@@ -36,7 +36,8 @@ export class VMain extends VPage<CPosts> {
 	}
 
 	private renderMeAllToggle() {
-		let cnButton = 'btn btn-outline-success btn-sm';
+
+        let cnButton = 'btn btn-outline-success btn-sm text-nowrap';
 		return <div className="px-2 d-flex align-items-center">
 			<div className="btn-group btn-group-toggle" data-toggle="buttons">
 				<label className={classNames(cnButton, {active: this.isMe})}>
@@ -154,12 +155,15 @@ export class VMain extends VPage<CPosts> {
 						<div className="small pt-1 text-muted">
 							{divUser}
 							&ensp;<EasyTime date={$create} />
-							{updated === true && <>&ensp;<FA name="pencil-square-o"/><EasyTime date={$update} /></>}
-                            {web===1?<span className="ml-1 text-primary">内部网页</span>:<></>}
-                            {agent===1?<span className="ml-1 text-primary">轻代理</span>:<></>}
-                            {assist===1?<span className="ml-1 text-primary">销售助手</span>:<></>}
-                            {openweb===1?<span className="ml-1 text-primary">开放网页</span>:<></>}
+							{updated === true && <>&ensp;<FA name="pencil-square-o"/><EasyTime date={$update} /></>}       
 						</div>
+                        <div className="small pt-1" style={{  overflow: "hidden" }}>
+                            {(web+agent+assist+openweb)>0?<span  className="mr-1 text-muted">发布：</span>:<></>}
+                            {web===1?<span className="mr-1 text-primary">内部网</span>:<></>}
+                            {agent===1?<span className="mr-1 text-primary">轻代理</span>:<></>}
+                            {assist===1?<span className="mr-1 text-primary">销售员</span>:<></>}
+                            {openweb===1?<span className="mr-1 text-primary">公开网</span>:<></>}
+                        </div>
                     </div>
                 </div>
                 <div className="small text-muted px-0 d-flex flex-column">
