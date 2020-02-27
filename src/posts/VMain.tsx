@@ -13,13 +13,17 @@ export class VMain extends VPage<CPosts> {
     }
 
     onBtn = () => {
+		/*
         if (this.controller.flg) {
             this.controller.flg = false;
             this.controller.loadList();
         } else {
             this.controller.flg = true;
             this.controller.loadList();
-        }
+		}
+		*/
+		this.controller.flg = !this.controller.flg;
+		this.controller.loadList();
     };
 
     private page = observer(() => {
@@ -125,7 +129,7 @@ export class VMain extends VPage<CPosts> {
         return (
             <div className="pl-2 pl-sm-3 pr-2 pr-sm-3 pt-2 pb-3 d-flex">
                 <div
-                    className="col-10 d-flex px-0"
+                    className="d-flex flex-fill"
                     onClick={() => this.controller.showDetail(item.id)}
                 >
 					<div className="mr-3 w-5c w-min-5c h-5c h-min-5c">
@@ -150,19 +154,22 @@ export class VMain extends VPage<CPosts> {
 					</div>
                     <div className="cursor-pointer d-flex flex-column">
 						<div><b>{caption}</b></div>
-                        <div className="small pt-1 text-muted flex-fill">{discription}</div>
-						<div className="small pt-1">{divUser}</div>
+                        <div className="small pt-1 flex-fill">{discription}</div>
+						<div className="small pt-1 text-muted">
+							{divUser}
+							&ensp;<EasyTime date={$create} />
+							{updated === true && <>&ensp;
+								<FA name="pencil-square-o"/> <EasyTime date={$update} />
+							</>}
+						</div>
                     </div>
                 </div>
-                <div className="small col-2 text-muted px-0 d-flex flex-column">
+                <div className="small text-muted px-0 d-flex flex-column">
 					<div className="flex-fill text-right">
 						<div className=" d-none d-sm-block">
-							<EasyTime date={$create} />
+							
 						</div>
 						{
-							updated === true && <div className=" d-none d-sm-block">
-								<FA name="pencil-square-o"/> <EasyTime date={$update} />
-							</div>
 						}
 					</div>
 
@@ -171,9 +178,7 @@ export class VMain extends VPage<CPosts> {
 							className="btn btn-sm btn-outline-primary"
 							onClick={() => this.controller.onPreviewPost(item.id)}
 						>
-							<span className="d-none d-sm-inline">&ensp;</span>
-                            {this.t('preview')}
-                            <span className="d-none d-sm-inline">&ensp;</span>
+							<FA name="tv" />
 						</button>
 					</div>
                 </div>
@@ -181,3 +186,8 @@ export class VMain extends VPage<CPosts> {
         );
     });
 }
+/*
+<span className="d-none d-sm-inline">&ensp;</span>
+{this.t('preview')}
+<span className="d-none d-sm-inline">&ensp;</span>
+*/
