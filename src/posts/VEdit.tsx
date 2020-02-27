@@ -1,21 +1,30 @@
 import * as React from 'react';
 import _ from 'lodash';
 import { CPosts } from "./CPosts";
-import { VPage, Form, Context, UiSchema, Schema, Page, UiInputItem, UiIdItem, tv } from "tonva";
+import { VPage, Form, Context, UiSchema, Schema, Page, UiInputItem, UiIdItem, tv, Edit, ItemSchema } from "tonva";
 import { observer } from 'mobx-react';
 import { consts } from 'consts';
 
 
 export class VEdit extends VPage<CPosts> {
-    private form: Form;
+	private form: Form;
+	private textarea: HTMLTextAreaElement;
     async open() {
         this.openPage(this.page);
     }
 
     private onClickSaveButton = async () => {
-        if (!this.form) return;
-        await this.form.buttonClick("submit");
+        //if (!this.form) return;
+		//await this.form.buttonClick("submit");
+		let {current} = this.controller;
+		let {id} = current;
+		current.content = this.textarea.value;
+        await this.controller.saveItem(id, current);
+        this.closePage();
     }
+
+	private onItemChanged = async (itemSchema: ItemSchema, newValue:any, preValue:any) => {		
+	}
 
     private onFormButtonClick = async (name: string, context: Context) => {
         let { current } = this.controller;
@@ -65,8 +74,8 @@ export class VEdit extends VPage<CPosts> {
     private schema: Schema = [
         { name: 'caption', type: 'string', required: true },
         { name: 'discription', type: 'string', required: false },
-        { name: 'content', type: 'string', required: true },
         { name: 'image', type: 'id', required: true },
+        //{ name: 'content', type: 'string', required: true },
         // { name: 'template', type: 'id', required: true },
     ];
     // ^.{3,6}$
@@ -75,23 +84,41 @@ export class VEdit extends VPage<CPosts> {
     }
 
     private page = observer(() => {
-        let { current } = this.controller;
-        return <Page header={this.t('editorpost')} headerClassName={consts.headerClass}>
-            <div className="mx-3">
-                <Form ref={v => this.form = v} className="my-3"
-                    formData={current}
-                    schema={this.schema}
-                    uiSchema={this.uiSchema}
-                    onButtonClick={this.onFormButtonClick}
-                    requiredFlag={true}
-                />
+		let { current } = this.controller;
+		let right = <button type="button" 
+			className="btn btn-sm btn-success mr-3"
+			onClick={this.onClickSaveButton} >{this.t('submit')}</button>
+
+		return <Page header={this.t('editorpost')}
+			right={right}
+			headerClassName={consts.headerClass}>
+            <div className="mx-3 py-2 h-100 d-flex flex-column">
+				<textarea ref={tt => this.textarea=tt}
+					className="flex-fill mb-2" 
+					defaultValue={current.content} />
+				<Edit data={current}
+					schema={this.schema}
+					uiSchema={this.uiSchema}
+					onItemChanged={this.onItemChanged}
+				/>
             </div>
+        </Page>
+    })
+}
+/*
+
+
+<Form ref={v => this.form = v} className="my-3"
+formData={current}
+schema={this.schema}
+uiSchema={this.uiSchema}
+onButtonClick={this.onFormButtonClick}
+requiredFlag={true}
+/>
             <div className="px-1 ">
                 <div className="text-content" style={{ textAlign: "center" }}>
                     <button type="button" className="btn btn-primary mx-2"
                         onClick={this.onClickSaveButton} >{this.t('submit')}</button>
                 </div>
             </div>
-        </Page>
-    })
-}
+*/

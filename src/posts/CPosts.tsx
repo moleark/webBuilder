@@ -39,7 +39,7 @@ export class CPosts extends CUqBase {
     /* 贴文查询*/
     searchPostsKey = async (key: string, author: any) => {
 		this.pagePosts = new QueryPager(this.uqs.webBuilder.SearchPost, 15, 30);
-		this.pagePosts.setItemAction((item:any)=> {
+		this.pagePosts.setEachItem((item:any)=> {
 			this.cApp.useUser(item.author);
 		});
         let Auser = this.isMe ? nav.user : 0;
