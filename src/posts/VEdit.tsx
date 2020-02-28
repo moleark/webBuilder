@@ -17,13 +17,15 @@ export class VEdit extends VPage<CPosts> {
         //if (!this.form) return;
         //await this.form.buttonClick("submit");
         let { current } = this.controller;
-        let { id } = current;
+        let id = current && current.id;
         current.content = this.textarea.value;
         await this.controller.saveItem(id, current);
         this.closePage();
     }
 
     private onItemChanged = async (itemSchema: ItemSchema, newValue: any, preValue: any) => {
+        let { name } = itemSchema;
+        this.controller.current[name] = newValue;
     }
 
     private onFormButtonClick = async (name: string, context: Context) => {
@@ -85,14 +87,11 @@ export class VEdit extends VPage<CPosts> {
 
     private page = observer(() => {
         let { current } = this.controller;
-        if (!current) {
-            current = { caption: "", discription: "", content: "", image: "", template: "" }
-        }
 
         let right = <button type="button"
             className="btn btn-sm btn-success mr-3"
-            onClick={this.onClickSaveButton} >{this.t('submit')}</button>
-
+            onClick={this.onClickSaveButton} >{this.t('submit')}
+        </button>;
         return <Page header={this.t('editorpost')}
             right={right}
             headerClassName={consts.headerClass}>

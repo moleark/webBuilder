@@ -89,7 +89,7 @@ export class CPosts extends CUqBase {
     });
 
     onAdd = () => {
-        this.current = undefined;
+        this.current = { caption: "", discription: "", content: "", image: undefined, template: undefined };
         this.openVPage(VEdit);
     };
 
