@@ -12,17 +12,27 @@ export class VShow extends VPage<CPosts> {
 
     private page = observer(() => {
         let { current, onShowRelease } = this.controller;
-        let { id, author, image, $update } = current;
+        let { id, author, $update } = current;
         let date = <span><EasyTime date={$update} /></span>;
         let isMe = Tuid.equ(author, this.controller.user.id);
+        let right = isMe && <div className="d-flex align-items-center">
+            <button className="mr-2 btn btn-sm btn-success" onClick={() => this.openVPage(VEdit)}>
+                <FA name="pencil-square-o" /> {this.t('editor')}
+            </button>;
+            <button className="mr-2 btn btn-sm btn-info" onClick={() => onShowRelease()}>
+                <FA name="external-link" /> {this.t('publish')}
+            </button>
+        </div>;
 
-        let eidet = isMe && <span className="cursor-pointer iconfont icon-xiugai1 mr-2 text-white" onClick={() => this.openVPage(VEdit)} style={{ fontSize: '1.5rem' }}></span>;
+		/*
+        let eidet = isMe && <span className="cursor-pointer iconfont icon-xiugai1 mr-2 text-white" onClick={() => this.openVPage(VEdit)} style={{ fontSize: '1.7rem' }}></span>;
         let right = <div>
             {eidet}
             <span className="cursor-pointer mx-3 text-white" style={{ fontSize: '1.5rem' }} onClick={() => onShowRelease()}>
                 <FA name="send-o" />
             </span>
-        </div>;
+		</div>;
+		*/
         /**
         let divUser = this.controller.cApp.renderUser(author.id);
         let tvImage = tv(image, (values) => {
@@ -30,7 +40,7 @@ export class VShow extends VPage<CPosts> {
         }, undefined,
         () => null);
         **/
-        return <Page header={this.t('postdetailed')} headerClassName={consts.headerClass} right={right}>
+        return <Page header={this.t('preview')} headerClassName={consts.headerClass} right={right}>
             <div className="w-100 h-100">
                 <iframe src={"https://web.jkchemical.com/post/" + id} className="border-0 w-100 h-100 overflow-hidden"></iframe>
             </div>

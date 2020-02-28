@@ -41,12 +41,15 @@ MAP PostPublish(
     update DATETIME
 );
 
+
+/** 搜索帖文
 MAP PostPublishProduct(
-    key product ID product,
+    key product ID ProductX,
     key post ID POST,
     operator ID [$user],
     update DATETIME
 );
+*/
 
 
 /** 搜索帖文*/
@@ -124,13 +127,29 @@ ACTION PublishPost(
 };
 
 
-/** 发布帖文到产品*/
+/** 发布帖文到产品
 ACTION PublishPostForProduct(
     _post ID POST , 
-    _product ID Product
+    _product ID ProductX
 ) {
     book PostPublishProduct at(_product, _post) set operator = $user, update = now();
 };
+*/
+
+
+/** 搜索已经发布了的文帖
+QUERY SearchPostPublishForProduct( _post ID POST)
+returns ret  (
+    product ID ProductX,
+    post ID POST,
+    operator ID [$user],
+    update DATETIME
+) {
+    into ret select a.product, a.post, a.operator, a.update 
+    from PostPublishProduct as a
+    where a.post = _post;
+};
+*/
 
 
 Action test(a1 int, a2 int) {

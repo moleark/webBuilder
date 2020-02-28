@@ -4,6 +4,7 @@ import { VPage, Page, Widget, UiSchema, UiCustom, Form, Schema, Context, setRes 
 import { consts } from 'consts';
 import { observable } from 'mobx';
 import _ from "lodash"
+import { VReleaseProduct } from './VReleaseProduct';
 
 /*
 interface ReleaseType {
@@ -80,10 +81,11 @@ class Discount extends Widget {
 
 const schema: Schema = [
     { name: 'discount', type: 'string', required: false },
-    { name: 'submit', type: 'submit' },
+    //{ name: 'submit', type: 'submit' },
 ];
 
 export class VRelease extends VPage<CPosts>  {
+    private form: Form;
     async open() {
         this.openPage(this.page);
     }
@@ -94,12 +96,17 @@ export class VRelease extends VPage<CPosts>  {
                 label: this.t('pleaseselect'),
                 WidgetClass: Discount,
             } as UiCustom,
-            submit: { widget: 'button', label: this.t('submit'), className: 'btn btn-primary w-8c' },
+            submit: { widget: 'button', label: this.t('publish'), className: 'btn btn-primary w-8c' },
         }
     }
+
+    private onPublish = async () => {
+        await this.form.buttonClick("submit");
+    }
+
+
     private onFormButtonClick = async (name: string, context: Context) => {
         let { publishPost } = this.controller;
-        //let data = _.clone(context.data);
         let { discount } = context.data;
         let arr = [];
         for (let i in discount) {
@@ -109,6 +116,7 @@ export class VRelease extends VPage<CPosts>  {
     }
 
     private page = () => {
+        let { showPostPublishForProduct } = this.controller;
         let def = {
             discount: {
                 "1": true,
@@ -118,13 +126,22 @@ export class VRelease extends VPage<CPosts>  {
             }
         };
         return <Page header={this.t('publish')} headerClassName={consts.headerClass} >
-            <Form className="my-3 mx-3"
+            <Form ref={v => this.form = v} className="my-3 mx-3"
                 schema={schema}
                 uiSchema={this.uiSchema}
                 onButtonClick={this.onFormButtonClick}
                 requiredFlag={false}
                 fieldLabelSize={2}
                 formData={def} />
-        </Page>
+
+            <div className="text-center">
+                <button type="button" className="btn btn-outline-info ml-2" onClick={this.onPublish} >
+                    {this.t('ordinarypublish')}
+                </button>
+                <button type="button" className="btn btn-primary mx-2" onClick={showPostPublishForProduct} >
+                    {this.t('productpublish')}
+                </button>
+            </div>
+        </Page >
     }
 }

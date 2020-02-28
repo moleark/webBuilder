@@ -11,6 +11,7 @@ import { VPickImage } from "./VPickImage";
 import { VPickTemplate } from "./VPickTemplate";
 import { VRelease } from "./VRelease";
 import { setting } from "configuration";
+import { VReleaseProduct } from "./VReleaseProduct";
 
 export class CPosts extends CUqBase {
     @observable pageTemplate: QueryPager<any>;
@@ -110,6 +111,10 @@ export class CPosts extends CUqBase {
         return await this.vCall(VPickImage);
     };
 
+    pickProduct = async () => {
+
+    }
+
     onPickedImage = (id: number) => {
         this.closePage();
         this.returnCall(this.uqs.webBuilder.Image.boxId(id));
@@ -147,6 +152,12 @@ export class CPosts extends CUqBase {
     onPreviewPost = (id: number) => {
         window.open(setting.previewUrl + "/post/" + id, "_blank");
     };
+
+    showPostPublishForProduct = async () => {
+        let result: any = this.uqs.webBuilder.SearchPostPublishForProduct.query({ _post: this.current.id });
+        let list: any = result.ret;
+        this.openVPage(VReleaseProduct, list);
+    }
 
     tab = () => {
         return <this.render />;

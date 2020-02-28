@@ -37,7 +37,7 @@ export class VMain extends VPage<CPosts> {
 
 	private renderMeAllToggle() {
 		let cnButton = ['btn', 'btn-outline-success', 'btn-sm', 'text-nowrap'];
-		return <div className="px-2 d-flex align-items-center">
+		return <div className="px-sm-2 d-flex align-items-center">
 			<div className="btn-group btn-group-toggle" data-toggle="buttons">
 				<label className={classNames(cnButton, {active: this.isMe})}>
 					<input type="radio" name="options" value="me" defaultChecked={true} onChange={this.onMeAll} />
@@ -66,7 +66,7 @@ export class VMain extends VPage<CPosts> {
                 />
                 <div onClick={onAdd}>
                     <span
-                        className="mx-2 iconfont icon-jiahao1 cursor-pointer"
+                        className="mx-sm-2 iconfont icon-jiahao1 cursor-pointer"
                         style={{ fontSize: "1.7rem", color: "white" }}
                     ></span>
                 </div>

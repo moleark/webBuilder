@@ -5,6 +5,10 @@ export interface UqHr {
     SearchEmployeeByid: Query;
 }
 
+export interface UqProduct {
+    SearchProduct: Query;
+}
+
 export interface WebBuilder {
     Content: Tuid;
     Template: Tuid;
@@ -27,9 +31,11 @@ export interface WebBuilder {
     PageBrowsing: Book;
     SearchTotalBrowsing: Query;
     Test1: Tag;
+    SearchPostPublishForProduct: Query;
 }
 
 export interface UQs {
     hr: UqHr;
     webBuilder: WebBuilder;
+    product: UqProduct;
 }
