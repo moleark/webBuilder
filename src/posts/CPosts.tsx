@@ -154,9 +154,8 @@ export class CPosts extends CUqBase {
     };
 
     showPostPublishForProduct = async () => {
-        let result: any = this.uqs.webBuilder.SearchPostPublishForProduct.query({ _post: this.current.id });
-        let list: any = result.ret;
-        this.openVPage(VReleaseProduct, list);
+        let result = await this.uqs.webBuilder.SearchPostPublishForProduct.query({ _post: this.current.id });
+        this.openVPage(VReleaseProduct, result.ret);
     }
 
     tab = () => {

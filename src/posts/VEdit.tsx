@@ -7,24 +7,24 @@ import { consts } from 'consts';
 
 
 export class VEdit extends VPage<CPosts> {
-	private form: Form;
-	private textarea: HTMLTextAreaElement;
+    private form: Form;
+    private textarea: HTMLTextAreaElement;
     async open() {
         this.openPage(this.page);
     }
 
     private onClickSaveButton = async () => {
         //if (!this.form) return;
-		//await this.form.buttonClick("submit");
-		let {current} = this.controller;
-		let {id} = current;
-		current.content = this.textarea.value;
+        //await this.form.buttonClick("submit");
+        let { current } = this.controller;
+        let { id } = current;
+        current.content = this.textarea.value;
         await this.controller.saveItem(id, current);
         this.closePage();
     }
 
-	private onItemChanged = async (itemSchema: ItemSchema, newValue:any, preValue:any) => {		
-	}
+    private onItemChanged = async (itemSchema: ItemSchema, newValue: any, preValue: any) => {
+    }
 
     private onFormButtonClick = async (name: string, context: Context) => {
         let { current } = this.controller;
@@ -65,9 +65,9 @@ export class VEdit extends VPage<CPosts> {
 
             template: {
                 widget: 'id', label: this.t('template'), pickId: this.controller.pickTemplate, Templet: this.templateContent
-			} as UiIdItem,
+            } as UiIdItem,
 
-			submit: { widget: 'button', label: this.t('submit') }
+            submit: { widget: 'button', label: this.t('submit') }
         }
     };
 
@@ -84,23 +84,27 @@ export class VEdit extends VPage<CPosts> {
     }
 
     private page = observer(() => {
-		let { current } = this.controller;
-		let right = <button type="button" 
-			className="btn btn-sm btn-success mr-3"
-			onClick={this.onClickSaveButton} >{this.t('submit')}</button>
+        let { current } = this.controller;
+        if (!current) {
+            current = { caption: "", discription: "", content: "", image: "", template: "" }
+        }
 
-		return <Page header={this.t('editorpost')}
-			right={right}
-			headerClassName={consts.headerClass}>
+        let right = <button type="button"
+            className="btn btn-sm btn-success mr-3"
+            onClick={this.onClickSaveButton} >{this.t('submit')}</button>
+
+        return <Page header={this.t('editorpost')}
+            right={right}
+            headerClassName={consts.headerClass}>
             <div className="mx-3 py-2 h-100 d-flex flex-column">
-				<textarea ref={tt => this.textarea=tt}
-					className="flex-fill mb-2" 
-					defaultValue={current.content} />
-				<Edit data={current}
-					schema={this.schema}
-					uiSchema={this.uiSchema}
-					onItemChanged={this.onItemChanged}
-				/>
+                <textarea ref={tt => this.textarea = tt}
+                    className="flex-fill mb-2"
+                    defaultValue={current.content} />
+                <Edit data={current}
+                    schema={this.schema}
+                    uiSchema={this.uiSchema}
+                    onItemChanged={this.onItemChanged}
+                />
             </div>
         </Page>
     })

@@ -18,7 +18,7 @@ export class VShow extends VPage<CPosts> {
         let right = isMe && <div className="d-flex align-items-center">
             <button className="mr-2 btn btn-sm btn-success" onClick={() => this.openVPage(VEdit)}>
                 <FA name="pencil-square-o" /> {this.t('editor')}
-            </button>;
+            </button>
             <button className="mr-2 btn btn-sm btn-info" onClick={() => onShowRelease()}>
                 <FA name="external-link" /> {this.t('publish')}
             </button>
