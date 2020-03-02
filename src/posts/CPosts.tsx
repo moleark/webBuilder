@@ -13,6 +13,7 @@ import { VRelease } from "./VRelease";
 import { setting } from "configuration";
 import { VReleaseProduct } from "./VReleaseProduct";
 import { VPickProduct } from "./VPickProduct";
+import { VGrade } from "./VGrade";
 
 class PageProduct extends PageItems<any> {
 
@@ -44,6 +45,12 @@ export class CPosts extends CUqBase {
     @observable current: any;
     @observable isMe: boolean = true;
     @observable postProduct: any;
+    @observable ratioA: any;
+    @observable ratioB: any;
+    @observable ratioC: any;
+    @observable ratioD: any;
+    @observable ratioE: any;
+
 
     protected async internalStart(param: any) {
         this.setRes({
@@ -141,30 +148,42 @@ export class CPosts extends CUqBase {
 
     evaluate = async (val:number) => {
         this.closePage(2);
-        let gradeVal:any;
-        switch (val) {
-            case 1:
-                gradeVal = "E";
-                break;
-            case 2:
-                gradeVal = "D";
-                 break;
-            case 3:
-                gradeVal = "C";
-                 break;
-            case 4:
-                gradeVal = "B";
-                 break;
-            case 5:
-                gradeVal = "A";
-                 break;
-        } 
         await this.uqs.webBuilder.AddPostEvaluate.submit({
-            post: this.current.id,
-            ip: '',
-            grade: gradeVal
+            _post: this.current.id,
+            _ip: '',
+            _grade: val
         })
        
+    }
+    onGrade = async () => {
+        this.openVPage(VGrade);
+        let a = await this.uqs.webBuilder.SearchPostEvaluate.table({_post: this.current.id});
+        console.log(a[0]==undefined,'aaa')
+        if(a[0]==undefined) {
+            console.log(11111)
+            this.ratioA = 0;
+            this.ratioB = 0;
+            this.ratioC = 0;
+            this.ratioD = 0;
+            this.ratioE = 0;
+            
+        } else {
+            console.log(22222)
+            let {GradeA,GradeB,GradeC,GradeD,GradeE} = a[0];
+            let total = ~~GradeA + ~~GradeD + ~~GradeB + ~~GradeC + ~~GradeE;
+            this.ratioA = total/5*~~GradeA;
+            this.ratioB = total/5*~~GradeB;
+            this.ratioC = total/5*~~GradeC;
+            this.ratioD = total/5*~~GradeD;
+            this.ratioE = total/5*~~GradeE;
+           
+        }
+        
+    }
+    acquire = async () => {
+        
+        // console.log(total/5*~~GradeA,'555')
+        // console.log(~~GradeA + ~~GradeD + ~~GradeB + ~~GradeC + ~~GradeE,'GradeD')
     }
 
     onPickedImage = (id: number) => {

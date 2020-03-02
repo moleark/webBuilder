@@ -13,11 +13,11 @@ export class VShow extends VPage<CPosts> {
     }
 
     private page = observer(() => {
-        let { current, onShowRelease } = this.controller;
+        let { current, onShowRelease, onGrade } = this.controller;
         let { id, author, $update } = current;
         let date = <span><EasyTime date={$update} /></span>;
         let isMe = Tuid.equ(author, this.controller.user.id);
-
+        console.log(isMe,'isMe')
         let meright = isMe && <>
             <button className="mr-2 btn btn-sm btn-success" onClick={() => this.openVPage(VEdit)}>
                 <FA name="pencil-square-o" /> {this.t('editor')}
@@ -27,16 +27,22 @@ export class VShow extends VPage<CPosts> {
             </button>
         </>;
 
-        let right = <div className="d-flex align-items-center">
-            <button className="mr-2 btn btn-sm btn-success" onClick={() => this.openVPage(VGrade)}>
-                {/* <FA name="code px-1" /> */}
+        let right = isMe ? <div className="d-flex align-items-center">
+            <button className="mr-2 btn btn-sm btn-success" onClick={() => this.openVPage(VSourceCode)}>
+                <FA name="code px-1" />{this.t('sourcecode')}
+            </button>
+            {meright}
+            </div>
+            :
+            <div className="d-flex align-items-center">
+             <button className="mr-2 btn btn-sm btn-success" onClick={() => onGrade()}>
                 评分
             </button>
             <button className="mr-2 btn btn-sm btn-success" onClick={() => this.openVPage(VSourceCode)}>
                 <FA name="code px-1" />{this.t('sourcecode')}
             </button>
             {meright}
-        </div>;
+        </div>
 
 		/*
         let eidet = isMe && <span className="cursor-pointer iconfont icon-xiugai1 mr-2 text-white" onClick={() => this.openVPage(VEdit)} style={{ fontSize: '1.7rem' }}></span>;
