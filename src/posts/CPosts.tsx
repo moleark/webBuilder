@@ -13,6 +13,7 @@ import { VRelease } from "./VRelease";
 import { setting } from "configuration";
 import { VReleaseProduct } from "./VReleaseProduct";
 import { VPickProduct } from "./VPickProduct";
+import { VTag } from "tag/VTag";
 
 class PageProduct extends PageItems<any> {
 
@@ -139,32 +140,32 @@ export class CPosts extends CUqBase {
 
     }
 
-    evaluate = async (val:number) => {
+    evaluate = async (val: number) => {
         this.closePage(2);
-        let gradeVal:any;
+        let gradeVal: any;
         switch (val) {
             case 1:
                 gradeVal = "E";
                 break;
             case 2:
                 gradeVal = "D";
-                 break;
+                break;
             case 3:
                 gradeVal = "C";
-                 break;
+                break;
             case 4:
                 gradeVal = "B";
-                 break;
+                break;
             case 5:
                 gradeVal = "A";
-                 break;
-        } 
+                break;
+        }
         await this.uqs.webBuilder.AddPostEvaluate.submit({
-            post: this.current.id,
+            post: this.current.id,
             ip: '',
             grade: gradeVal
         })
-       
+
     }
 
     onPickedImage = (id: number) => {

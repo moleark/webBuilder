@@ -42,33 +42,21 @@ export class VEdit extends VPage<CPosts> {
         });
     }
 
-    private templateContent = (boxId: any) => {
-        return tv(boxId, (values) => {
-            let { caption } = values;
-            return <>{caption}</>;
-        });
-    }
-
     private uiSchema: UiSchema = {
         items: {
             caption: { widget: 'text', label: this.t('title') },
-
             discription: {
                 widget: 'textarea', label: this.t('describe'), placeholder: this.t('describe'), rows: 3
-            } as UiInputItem,
-
-            content: {
-                widget: 'textarea', label: this.t('content'), placeholder: this.t('content'), rows: 8
             } as UiInputItem,
 
             image: {
                 widget: 'id', label: this.t('picture'), pickId: this.controller.pickImage, Templet: this.imageContent
             } as UiIdItem,
-
+            /**
             template: {
                 widget: 'id', label: this.t('template'), pickId: this.controller.pickTemplate, Templet: this.templateContent
             } as UiIdItem,
-
+            **/
             submit: { widget: 'button', label: this.t('submit') }
         }
     };
@@ -86,12 +74,19 @@ export class VEdit extends VPage<CPosts> {
     }
 
     private page = observer(() => {
-        let { current } = this.controller;
 
-        let right = <button type="button"
-            className="btn btn-sm btn-success mr-3"
-            onClick={this.onClickSaveButton} >{this.t('submit')}
-        </button>;
+        let { current, cApp } = this.controller;
+
+        let right = <div>
+            <button type="button"
+                className="btn btn-sm btn-success mr-3"
+                onClick={this.onClickSaveButton} >{this.t('submit')}
+            </button>
+            <button type="button"
+                className="btn btn-sm btn-success mr-3"
+                onClick={cApp.cTag.showTag} >{this.t('tag')}
+            </button>
+        </div>;
         return <Page header={this.t('editorpost')}
             right={right}
             headerClassName={consts.headerClass}>

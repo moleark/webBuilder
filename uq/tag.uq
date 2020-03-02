@@ -1,6 +1,57 @@
 
 --领域
-
-Tag Field;
+Tag ResearchField;
 
 Tag Test1 ver 1.5 (a:'aaTest1', b:'bbTest1');
+
+MAP PostResearchField(
+    key post ID POST,
+    key value smallint
+);
+
+ACTION AddPostResearchField(
+    _post ID POST, 
+    _tag Text
+) {
+    delete from PostResearchField where post = _post;
+    foreach (var t smallint of TAGS _tag) {
+        book PostResearchField at( _post, t  );
+    }
+};
+
+QUERY SearchPostResearchField(
+    _post ID POST
+) 
+RETURNS ret (
+   value smallint
+) {
+     into ret select value 
+     from PostResearchField 
+     where post = _post;
+};
+
+
+/**
+QUERY a ver 1.0 (
+ p1 int,
+ tags char(100)
+)
+RETURNS ret (
+    scoreItem ID ScoreItem,
+    role ID Role,
+ test1Tag TAG Test1,
+) {
+ TABLE tagsTab1 (t1 SMALLINT);
+ TABLE tagsTab2 (t1 SMALLINT);
+
+ Text tags into tagsTab1;
+
+ foreach (var t smallint of TAGS tags) {
+  into tagsTab2 select t as t1;
+ }
+
+ into ret select scoreItem, role, test1Tag 
+  from RoleScoreItem 
+  where scoreItem=1 and role=1 and test1Tag=1;
+};
+**/

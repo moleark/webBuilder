@@ -32,11 +32,13 @@ export interface WebBuilder {
     SearchBranch: Query;
     PageBrowsing: Book;
     SearchTotalBrowsing: Query;
-    Test1: Tag;
     SearchPostPublishForProduct: Query;
     PostPublishProduct: Map;
     AddPostEvaluate: Action;
     SearchPostEvaluate: Query;
+    ResearchField: Tag;
+    AddPostResearchField: Action;
+    SearchPostResearchField: Query;
 }
 
 export interface UQs {
