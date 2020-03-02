@@ -50,8 +50,22 @@ MAP PostPublishProduct(
     update DATETIME
 );
 
+BOOK PostEvaluate (
+    key post ID POST,
+    GradeA int,
+    GradeB int,
+    GradeC int,
+    GradeD int,
+    GradeE int,
+);
 
-
+History PostEvaluateRecord (
+    date,
+    post ID POST,
+    ip ID ip,
+    grade int
+);
+ 
 /** 搜索帖文*/
 QUERY SearchPost( key char(100), author ID [$user])
 PAGE (
@@ -150,6 +164,28 @@ returns ret  (
 };
 
 
+Action AddPostEvaluate (
+    _post ID POST , 
+    _ip char(20),
+    _grade char(10)
+) {
+    var ip ID IP;
+    set ip=id from ip where ip= _ip;
+    HISTORY PostEvaluateRecord SET post=_post, ip=ip, grade = _grade;
+    if(_grade='A'){
+        BOOK PostEvaluate at(_post) set GradeA += 1;
+    } else if(_grade='B'){
+         BOOK PostEvaluate at(_post) set GradeB += 1;
+    } else if(_grade='C'){
+         BOOK PostEvaluate at(_post) set GradeC += 1;
+    } else if(_grade='D'){
+         BOOK PostEvaluate at(_post) set GradeD += 1;
+    } else if(_grade='E'){
+         BOOK PostEvaluate at(_post) set GradeE += 1;
+    }
+ 
+};
+ 
 Action test(a1 int, a2 int) {
     book contenttag at(a1, a2);
 };
