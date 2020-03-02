@@ -6,7 +6,9 @@ export interface UqHr {
 }
 
 export interface UqProduct {
+    ProductX: Tuid;
     SearchProduct: Query;
+
 }
 
 export interface WebBuilder {
@@ -32,6 +34,7 @@ export interface WebBuilder {
     SearchTotalBrowsing: Query;
     Test1: Tag;
     SearchPostPublishForProduct: Query;
+    PostPublishProduct: Map;
 }
 
 export interface UQs {

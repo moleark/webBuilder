@@ -6,20 +6,44 @@ import { observer } from "mobx-react";
 import { VMain } from "./VMain";
 import { VShow } from "./VShow";
 import { VEdit } from "./VEdit";
-import { Context, nav, QueryPager } from "tonva";
+import { Context, nav, QueryPager, PageItems, Query } from "tonva";
 import { VPickImage } from "./VPickImage";
 import { VPickTemplate } from "./VPickTemplate";
 import { VRelease } from "./VRelease";
 import { setting } from "configuration";
 import { VReleaseProduct } from "./VReleaseProduct";
+import { VPickProduct } from "./VPickProduct";
+
+class PageProduct extends PageItems<any> {
+
+    private searchProductQuery: Query;
+
+    constructor(searchProductQuery: Query) {
+        super();
+        this.firstSize = this.pageSize = 10;
+        this.searchProductQuery = searchProductQuery;
+    }
+
+    protected async load(param: any, pageStart: any, pageSize: number): Promise<any[]> {
+        if (pageStart === undefined) pageStart = 0;
+        let ret = await this.searchProductQuery.page(param, pageStart, pageSize);
+        return ret;
+    }
+
+    protected setPageStart(item: any): any {
+        this.pageStart = item === undefined ? 0 : item.seq;
+    }
+}
+
 
 export class CPosts extends CUqBase {
     @observable pageTemplate: QueryPager<any>;
     @observable pagePosts: QueryPager<any>;
     @observable pageMedia: QueryPager<any>;
-    //@observable items: any[];
+    @observable pageProduct: PageProduct;
     @observable current: any;
     @observable isMe: boolean = true;
+    @observable postProduct: any;
 
     protected async internalStart(param: any) {
         this.setRes({
@@ -153,9 +177,35 @@ export class CPosts extends CUqBase {
         window.open(setting.previewUrl + "/post/" + id, "_blank");
     };
 
+    searchPostProduct = async () => {
+        this.postProduct = await this.uqs.webBuilder.SearchPostPublishForProduct.table({ _post: this.current.id });
+    };
+
     showPostPublishForProduct = async () => {
-        let result = await this.uqs.webBuilder.SearchPostPublishForProduct.query({ _post: this.current.id });
-        this.openVPage(VReleaseProduct, result.ret);
+        await this.searchPostProduct();
+        this.openVPage(VReleaseProduct);
+    }
+
+
+    searchProduct = async (key: string) => {
+        this.pageProduct = new PageProduct(this.uqs.product.SearchProduct);
+        await this.pageProduct.first({ keyWord: key, salesRegion: 1 });
+    };
+
+    showProduct = async (param: any) => {
+        await this.searchProduct("");
+        this.openVPage(VPickProduct);
+    }
+
+    onPickedProduct = async (id: number) => {
+        await this.searchPostProduct();
+        this.closePage();
+        await this.uqs.webBuilder.PostPublishProduct.add({ product: id, arr1: [{ post: this.current.id, operator: nav.user.id }] });
+    };
+
+    delPostProduct = async (param: any) => {
+        await this.searchPostProduct();
+        this.uqs.webBuilder.PostPublishProduct.del({ product: param.id, arr1: [{ post: this.current.id }] });
     }
 
     tab = () => {

@@ -16,6 +16,7 @@ export const en = {
     lightagent: 'Light agent',
     internalwebpage: 'Internal web page',
     openwebpage: 'Open web page',
+    sourcecode: 'Code',
 
     picture: 'Picture',
     searchpicture: 'Search picture',
@@ -77,6 +78,7 @@ export const zh = {
     lightagent: '轻代理',
     internalwebpage: '内部网页',
     openwebpage: '公开网页',
+    sourcecode: '源码',
 
     picture: '图片',
     searchpicture: '搜索图片',
