@@ -111,7 +111,7 @@ PAGE (
 
     PAGE select p.id, p.caption, p.discription, p.image, p.author, p.template
     from    POST as p
-            join AssistPost as a on p.id = a.post
+            join PostPublish as a on p.id = a.post
     where   p.id < $pageStart
     order by p.id desc
     limit $pageSize;
@@ -183,8 +183,23 @@ Action AddPostEvaluate (
     } else if(_grade='E'){
          BOOK PostEvaluate at(_post) set GradeE += 1;
     }
- 
 };
+
+/** 搜索已经发布了的文帖*/
+QUERY SearchPostEvaluate( _post ID POST)
+returns ret  (
+    post ID POST,
+    GradeA int,
+    GradeB int,
+    GradeC int,
+    GradeD int,
+    GradeE int,
+) {
+    into ret select a.post, a.GradeA, a.GradeB, a.GradeC , a.GradeD , a.GradeE 
+    from PostEvaluate as a
+    where a.post = _post;
+};
+
  
 Action test(a1 int, a2 int) {
     book contenttag at(a1, a2);

@@ -36,7 +36,7 @@ export class VMain extends VPage<CPosts> {
 	}
 
 	private renderMeAllToggle() {
-		let cnButton = ['btn', 'btn-outline-success', 'btn-sm', 'text-nowrap'];
+		let cnButton = ['btn', 'btn-outline-warning', 'btn-sm', 'text-nowrap'];
 		return <div className="px-sm-2 d-flex align-items-center">
 			<div className="btn-group btn-group-toggle" data-toggle="buttons">
 				<label className={classNames(cnButton, {active: this.isMe})}>

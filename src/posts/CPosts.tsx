@@ -193,7 +193,7 @@ export class CPosts extends CUqBase {
     };
 
     showProduct = async (param: any) => {
-        await this.searchProduct("");
+        await this.searchProduct(undefined);
         this.openVPage(VPickProduct);
     }
 
