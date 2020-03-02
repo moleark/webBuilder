@@ -172,15 +172,15 @@ Action AddPostEvaluate (
     var ip ID IP;
     set ip=id from ip where ip= _ip;
     HISTORY PostEvaluateRecord SET post=_post, ip=ip, grade = _grade;
-    if(_grade='A'){
+    if(  _grade = "1"){
         BOOK PostEvaluate at(_post) set GradeA += 1;
-    } else if(_grade='B'){
+    } else if( _grade = "2"){
          BOOK PostEvaluate at(_post) set GradeB += 1;
-    } else if(_grade='C'){
+    } else if( _grade = "3"){
          BOOK PostEvaluate at(_post) set GradeC += 1;
-    } else if(_grade='D'){
+    } else if( _grade = "4"){
          BOOK PostEvaluate at(_post) set GradeD += 1;
-    } else if(_grade='E'){
+    } else if( _grade = "5"){
          BOOK PostEvaluate at(_post) set GradeE += 1;
     }
 };
