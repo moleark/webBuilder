@@ -123,13 +123,6 @@ export class CPosts extends CUqBase {
 
     loadList = async () => {
         this.searchPostsKey("", this.isMe ? nav.user : 0);
-        // let query = { user: this.user.id };
-        let a = await this.uqs.webBuilder.AddPostEvaluate.submit({
-            POST: this.user.id,
-            ip: '',
-            grade: 'A'
-        });
-        console.log(a,'aaa')
     };
 
     showDetail = async (id: number) => {
@@ -167,11 +160,11 @@ export class CPosts extends CUqBase {
                  break;
         } 
         await this.uqs.webBuilder.AddPostEvaluate.submit({
-            POST: this.user.id,
+            post: this.current.id,
             ip: '',
             grade: gradeVal
-        });
-
+        })
+       
     }
 
     onPickedImage = (id: number) => {

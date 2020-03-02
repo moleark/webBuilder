@@ -36,6 +36,7 @@ export interface WebBuilder {
     SearchPostPublishForProduct: Query;
     PostPublishProduct: Map;
     AddPostEvaluate: Action;
+    SearchPostEvaluate: Query;
 }
 
 export interface UQs {
