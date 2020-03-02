@@ -10,11 +10,15 @@ export class VPickProduct extends VPage<CPosts> {
     }
 
     private page = observer(() => {
-        let { pageProduct } = this.controller;
+        let { pageProduct, searchProduct } = this.controller;
         let none = <div className="my-3 mx-2 text-warning">
             <span className="text-primary" > {this.t('nopicture')}！</span>
         </div>;
-        return <Page headerClassName={consts.headerClass} header={this.t('选择产品')} back="close" >
+        let right = <SearchBox className="w-80 mt-2 mr-2"
+            size='sm'
+            onSearch={(key: string) => searchProduct(key)}
+            placeholder={this.t('pleaseselect')} />;
+        return <Page headerClassName={consts.headerClass} header={this.t('selectproduct')} right={right} >
             <List
                 before={''}
                 none={none}

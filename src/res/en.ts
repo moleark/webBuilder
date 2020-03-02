@@ -11,7 +11,7 @@ export const en = {
     publish: 'Publish',
     productpublish: 'Publish For Product',
     ordinarypublish: 'Publish Fro Ordinary',
-    pleaseselect: 'Please select',
+    selectproduct: 'Select Product',
     internalsales: 'Internal sales',
     lightagent: 'Light agent',
     internalwebpage: 'Internal web page',
@@ -56,7 +56,8 @@ export const en = {
     save: 'Save',
     copy: 'Copy',
     copysuccess: 'Copy Success',
-    editor: 'Editor'
+    editor: 'Editor',
+    pleaseselect: 'Please select'
 }
 
 export const zh = {
@@ -72,8 +73,8 @@ export const zh = {
 
     publish: '发布',
     productpublish: '产品发布',
+    selectproduct: '选择产品',
     ordinarypublish: '普通发布',
-    pleaseselect: '请选择',
     internalsales: '内部销售',
     lightagent: '轻代理',
     internalwebpage: '内部网页',
@@ -118,5 +119,6 @@ export const zh = {
     save: '保存',
     copy: '复制',
     copysuccess: '复制成功',
-    editor: '编辑'
+    editor: '编辑',
+    pleaseselect: '请选择'
 }
