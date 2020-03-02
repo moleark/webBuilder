@@ -5,6 +5,7 @@ import { VEdit } from './VEdit';
 import { observer } from 'mobx-react';
 import { consts } from 'consts';
 import { VSourceCode } from './VSourceCode';
+import { VGrade } from './VGrade';
 
 export class VShow extends VPage<CPosts> {
     async open() {
@@ -27,6 +28,10 @@ export class VShow extends VPage<CPosts> {
         </>;
 
         let right = <div className="d-flex align-items-center">
+            <button className="mr-2 btn btn-sm btn-success" onClick={() => this.openVPage(VGrade)}>
+                {/* <FA name="code px-1" /> */}
+                评分
+            </button>
             <button className="mr-2 btn btn-sm btn-success" onClick={() => this.openVPage(VSourceCode)}>
                 <FA name="code px-1" />{this.t('sourcecode')}
             </button>

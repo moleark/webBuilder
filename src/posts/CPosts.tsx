@@ -123,6 +123,13 @@ export class CPosts extends CUqBase {
 
     loadList = async () => {
         this.searchPostsKey("", this.isMe ? nav.user : 0);
+        // let query = { user: this.user.id };
+        let a = await this.uqs.webBuilder.AddPostEvaluate.submit({
+            POST: this.user.id,
+            ip: '',
+            grade: 'A'
+        });
+        console.log(a,'aaa')
     };
 
     showDetail = async (id: number) => {
@@ -136,6 +143,34 @@ export class CPosts extends CUqBase {
     };
 
     pickProduct = async () => {
+
+    }
+
+    evaluate = async (val:number) => {
+        this.closePage(2);
+        let gradeVal:any;
+        switch (val) {
+            case 1:
+                gradeVal = "E";
+                break;
+            case 2:
+                gradeVal = "D";
+                 break;
+            case 3:
+                gradeVal = "C";
+                 break;
+            case 4:
+                gradeVal = "B";
+                 break;
+            case 5:
+                gradeVal = "A";
+                 break;
+        } 
+        await this.uqs.webBuilder.AddPostEvaluate.submit({
+            POST: this.user.id,
+            ip: '',
+            grade: gradeVal
+        });
 
     }
 

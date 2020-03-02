@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.css';
 import './index.css';
+import { Button } from 'element-react';
+import 'element-theme-default';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import './static/font_o9pla2ijgg/iconfont.css';

@@ -16,6 +16,8 @@
         "bootstrap": "^4.3.1",
         "classnames": "^2.2.6",
         "copy-to-clipboard": "^3.2.0",
+        "element-react": "^1.4.34",
+        "element-theme-default": "^1.4.13",
         "font-awesome": "^4.7.0",
         "gh-pages": "^2.1.1",
         "jwt-decode": "^2.2.0",
@@ -26,6 +28,7 @@
         "querystringify": "^2.1.1",
         "react": "^16.10.2",
         "react-dom": "^16.10.2",
+        "react-hot-loader": "^4.5.3",
         "react-scripts": "3.3.0",
         "tonva": "^1.2.35",
         "typescript": "^3.7.3"
