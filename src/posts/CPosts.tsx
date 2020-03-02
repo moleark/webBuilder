@@ -14,6 +14,7 @@ import { setting } from "configuration";
 import { VReleaseProduct } from "./VReleaseProduct";
 import { VPickProduct } from "./VPickProduct";
 import { VGrade } from "./VGrade";
+import { VTag } from "tag/VTag";
 
 class PageProduct extends PageItems<any> {
 
@@ -146,14 +147,14 @@ export class CPosts extends CUqBase {
 
     }
 
-    evaluate = async (val:number) => {
+    evaluate = async (val: number) => {
         this.closePage(2);
         await this.uqs.webBuilder.AddPostEvaluate.submit({
             _post: this.current.id,
             _ip: '',
             _grade: val
         })
-       
+
     }
     onGrade = async () => {
         this.openVPage(VGrade);

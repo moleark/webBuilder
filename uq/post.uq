@@ -151,7 +151,9 @@ ACTION PublishPostForProduct(
 
 
 /** 搜索已经发布了的文帖*/
-QUERY SearchPostPublishForProduct( _post ID POST)
+QUERY SearchPostPublishForProduct( 
+    _post ID POST
+)
 returns ret  (
     product ID ProductX,
     post ID POST,
