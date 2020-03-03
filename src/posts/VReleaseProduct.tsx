@@ -42,8 +42,6 @@ export class VReleaseProduct extends VPage<CPosts> {
                     <div className="row row-cols-1 small" >
                         <div className="col d-flex pt-2">品牌：{tv(vl.brand, val => val.name)}</div>
                         <div className="col d-flex pt-2">产品编号：{vl.origin}</div>
-                        <div className="col d-flex pt-2">品牌：{tv(vl.brand, val => val.name)}</div>
-                        <div className="col d-flex pt-2">产品编号：{vl.origin}</div>
                     </div>
                     <button className="btn btn-outline-info pt-2" onClick={() => delPostProduct(product)}> 删除</button>
                 </div>
