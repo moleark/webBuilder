@@ -12,14 +12,14 @@ export class VTeam extends VPage<CMe> {
     async open() {
         this.openPage(this.page);
     }
-  
+
 
     private page = observer(() => {
         let { Myteam } = this.controller;
         return <Page header={this.t('myteam')} headerClassName={consts.headerClass}>
             <List items={Myteam} item={{ render: this.renderItem }} />
         </Page>;
-        
+
     })
     private renderItem = (item: any, index: number) => {
         return <this.itemRow {...item} />
@@ -28,9 +28,11 @@ export class VTeam extends VPage<CMe> {
     private itemRow = observer((item: any) => {
         let { onDetail } = this.controller;
         let { webuser } = item;
-        let right = <></>;
-        return <LMR className="px-3 py-2 border bg-white" right={right} onClick={()=>onDetail(webuser.id)}>
-        <div>{tv(webuser,(values)=><>{values.name}</> )}</div>
-    </LMR>;
+
+        console.log(webuser, 'aaa')
+        let right = <></>
+        return <LMR className="px-3 py-2 border bg-white" right={right} onClick={() => onDetail(webuser.id)}>
+            <div>{this.controller.cApp.renderUser(webuser.id)}</div>
+        </LMR>;
     });
 }
