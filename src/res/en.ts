@@ -70,7 +70,7 @@ export const zh = {
     title: '标题',
     describe: '描述',
     content: '内容',
-
+    estimate:'评价',
     publish: '发布',
     productpublish: '产品发布',
     selectproduct: '选择产品',
@@ -104,6 +104,9 @@ export const zh = {
     me: '我的',
     tag: '标签',
     set: '设置',
+    team: '团队',
+    myteam: '我的团队',
+    privatedetail: '个人明细',
     logout: '退出登陆',
     about: '关于',
     password: '密码',

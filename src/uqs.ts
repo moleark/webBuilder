@@ -41,6 +41,7 @@ export interface WebBuilder {
     ResearchField: Tag;
     AddPostResearchField: Action;
     SearchPostResearchField: Query;
+    SearchAchievement: Query;
 }
 
 export interface UQs {

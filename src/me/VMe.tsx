@@ -25,7 +25,7 @@ export class VMe extends VPage<CMe> {
 
     private page = observer(() => {
 
-        let { onSet, user, PostTotal, PageTotal, cApp } = this.controller;
+        let { onSet, user, PostTotal, PageTotal, cApp, onTeams } = this.controller;
         PageTotal = PageTotal ? PageTotal : 0;
         PostTotal = PostTotal ? PostTotal : 0;
         if (!user) return;
@@ -46,6 +46,7 @@ export class VMe extends VPage<CMe> {
             {branch(this.t('post'), PostTotal, "icon-yewuzongliang", undefined)}
             {branch(this.t('page'), PageTotal, "icon-shuangsechangyongtubiao-", undefined)}
             {branch(this.t('tag'), PageTotal, "icon-shuangsechangyongtubiao-", cApp.cTag.showTag)}
+            {branch(this.t('team'), null, "icon-shezhi3 ", onTeams)}
             {branch(this.t('set'), null, "icon-shezhi3 ", onSet)}
         </Page>;
     })

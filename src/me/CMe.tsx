@@ -7,6 +7,8 @@ import { PageItems, Query, nav } from "tonva";
 import { VCompileImg } from "./VCompileImg";
 import { VSetDetails } from "./VSetDetails";
 import { VAbout } from "./VAbout";
+import { VTeam } from "./VTeam";
+import { VTeamDetail } from "./VTeamDetail";
 
 class PageMedia extends PageItems<any> {
     private searchMediaQuery: Query;
@@ -36,6 +38,8 @@ export class CMe extends CUqBase {
     @observable current: any;
     @observable PostTotal: any = 0;
     @observable PageTotal: any = 0;
+    @observable Myteam: any[];
+    @observable details: any[];
     @observable pagePosts: any[];
 
     searchMadiaKey = async (key: string) => {
@@ -49,6 +53,17 @@ export class CMe extends CUqBase {
 
     };
 
+    onTeams = () => {
+        this.openVPage(VTeam);
+
+    };
+
+    onDetail = async (id:number)=> {
+        this.openVPage(VTeamDetail)
+        this.details = await this.uqs.webBuilder.SearchAchievement.table({_user: id})
+        console.log(this.details,'员工明细')
+    }
+
     showAbout = () => {
         this.openVPage(VAbout);
     };
@@ -58,9 +73,7 @@ export class CMe extends CUqBase {
         let postTotal = await this.uqs.webBuilder.SearchTotalBrowsing.query({});
 
         if (postTotal.ret.length && (postTotal.ret.length > 0)) {
-            console.log(1)
             this.PostTotal = postTotal.ret[0].PostTotal;
-            console.log(this.PostTotal, 777)
         }
 
         // page用户总浏览量
@@ -98,7 +111,7 @@ export class CMe extends CUqBase {
     };
 
     searchTeam = async () => {
-        let team = await this.uqs.hr.SearchTeam.table({ key: "" });
+        this.Myteam = await this.uqs.hr.SearchTeam.table({ key: "" });
     }
 
     render = observer(() => {
