@@ -46,6 +46,7 @@ export class CMe extends CUqBase {
 
     onSet = () => {
         this.openVPage(VSetDetails);
+
     };
 
     showAbout = () => {
@@ -55,7 +56,7 @@ export class CMe extends CUqBase {
     loadList = async () => {
         // post用浏览量
         let postTotal = await this.uqs.webBuilder.SearchTotalBrowsing.query({});
-        
+
         if (postTotal.ret.length && (postTotal.ret.length > 0)) {
             console.log(1)
             this.PostTotal = postTotal.ret[0].PostTotal;
@@ -67,6 +68,8 @@ export class CMe extends CUqBase {
         if (pageTotal.ret.length && (pageTotal.ret.length > 0)) {
             this.PageTotal = pageTotal.ret[0].PageTotal;
         }
+
+        await this.searchTeam();
     };
 
     onAlterImg = () => {
@@ -93,6 +96,10 @@ export class CMe extends CUqBase {
         }
         this.searchMadiaKey("");
     };
+
+    searchTeam = async () => {
+        let team = await this.uqs.hr.SearchTeam.table({ key: "" });
+    }
 
     render = observer(() => {
         return this.renderView(VMe);

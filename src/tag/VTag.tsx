@@ -53,6 +53,7 @@ export class VTag extends VPage<CTag> {
     });
 
     private onFormButtonClick = async (name: string, context: Context) => {
+        this.closePage();
         this.controller.addPostResearchField(context.data);
     }
 }

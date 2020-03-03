@@ -3,6 +3,7 @@ import { Tuid, Map, Query, Action, Sheet, Book, Tag } from "tonva";
 export interface UqHr {
     employee: Tuid;
     SearchEmployeeByid: Query;
+    SearchTeam: Query;
 }
 
 export interface UqProduct {
