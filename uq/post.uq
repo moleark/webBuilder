@@ -137,8 +137,24 @@ ACTION PublishPost(
             set _openweb = 1;
         }
     }
+
+    var _new int = 0, _old int =0;
+    if( _web = 1 or _agent = 1 or _assist = 1 or _openweb = 1){
+        set _new = 1;
+    };
+    
+    if exists( select 1 
+        from    PostPublish 
+        where   web=1 or agent= 1 or assist=1 or openweb=1
+    ){
+        set _old = 1;
+    };
+
+    BOOK Achievement at($user) set postPulishSum +=(_new - _old);
+
     book PostPublish at(_post) 
     set web=_web, agent=_agent, assist=_assist, openweb=_openweb, operator = $user, update = now();
+
 };
 
 
@@ -157,7 +173,7 @@ ACTION AddPost(
         caption = _caption, discription = _discription, image = _image, 
         author = $user, template = _template, content = _content;
 
-    BOOK Achievement at($user) set postTotal+=1;
+    BOOK Achievement at($user) set postSum+=1;
     into ret select postId as id;
 };
 
