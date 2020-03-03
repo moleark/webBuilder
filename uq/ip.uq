@@ -31,6 +31,7 @@ ACTION hit ver 0.1 (
         post BIGINT
     )
 ) {
+
     foreach oneHit {
         var ipId ID;
         TUID ip INTO ipId unique(ip);
@@ -38,7 +39,10 @@ ACTION hit ver 0.1 (
             HISTORY hits DATE=from_unixtime(tick) SET ip=ipId, post=post;
             BOOK hitted at(post, ipId);
             BOOK hot at (post) set sumHits+=1;
-            BOOK Achievement at($user) set postHitSum += 1;
+    
+            var _user ID $user;
+            set _user = p.author from POST as p where p.ID = post;
+            BOOK Achievement at(_user) set postHitSum += 1;
         }
     }
 };
