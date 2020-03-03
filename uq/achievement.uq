@@ -6,13 +6,15 @@ BOOK Achievement(
  
 
  /** 搜索绩效*/
-QUERY SearchAchievement()
+QUERY SearchAchievement(
+    _user ID [$user]
+)
 returns ret  (
     postTotal int,
     postHit int 
 ) {
     into ret select a.postTotal, a.postHit
     from    Achievement as a
-    where   a.user = $user;
+    where   a.user = _user;
 };
  
