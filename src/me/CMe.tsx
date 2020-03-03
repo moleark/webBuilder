@@ -58,10 +58,10 @@ export class CMe extends CUqBase {
 
     };
 
-    onDetail = async (id:number)=> {
+    onDetail = async (id: number) => {
         this.openVPage(VTeamDetail)
-        this.details = await this.uqs.webBuilder.SearchAchievement.table({_user: id})
-        console.log(this.details,'员工明细')
+        this.details = await this.uqs.webBuilder.SearchAchievement.table({ _user: id })
+        console.log(this.details, '员工明细')
     }
 
     showAbout = () => {
