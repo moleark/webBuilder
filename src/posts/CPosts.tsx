@@ -97,7 +97,10 @@ export class CPosts extends CUqBase {
     // 保存Post
     saveItem = async (id: number, param: any) => {
         param.author = this.user.id;
-        let ret = await this.uqs.webBuilder.Post.save(id, param);
+        let { caption, discription, image, template, content } = param;
+        let par = { _caption: caption, _discription: discription, _image: image, _template: template, _content: content };
+
+        let ret = await this.uqs.webBuilder.AddPost.submit(par);
         if (id) {
             let item = this.pagePosts.items.find(v => v.id === id);
             if (item !== undefined) {
@@ -150,7 +153,7 @@ export class CPosts extends CUqBase {
     evaluate = async (val: number) => {
         this.closePage(2);
         await this.uqs.webBuilder.AddPostEvaluate.submit({
-            _post: this.current.id,
+            _post: this.current.id,
             _ip: '',
             _grade: val
         })
@@ -158,31 +161,31 @@ export class CPosts extends CUqBase {
     }
     onGrade = async () => {
         this.openVPage(VGrade);
-        let a = await this.uqs.webBuilder.SearchPostEvaluate.table({_post: this.current.id});
-        console.log(a[0]==undefined,'aaa')
-        if(a[0]==undefined) {
+        let a = await this.uqs.webBuilder.SearchPostEvaluate.table({ _post: this.current.id });
+        console.log(a[0] == undefined, 'aaa')
+        if (a[0] == undefined) {
             console.log(11111)
             this.ratioA = 0;
             this.ratioB = 0;
             this.ratioC = 0;
             this.ratioD = 0;
             this.ratioE = 0;
-            
+
         } else {
             console.log(22222)
-            let {GradeA,GradeB,GradeC,GradeD,GradeE} = a[0];
+            let { GradeA, GradeB, GradeC, GradeD, GradeE } = a[0];
             let total = ~~GradeA + ~~GradeD + ~~GradeB + ~~GradeC + ~~GradeE;
-            this.ratioA = total/5*~~GradeA;
-            this.ratioB = total/5*~~GradeB;
-            this.ratioC = total/5*~~GradeC;
-            this.ratioD = total/5*~~GradeD;
-            this.ratioE = total/5*~~GradeE;
-           
+            this.ratioA = total / 5 * ~~GradeA;
+            this.ratioB = total / 5 * ~~GradeB;
+            this.ratioC = total / 5 * ~~GradeC;
+            this.ratioD = total / 5 * ~~GradeD;
+            this.ratioE = total / 5 * ~~GradeE;
+
         }
-        
+
     }
     acquire = async () => {
-        
+
         // console.log(total/5*~~GradeA,'555')
         // console.log(~~GradeA + ~~GradeD + ~~GradeB + ~~GradeC + ~~GradeE,'GradeD')
     }

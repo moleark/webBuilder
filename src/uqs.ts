@@ -17,6 +17,7 @@ export interface WebBuilder {
     Template: Tuid;
     Image: Tuid;
     Post: Tuid;
+    AddPost: Action;
     SearchPost: Query;
     SearchTemplate: Query;
     SearchImage: Query;

@@ -1,0 +1,18 @@
+BOOK Achievement(
+    key user ID [$user],
+    postTotal int,
+    postHit int 
+);
+ 
+
+ /** 搜索绩效*/
+QUERY SearchAchievement()
+returns ret  (
+    postTotal int,
+    postHit int 
+) {
+    into ret select a.postTotal, a.postHit
+    from    Achievement as a
+    where   a.user = $user;
+};
+ 

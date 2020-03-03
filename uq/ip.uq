@@ -38,6 +38,7 @@ ACTION hit ver 0.1 (
             HISTORY hits DATE=from_unixtime(tick) SET ip=ipId, post=post;
             BOOK hitted at(post, ipId);
             BOOK hot at (post) set sumHits+=1;
+            BOOK Achievement at($user) set postHit += 1;
         }
     }
 };
