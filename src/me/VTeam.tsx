@@ -28,11 +28,9 @@ export class VTeam extends VPage<CMe> {
     private itemRow = observer((item: any) => {
         let { onDetail } = this.controller;
         let { webuser } = item;
-        
-        console.log(webuser,'aaa')
-        let right = <></>
+        let right = <></>;
         return <LMR className="px-3 py-2 border bg-white" right={right} onClick={()=>onDetail(webuser.id)}>
-        <div>{tv(webuser,(values)=><div>{values.name}</div> )}</div>
+        <div>{tv(webuser,(values)=><>{values.name}</> )}</div>
     </LMR>;
     });
 }

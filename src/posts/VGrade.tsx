@@ -36,15 +36,15 @@ export class VGrade extends VPage<CPosts> {
                     </div>
                     
                     <div className='block align-items-centerd-flex px-3 py-2 bg-white align-items-center cursor-pointer'>
-                        <div className="d-flex"><Rate disabled={true} value={5} /> <span>惊喜5颗星:  {Number(ratioA).toFixed(1)}%</span>
+                        <div className="d-flex"><Rate disabled={true} value={5} /> <span>惊喜5颗星:  {Number(ratioE).toFixed(1)}%</span>
                         </div>
-                        <div className="d-flex"><Rate disabled={true} value={4} /><span>满意4颗星:  {Number(ratioB).toFixed(1)}%</span>
+                        <div className="d-flex"><Rate disabled={true} value={4} /><span>满意4颗星:  {Number(ratioD).toFixed(1)}%</span>
                         </div>
                         <div className="d-flex"><Rate disabled={true} value={3} /><span>一般3颗星:  {Number(ratioC).toFixed(1)}%</span>
                         </div>
-                        <div className="d-flex"><Rate disabled={true} value={2} /><span>失望2颗星:  {Number(ratioD).toFixed(1)}%</span>
+                        <div className="d-flex"><Rate disabled={true} value={2} /><span>失望2颗星:  {Number(ratioB).toFixed(1)}%</span>
                         </div>
-                        <div className="d-flex"><Rate disabled={true} value={1} /><span>极差1颗星:  {Number(ratioE).toFixed(1)}%</span>
+                        <div className="d-flex"><Rate disabled={true} value={1} /><span>极差1颗星:  {Number(ratioA).toFixed(1)}%</span>
                         </div>
                     </div>
                 </div>
