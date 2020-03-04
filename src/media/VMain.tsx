@@ -71,28 +71,35 @@ export class VMain extends VPage<CMedia> {
         }
         //let right = <div className="border p-1"><img className="h-4c w-4c" src={path} /></div>;
 
-        let right = <div className="d-flex align-items-center bg-white rounded" onClick={() => this.preview(item.path)}>
+		let divImg = <div className="d-flex align-items-center bg-white rounded  cursor-pointer" 
+				onClick={() => this.preview(item.path)}>
             <div className="w-100 h-100 bg-center-img h-min-12c" style={imgStyle}>
             </div>
         </div>;
 
-        return <div key={index} className="col px-3 py-2 border-bottom cursor-pointer text-center">
+        return <div key={index} className="col px-3 py-2 border-bottom border-dark">
             <div 
-                className="pb-2" 
-                style={{ height: "27px", overflow: "hidden" }} 
+                className="text-info bg-light p-2 d-flex text-nowrap cursor-pointer border-bottom" 
                 onClick={()=>onimgNames(id)} >
-                {caption}
+				<div className="overflow-hidden flex-fill">{caption}</div>
+                <div className=""><FA name="edit" /></div>
             </div>
-            {right}
+            {divImg}
 
-            <div className="smallPath small pt-2">{path}</div>
-            <button
-                style={{ fontWeight: 550, padding: '0 5px', fontSize: '12px' }}
-                className="mt-2 btn btn-outline-primary"
-                onClick={this.copyClick}>
-                {this.t('copy')}
-            </button >
+			<div className="smallPath small my-2 text-muted cursor-pointer position-relative"
+				onClick={this.copyClick}>
+				{path} 
+				<small className="position-absolute text-muted" style={{right:0, bottom:0}}>复制</small>
+			</div>
         </div>;
 
     }
 }
+/*
+<button
+style={{ fontWeight: 550, padding: '0 5px', fontSize: '12px' }}
+className="mt-2 btn btn-outline-primary"
+onClick={this.copyClick}>
+{this.t('copy')}
+</button >
+*/

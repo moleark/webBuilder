@@ -99,7 +99,11 @@ ACTION calcHot () {
                     AND a.DATE<FROM_UNIXTIME(calcTick-weekTick)
                 GROUP BY (a.post) as gPost)
         {
-            BOOK hot at(post1) set hits-=hit1;
+            BOOK hot at(post1) set hits= 
+				case 
+					when .hits>hit1 then .hits-hit1
+					else 0
+				end;
         }
     }
 

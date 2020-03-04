@@ -105,16 +105,15 @@ export class VMain extends VPage<CPosts> {
     private itemRow = observer((item: any) => {
 		let {user} = this.controller;
         if (!user) return;
-        let { image, caption, discription, author, $update, $create, web, agent,assist,openweb } = item;
+		let { image, caption, discription, author, $update, $create
+			, hits, sumHits
+			, web, agent,assist,openweb } = item;
 
 		let $c:Date = $create, $u:Date = $update;
 		let updated: boolean = false;
 		if ($c && $u) {
 			let now = Date.now(), create=$c.getTime(), update=$u.getTime();
-			if (update === create) {
-				updated = false;
-			}
-			else if (now - create < 24*3600*1000) {
+			if (update-create>3600*1000 && now - create < 24*3600*1000) {
 				updated = true;
 			}
 			else {
@@ -152,13 +151,21 @@ export class VMain extends VPage<CPosts> {
                         )
                     )}
 					</div>
-                    <div className="d-flex flex-column">
+                    <div className="d-flex flex-column w-100">
 						<div><b>{caption}</b></div>
                         <div className="small pt-1 flex-fill">{discription}</div>
-						<div className="small pt-1 text-muted">
-							{divUser}
-							&ensp;<EasyTime date={$create} />
-							{updated === true && <>&ensp;<FA name="pencil-square-o"/><EasyTime date={$update} /></>}       
+						<div className="small pt-1 text-muted d-flex">
+							<div className="flex-fill">
+								{divUser}
+								&ensp;<EasyTime date={$create} />
+								{updated === true && <>&ensp;<FA name="pencil-square-o"/><EasyTime date={$update} /></>}       
+							</div>
+							<div>
+								{sumHits && hits && <>阅读<b>{sumHits}</b>次 
+									{sumHits>hits && <>周<b>{hits}</b>次</>}
+								</>
+								}
+							</div>
 						</div>
                         <div className="small pt-1" style={{  overflow: "hidden" }}>
                             {(web+agent+assist+openweb)>0?<span  className="mr-1 text-muted">发布：</span>:<></>}
