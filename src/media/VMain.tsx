@@ -27,6 +27,7 @@ export class VMain extends VPage<CMedia> {
             </div>
         </div>;
         let { items, loading } = pageMedia;
+        console.log(items,'items')
         let divItems: any;
         if (!items) {
             divItems = (loading === true) ?
@@ -63,7 +64,8 @@ export class VMain extends VPage<CMedia> {
     }
 
     private renderItem = (item: any, index: number) => {
-        let { caption, path, $create } = item;
+        let { caption, path, $create, id } = item;
+        let { onimgNames } = this.controller
         let imgStyle = {
             backgroundImage: `url(${path})`,
         }
@@ -75,7 +77,12 @@ export class VMain extends VPage<CMedia> {
         </div>;
 
         return <div key={index} className="col px-3 py-2 border-bottom cursor-pointer text-center">
-            <div className="pb-2" style={{ height: "27px", overflow: "hidden" }} >{caption}</div>
+            <div 
+                className="pb-2" 
+                style={{ height: "27px", overflow: "hidden" }} 
+                onClick={()=>onimgNames(id)} >
+                {caption}
+            </div>
             {right}
 
             <div className="smallPath small pt-2">{path}</div>

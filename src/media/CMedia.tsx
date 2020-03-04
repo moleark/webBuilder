@@ -7,6 +7,7 @@ import { VMain } from "./VMain";
 import { QueryPager } from "tonva";
 import { VShowImg } from "./VShowImg";
 import { VEdit } from "./VEdit";
+import { VChangeNames } from "./VChangeNames";
 //import { Content } from "./model/content"
 
 export class CMedia extends CUqBase {
@@ -50,6 +51,12 @@ export class CMedia extends CUqBase {
         this.current = undefined;
         this.openVPage(VEdit);
     };
+
+    onimgNames = async (id: number) => {
+        this.current = await this.uqs.webBuilder.Image.load(id);
+        // console.log(a,'aid')
+        this.openVPage(VChangeNames);
+    }
 
     render = observer(() => {
         return this.renderView(VMain);
