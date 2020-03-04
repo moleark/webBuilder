@@ -153,14 +153,14 @@ export class VMain extends VPage<CPosts> {
 					</div>
                     <div className="d-flex flex-column w-100">
 						<div><b>{caption}</b></div>
-                        <div className="small pt-1 flex-fill">{discription}</div>
-						<div className="small pt-1 text-muted d-flex">
+                        <div className="small text-muted py-2 flex-fill">{discription}</div>
+						<div className="small d-flex">
 							<div className="flex-fill">
 								{divUser}
 								&ensp;<EasyTime date={$create} />
 								{updated === true && <>&ensp;<FA name="pencil-square-o"/><EasyTime date={$update} /></>}       
 							</div>
-							<div>
+							<div className="author">
 								{sumHits && hits && <>阅读<b>{sumHits}</b>次 
 									{sumHits>hits && <>周<b>{hits}</b>次</>}
 								</>

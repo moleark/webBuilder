@@ -3,7 +3,7 @@ import _ from 'lodash';
 import { consts } from "consts";
 import { CMedia } from "./CMedia";
 import { observer } from "mobx-react";
-import { VPage, UiSchema, Schema, UiInputItem, Page, Form, Context, ImageUploader, nav } from "tonva";
+import { VPage, UiSchema, Schema, UiInputItem, Page, Form, Context, ImageUploader, nav, AudioUploader } from "tonva";
 import { observable } from "mobx";
 
 export class VEdit extends VPage<CMedia> {
@@ -49,7 +49,14 @@ export class VEdit extends VPage<CMedia> {
 
     private onUpload = () => {
         this.media = this.form.data;
-        this.openPageElement(<ImageUploader onSaved={this.onSaved} />);
+		//this.openPageElement(<ImageUploader onSaved={this.onSaved} />);
+		this.openPageElement(<ImageUploader onSaved={this.onSaved} />);
+    }
+
+    private onUploadFile = () => {
+        this.media = this.form.data;
+		//this.openPageElement(<ImageUploader onSaved={this.onSaved} />);
+		this.openPageElement(<AudioUploader onSaved={this.onSaved} />);
     }
 
     private page = observer(() => {
@@ -65,7 +72,8 @@ export class VEdit extends VPage<CMedia> {
         }
         else {
             image = <div className="text-content text-center">
-                <button className="btn btn-primary" onClick={this.onUpload}>{this.t('uploadpicture')}</button>
+                <button className="btn btn-primary mr-3" onClick={this.onUpload}>{this.t('uploadpicture')}</button>
+                <button className="btn btn-outline-primary" onClick={this.onUploadFile}>{this.t('uploadaudio')}</button>
             </div>;
         }
 

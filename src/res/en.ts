@@ -23,7 +23,8 @@ export const en = {
     selectpicture: 'Select picture',
     editorpicture: 'Editor picture',
     nopicture: 'No picture',
-    uploadpicture: 'Upload picture',
+	uploadpicture: 'Upload picture',
+	uploadfile: 'Upload audio',
 
     template: 'Template',
     selecttemplate: 'Select template',
@@ -54,7 +55,7 @@ export const en = {
     submit: 'Submit',
     select: 'Select',
     save: 'Save',
-    copy: 'Copy',
+	copy: 'Copy',
     copysuccess: 'Copy Success',
     editor: 'Editor',
     pleaseselect: 'Please select'
@@ -86,7 +87,8 @@ export const zh = {
     selectpicture: '选择图片',
     editorpicture: '编辑图片',
     nopicture: '无图片',
-    uploadpicture: '上传图片',
+	uploadpicture: '上传图片',
+	uploadaudio: '上传音频',
 
     template: '模板',
     selecttemplate: '选择模板',

@@ -56,8 +56,15 @@ export class VMain extends VPage<CMedia> {
     }
 
     private copyClick = (e: any) => {
-        copy(e.target.previousElementSibling.innerText)
-        alert(this.t('copysuccess'))
+		let el = e.target as HTMLElement;
+		let text = (el.firstChild as HTMLElement).innerText;
+		let innerHTML  = el.innerHTML;
+		copy(text);
+		el.innerHTML = '<div class="text-center text-danger w-100"> <span style="color:transparent">- - - - - -</span> url ' + this.t('copysuccess') + '<span style="color:transparent">- - - - - -</span> </div>';
+		setTimeout(()=> {
+			el.innerHTML = innerHTML;
+		}, 1000);
+        //alert(this.t('copysuccess'))
     }
     private preview = (path: any) => {
         window.open(path, '_blank')
@@ -81,15 +88,15 @@ export class VMain extends VPage<CMedia> {
             <div 
                 className="text-info bg-light p-2 d-flex text-nowrap cursor-pointer border-bottom" 
                 onClick={()=>onimgNames(id)} >
-				<div className="overflow-hidden flex-fill">{caption}</div>
+				<div className="overflow-hidden flex-fill small">{caption}</div>
                 <div className=""><FA name="edit" /></div>
             </div>
             {divImg}
 
 			<div className="smallPath small my-2 text-muted cursor-pointer position-relative"
 				onClick={this.copyClick}>
-				{path} 
-				<small className="position-absolute text-muted" style={{right:0, bottom:0}}>复制</small>
+				<span>{path}</span>
+				<small className="position-absolute text-muted" style={{right:0, bottom:0}}>{this.t('copy')}</small>
 			</div>
         </div>;
 
