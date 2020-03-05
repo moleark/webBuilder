@@ -2,7 +2,7 @@ import * as React from "react";
 import { consts } from "consts";
 import { CMedia } from "./CMedia";
 import { observer } from "mobx-react";
-import { VPage, Page, SearchBox, Loading } from "tonva";
+import { VPage, Page, SearchBox, Loading, FA } from "tonva";
 import copy from 'copy-to-clipboard';
 
 export class VMain extends VPage<CMedia> {
@@ -27,7 +27,7 @@ export class VMain extends VPage<CMedia> {
             </div>
         </div>;
         let { items, loading } = pageMedia;
-        console.log(items,'items')
+        console.log(items, 'items')
         let divItems: any;
         if (!items) {
             divItems = (loading === true) ?
@@ -56,14 +56,14 @@ export class VMain extends VPage<CMedia> {
     }
 
     private copyClick = (e: any) => {
-		let el = e.target as HTMLElement;
-		let text = (el.firstChild as HTMLElement).innerText;
-		let innerHTML  = el.innerHTML;
-		copy(text);
-		el.innerHTML = '<div class="text-center text-danger w-100"> <span style="color:transparent">- - - - - -</span> url ' + this.t('copysuccess') + '<span style="color:transparent">- - - - - -</span> </div>';
-		setTimeout(()=> {
-			el.innerHTML = innerHTML;
-		}, 1000);
+        let el = e.target as HTMLElement;
+        let text = (el.firstChild as HTMLElement).innerText;
+        let innerHTML = el.innerHTML;
+        copy(text);
+        el.innerHTML = '<div class="text-center text-danger w-100"> <span style="color:transparent">- - - - - -</span> url ' + this.t('copysuccess') + '<span style="color:transparent">- - - - - -</span> </div>';
+        setTimeout(() => {
+            el.innerHTML = innerHTML;
+        }, 1000);
         //alert(this.t('copysuccess'))
     }
     private preview = (path: any) => {
@@ -78,26 +78,26 @@ export class VMain extends VPage<CMedia> {
         }
         //let right = <div className="border p-1"><img className="h-4c w-4c" src={path} /></div>;
 
-		let divImg = <div className="d-flex align-items-center bg-white rounded  cursor-pointer" 
-				onClick={() => this.preview(item.path)}>
+        let divImg = <div className="d-flex align-items-center bg-white rounded  cursor-pointer"
+            onClick={() => this.preview(item.path)}>
             <div className="w-100 h-100 bg-center-img h-min-12c" style={imgStyle}>
             </div>
         </div>;
 
         return <div key={index} className="col px-3 py-2 border-bottom border-dark">
-            <div 
-                className="text-info bg-light p-2 d-flex text-nowrap cursor-pointer border-bottom" 
-                onClick={()=>onimgNames(id)} >
-				<div className="overflow-hidden flex-fill small">{caption}</div>
+            <div
+                className="text-info bg-light p-2 d-flex text-nowrap cursor-pointer border-bottom"
+                onClick={() => onimgNames(id)} >
+                <div className="overflow-hidden flex-fill small">{caption}</div>
                 <div className=""><FA name="edit" /></div>
             </div>
             {divImg}
 
-			<div className="smallPath small my-2 text-muted cursor-pointer position-relative"
-				onClick={this.copyClick}>
-				<span>{path}</span>
-				<small className="position-absolute text-muted" style={{right:0, bottom:0}}>{this.t('copy')}</small>
-			</div>
+            <div className="smallPath small my-2 text-muted cursor-pointer position-relative"
+                onClick={this.copyClick}>
+                <span>{path}</span>
+                <small className="position-absolute text-muted" style={{ right: 0, bottom: 0 }}>{this.t('copy')}</small>
+            </div>
         </div>;
 
     }
