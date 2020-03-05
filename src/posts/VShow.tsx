@@ -13,14 +13,11 @@ export class VShow extends VPage<CPosts> {
         this.openPage(this.page);
     }
 
-    private copyClick = (e: any) => {
+    private copyClick = (e: any,path: any) => {
         let el = e.target as HTMLElement;
-        console.log(el,'el')
-        let text = (el.previousSibling as HTMLElement).innerText;
-        console.log(text,'text')
         let innerHTML = el.innerHTML;
-        copy(text);
-        el.innerHTML = '<div class="text-center text-danger w-100"> <span style="color:transparent">- - - - - -</span> url ' + this.t('copysuccess') + '<span style="color:transparent">- - - - - -</span> </div>';
+        copy(path);
+        el.innerHTML = '<div class="text-center text-danger w-100"> <span style="color:transparent">-</span> url ' + this.t('copysuccess') + '<span style="color:transparent">-</span> </div>';
         setTimeout(() => {
             el.innerHTML = innerHTML;
         }, 1000);
@@ -29,6 +26,7 @@ export class VShow extends VPage<CPosts> {
     private page = observer(() => {
         let { current, onShowRelease, onGrade } = this.controller;
         let { id, author, $update } = current;
+        let leftPath = "https://web.jkchemical.com/post/" + id;
         let date = <span><EasyTime date={$update} /></span>;
         let isMe = Tuid.equ(author, this.controller.user.id);
         let meright = isMe && <>
@@ -41,6 +39,9 @@ export class VShow extends VPage<CPosts> {
         </>;
 
         let right = isMe ? <div className="d-flex align-items-center">
+            <button className="mr-2 btn btn-sm btn-success" onClick={(e)=>this.copyClick(e,leftPath)}>
+                {this.t('copy')}
+            </button>
             <button className="mr-2 btn btn-sm btn-success" onClick={() => this.openVPage(VSourceCode)}>
                 <FA name="code px-1" />{this.t('sourcecode')}
             </button>
@@ -49,7 +50,7 @@ export class VShow extends VPage<CPosts> {
             :
             <div className="d-flex align-items-center">
              <button className="mr-2 btn btn-sm btn-success" onClick={() => onGrade()}>
-                评分
+                {this.t('estimate')}
             </button>
             <button className="mr-2 btn btn-sm btn-success" onClick={() => this.openVPage(VSourceCode)}>
                 <FA name="code px-1" />{this.t('sourcecode')}
@@ -73,17 +74,7 @@ export class VShow extends VPage<CPosts> {
         }, undefined,
         () => null);
         **/
-    //    let rightCopy = <button className="mr-2 btn btn-sm btn-success" onClick={this.copyClick}>
-    //                         复制
-    //                     </button>
-        let leftPath = "https://web.jkchemical.com/post/" + id;
         return <Page header={this.t('preview')} headerClassName={consts.headerClass} right={right}>
-            <div className="smallPath small m-2 text-muted cursor-pointer position-relative"
-                onClick={this.copyClick}>
-                {this.t('link')}:
-                <span className='ml-2'>{leftPath}</span>
-                <small className="position-absolute mr-4 text-primary" style={{ right: 0, bottom: 0 }}>{this.t('copy')}</small>
-            </div>
             <div className="w-100 h-100">
                 <iframe src={"https://web.jkchemical.com/post/" + id} className="border-0 w-100 h-100 overflow-hidden"></iframe>
             </div>
