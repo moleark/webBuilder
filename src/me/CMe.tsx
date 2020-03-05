@@ -38,7 +38,11 @@ export class CMe extends CUqBase {
     @observable current: any;
     @observable PostTotal: any = 0;
     @observable PageTotal: any = 0;
-    @observable details: any[];
+    @observable Myteam: any;
+    @observable postSum: any;
+    @observable postPulishSum: any;
+    @observable postHitSum: any;
+    @observable details: any;
     @observable pagePosts: any[];
     @observable pageTeam: QueryPager<any>;
 
@@ -60,8 +64,17 @@ export class CMe extends CUqBase {
 
     onDetail = async (id: number) => {
         this.openVPage(VTeamDetail)
-        this.details = await this.uqs.webBuilder.SearchAchievement.table({ _user: id })
-        console.log(this.details, '员工明细')
+        let ret = await this.uqs.webBuilder.SearchAchievement.table({ _user: id });
+        if (ret[0] == undefined) {
+            this.postSum = 0;
+            this.postPulishSum = 0;
+            this.postHitSum = 0;
+        } else {
+            let { postSum, postPulishSum, postHitSum } = ret[0];
+            this.postSum = postSum;
+            this.postPulishSum = postPulishSum;
+            this.postHitSum = postHitSum;
+        }
     }
 
     showAbout = () => {
@@ -111,7 +124,7 @@ export class CMe extends CUqBase {
     };
 
     searchTeam = async () => {
-        this.pageTeam = await this.uqs.hr.SearchTeam.table({ key: "" });
+        // this.pageTeam = await this.uqs.hr.SearchTeam.table({ key: "" });
         this.pageTeam.setEachItem((item: any) => {
             this.cApp.useUser(item.author);
         });
