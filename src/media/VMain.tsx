@@ -2,7 +2,7 @@ import * as React from "react";
 import { consts } from "consts";
 import { CMedia } from "./CMedia";
 import { observer } from "mobx-react";
-import { VPage, Page, FA, List, LMR, EasyTime, SearchBox, Loading } from "tonva";
+import { VPage, Page, SearchBox, Loading } from "tonva";
 import copy from 'copy-to-clipboard';
 
 export class VMain extends VPage<CMedia> {

@@ -3,7 +3,7 @@ import { CUqBase } from "../CBase";
 import { VMe } from "./VMe";
 import { observer } from "mobx-react";
 import { observable, isObservable } from "mobx";
-import { PageItems, Query, nav } from "tonva";
+import { PageItems, Query, nav, QueryPager } from "tonva";
 import { VCompileImg } from "./VCompileImg";
 import { VSetDetails } from "./VSetDetails";
 import { VAbout } from "./VAbout";
@@ -38,9 +38,9 @@ export class CMe extends CUqBase {
     @observable current: any;
     @observable PostTotal: any = 0;
     @observable PageTotal: any = 0;
-    @observable Myteam: any[];
     @observable details: any[];
     @observable pagePosts: any[];
+    @observable pageTeam: QueryPager<any>;
 
     searchMadiaKey = async (key: string) => {
         this.pageMedia = new PageMedia(this.uqs.webBuilder.SearchImage);
@@ -111,7 +111,10 @@ export class CMe extends CUqBase {
     };
 
     searchTeam = async () => {
-        this.Myteam = await this.uqs.hr.SearchTeam.table({ key: "" });
+        this.pageTeam = await this.uqs.hr.SearchTeam.table({ key: "" });
+        this.pageTeam.setEachItem((item: any) => {
+            this.cApp.useUser(item.author);
+        });
     }
 
     render = observer(() => {

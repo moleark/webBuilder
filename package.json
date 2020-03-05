@@ -30,7 +30,7 @@
         "react-dom": "^16.10.2",
         "react-hot-loader": "^4.5.3",
         "react-scripts": "3.3.0",
-        "tonva": "^1.2.36",
+        "tonva": "^1.2.39",
         "typescript": "^3.7.3"
     },
     "scripts": {
