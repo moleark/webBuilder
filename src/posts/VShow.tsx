@@ -13,7 +13,7 @@ export class VShow extends VPage<CPosts> {
         this.openPage(this.page);
     }
 
-    private copyClick = (e: any,path: any) => {
+    private copyClick = (e: any, path: any) => {
         let el = e.target as HTMLElement;
         let innerHTML = el.innerHTML;
         copy(path);
@@ -39,24 +39,27 @@ export class VShow extends VPage<CPosts> {
         </>;
 
         let right = isMe ? <div className="d-flex align-items-center">
-            <button className="mr-2 btn btn-sm btn-success" onClick={(e)=>this.copyClick(e,leftPath)}>
+            <button className="mr-2 btn btn-sm btn-success" onClick={(e) => this.copyClick(e, leftPath)}>
                 {this.t('copy')}
             </button>
             <button className="mr-2 btn btn-sm btn-success" onClick={() => this.openVPage(VSourceCode)}>
                 <FA name="code px-1" />{this.t('sourcecode')}
             </button>
             {meright}
-            </div>
+        </div>
             :
             <div className="d-flex align-items-center">
-             <button className="mr-2 btn btn-sm btn-success" onClick={() => onGrade()}>
-                {this.t('estimate')}
-            </button>
-            <button className="mr-2 btn btn-sm btn-success" onClick={() => this.openVPage(VSourceCode)}>
-                <FA name="code px-1" />{this.t('sourcecode')}
-            </button>
-            {meright}
-        </div>
+                <button className="mr-2 btn btn-sm btn-success" onClick={(e) => this.copyClick(e, leftPath)}>
+                    {this.t('copy')}
+                </button>
+                <button className="mr-2 btn btn-sm btn-success" onClick={() => onGrade()}>
+                    {this.t('estimate')}
+                </button>
+                <button className="mr-2 btn btn-sm btn-success" onClick={() => this.openVPage(VSourceCode)}>
+                    <FA name="code px-1" />{this.t('sourcecode')}
+                </button>
+                {meright}
+            </div>
         return <Page header={this.t('preview')} headerClassName={consts.headerClass} right={right}>
             <div className="w-100 h-100">
                 <iframe src={"https://web.jkchemical.com/post/" + id} className="border-0 w-100 h-100 overflow-hidden"></iframe>
