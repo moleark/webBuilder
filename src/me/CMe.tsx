@@ -38,7 +38,6 @@ export class CMe extends CUqBase {
     @observable current: any;
     @observable PostTotal: any = 0;
     @observable PageTotal: any = 0;
-    @observable Myteam: any;
     @observable postSum: any;
     @observable postPulishSum: any;
     @observable postHitSum: any;
@@ -124,10 +123,11 @@ export class CMe extends CUqBase {
     };
 
     searchTeam = async () => {
-        // this.pageTeam = await this.uqs.hr.SearchTeam.table({ key: "" });
+        this.pageTeam = new QueryPager(this.uqs.hr.SearchTeam, 15, 30);
         this.pageTeam.setEachItem((item: any) => {
-            this.cApp.useUser(item.author);
+            this.cApp.useUser(item.webuser);
         });
+        await this.pageTeam.first({ key: "" });
     }
 
     render = observer(() => {

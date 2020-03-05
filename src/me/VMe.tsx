@@ -25,10 +25,10 @@ export class VMe extends VPage<CMe> {
 
     private page = observer(() => {
 
-        let { onSet, user, PostTotal, PageTotal, cApp, onTeams,Myteam } = this.controller;
+        let { onSet, user, PostTotal, PageTotal, cApp, onTeams, pageTeam } = this.controller;
         PageTotal = PageTotal ? PageTotal : 0;
         PostTotal = PostTotal ? PostTotal : 0;
-        Myteam = Myteam.length ? Myteam.length : 0
+
         if (!user) return;
 
         let left = <Image className="ml-2 border text-center w-3c h-3c mx-3" src={user.icon} />
@@ -44,17 +44,17 @@ export class VMe extends VPage<CMe> {
                     <div className="small pt-1"><span className="text-muted">ID：</span> {user.id > 10000 ? user.id : String(user.id + 10000).substr(1)}</div>
                 </div>
             </LMR>
-            {branch(this.t('post'),null, PostTotal, "icon-yewuzongliang", undefined)}
+            {branch(this.t('post'), null, PostTotal, "icon-yewuzongliang", undefined)}
             {branch(this.t('page'), null, PageTotal, "icon-shuangsechangyongtubiao-", undefined)}
             {branch(this.t('tag'), null, PageTotal, "icon-shuangsechangyongtubiao-", cApp.cTag.showTag)}
-            {branch(this.t('team'), Myteam, null, "icon-shezhi3 ", onTeams)}
+            {branch(this.t('team'), "0", null, "icon-shezhi3 ", onTeams)}
             {branch(this.t('set'), null, null, "icon-shezhi3 ", onSet)}
         </Page>;
     })
 }
 
 
-function branch(name: string,teams: string, val: string, icon: string, action: any): JSX.Element {
+function branch(name: string, teams: string, val: string, icon: string, action: any): JSX.Element {
     // console.log(teams,'teams')
     let style = " iconfont text-primary  " + icon;
     let count: any = val ? <div className="text-muted small mx-3 px-3">浏览量：{val}</div> : <div className="text-muted small mx-3 px-3 my-3"></div>;

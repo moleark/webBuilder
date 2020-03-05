@@ -15,12 +15,12 @@ export class VTeam extends VPage<CMe> {
 
 
     private page = observer(() => {
-        let { Myteam } = this.controller;
+        let { pageTeam } = this.controller;
         return <Page header={this.t('myteam')} headerClassName={consts.headerClass}>
-            <List items={Myteam} item={{ render: this.renderItem }} />
+            <List items={pageTeam} item={{ render: this.renderItem }} />
         </Page>;
-
     })
+
     private renderItem = (item: any, index: number) => {
         return <this.itemRow {...item} />
     }
