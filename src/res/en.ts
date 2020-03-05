@@ -94,6 +94,7 @@ export const zh = {
     selecttemplate: '选择模板',
     notemplate: '无模板',
     preview: '预览',
+    link: '链接',
 
     page: '网页',
     name: '名称',

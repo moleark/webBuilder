@@ -6,10 +6,24 @@ import { observer } from 'mobx-react';
 import { consts } from 'consts';
 import { VSourceCode } from './VSourceCode';
 import { VGrade } from './VGrade';
+import copy from 'copy-to-clipboard';
 
 export class VShow extends VPage<CPosts> {
     async open() {
         this.openPage(this.page);
+    }
+
+    private copyClick = (e: any) => {
+        let el = e.target as HTMLElement;
+        console.log(el,'el')
+        let text = (el.previousSibling as HTMLElement).innerText;
+        console.log(text,'text')
+        let innerHTML = el.innerHTML;
+        copy(text);
+        el.innerHTML = '<div class="text-center text-danger w-100"> <span style="color:transparent">- - - - - -</span> url ' + this.t('copysuccess') + '<span style="color:transparent">- - - - - -</span> </div>';
+        setTimeout(() => {
+            el.innerHTML = innerHTML;
+        }, 1000);
     }
 
     private page = observer(() => {
@@ -17,7 +31,6 @@ export class VShow extends VPage<CPosts> {
         let { id, author, $update } = current;
         let date = <span><EasyTime date={$update} /></span>;
         let isMe = Tuid.equ(author, this.controller.user.id);
-        console.log(isMe,'isMe')
         let meright = isMe && <>
             <button className="mr-2 btn btn-sm btn-success" onClick={() => this.openVPage(VEdit)}>
                 <FA name="pencil-square-o" /> {this.t('editor')}
@@ -60,7 +73,17 @@ export class VShow extends VPage<CPosts> {
         }, undefined,
         () => null);
         **/
+    //    let rightCopy = <button className="mr-2 btn btn-sm btn-success" onClick={this.copyClick}>
+    //                         复制
+    //                     </button>
+        let leftPath = "https://web.jkchemical.com/post/" + id;
         return <Page header={this.t('preview')} headerClassName={consts.headerClass} right={right}>
+            <div className="smallPath small m-2 text-muted cursor-pointer position-relative"
+                onClick={this.copyClick}>
+                {this.t('link')}:
+                <span className='ml-2'>{leftPath}</span>
+                <small className="position-absolute mr-4 text-primary" style={{ right: 0, bottom: 0 }}>{this.t('copy')}</small>
+            </div>
             <div className="w-100 h-100">
                 <iframe src={"https://web.jkchemical.com/post/" + id} className="border-0 w-100 h-100 overflow-hidden"></iframe>
             </div>

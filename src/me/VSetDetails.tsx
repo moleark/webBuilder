@@ -6,7 +6,9 @@ import { appConfig, setting } from 'configuration';
 import { consts } from 'consts';
 
 export class VSetDetails extends VPage<CMe> {
+    private version: any;
     async open() {
+        this.version = await nav.checkVersion();
         this.openPage(this.page)
     }
 

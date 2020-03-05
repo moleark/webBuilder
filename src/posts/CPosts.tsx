@@ -226,6 +226,7 @@ export class CPosts extends CUqBase {
 
     onPreviewPost = (id: number) => {
         window.open(setting.previewUrl + "/post/" + id, "_blank");
+        console.log(setting.previewUrl + "/post/" + id,'aa')
     };
 
     searchPostProduct = async () => {
