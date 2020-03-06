@@ -161,7 +161,7 @@ ACTION PublishPost(
     };
 
     BOOK Achievement at($user) set postPulishSum +=(_new - _old);
-
+ 
     BOOK PostPublish at(_post) 
     set web=_web, agent=_agent, assist=_assist, openweb=_openweb, operator = $user, update = now();
 

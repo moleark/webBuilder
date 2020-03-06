@@ -63,6 +63,7 @@ RETURNS ret (
         a.hits, a.post, b.caption, b.discription, b.image, c.path as imagePath, b.author,
         unix_timestamp(b.[$create]) as create, unix_timestamp(b.[$update]) as update
         FROM Hot as a
+            join PostPublish as p on p.post = a.post and p.openweb = 1
             left join Post as b on a.post = b.id
             left join IMage as c on b.image = c.id
         WHERE a.post>0
