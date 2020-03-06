@@ -10,7 +10,7 @@ TUID POST (
     stamp (create, update),
 );
 
-/** POST发布 */
+/** POST发布 
 MAP WebPost(
     key post ID POST,
     operator ID [$user] 
@@ -30,6 +30,7 @@ MAP CustomerPost(
     key post ID POST,
     operator ID [$user] 
 );
+**/
 
 MAP PostPublish(
     key post ID POST,

@@ -1,7 +1,6 @@
 TUID ip (
     id small,
     ip varchar(20),
-
     unique (ip),
 );
 
@@ -20,7 +19,6 @@ BOOK Hot (
     KEY post ID,
     hits INT,
     sumHits INT,
-
     index hits (hits)
 );
 

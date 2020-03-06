@@ -24,10 +24,11 @@ export class VEdit extends VPage<CMedia> {
     private getMediaPath(resId: string): string { return nav.resUrl + (resId.substr(1)) }
 
     private onFormButtonClick = async (name: string, context: Context) => {
+        this.closePage(1);
         let param = _.clone(context.form.data);
         param.path = this.mediaPath;
         await this.controller.saveItem(this.mediaId, param);
-        this.closePage();
+
     }
 
     private uiSchema: UiSchema = {
@@ -49,14 +50,14 @@ export class VEdit extends VPage<CMedia> {
 
     private onUpload = () => {
         this.media = this.form.data;
-		//this.openPageElement(<ImageUploader onSaved={this.onSaved} />);
-		this.openPageElement(<ImageUploader onSaved={this.onSaved} />);
+        //this.openPageElement(<ImageUploader onSaved={this.onSaved} />);
+        this.openPageElement(<ImageUploader onSaved={this.onSaved} />);
     }
 
     private onUploadFile = () => {
         this.media = this.form.data;
-		//this.openPageElement(<ImageUploader onSaved={this.onSaved} />);
-		this.openPageElement(<AudioUploader onSaved={this.onSaved} />);
+        //this.openPageElement(<ImageUploader onSaved={this.onSaved} />);
+        this.openPageElement(<AudioUploader onSaved={this.onSaved} />);
     }
 
     private page = observer(() => {
