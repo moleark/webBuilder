@@ -21,7 +21,7 @@ export class VChangeNames extends VPage<CMedia> {
         let id = current && current.id;
         console.log(id,'id')
         await this.controller.saveItem(id, current);
-        // this.closePage();
+        this.closePage();
     }
 
     private uiSchema: UiSchema = {
