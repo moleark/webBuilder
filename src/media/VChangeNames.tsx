@@ -1,6 +1,5 @@
 import * as React from 'react';
-import _ from 'lodash';
-import { VPage, Form, Context, UiSchema, Schema, Page, UiInputItem, UiIdItem, tv, Edit, ItemSchema } from "tonva";
+import { VPage, Form, UiSchema, Schema, Page, Edit, ItemSchema } from "tonva";
 import { observer } from 'mobx-react';
 import { consts } from 'consts';
 import { CMedia } from './CMedia';
@@ -19,7 +18,7 @@ export class VChangeNames extends VPage<CMedia> {
     private onClickSaveButton = async () => {
         let { current } = this.controller;
         let id = current && current.id;
-        console.log(id,'id')
+        console.log(id, 'id')
         await this.controller.saveItem(id, current);
         this.closePage();
     }

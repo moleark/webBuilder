@@ -21,7 +21,7 @@ export class CPage extends CUqBase {
     @observable current: any;
     @observable lock: boolean = false;
 
-    protected async internalStart(param: any) {}
+    protected async internalStart(param: any) { }
 
     /* 网页查询*/
     searchPageKey = async (key: string, author: any) => {
@@ -167,10 +167,7 @@ export class CPage extends CUqBase {
 
     // 选择公共模块
     onPickedBranch = async (id: number) => {
-        await this.uqs.webBuilder.WebPageBranch.add({
-            webPage: this.current.id,
-            arr1: [{ branch: id, sort: 0 }]
-        });
+        await this.uqs.webBuilder.WebPageBranch.add({ webPage: this.current.id, arr1: [{ branch: id, sort: 0 }] });
         let result = await this.uqs.webBuilder.SearchPrivateBranch.query({
             _page: this.current.id
         });

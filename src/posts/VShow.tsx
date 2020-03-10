@@ -1,11 +1,10 @@
 import * as React from 'react';
-import { VPage, Page, LMR, tv, EasyTime, Tuid, FA } from "tonva";
+import { VPage, Page, EasyTime, Tuid, FA } from "tonva";
 import { CPosts } from "./CPosts";
 import { VEdit } from './VEdit';
 import { observer } from 'mobx-react';
 import { consts } from 'consts';
 import { VSourceCode } from './VSourceCode';
-import { VGrade } from './VGrade';
 import copy from 'copy-to-clipboard';
 
 export class VShow extends VPage<CPosts> {

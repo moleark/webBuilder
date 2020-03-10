@@ -1,19 +1,14 @@
 import * as React from 'react';
-import { Page, VPage, ItemSchema, StringSchema, ImageSchema, UiSchema, UiImageItem, UiTextItem, Edit, nav, userApi, List, LMR, tv } from 'tonva';
+import { Page, VPage, List, LMR } from 'tonva';
 import { CMe } from './CMe';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
 import { consts } from 'consts';
-import { VTeamDetail } from './VTeamDetail';
-
 export class VTeam extends VPage<CMe> {
     @observable private data: any;
-
     async open() {
         this.openPage(this.page);
     }
-
-
     private page = observer(() => {
         let { pageTeam } = this.controller;
         return <Page header={this.t('myteam')} headerClassName={consts.headerClass}>

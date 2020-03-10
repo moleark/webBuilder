@@ -71,7 +71,7 @@ export class VMain extends VPage<CMedia> {
     }
 
     private renderItem = (item: any, index: number) => {
-        let { caption, path, $create, id } = item;
+        let { caption, path, id } = item;
         let { onimgNames } = this.controller
         let imgStyle = {
             backgroundImage: `url(${path})`,

@@ -103,7 +103,7 @@ export class VMain extends VPage<CPosts> {
     };
 
     private itemRow = observer((item: any) => {
-		let {user} = this.controller;
+		let {user,showDetail} = this.controller;
         if (!user) return;
 		let { image, caption, discription, author, $update, $create
 			, hits, sumHits
@@ -129,10 +129,7 @@ export class VMain extends VPage<CPosts> {
 			this.controller.cApp.renderUser(author.id);
         return (
             <div className="pl-2 pl-sm-3 pr-2 pr-sm-3 pt-2 pb-3 d-flex">
-                <div
-                    className="d-flex flex-fill cursor-pointer"
-                    onClick={() => this.controller.showDetail(item.id)}
-                >
+                <div className="d-flex flex-fill cursor-pointer" onClick={() => showDetail(item.id)} >
 					<div className="mr-3 w-5c w-min-5c h-5c h-min-5c">
                     {tv(
                         image,
@@ -175,7 +172,7 @@ export class VMain extends VPage<CPosts> {
                             {openweb===1?<span className="mr-1 text-primary">公开网</span>:<></>}
                         </div>
                     </div>
-                </div>        
+                </div>   
             </div>
         );
     });
@@ -184,30 +181,30 @@ export class VMain extends VPage<CPosts> {
 <span className="d-none d-sm-inline">&ensp;</span>
 {this.t('preview')}
 <span className="d-none d-sm-inline">&ensp;</span>
-                    <div
-                        className="d-flex cursor-pointer justify-content-center"
-                        onClick={e => this.onBtn()}
-                    >
-                        <strong className={classNames("small text-right")}>
-                            {this.t('me')}
-                        </strong>
-                        <div
-                            className="mx-2"
-                            style={{ width: "40px", height: "18px", backgroundColor: "rgb(211, 209, 209)",  borderRadius: "20px" }}
-                        >
-                            {this.controller.isMe ? (
-                                <div
-                                    style={{ border: "1px solid #007bff",  width: "20px", height: "18px", backgroundColor: "#007bff", borderRadius: "100%"}}
-                                ></div>
-                            ) : (
-                                    <div
-                                        style={{ border: "1px solid #007bff", width: "20px", height: "18px", backgroundColor: "#007bff", borderRadius: "100%" }}
-                                    ></div>
-                                )}
-                        </div>
-                        <strong className={classNames("small")}>
-                            {this.t('all')}
-                        </strong>
-                    </div>
+<div
+    className="d-flex cursor-pointer justify-content-center"
+    onClick={e => this.onBtn()}
+>
+    <strong className={classNames("small text-right")}>
+        {this.t('me')}
+    </strong>
+    <div
+        className="mx-2"
+        style={{ width: "40px", height: "18px", backgroundColor: "rgb(211, 209, 209)",  borderRadius: "20px" }}
+    >
+        {this.controller.isMe ? (
+            <div
+                style={{ border: "1px solid #007bff",  width: "20px", height: "18px", backgroundColor: "#007bff", borderRadius: "100%"}}
+            ></div>
+        ) : (
+                <div
+                    style={{ border: "1px solid #007bff", width: "20px", height: "18px", backgroundColor: "#007bff", borderRadius: "100%" }}
+                ></div>
+            )}
+    </div>
+    <strong className={classNames("small")}>
+        {this.t('all')}
+    </strong>
+</div>
 
 */

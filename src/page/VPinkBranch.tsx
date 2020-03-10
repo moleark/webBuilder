@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { VPage, Page, LMR, tv, EasyTime, UserView, FA, User, Tuid, List, SearchBox } from "tonva";
+import { VPage, Page, List, SearchBox } from "tonva";
 import { observer } from 'mobx-react';
 import { CPage } from './CPage';
 import { consts } from 'consts';

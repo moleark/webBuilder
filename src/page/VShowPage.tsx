@@ -3,7 +3,7 @@ import { consts } from 'consts';
 import { CPage } from "./CPage";
 import { observer } from 'mobx-react';
 import { VEditPage } from './VEditPage';
-import { VPage, Page, LMR, tv, EasyTime, UserView, FA, User, Tuid, List } from "tonva";
+import { VPage, Page, LMR, tv, EasyTime, Tuid, List } from "tonva";
 
 export class VShowPage extends VPage<CPage> {
 

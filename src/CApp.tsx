@@ -6,7 +6,7 @@ import { CUqBase } from "./CBase";
 import { CPage } from "page/CPage";
 import { CPosts } from "./posts/CPosts";
 import { CMedia } from "./media/CMedia";
-import { CAppBase, IConstructor, UserCache, UserView, tv } from "tonva";
+import { CAppBase, IConstructor, UserCache } from "tonva";
 import { CTemplets } from "./templets/CTemplets";
 import { setting } from "configuration";
 import { CTag } from "tag/CTag";
@@ -48,8 +48,8 @@ export class CApp extends CAppBase {
         this.userCache = new UserCache(userLoader);
 
         this.cMe = this.newC(CMe);
-		this.cPosts = this.newC(CPosts);
-		await this.cPosts.start();
+        this.cPosts = this.newC(CPosts);
+        await this.cPosts.start();
         this.cMedia = this.newC(CMedia);
         this.cTemplets = this.newC(CTemplets);
         this.cPage = this.newC(CPage);
@@ -66,17 +66,17 @@ export class CApp extends CAppBase {
     }
 
     private _renderUser = observer((props: { userId: number }): JSX.Element => {
-		let {userId} = props;
+        let { userId } = props;
         let val = this.userCache.getValue(userId);
         switch (typeof val) {
-		case 'undefined':
-		case 'number':
-			return <span className="author">{userId}</span> 
-		};
+            case 'undefined':
+            case 'number':
+                return <span className="author">{userId}</span>
+        };
         return <span className="author">{val.name}</span>;
-	});
-	
-	useUser(userId: number) {
-		this.userCache.use(userId);
-	}
+    });
+
+    useUser(userId: number) {
+        this.userCache.use(userId);
+    }
 }

@@ -14,7 +14,7 @@ import { setting } from "configuration";
 import { VReleaseProduct } from "./VReleaseProduct";
 import { VPickProduct } from "./VPickProduct";
 import { VGrade } from "./VGrade";
-import { VTag } from "tag/VTag";
+
 
 class PageProduct extends PageItems<any> {
 
@@ -100,8 +100,8 @@ export class CPosts extends CUqBase {
         let { caption, discription, image, template, content } = param;
         let par = { _caption: caption, _discription: discription, _image: image, _template: template, _content: content };
 
-        let ret = await this.uqs.webBuilder.AddPost.submit(par);
         if (id) {
+            await this.uqs.webBuilder.Post.save(id, param);
             let item = this.pagePosts.items.find(v => v.id === id);
             if (item !== undefined) {
                 _.merge(item, param);
@@ -110,6 +110,7 @@ export class CPosts extends CUqBase {
             this.current = item;
             this.closePage();
         } else {
+            let ret = await this.uqs.webBuilder.AddPost.submit(par);
             param.id = ret.id;
             param.$create = new Date();
             param.$update = new Date();
@@ -226,7 +227,7 @@ export class CPosts extends CUqBase {
 
     onPreviewPost = (id: number) => {
         window.open(setting.previewUrl + "/post/" + id, "_blank");
-        console.log(setting.previewUrl + "/post/" + id,'aa')
+        console.log(setting.previewUrl + "/post/" + id, 'aa')
     };
 
     searchPostProduct = async () => {

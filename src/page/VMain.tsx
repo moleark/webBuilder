@@ -2,7 +2,7 @@ import * as React from 'react';
 import { CPage } from './CPage';
 import { consts } from 'consts';
 import { observer } from 'mobx-react';
-import { VPage, Page, FA, List, Tuid, User, UserView, EasyTime, LMR } from 'tonva';
+import { VPage, Page, List, EasyTime } from 'tonva';
 
 export class VMain extends VPage<CPage> {
     async open() {

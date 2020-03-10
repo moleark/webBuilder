@@ -32,7 +32,7 @@ export class VReleaseProduct extends VPage<CPosts> {
     })
 
     private renderItem = (item: any, index: number) => {
-        let { product, post } = item;
+        let { product } = item;
         let { delPostProduct } = this.controller;
         return <div>
             {

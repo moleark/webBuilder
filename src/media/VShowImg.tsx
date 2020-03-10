@@ -1,6 +1,6 @@
 import * as React from "react";
 import { CMedia } from './CMedia';
-import { VPage, Page, EasyTime, Tuid, User, FA, LMR, UserView, tv } from "tonva";
+import { VPage, Page, EasyTime, Tuid, FA, LMR, tv } from "tonva";
 import { observer } from "mobx-react";
 import { consts } from "consts";
 
@@ -11,7 +11,7 @@ export class VShowImg extends VPage<CMedia> {
 
     private page = observer(() => {
         let { current } = this.controller;
-        let { caption, path, author, image, template, discription, $create, $update } = current;
+        let { caption, author, template, $update } = current;
         let date = <span><EasyTime date={$update} /></span>;
         let isMe = Tuid.equ(author, this.controller.user.id);
         let right = isMe && <button className="btn btn-sm btn-success mr-2 align-self-center"><FA name="pencil-square-o" /></button>;

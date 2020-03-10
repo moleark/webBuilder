@@ -36,7 +36,7 @@ export class VMe extends VPage<CMe> {
         return <Page header={this.t('me')} headerClassName={consts.headerClass}>
             <LMR
                 left={left}
-                className="bg-white py-2 border-bottom"
+                className="bg-white py-3 px-3 border-bottom"
                 right={right}
                 onClick={() => { this.openVPage(EditMeInfo) }}>
                 <div className="mt-1">

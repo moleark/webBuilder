@@ -1,5 +1,5 @@
 import * as React from "react";
-import { VPage, Page, List, LMR, EasyTime, FA, SearchBox } from "tonva";
+import { VPage, Page, List, EasyTime, SearchBox } from "tonva";
 import { consts } from "consts";
 import { CTemplets } from "./CTemplets";
 import { observer } from "mobx-react";
@@ -39,9 +39,6 @@ export class VMain extends VPage<CTemplets> {
         this.openVPage(VEdit);
     }
 
-    private itemClick = (item: any) => {
-        this.controller.showDetail(item.id);
-    }
 
     private onScrollBottom = async () => {
         await this.controller.pageTemplate.more();
@@ -52,14 +49,14 @@ export class VMain extends VPage<CTemplets> {
     }
 
     private renderItem = (item: any, index: number) => {
-        let { id, caption, content, $create, $update } = item;
+        let { caption, $update } = item;
         let right = <div>
             <small className="text-muted"><EasyTime date={$update} /></small>
             <button
                 style={{ fontWeight: 550, padding: '0 5px', fontSize: '12px' }} className="mt-2 btn btn-outline-primary"
                 onClick={() => this.onPreview(item.id)}
             >预览
-                 </button>
+            </button>
         </div>
         // return <LMR className="px-3 py-2 border-bottom" right={right}>
         //     <div>

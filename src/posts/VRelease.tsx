@@ -3,15 +3,6 @@ import { CPosts } from './CPosts';
 import { VPage, Page, Widget, UiSchema, UiCustom, Form, Schema, Context, setRes } from 'tonva';
 import { consts } from 'consts';
 import { observable } from 'mobx';
-import _ from "lodash"
-import { VReleaseProduct } from './VReleaseProduct';
-
-/*
-interface ReleaseType {
-    id: string
-    list: any[];
-}
-*/
 
 const res: { [prop: string]: string | any } = {
     sales: '内部销售',
