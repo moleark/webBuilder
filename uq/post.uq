@@ -7,6 +7,7 @@ TUID POST (
     main author ID [$user],
     template ID Template,
     content text,
+    isValid smallint,
     stamp (create, update),
 );
 
@@ -79,6 +80,7 @@ PAGE (
     template ID Template,
 	[$update] DATETIME,
 	[$create] DATETIME,
+    isValid smallint,
 	hits int,
 	sumHits int,
     web     smallint,
@@ -90,7 +92,7 @@ PAGE (
     set key2 = concat('%', key, '%');
 
     PAGE select p.id, p.caption, p.discription, p.image, p.author
-		, p.template, p.[$update], p.[$create]
+		, p.template, p.[$update], p.[$create],p.isValid
 		, c.hits, c.sumHits
 		, ifnull(ph.web, 0) as web
 		, ifnull(ph.agent,0) as agent
@@ -99,7 +101,8 @@ PAGE (
     from    POST as p
             left join PostPublish as ph on p.id = ph.post
 			left join Hot as c on p.id=c.post
-    where   p.id < $pageStart and ( p.template like key2 or p.discription like key2 or p.caption like key2 or key is null )
+    where   p.id < $pageStart and p.isValid = 1 
+            and ( p.template like key2 or p.discription like key2 or p.caption like key2 or key is null )
             and ( p.author = author or author = 0 )
     order by p.id desc
     limit $pageSize;
@@ -122,7 +125,7 @@ PAGE (
     PAGE select p.id, p.caption, p.discription, p.image, p.author, p.template
     from    POST as p
             join PostPublish as a on p.id = a.post
-    where   p.id < $pageStart and ( a.openweb = 1 or a.web = 1)
+    where   p.id < $pageStart and p.isValid = 1 and ( a.openweb = 1 or a.web = 1)
             and ( p.discription like key2 or p.caption like key2 or key is null )
     order by p.id desc
     limit $pageSize;
@@ -190,7 +193,7 @@ ACTION AddPost(
     
     TUID POST into postId set
         caption = _caption, discription = _discription, image = _image, 
-        author = $user, template = _template, content = _content;
+        author = $user, template = _template, content = _content, isValid = 1;
    
     BOOK Achievement at($user) set postSum+=1;
     into ret select postId as id;
