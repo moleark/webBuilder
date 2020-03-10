@@ -22,7 +22,7 @@ export class CMedia extends CUqBase {
 
     //添加任务
     saveItem = async (id: any, param: any) => {
-        let pa = { caption: param.caption, path: param.path, author: this.user.id };
+        let pa = { caption: param.caption, path: param.path, author: this.user.id, isValid: 1 };
         let ret = await this.uqs.webBuilder.Image.save(id, pa);
         if (id) {
             let item = this.pageMedia.items.find(v => v.id === id);
