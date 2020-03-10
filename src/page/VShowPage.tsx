@@ -12,7 +12,7 @@ export class VShowPage extends VPage<CPage> {
     }
     private page = observer(() => {
         let { current, onRedact, itemsModule, onCommonalityModule, ondisplay, lock } = this.controller;
-        let { titel, name, author, template, discription, $create, $update } = current;
+        let { titel, name, author, template, discription, $update } = current;
         const sortItemsModule = itemsModule.sort(function (m, n) {
             if (m.sort < n.sort) return -1
             else if (m.sort > n.sort) return 1

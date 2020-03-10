@@ -166,10 +166,10 @@ export class VMain extends VPage<CPosts> {
 						</div>
                         <div className="small pt-1" style={{  overflow: "hidden" }}>
                             {(web+agent+assist+openweb)>0?<span  className="mr-1 text-muted">发布：</span>:<></>}
-                            {web===1?<span className="mr-1 text-primary">内部网</span>:<></>}
-                            {agent===1?<span className="mr-1 text-primary">轻代理</span>:<></>}
-                            {assist===1?<span className="mr-1 text-primary">销售员</span>:<></>}
-                            {openweb===1?<span className="mr-1 text-primary">公开网</span>:<></>}
+                            {web===1?<span className="mr-1 text-primary">{ this.t('privateSite')}</span>:<></>}
+                            {agent===1?<span className="mr-1 text-primary">{ this.t('agent')}</span>:<></>}
+                            {assist===1?<span className="mr-1 text-primary">{ this.t('sales')}</span>:<></>}
+                            {openweb===1?<span className="mr-1 text-primary">{ this.t('publicSite')}</span>:<></>}
                         </div>
                     </div>
                 </div>   

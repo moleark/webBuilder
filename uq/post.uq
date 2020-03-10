@@ -140,28 +140,34 @@ ACTION PublishPost(
     foreach tags {
         if( [tagName] = 1 ){
             set _web = 1;
-        }elseif( [tagName] = 2 ){
+        }else if( [tagName] = 2 ){
             set _agent = 1;
-        }elseif( [tagName] = 3 ){
+        }else if( [tagName] = 3 ){
             set _assist = 1;
-        }elseif( [tagName] = 4 ){
+        }else if( [tagName] = 4 ){
             set _openweb = 1;
         }
     }
 
-    VAR _new int = 0, _old int = 0;
+    VAR newval int = 0, oldval int = 0;
     if( _web = 1 or _agent = 1 or _assist = 1 or _openweb = 1 ){
-        set _new = 1;
+        set newval = 1;
+    }else{
+        set newval = 0;
     };
     
     if exists( select 1 
         from    PostPublish 
-        where   web=1 or agent= 1 or assist=1 or openweb=1
+        where   post = _post and (web=1 or agent= 1 or assist=1 or openweb=1)
     ){
-        set _old = 1;
+        set oldval = 1;
+    }else{
+        set oldval = 0;
     };
 
-    BOOK Achievement at($user) set postPulishSum +=(_new - _old);
+    var val int = 0;
+    set val = newval - oldval
+    BOOK Achievement at($user) set postPublishSum += val;
  
     BOOK PostPublish at(_post) 
     set web=_web, agent=_agent, assist=_assist, openweb=_openweb, operator = $user, update = now();

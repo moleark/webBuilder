@@ -15,7 +15,7 @@ export class VShow extends VPage<CTemplets> {
         if (templet === undefined) {
             return <Page>...</Page>;
         }
-        let { caption, content, author, $create, $update, contentModule } = templet;
+        let { caption, content, author, $update, contentModule } = templet;
         let date = <span><EasyTime date={$update} /></span>;
         let isMe = Tuid.equ(author, this.controller.user.id);
         let right = isMe && <div onClick={() => this.openVPage(VEdit, templet)}><span className="iconfont icon-xiugai1 mr-2" style={{ fontSize: "26px", color: "white" }}></span></div>

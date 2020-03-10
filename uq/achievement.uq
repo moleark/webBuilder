@@ -3,7 +3,7 @@
 BOOK Achievement(
     key user ID [$user],
     postSum int,      --post总数
-    postPulishSum int,  --post发布总数
+    postPublishSum int,  --post发布总数
     postHitSum int         --post访问总数
 );
  
@@ -14,10 +14,10 @@ QUERY SearchAchievement(
 )
 returns ret  (
     postSum int,      --post总数
-    postPulishSum int,  --post发布总数
+    postPublishSum int,  --post发布总数
     postHitSum int         --post访问总数
 ) {
-    into ret select a.postSum, a.postPulishSum, a.postHitSum
+    into ret select a.postSum, a.postPublishSum, a.postHitSum
     from    Achievement as a
     where   a.user = _user;
 };
