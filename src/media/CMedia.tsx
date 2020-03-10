@@ -64,6 +64,11 @@ export class CMedia extends CUqBase {
         this.searchMadiaKey("");
     };
 
+    onRem = async (id: number) => {
+        this.current = await this.uqs.webBuilder.Image.save(id, {isValid: 0});
+        this.searchMadiaKey("");
+    }
+
     tab = () => {
         return <this.render />;
     };

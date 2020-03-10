@@ -2,7 +2,7 @@ import * as React from "react";
 import { consts } from "consts";
 import { CMedia } from "./CMedia";
 import { observer } from "mobx-react";
-import { VPage, Page, SearchBox, Loading, FA } from "tonva";
+import { VPage, Page, SearchBox, Loading, FA, Tuid } from "tonva";
 import copy from 'copy-to-clipboard';
 
 export class VMain extends VPage<CMedia> {
@@ -27,7 +27,6 @@ export class VMain extends VPage<CMedia> {
             </div>
         </div>;
         let { items, loading } = pageMedia;
-        console.log(items, 'items')
         let divItems: any;
         if (!items) {
             divItems = (loading === true) ?
@@ -71,7 +70,10 @@ export class VMain extends VPage<CMedia> {
     }
 
     private renderItem = (item: any, index: number) => {
-        let { caption, path, id } = item;
+        let { onRem } = this.controller;
+        let { caption, path, id, isValid, author } = item;
+        let isMe = Tuid.equ(author, this.controller.user.id);
+        console.log(isMe, 'item')
         let { onimgNames } = this.controller
         let imgStyle = {
             backgroundImage: `url(${path})`,
@@ -83,22 +85,40 @@ export class VMain extends VPage<CMedia> {
             <div className="w-100 h-100 bg-center-img h-min-12c" style={imgStyle}>
             </div>
         </div>;
-
-        return <div key={index} className="col px-3 py-2 border-bottom border-dark">
-            <div
-                className="text-info bg-light p-2 d-flex text-nowrap cursor-pointer border-bottom"
-                onClick={() => onimgNames(id)} >
-                <div className="overflow-hidden flex-fill small">{caption}</div>
-                <div className=""><FA name="edit" /></div>
+        if(isMe) {
+            return <div key={index} className="col px-3 py-2 border-bottom border-dark">
+            <div  className="text-info bg-light p-2 d-flex text-nowrap cursor-pointer border-bottom">
+                <div className="d-flex flex-fill" onClick={() => onimgNames(id)} >
+                    <div className="overflow-hidden flex-fill small">{caption}</div>
+                    <div className=""><FA name="edit" /></div>
+                </div>
+                <div className="iconfont icon-shanchu pl-1" onClick={() => onRem(id)}></div>
             </div>
-            {divImg}
 
+            {divImg}
             <div className="smallPath small my-2 text-muted cursor-pointer position-relative"
                 onClick={this.copyClick}>
                 <span>{path}</span>
                 <small className="position-absolute text-muted" style={{ right: 0, bottom: 0 }}>{this.t('copy')}</small>
             </div>
         </div>;
+
+        }
+        return <div key={index} className="col px-3 py-2 border-bottom border-dark">
+        <div  className="text-info bg-light p-2 d-flex text-nowrap cursor-pointer border-bottom">
+            <div className="d-flex flex-fill" onClick={() => onimgNames(id)} >
+                <div className="overflow-hidden flex-fill small">{caption}</div>
+                <div className=""><FA name="edit" /></div>
+            </div>
+        </div>
+
+        {divImg}
+        <div className="smallPath small my-2 text-muted cursor-pointer position-relative"
+            onClick={this.copyClick}>
+            <span>{path}</span>
+            <small className="position-absolute text-muted" style={{ right: 0, bottom: 0 }}>{this.t('copy')}</small>
+        </div>
+    </div>;
 
     }
 }
