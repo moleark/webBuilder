@@ -10,13 +10,14 @@ export class VTag extends VPage<CTag> {
     }
     private schema: Schema = [
         // { name: "b", type: "string" },
-        { name: "c", type: "string" },
+        { name: "cresearch", type: "string" },
+        { name: "business", type: "string" },
         { name: "submit", type: "submit" }
     ];
 
     private page = observer(() => {
 
-        let { ResearchField, postResearchField } = this.controller;
+        let { ResearchField, Business, postResearchField } = this.controller;
         let uiSchema = {
             items: {
                 /**
@@ -26,10 +27,15 @@ export class VTag extends VPage<CTag> {
                     valuesView: this.controller.Test1.view //list: this.controller.tagText2Values
                 } as UiTagSingle,
                 **/
-                c: {
+                cresearch: {
                     label: '研究领域',
                     widget: 'tagMulti',
                     valuesView: ResearchField.view,
+                } as UiTagMulti,
+                business: {
+                    label: '业务部门',
+                    widget: 'tagMulti',
+                    valuesView: Business.view,
                 } as UiTagMulti,
                 submit: {
                     label: "提交",
@@ -45,7 +51,7 @@ export class VTag extends VPage<CTag> {
                     schema={this.schema}
                     uiSchema={uiSchema}
                     onButtonClick={this.onFormButtonClick}
-                    formData={{ c: postResearchField }}
+                    formData={{ cresearch: postResearchField }}
                     fieldLabelSize={2}
                 />
             </Page>
@@ -54,6 +60,6 @@ export class VTag extends VPage<CTag> {
 
     private onFormButtonClick = async (name: string, context: Context) => {
         this.closePage();
-        this.controller.addPostResearchField(context.data);
+        this.controller.saveTag(context.data);
     }
 }

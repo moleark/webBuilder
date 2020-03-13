@@ -5,10 +5,10 @@ import { consts } from 'consts';
 import { observable } from 'mobx';
 
 const res: { [prop: string]: string | any } = {
-    sales: '内部销售',
+    sales: '销售助手',
     agent: '轻代理',
     privateSite: '内部网站',
-    publicSite: '公开网站',
+    publicSite: '内容网站',
     $en: {
         sales: 'Sales',
         agent: 'Agent',

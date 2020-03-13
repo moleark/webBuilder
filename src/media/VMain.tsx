@@ -54,17 +54,17 @@ export class VMain extends VPage<CMedia> {
         await this.controller.pageMedia.more();
     }
 
-    private copyClick = (e: any) => {
+    private copyClick = (e: any, path: any) => {
         let el = e.target as HTMLElement;
-        let text = (el.firstChild as HTMLElement).innerText;
         let innerHTML = el.innerHTML;
-        copy(text);
+        copy(path);
         el.innerHTML = '<div class="text-center text-danger w-100"> <span style="color:transparent">- - - - - -</span> url ' + this.t('copysuccess') + '<span style="color:transparent">- - - - - -</span> </div>';
         setTimeout(() => {
             el.innerHTML = innerHTML;
         }, 1000);
         //alert(this.t('copysuccess'))
     }
+
     private preview = (path: any) => {
         window.open(path, '_blank')
     }
@@ -85,40 +85,40 @@ export class VMain extends VPage<CMedia> {
             <div className="w-100 h-100 bg-center-img h-min-12c" style={imgStyle}>
             </div>
         </div>;
-        if(isMe) {
+        if (isMe) {
             return <div key={index} className="col px-3 py-2 border-bottom border-dark">
-            <div  className="text-info bg-light p-2 d-flex text-nowrap cursor-pointer border-bottom">
+                <div className="text-info bg-light p-2 d-flex text-nowrap cursor-pointer border-bottom">
+                    <div className="d-flex flex-fill" onClick={() => onimgNames(id)} >
+                        <div className="overflow-hidden flex-fill small">{caption}</div>
+                        <div className=""><FA name="edit" /></div>
+                    </div>
+                    <div className="iconfont icon-shanchu pl-1" onClick={() => onRem(id)}></div>
+                </div>
+
+                {divImg}
+                <div className="smallPath small my-2 text-muted cursor-pointer position-relative"
+                    onClick={(e) => this.copyClick(e, path)}>
+                    <span>{path}</span>
+                    <small className="position-absolute text-muted" style={{ right: 0, bottom: 0 }}>{this.t('copy')}</small>
+                </div>
+            </div>;
+
+        }
+        return <div key={index} className="col px-3 py-2 border-bottom border-dark">
+            <div className="text-info bg-light p-2 d-flex text-nowrap cursor-pointer border-bottom">
                 <div className="d-flex flex-fill" onClick={() => onimgNames(id)} >
                     <div className="overflow-hidden flex-fill small">{caption}</div>
                     <div className=""><FA name="edit" /></div>
                 </div>
-                <div className="iconfont icon-shanchu pl-1" onClick={() => onRem(id)}></div>
             </div>
 
             {divImg}
             <div className="smallPath small my-2 text-muted cursor-pointer position-relative"
-                onClick={this.copyClick}>
+                onClick={(e) => this.copyClick(e, path)}>>
                 <span>{path}</span>
                 <small className="position-absolute text-muted" style={{ right: 0, bottom: 0 }}>{this.t('copy')}</small>
             </div>
         </div>;
-
-        }
-        return <div key={index} className="col px-3 py-2 border-bottom border-dark">
-        <div  className="text-info bg-light p-2 d-flex text-nowrap cursor-pointer border-bottom">
-            <div className="d-flex flex-fill" onClick={() => onimgNames(id)} >
-                <div className="overflow-hidden flex-fill small">{caption}</div>
-                <div className=""><FA name="edit" /></div>
-            </div>
-        </div>
-
-        {divImg}
-        <div className="smallPath small my-2 text-muted cursor-pointer position-relative"
-            onClick={this.copyClick}>
-            <span>{path}</span>
-            <small className="position-absolute text-muted" style={{ right: 0, bottom: 0 }}>{this.t('copy')}</small>
-        </div>
-    </div>;
 
     }
 }

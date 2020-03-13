@@ -39,6 +39,7 @@ export interface WebBuilder {
     AddPostEvaluate: Action;
     SearchPostEvaluate: Query;
     ResearchField: Tag;
+    Business: Tag;
     AddPostResearchField: Action;
     SearchPostResearchField: Query;
     SearchAchievement: Query;

@@ -142,11 +142,11 @@ ACTION PublishPost(
     
     foreach tags {
         if( [tagName] = 1 ){
-            set _web = 1;
+            set _assist = 1;
         }else if( [tagName] = 2 ){
             set _agent = 1;
         }else if( [tagName] = 3 ){
-            set _assist = 1;
+            set _web = 1;
         }else if( [tagName] = 4 ){
             set _openweb = 1;
         }

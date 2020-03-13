@@ -12,12 +12,14 @@ export const en = {
     productpublish: 'Publish For Product',
     ordinarypublish: 'Publish Fro Ordinary',
     selectproduct: 'Select Product',
-    internalsales: 'Internal sales',
-    lightagent: 'Light agent',
-    internalwebpage: 'Internal web page',
-    openwebpage: 'Open web page',
-    sourcecode: 'Code',
 
+
+    sales: 'Internal Sales',
+    agent: 'ight Agent',
+    privateSite: 'Private Site',
+    publicSite: 'Public Site',
+
+    sourcecode: 'Code',
     picture: 'Picture',
     searchpicture: 'Search picture',
     selectpicture: 'Select picture',
@@ -76,10 +78,12 @@ export const zh = {
     productpublish: '产品发布',
     selectproduct: '选择产品',
     ordinarypublish: '普通发布',
-    internalsales: '销售助手',
-    lightagent: '轻代理',
-    internalwebpage: '内部网页',
-    openwebpage: '内容网站',
+
+    sales: '销售助手',
+    agent: '轻代理',
+    privateSite: '内部网页',
+    publicSite: '内容网站',
+
     sourcecode: '源码',
 
     picture: '图片',

@@ -1,16 +1,14 @@
 import _ from "lodash";
 import { CUqBase } from "CBase";
-import { observable } from "mobx";
 import { VTag } from "./VTag";
 import { Tag } from "tonva";
 
 export class CTag extends CUqBase {
     ResearchField: Tag;
+    Business: Tag;
     postResearchField: string = "";
     protected async internalStart(param: any) {
-
     }
-
 
     searchPostResearchField = async () => {
         let list = await this.uqs.webBuilder.SearchPostResearchField.table({ _post: 1 });
@@ -25,14 +23,16 @@ export class CTag extends CUqBase {
 
     showTag = async () => {
         await this.searchPostResearchField();
-        let { ResearchField } = this.uqs.webBuilder;
+        let { ResearchField, Business } = this.uqs.webBuilder;
         this.ResearchField = ResearchField;
+        this.Business = Business;
         await ResearchField.loadValues();
+        await Business.loadValues();
         this.openVPage(VTag);
     };
 
-    addPostResearchField = (data: any) => {
-        let param = { _post: 1, _tag: data.c };
+    saveTag = (data: any) => {
+        let param = { _post: 1, _tag: data.cresearch };
         this.uqs.webBuilder.AddPostResearchField.submit(param);
     }
 
