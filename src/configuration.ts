@@ -16,7 +16,10 @@ export const setting = {
     logo: logo,
     pageHeaderCss: "bg-primary py-1",
     appUrlDomain: "cs.jkchemical.com",
-    previewUrl: "https://web.jkchemical.com"
+    previewUrl: "https://web.jkchemical.com",
+    SALESREGION_CN: 1,
+    CHINESE: 197,
+
     // sales: undefined as Sales,
 };
 

@@ -71,7 +71,7 @@ export class VMain extends VPage<CMedia> {
 
     private renderItem = (item: any, index: number) => {
         let { onRem } = this.controller;
-        let { caption, path, id, isValid, author } = item;
+        let { caption, path, id, author } = item;
         let isMe = Tuid.equ(author, this.controller.user.id);
         console.log(isMe, 'item')
         let { onimgNames } = this.controller

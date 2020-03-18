@@ -7,10 +7,13 @@ export interface UqHr {
 }
 
 export interface UqProduct {
+    ProductCategory: Tuid;
     ProductX: Tuid;
     SearchProduct: Query;
-
+    GetRootCategory: Query;
+    GetChildrenCategory: Query;
 }
+
 
 export interface WebBuilder {
     Content: Tuid;

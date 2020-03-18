@@ -42,6 +42,14 @@ export class VEdit extends VPage<CPosts> {
         });
     }
 
+    private catalogContent = (boxId: any) => {
+        return tv(boxId, (values) => {
+            let { caption } = values;
+            return <>{caption}</>;
+        });
+    }
+
+
     private uiSchema: UiSchema = {
         items: {
             caption: { widget: 'text', label: this.t('title') },
@@ -51,6 +59,10 @@ export class VEdit extends VPage<CPosts> {
 
             image: {
                 widget: 'id', label: this.t('picture'), pickId: this.controller.pickImage, Templet: this.imageContent
+            } as UiIdItem,
+
+            productcatalog: {
+                widget: 'id', label: "目录", pickId: this.controller.pickProductCatalog, Templet: this.catalogContent
             } as UiIdItem,
             /**
             template: {
@@ -65,6 +77,7 @@ export class VEdit extends VPage<CPosts> {
         { name: 'caption', type: 'string', required: true },
         { name: 'discription', type: 'string', required: false },
         { name: 'image', type: 'id', required: true },
+        { name: 'productcatalog', type: 'id', required: false }
         //{ name: 'content', type: 'string', required: true },
         // { name: 'template', type: 'id', required: true },
     ];
@@ -91,9 +104,7 @@ export class VEdit extends VPage<CPosts> {
             right={right}
             headerClassName={consts.headerClass}>
             <div className="mx-3 py-2 h-100 d-flex flex-column">
-                <textarea ref={tt => this.textarea = tt}
-                    className="flex-fill mb-2"
-                    defaultValue={current.content} />
+                <textarea ref={tt => this.textarea = tt} className="flex-fill mb-2" defaultValue={current.content} />
                 <Edit data={current}
                     schema={this.schema}
                     uiSchema={this.uiSchema}

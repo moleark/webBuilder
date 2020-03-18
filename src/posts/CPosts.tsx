@@ -14,6 +14,7 @@ import { setting } from "configuration";
 import { VReleaseProduct } from "./VReleaseProduct";
 import { VPickProduct } from "./VPickProduct";
 import { VGrade } from "./VGrade";
+import { VPickProductCatalog } from "./VPickProductCatalog";
 
 
 class PageProduct extends PageItems<any> {
@@ -51,11 +52,12 @@ export class CPosts extends CUqBase {
     @observable ratioC: any;
     @observable ratioD: any;
     @observable ratioE: any;
+    @observable pageProductCatalog: any;
 
 
     protected async internalStart(param: any) {
         this.setRes({
-            'me-sm': 'm',
+            'me-sm': 'M',
             'all-sm': 'A',
             $zh: {
                 'me-sm': '我',
@@ -260,6 +262,24 @@ export class CPosts extends CUqBase {
         await this.searchPostProduct();
         this.uqs.webBuilder.PostPublishProduct.del({ product: param.id, arr1: [{ post: this.current.id }] });
     }
+
+
+    pickProductCatalog = async (context: Context, name: string, value: number): Promise<any> => {
+        let results = this.pageProductCatalog = await this.uqs.product.GetRootCategory.query({ salesRegion: setting.SALESREGION_CN, language: setting.CHINESE });
+        this.pageProductCatalog = results.first;
+        return await this.vCall(VPickProductCatalog);
+    };
+
+    onPickProductCatalog = async (id: number) => {
+        this.closePage();
+    }
+
+    /* 产品目录*/
+    searchProductCatalogChildrenKey = async (key: string) => {
+        let results = await this.uqs.product.GetChildrenCategory.query({ parent: key, salesRegion: setting.SALESREGION_CN, language: setting.CHINESE });
+        this.pageProductCatalog = results.first;
+    };
+
 
     tab = () => {
         return <this.render />;
