@@ -9,7 +9,7 @@ import { VSetDetails } from "./VSetDetails";
 import { VAbout } from "./VAbout";
 import { VTeam } from "./VTeam";
 import { VTeamDetail } from "./VTeamDetail";
-
+/* eslint-disable */
 class PageMedia extends PageItems<any> {
     private searchMediaQuery: Query;
     constructor(searchQuery: Query) {

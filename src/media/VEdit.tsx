@@ -5,7 +5,7 @@ import { CMedia } from "./CMedia";
 import { observer } from "mobx-react";
 import { VPage, UiSchema, Schema, UiInputItem, Page, Form, Context, ImageUploader, nav, AudioUploader } from "tonva";
 import { observable } from "mobx";
-
+/* eslint-disable */
 export class VEdit extends VPage<CMedia> {
     @observable private media: any;
     @observable private mediaPath: string;

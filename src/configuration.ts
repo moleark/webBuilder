@@ -6,7 +6,7 @@ export const appConfig: AppConfig = {
     tvs: {},
     oem: "百灵威"
 };
-
+/* eslint-disable */
 export const setting = {
     appName: "内容管理",
     url: "http://agent.jkchemical.com",

@@ -4,7 +4,7 @@ import { observer } from "mobx-react";
 import { VPage, Page } from "tonva";
 import { CPosts } from "./CPosts";
 import { Rate } from "element-react";
-
+/* eslint-disable */
 export class VGrade extends VPage<CPosts> {
     async open() {
         this.openPage(this.page)

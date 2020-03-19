@@ -50,6 +50,7 @@ export class VMain extends VPage<CTemplets> {
 
     private renderItem = (item: any, index: number) => {
         let { caption, $update } = item;
+        /**
         let right = <div>
             <small className="text-muted"><EasyTime date={$update} /></small>
             <button
@@ -58,6 +59,7 @@ export class VMain extends VPage<CTemplets> {
             >预览
             </button>
         </div>
+        **/
         // return <LMR className="px-3 py-2 border-bottom" right={right}>
         //     <div>
         //         <span className=" iconfont icon-mobanguanli mr-2"

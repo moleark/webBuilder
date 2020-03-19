@@ -1,4 +1,3 @@
-import _ from "lodash";
 import { CUqBase } from "CBase";
 import { VTag } from "./VTag";
 import { Tag } from "tonva";

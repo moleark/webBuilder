@@ -1,13 +1,11 @@
 import * as React from 'react';
-import _ from 'lodash';
 import { CPosts } from "./CPosts";
-import { VPage, Form, Context, UiSchema, Schema, Page, UiInputItem, UiIdItem, tv, Edit, ItemSchema } from "tonva";
+import { VPage, Context, UiSchema, Schema, Page, UiInputItem, UiIdItem, tv, Edit, ItemSchema } from "tonva";
 import { observer } from 'mobx-react';
 import { consts } from 'consts';
 
-
 export class VEdit extends VPage<CPosts> {
-    private form: Form;
+
     private textarea: HTMLTextAreaElement;
     async open() {
         this.openPage(this.page);

@@ -1,5 +1,4 @@
 import * as React from 'react';
-import _ from 'lodash';
 import { CTemplets } from "./CTemplets";
 import { VPage, Form, Context, UiSchema, Schema, Page, UiInputItem } from "tonva";
 import { observer } from 'mobx-react';
@@ -44,9 +43,11 @@ export class VEdit extends VPage<CTemplets> {
     }
 
     private page = observer(() => {
+        /*
         let right = <div className="cursor-pointer py-1" >
             <span className="iconfont  mx-3 icon-tianjia" style={{ fontSize: "20px", color: "#ffffff" }}></span>
         </div>;
+        */
         return <Page header="编辑模板" headerClassName={consts.headerClass}>
             <div className="mx-3">
                 <Form ref={v => this.form = v} className="my-3"

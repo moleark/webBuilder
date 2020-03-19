@@ -5,7 +5,7 @@ import { CMe } from "./CMe";
 import { observer } from "mobx-react";
 import { VPage, UiSchema, Schema, UiInputItem, Page, Form, Context, ImageUploader, nav } from "tonva";
 import { observable } from "mobx";
-
+/* eslint-disable */
 export class VCompileImg extends VPage<CMe> {
     @observable private media: any;
     @observable private mediaPath: string;

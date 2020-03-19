@@ -25,7 +25,7 @@ export class VMe extends VPage<CMe> {
 
     private page = observer(() => {
 
-        let { onSet, user, PostTotal, PageTotal, cApp, onTeams, pageTeam } = this.controller;
+        let { onSet, user, PostTotal, PageTotal, cApp, onTeams } = this.controller;
         PageTotal = PageTotal ? PageTotal : 0;
         PostTotal = PostTotal ? PostTotal : 0;
 

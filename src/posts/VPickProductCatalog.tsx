@@ -1,6 +1,6 @@
 import * as React from "react";
 import { observer } from "mobx-react";
-import { VPage, Page, List, tv } from "tonva";
+import { VPage, Page, List } from "tonva";
 import { consts } from "consts";
 import { CPosts } from "./CPosts";
 
@@ -28,7 +28,7 @@ export class VPickProductCatalog extends VPage<CPosts> {
 
     private renderItem = (model: any, index: number) => {
         let { onPickProductCatalog, searchProductCatalogChildrenKey } = this.controller;
-        let { productCategory, name, children } = model;
+        let { productCategory, name } = model;
 
         return (
             <div className="pl-2 pl-sm-3 pr-2 pr-sm-3 pt-2 pb-3 d-flex">

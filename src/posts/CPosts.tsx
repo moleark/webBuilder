@@ -16,7 +16,7 @@ import { VPickProduct } from "./VPickProduct";
 import { VGrade } from "./VGrade";
 import { VPickProductCatalog } from "./VPickProductCatalog";
 
-
+/* eslint-disable */
 class PageProduct extends PageItems<any> {
 
     private searchProductQuery: Query;

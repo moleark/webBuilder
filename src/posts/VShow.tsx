@@ -1,12 +1,12 @@
 import * as React from 'react';
-import { VPage, Page, EasyTime, Tuid, FA } from "tonva";
+import { VPage, Page, Tuid, FA } from "tonva";
 import { CPosts } from "./CPosts";
 import { VEdit } from './VEdit';
 import { observer } from 'mobx-react';
 import { consts } from 'consts';
 import { VSourceCode } from './VSourceCode';
 import copy from 'copy-to-clipboard';
-
+/* eslint-disable */
 export class VShow extends VPage<CPosts> {
     async open() {
         this.openPage(this.page);
@@ -24,9 +24,9 @@ export class VShow extends VPage<CPosts> {
 
     private page = observer(() => {
         let { current, onShowRelease, onGrade } = this.controller;
-        let { id, author, $update } = current;
+        let { id, author } = current;
         let leftPath = "https://web.jkchemical.com/post/" + id;
-        let date = <span><EasyTime date={$update} /></span>;
+        //let date = <span><EasyTime date={$update} /></span>;
         let isMe = Tuid.equ(author, this.controller.user.id);
         let meright = isMe && <>
             <button className="mr-2 btn btn-sm btn-success" onClick={() => this.openVPage(VEdit)}>
