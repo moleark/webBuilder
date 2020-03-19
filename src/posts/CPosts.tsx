@@ -187,11 +187,6 @@ export class CPosts extends CUqBase {
         }
 
     }
-    acquire = async () => {
-
-        // console.log(total/5*~~GradeA,'555')
-        // console.log(~~GradeA + ~~GradeD + ~~GradeB + ~~GradeC + ~~GradeE,'GradeD')
-    }
 
     onPickedImage = (id: number) => {
         this.closePage();
@@ -270,7 +265,10 @@ export class CPosts extends CUqBase {
         return await this.vCall(VPickProductCatalog);
     };
 
-    onPickProductCatalog = async (id: number) => {
+    onPickProductCatalog = async (param: any) => {
+        let { productCategory } = param;
+        this.uqs.webBuilder.AddPostProductCatalog.submit({ _post: this.current.id, _productCategory: productCategory.id });
+        this.returnCall(param);
         this.closePage();
     }
 

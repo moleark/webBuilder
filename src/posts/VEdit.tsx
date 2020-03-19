@@ -41,12 +41,8 @@ export class VEdit extends VPage<CPosts> {
     }
 
     private catalogContent = (boxId: any) => {
-        return tv(boxId, (values) => {
-            let { caption } = values;
-            return <>{caption}</>;
-        });
+        return <>{boxId ? boxId.name : null}</>;
     }
-
 
     private uiSchema: UiSchema = {
         items: {

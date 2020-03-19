@@ -20,3 +20,18 @@ TUID ProductX from JKProduct(
         unit char(10),
     ),
 );
+
+TUID ProductCategory  from JKProduct (
+    id,
+    main no int not null,
+    main parent ID ProductCategory,
+    main isLeaf tinyint not null default 0,
+    main orderWithinParent int,
+    arr ProductCategoryLanguage (
+        owner,
+        id,
+        language ID Language,
+        name char(200),
+    ),
+    unique(no),
+);

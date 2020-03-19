@@ -11,7 +11,68 @@ TUID POST (
     stamp (create, update),
 );
 
-/** POST发布 
+
+/** 发布帖文记录*/
+MAP PostPublish(
+    key post ID POST,
+    web     smallint,
+    agent   smallint, 
+    assist  smallint, 
+    openweb smallint, 
+    operator ID [$user],
+    update DATETIME
+);
+
+
+/** 发布帖文记录--产品*/
+MAP PostPublishProduct(
+    key product ID ProductX,
+    key post ID POST,
+    operator ID [$user],
+    update DATETIME
+);
+
+/** 帖文 目录节点 */
+BOOK PostProductCatalog(
+    key post ID POST,
+    productCategory ID ProductCategory
+);
+
+
+/** 评价 **/
+BOOK PostEvaluate (
+    key post ID POST,
+    GradeA int,
+    GradeB int,
+    GradeC int,
+    GradeD int,
+    GradeE int,
+);
+
+/** 访问记录 **/
+History PostEvaluateRecord (
+    date,
+    post ID POST,
+    ip ID ip,
+    grade int
+);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/** POST发布  已作废
 MAP WebPost(
     key post ID POST,
     operator ID [$user] 
@@ -32,237 +93,3 @@ MAP CustomerPost(
     operator ID [$user] 
 );
 **/
-
-MAP PostPublish(
-    key post ID POST,
-    web     smallint,
-    agent   smallint, 
-    assist  smallint, 
-    openweb smallint, 
-    operator ID [$user],
-    update DATETIME
-);
-
-
-/** 发布帖文记录*/
-MAP PostPublishProduct(
-    key product ID ProductX,
-    key post ID POST,
-    operator ID [$user],
-    update DATETIME
-);
-
-BOOK PostEvaluate (
-    key post ID POST,
-    GradeA int,
-    GradeB int,
-    GradeC int,
-    GradeD int,
-    GradeE int,
-);
-
-History PostEvaluateRecord (
-    date,
-    post ID POST,
-    ip ID ip,
-    grade int
-);
-
-
-/** 搜索帖文*/
-QUERY SearchPost( key char(100), author ID [$user])
-PAGE (
-    id bigint desc,
-    caption char(100),
-    discription char(200),
-    image ID Image,
-    author ID [$user],
-    template ID Template,
-	[$update] DATETIME,
-	[$create] DATETIME,
-    isValid tinyint,
-	hits int,
-	sumHits int,
-    web     smallint,
-    agent   smallint, 
-    assist  smallint, 
-    openweb smallint
-) {
-    var key2 char(102);
-    set key2 = concat('%', key, '%');
-
-    PAGE select p.id, p.caption, p.discription, p.image, p.author
-		, p.template, p.[$update], p.[$create],p.isValid
-		, c.hits, c.sumHits
-		, ifnull(ph.web, 0) as web
-		, ifnull(ph.agent,0) as agent
-		, ifnull( ph.assist,0) as assist
-		, ifnull( ph.openweb ,0) as openweb
-    from    POST as p
-            left join PostPublish as ph on p.id = ph.post
-			left join Hot as c on p.id=c.post
-    where   p.id < $pageStart and p.isValid = 1 
-            and ( p.template like key2 or p.discription like key2 or p.caption like key2 or key is null )
-            and ( p.author = author or author = 0 )
-    order by p.id desc
-    limit $pageSize;
-};
-
-
-/** 搜索已经发布了的文帖*/
-QUERY SearchPostPublish( key char(100))
-PAGE (
-    id bigint desc,
-    caption char(100),
-    discription char(200),
-    image ID Image,
-    author ID [$user],
-    template ID Template
-) {
-    var key2 char(102);
-    set key2 = concat('%', key, '%');
-
-    PAGE select p.id, p.caption, p.discription, p.image, p.author, p.template
-    from    POST as p
-            join PostPublish as a on p.id = a.post
-    where   p.id < $pageStart and p.isValid = 1 and ( a.openweb = 1 or a.web = 1)
-            and ( p.discription like key2 or p.caption like key2 or key is null )
-    order by p.id desc
-    limit $pageSize;
-};
-
-/** 搜索发布帖文*/
-ACTION PublishPost(
-    _post ID POST , 
-    arr tags ( 
-        [tagName] int
-    )
-) {
-    VAR _web smallint = 0, _agent smallint = 0, _assist smallint = 0, _openweb smallint = 0; 
-    
-    foreach tags {
-        if( [tagName] = 1 ){
-            set _assist = 1;
-        }else if( [tagName] = 2 ){
-            set _agent = 1;
-        }else if( [tagName] = 3 ){
-            set _web = 1;
-        }else if( [tagName] = 4 ){
-            set _openweb = 1;
-        }
-    }
-
-    VAR newval int = 0, oldval int = 0;
-    if( _web = 1 or _agent = 1 or _assist = 1 or _openweb = 1 ){
-        set newval = 1;
-    }else{
-        set newval = 0;
-    };
-    
-    if exists( select 1 
-        from    PostPublish 
-        where   post = _post and (web=1 or agent= 1 or assist=1 or openweb=1)
-    ){
-        set oldval = 1;
-    }else{
-        set oldval = 0;
-    };
-
-    var val int = 0;
-    set val = newval - oldval
-    BOOK Achievement at($user) set postPublishSum += val;
- 
-    BOOK PostPublish at(_post) 
-    set web=_web, agent=_agent, assist=_assist, openweb=_openweb, operator = $user, update = now();
-
-};
-
-
-/** 搜索发布帖文*/
-ACTION AddPost(
-    _id ID POST,
-    _caption char(100),
-    _discription char(200),
-    _image ID Image,
-    _template ID Template,
-    _content text
-) RETURNS ret (
-    id ID
-) {
-    var postId ID;
-    
-    TUID POST into postId set
-        caption = _caption, discription = _discription, image = _image, 
-        author = $user, template = _template, content = _content, isValid = 1;
-   
-    BOOK Achievement at($user) set postSum+=1;
-    into ret select postId as id;
-};
-
-
-/** 发布帖文到产品*/
-ACTION PublishPostForProduct(
-    _post ID POST , 
-    _product ID ProductX
-) {
-    book PostPublishProduct at(_product, _post) set operator = $user, update = now();
-};
-
-
-/** 搜索已经发布了的文帖*/
-QUERY SearchPostPublishForProduct( 
-    _post ID POST
-)
-returns ret  (
-    product ID ProductX,
-    post ID POST,
-    operator ID [$user],
-    update DATETIME
-) {
-    into ret select a.product, a.post, a.operator, a.update 
-    from PostPublishProduct as a
-    where a.post = _post;
-};
-
-
-Action AddPostEvaluate (
-    _post ID POST , 
-    _ip char(20),
-    _grade char(10)
-) {
-    var ip ID IP;
-    set ip=id from ip where ip= _ip;
-    HISTORY PostEvaluateRecord SET post=_post, ip=ip, grade = _grade;
-    if(  _grade = "1"){
-        BOOK PostEvaluate at(_post) set GradeA += 1;
-    } else if( _grade = "2"){
-         BOOK PostEvaluate at(_post) set GradeB += 1;
-    } else if( _grade = "3"){
-         BOOK PostEvaluate at(_post) set GradeC += 1;
-    } else if( _grade = "4"){
-         BOOK PostEvaluate at(_post) set GradeD += 1;
-    } else if( _grade = "5"){
-         BOOK PostEvaluate at(_post) set GradeE += 1;
-    }
-};
-
-/** 搜索已经发布了的文帖*/
-QUERY SearchPostEvaluate( _post ID POST)
-returns ret  (
-    post ID POST,
-    GradeA int,
-    GradeB int,
-    GradeC int,
-    GradeD int,
-    GradeE int,
-) {
-    into ret select a.post, a.GradeA, a.GradeB, a.GradeC , a.GradeD , a.GradeE 
-    from PostEvaluate as a
-    where a.post = _post;
-};
-
- 
-Action test(a1 int, a2 int) {
-    book contenttag at(a1, a2);
-};
-

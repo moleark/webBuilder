@@ -14,17 +14,11 @@ export class VPickProductCatalog extends VPage<CPosts> {
     private page = observer(() => {
         let { pageProductCatalog } = this.controller;
         return (
-            <Page header={"目录"} headerClassName={consts.headerClass}  >
-                <List
-                    before={""}
-                    none="无"
-                    items={pageProductCatalog}
-                    item={{ render: this.renderItem }}
-                />
+            <Page header={"目录"} headerClassName={consts.headerClass} >
+                <List before={""} none="无" items={pageProductCatalog} item={{ render: this.renderItem }} />
             </Page>
         );
     });
-
 
     private renderItem = (model: any, index: number) => {
         let { onPickProductCatalog, searchProductCatalogChildrenKey } = this.controller;
@@ -32,11 +26,11 @@ export class VPickProductCatalog extends VPage<CPosts> {
 
         return (
             <div className="pl-2 pl-sm-3 pr-2 pr-sm-3 pt-2 pb-3 d-flex">
-                <div className="d-flex flex-fill" onClick={() => onPickProductCatalog(productCategory.id)} >
+                <div className="d-flex flex-fill mx-2" onClick={() => onPickProductCatalog(model)} >
                     <span>{name}</span>
                 </div>
                 <div>
-                    <div className="small d-flex cursor-pointer text-primary text-right w-5c pt-3 ">
+                    <div className="small d-flex cursor-pointer text-primary text-right w-7c ">
                         <button className="btn btn-outline-info" onClick={() => searchProductCatalogChildrenKey(productCategory.id)} >
                             下一级
                         </button>
@@ -45,5 +39,4 @@ export class VPickProductCatalog extends VPage<CPosts> {
             </div >
         );
     };
-
 }

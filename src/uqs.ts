@@ -46,6 +46,8 @@ export interface WebBuilder {
     AddPostResearchField: Action;
     SearchPostResearchField: Query;
     SearchAchievement: Query;
+    PostProductCatalog: Book;
+    AddPostProductCatalog: Action;
 }
 
 export interface UQs {

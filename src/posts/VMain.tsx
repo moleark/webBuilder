@@ -1,13 +1,13 @@
 import * as React from "react";
 import { consts } from "consts";
 import { observer } from "mobx-react";
-import { VPage, Page, FA, List, EasyTime, tv, SearchBox } from "tonva";
+import { VPage, Page, FA, List, EasyTime, tv, SearchBox, LMR } from "tonva";
 import { CPosts } from "./CPosts";
 import classNames from "classnames";
 import { observable } from "mobx";
 
 export class VMain extends VPage<CPosts> {
-	@observable private isMe:boolean = true;
+    @observable private isMe: boolean = true;
 
     async open() { }
 
@@ -16,48 +16,48 @@ export class VMain extends VPage<CPosts> {
     }
 
     //onBtn = () => {
-		/*
-        if (this.controller.flg) {
-            this.controller.flg = false;
-            this.controller.loadList();
-        } else {
-            this.controller.flg = true;
-            this.controller.loadList();
-		}
-		*/
-		//this.controller.isMe = !this.controller.isMe;
-		//this.controller.loadList();
-	//};
-	
-	private onMeAll = (evt: React.ChangeEvent<HTMLInputElement>) => {
-		this.isMe = evt.currentTarget.value === 'me';
-		//this.controller.changeMeAll();
-		this.controller.setMe(this.isMe)
-	}
+    /*
+    if (this.controller.flg) {
+        this.controller.flg = false;
+        this.controller.loadList();
+    } else {
+        this.controller.flg = true;
+        this.controller.loadList();
+    }
+    */
+    //this.controller.isMe = !this.controller.isMe;
+    //this.controller.loadList();
+    //};
 
-	private renderMeAllToggle() {
-		let cnButton = ['btn', 'btn-outline-warning', 'btn-sm', 'text-nowrap'];
-		return <div className="px-sm-2 d-flex align-items-center">
-			<div className="btn-group btn-group-toggle" data-toggle="buttons">
-				<label className={classNames(cnButton, {active: this.isMe})}>
-					<input type="radio" name="options" value="me" defaultChecked={true} onChange={this.onMeAll} />
-					<span className="d-inline d-sm-none">{this.t('me-sm')}</span>
-					<span className="d-none d-sm-inline">{this.t('me')}</span>
-				</label>
-				<label className={classNames(cnButton, {active: !this.isMe})}>
-					<input type="radio" name="options" value="all" defaultChecked={false} onChange={this.onMeAll}/>
-					<span className="d-inline d-sm-none">{this.t('all-sm')}</span>
-					<span className="d-none d-sm-inline">{this.t('all')}</span>
-				</label>
-			</div>
-		</div>
-	}
+    private onMeAll = (evt: React.ChangeEvent<HTMLInputElement>) => {
+        this.isMe = evt.currentTarget.value === 'me';
+        //this.controller.changeMeAll();
+        this.controller.setMe(this.isMe)
+    }
+
+    private renderMeAllToggle() {
+        let cnButton = ['btn', 'btn-outline-warning', 'btn-sm', 'text-nowrap'];
+        return <div className="px-sm-2 d-flex align-items-center">
+            <div className="btn-group btn-group-toggle" data-toggle="buttons">
+                <label className={classNames(cnButton, { active: this.isMe })}>
+                    <input type="radio" name="options" value="me" defaultChecked={true} onChange={this.onMeAll} />
+                    <span className="d-inline d-sm-none">{this.t('me-sm')}</span>
+                    <span className="d-none d-sm-inline">{this.t('me')}</span>
+                </label>
+                <label className={classNames(cnButton, { active: !this.isMe })}>
+                    <input type="radio" name="options" value="all" defaultChecked={false} onChange={this.onMeAll} />
+                    <span className="d-inline d-sm-none">{this.t('all-sm')}</span>
+                    <span className="d-none d-sm-inline">{this.t('all')}</span>
+                </label>
+            </div>
+        </div>
+    }
 
     private page = observer(() => {
         let { pagePosts, onAdd, searchPostsKey } = this.controller;
         let right = (
             <div className="d-flex align-items-center">
-				{this.renderMeAllToggle()}
+                {this.renderMeAllToggle()}
                 <SearchBox
                     className=""
                     size="sm"
@@ -78,18 +78,15 @@ export class VMain extends VPage<CPosts> {
             </div>
         );
         return (
-            <Page
-                header={this.t('post')}
-                headerClassName={consts.headerClass}
-                right={right}
-                onScrollBottom={this.onScrollBottom}
-            >
-                <List
-                    before={""}
-                    none={none}
-                    items={pagePosts}
-                    item={{ render: this.renderItem }}
-                />
+            <Page header={this.t('post')} headerClassName={consts.headerClass} right={right} onScrollBottom={this.onScrollBottom}>
+                <LMR
+                    className="bg-white py-3 my-1"
+                    left={<i className="iconfont icon-neirong " style={{ fontSize: "30px", color: "#efb336" }}></i>}
+                    right={<i className=" px-2 iconfont icon-jiantou1"></i>}
+                >
+                    <div className="mx-3 px-2 font-weight-bold">产品目录树</div>
+                </LMR>
+                <List before={""} none={none} items={pagePosts} item={{ render: this.renderItem }} />
             </Page>
         );
     });
@@ -103,76 +100,72 @@ export class VMain extends VPage<CPosts> {
     };
 
     private itemRow = observer((item: any) => {
-		let {user,showDetail} = this.controller;
+        let { user, showDetail } = this.controller;
         if (!user) return;
-		let { image, caption, discription, author, $update, $create
-			, hits, sumHits
-			, web, agent,assist,openweb } = item;
+        let { image, caption, discription, author, $update, $create
+            , hits, sumHits
+            , web, agent, assist, openweb } = item;
 
-		let $c:Date = $create, $u:Date = $update;
-		let updated: boolean = false;
-		if ($c && $u) {
-			let now = Date.now(), create=$c.getTime(), update=$u.getTime();
-			if (update-create>3600*1000 && now - create < 24*3600*1000) {
-				updated = true;
-			}
-			else {
-				let cYear = $c.getFullYear(), cMonth = $c.getMonth(), cDate = $c.getDate();
-				let uYear = $u.getFullYear(), uMonth = $u.getMonth(), uDate = $u.getDate();
-				updated = cYear !== uYear || cMonth !== uMonth || cDate !== uDate;
-			}
-		}
+        let $c: Date = $create, $u: Date = $update;
+        let updated: boolean = false;
+        if ($c && $u) {
+            let now = Date.now(), create = $c.getTime(), update = $u.getTime();
+            if (update - create > 3600 * 1000 && now - create < 24 * 3600 * 1000) {
+                updated = true;
+            }
+            else {
+                let cYear = $c.getFullYear(), cMonth = $c.getMonth(), cDate = $c.getDate();
+                let uYear = $u.getFullYear(), uMonth = $u.getMonth(), uDate = $u.getDate();
+                updated = cYear !== uYear || cMonth !== uMonth || cDate !== uDate;
+            }
+        }
 
-		let divUser = user.id === author.id?
-			<span className="text-warning">[自己]</span>
-			: 
-			this.controller.cApp.renderUser(author.id);
+        let divUser = user.id === author.id ?
+            <span className="text-warning">[自己]</span>
+            :
+            this.controller.cApp.renderUser(author.id);
         return (
             <div className="pl-2 pl-sm-3 pr-2 pr-sm-3 pt-2 pb-3 d-flex">
                 <div className="d-flex flex-fill cursor-pointer" onClick={() => showDetail(item.id)} >
-					<div className="mr-3 w-5c w-min-5c h-5c h-min-5c">
-                    {tv(
-                        image,
-						values => <div className="w-100 h-100 bg-center-img h-max-6c border rounded" 
-							style={{backgroundImage: 'url(' + values.path + ')'}}></div>,
-                        undefined, //w-6c h-4c mr-2 text-black-50 justify-content-center d-flex align-items-center
-                        () => (
-							<div className="d-flex align-items-center h-100
+                    <div className="mr-3 w-5c w-min-5c h-5c h-min-5c">
+                        {tv(
+                            image,
+                            values => <div className="w-100 h-100 bg-center-img h-max-6c border rounded"
+                                style={{ backgroundImage: 'url(' + values.path + ')' }}></div>,
+                            undefined, //w-6c h-4c mr-2 text-black-50 justify-content-center d-flex align-items-center
+                            () => (
+                                <div className="d-flex align-items-center h-100
 								justify-content-center bg-light border rounded">
-                                <FA
-                                    className="text-info"
-									name="camera"
-									size="lg"
-                                />
-                            </div>
-                        )
-                    )}
-					</div>
+                                    <FA className="text-info" name="camera" size="lg" />
+                                </div>
+                            )
+                        )}
+                    </div>
                     <div className="d-flex flex-column w-100">
-						<div><b>{caption}</b></div>
+                        <div><b>{caption}</b></div>
                         <div className="small text-muted py-2 flex-fill">{discription}</div>
-						<div className="small d-flex">
-							<div className="flex-fill">
-								{divUser}
+                        <div className="small d-flex">
+                            <div className="flex-fill">
+                                {divUser}
 								&ensp;<EasyTime date={$create} />
-								{updated === true && <>&ensp;<FA name="pencil-square-o"/><EasyTime date={$update} /></>}       
-							</div>
-							<div className="author">
-								{sumHits && hits && <>阅读<b>{sumHits}</b>次 
-									{sumHits>hits && <>周<b>{hits}</b>次</>}
-								</>
-								}
-							</div>
-						</div>
-                        <div className="small pt-1" style={{  overflow: "hidden" }}>
-                            {(web+agent+assist+openweb)>0?<span  className="mr-1 text-muted">发布：</span>:<></>}
-                            {web===1?<span className="mr-1 text-primary">{ this.t('privateSite')}</span>:<></>}
-                            {agent===1?<span className="mr-1 text-primary">{ this.t('agent')}</span>:<></>}
-                            {assist===1?<span className="mr-1 text-primary">{ this.t('sales')}</span>:<></>}
-                            {openweb===1?<span className="mr-1 text-primary">{ this.t('publicSite')}</span>:<></>}
+                                {updated === true && <>&ensp;<FA name="pencil-square-o" /><EasyTime date={$update} /></>}
+                            </div>
+                            <div className="author">
+                                {sumHits && hits && <>阅读<b>{sumHits}</b>次
+									{sumHits > hits && <>周<b>{hits}</b>次</>}
+                                </>
+                                }
+                            </div>
+                        </div>
+                        <div className="small pt-1" style={{ overflow: "hidden" }}>
+                            {(web + agent + assist + openweb) > 0 ? <span className="mr-1 text-muted">发布：</span> : <></>}
+                            {web === 1 ? <span className="mr-1 text-primary">{this.t('privateSite')}</span> : <></>}
+                            {agent === 1 ? <span className="mr-1 text-primary">{this.t('agent')}</span> : <></>}
+                            {assist === 1 ? <span className="mr-1 text-primary">{this.t('sales')}</span> : <></>}
+                            {openweb === 1 ? <span className="mr-1 text-primary">{this.t('publicSite')}</span> : <></>}
                         </div>
                     </div>
-                </div>   
+                </div>
             </div>
         );
     });

@@ -1,0 +1,70 @@
+
+/** 搜索帖文*/
+QUERY SearchPost( key char(100), author ID [$user])
+PAGE (
+    id bigint desc,
+    caption char(100),
+    discription char(200),
+    image ID Image,
+    author ID [$user],
+    template ID Template,
+	[$update] DATETIME,
+	[$create] DATETIME,
+    isValid tinyint,
+	hits int,
+	sumHits int,
+    web     smallint,
+    agent   smallint, 
+    assist  smallint, 
+    openweb smallint
+) {
+    var key2 char(102);
+    set key2 = concat('%', key, '%');
+
+    PAGE select p.id, p.caption, p.discription, p.image, p.author
+		, p.template, p.[$update], p.[$create],p.isValid
+		, c.hits, c.sumHits
+		, ifnull(ph.web, 0) as web
+		, ifnull(ph.agent,0) as agent
+		, ifnull( ph.assist,0) as assist
+		, ifnull( ph.openweb ,0) as openweb
+    from    POST as p
+            left join PostPublish as ph on p.id = ph.post
+			left join Hot as c on p.id=c.post
+    where   p.id < $pageStart and p.isValid = 1 
+            and ( p.template like key2 or p.discription like key2 or p.caption like key2 or key is null )
+            and ( p.author = author or author = 0 )
+    order by p.id desc
+    limit $pageSize;
+};
+
+/** 搜索已经发布了的文帖*/
+QUERY SearchPostPublishForProduct( 
+    _post ID POST
+)
+returns ret  (
+    product ID ProductX,
+    post ID POST,
+    operator ID [$user],
+    update DATETIME
+) {
+    into ret select a.product, a.post, a.operator, a.update 
+    from PostPublishProduct as a
+    where a.post = _post;
+};
+
+/** 搜索已经发布了的文帖*/
+QUERY SearchPostEvaluate( _post ID POST)
+returns ret  (
+    post ID POST,
+    GradeA int,
+    GradeB int,
+    GradeC int,
+    GradeD int,
+    GradeE int,
+) {
+    into ret select a.post, a.GradeA, a.GradeB, a.GradeC , a.GradeD , a.GradeE 
+    from PostEvaluate as a
+    where a.post = _post;
+};
+
