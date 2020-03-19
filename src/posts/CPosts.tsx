@@ -15,6 +15,8 @@ import { VReleaseProduct } from "./VReleaseProduct";
 import { VPickProduct } from "./VPickProduct";
 import { VGrade } from "./VGrade";
 import { VPickProductCatalog } from "./VPickProductCatalog";
+import { VProductCatalog } from "./VProductCatalog";
+import { VProductCatalogDetil } from "./VProductCatalogDetil";
 
 /* eslint-disable */
 class PageProduct extends PageItems<any> {
@@ -43,6 +45,7 @@ export class CPosts extends CUqBase {
     @observable pageTemplate: QueryPager<any>;
     @observable pagePosts: QueryPager<any>;
     @observable pageMedia: QueryPager<any>;
+    @observable pageProductCatalogPost: QueryPager<any>;
     @observable pageProduct: PageProduct;
     @observable current: any;
     @observable isMe: boolean = true;
@@ -53,6 +56,7 @@ export class CPosts extends CUqBase {
     @observable ratioD: any;
     @observable ratioE: any;
     @observable pageProductCatalog: any;
+
 
 
     protected async internalStart(param: any) {
@@ -183,9 +187,7 @@ export class CPosts extends CUqBase {
             this.ratioC = total / 5 * ~~GradeC;
             this.ratioD = total / 5 * ~~GradeD;
             this.ratioE = total / 5 * ~~GradeE;
-
         }
-
     }
 
     onPickedImage = (id: number) => {
@@ -260,7 +262,7 @@ export class CPosts extends CUqBase {
 
 
     pickProductCatalog = async (context: Context, name: string, value: number): Promise<any> => {
-        let results = this.pageProductCatalog = await this.uqs.product.GetRootCategory.query({ salesRegion: setting.SALESREGION_CN, language: setting.CHINESE });
+        let results = await this.uqs.product.GetRootCategory.query({ salesRegion: setting.SALESREGION_CN, language: setting.CHINESE });
         this.pageProductCatalog = results.first;
         return await this.vCall(VPickProductCatalog);
     };
@@ -278,6 +280,17 @@ export class CPosts extends CUqBase {
         this.pageProductCatalog = results.first;
     };
 
+    showProductCatalog = async () => {
+        let results = await this.uqs.product.GetRootCategory.query({ salesRegion: setting.SALESREGION_CN, language: setting.CHINESE });
+        this.pageProductCatalog = results.first;
+        this.openVPage(VProductCatalog);
+    }
+
+    showProductCatalogDetil = async (param: any) => {
+        this.pageProductCatalogPost = new QueryPager(this.uqs.webBuilder.SearchProductCategoryPost, 15, 30);
+        this.pageProductCatalogPost.first({ author: 0, productCategory: param })
+        this.openVPage(VProductCatalogDetil);
+    }
 
     tab = () => {
         return <this.render />;

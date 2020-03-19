@@ -1,4 +1,3 @@
-
 /** 搜索帖文*/
 QUERY SearchPost( key char(100), author ID [$user])
 PAGE (
@@ -38,6 +37,30 @@ PAGE (
     limit $pageSize;
 };
 
+
+/** 搜索已经发布了的文帖*/
+QUERY SearchPostPublish( key char(100))
+PAGE (
+    id bigint desc,
+    caption char(100),
+    discription char(200),
+    image ID Image,
+    author ID [$user],
+    template ID Template
+) {
+    var key2 char(102);
+    set key2 = concat('%', key, '%');
+
+    PAGE select p.id, p.caption, p.discription, p.image, p.author, p.template
+    from    POST as p
+            join PostPublish as a on p.id = a.post
+    where   p.id < $pageStart and p.isValid = 1 and ( a.openweb = 1 or a.web = 1)
+            and ( p.discription like key2 or p.caption like key2 or key is null )
+    order by p.id desc
+    limit $pageSize;
+};
+
+
 /** 搜索已经发布了的文帖*/
 QUERY SearchPostPublishForProduct( 
     _post ID POST
@@ -68,3 +91,43 @@ returns ret  (
     where a.post = _post;
 };
 
+
+/** 根据目录树搜索文帖 **/
+QUERY SearchProductCategoryPost( 
+    author ID [$user],
+    productCategory ID ProductCategory
+)
+PAGE (
+    id bigint desc,
+    caption char(100),
+    discription char(200),
+    image ID Image,
+    author ID [$user],
+    template ID Template,
+	[$update] DATETIME,
+	[$create] DATETIME,
+    isValid tinyint,
+	hits int,
+	sumHits int,
+    web     smallint,
+    agent   smallint, 
+    assist  smallint, 
+    openweb smallint
+) {
+
+    PAGE select p.id, p.caption, p.discription, p.image, p.author
+            , p.template, p.[$update], p.[$create],p.isValid
+            , c.hits, c.sumHits
+            , ifnull(ph.web, 0) as web
+            , ifnull(ph.agent,0) as agent
+            , ifnull( ph.assist,0) as assist
+            , ifnull( ph.openweb ,0) as openweb
+    from    POST as p
+            join PostProductCatalog as pp on pp.post = p.id and pp.productCategory = productCategory
+            left join PostPublish as ph on p.id = ph.post
+			left join Hot as c on p.id=c.post
+    where   p.id < $pageStart and p.isValid = 1 
+            and ( p.author = author or author = 0 )
+    order by p.id desc
+    limit $pageSize;
+};

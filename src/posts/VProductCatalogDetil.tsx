@@ -1,91 +1,31 @@
 import * as React from "react";
-import { consts } from "consts";
 import { observer } from "mobx-react";
-import { VPage, Page, FA, List, EasyTime, tv, SearchBox, LMR } from "tonva";
+import { VPage, Page, List, tv, FA, EasyTime } from "tonva";
+import { consts } from "consts";
 import { CPosts } from "./CPosts";
-import classNames from "classnames";
-import { observable } from "mobx";
 
-export class VMain extends VPage<CPosts> {
-    @observable private isMe: boolean = true;
+export class VProductCatalogDetil extends VPage<CPosts> {
 
-    async open() { }
-
-    render(): JSX.Element {
-        return <this.page />;
-    }
-
-    //onBtn = () => {
-    /*
-    if (this.controller.flg) {
-        this.controller.flg = false;
-        this.controller.loadList();
-    } else {
-        this.controller.flg = true;
-        this.controller.loadList();
-    }
-    */
-    //this.controller.isMe = !this.controller.isMe;
-    //this.controller.loadList();
-    //};
-
-    private onMeAll = (evt: React.ChangeEvent<HTMLInputElement>) => {
-        this.isMe = evt.currentTarget.value === 'me';
-        //this.controller.changeMeAll();
-        this.controller.setMe(this.isMe)
-    }
-
-    private renderMeAllToggle() {
-        let cnButton = ['btn', 'btn-outline-warning', 'btn-sm', 'text-nowrap'];
-        return <div className="px-sm-2 d-flex align-items-center">
-            <div className="btn-group btn-group-toggle" data-toggle="buttons">
-                <label className={classNames(cnButton, { active: this.isMe })}>
-                    <input type="radio" name="options" value="me" defaultChecked={true} onChange={this.onMeAll} />
-                    <span className="d-inline d-sm-none">{this.t('me-sm')}</span>
-                    <span className="d-none d-sm-inline">{this.t('me')}</span>
-                </label>
-                <label className={classNames(cnButton, { active: !this.isMe })}>
-                    <input type="radio" name="options" value="all" defaultChecked={false} onChange={this.onMeAll} />
-                    <span className="d-inline d-sm-none">{this.t('all-sm')}</span>
-                    <span className="d-none d-sm-inline">{this.t('all')}</span>
-                </label>
-            </div>
-        </div>
+    async open() {
+        this.openPage(this.page);
     }
 
     private page = observer(() => {
-        let { pagePosts, onAdd, searchPostsKey, showProductCatalog } = this.controller;
-        let right = (
-            <div className="d-flex align-items-center">
-                {this.renderMeAllToggle()}
-                <SearchBox size="sm" onSearch={(key: string) => searchPostsKey(key, "")} placeholder={this.t('searchpost')} />
-                <div onClick={onAdd}>
-                    <span className="mx-sm-2 iconfont icon-jiahao1 cursor-pointer" style={{ fontSize: "1.7rem", color: "white" }}></span>
-                </div>
-            </div>
-        );
+        let { pageProductCatalogPost } = this.controller;
         let none = (
             <div className="my-3 mx-2">
                 <span className="text-muted small">[{this.t('noposts')}]</span>
             </div>
         );
         return (
-            <Page header={this.t('post')} headerClassName={consts.headerClass} right={right} onScrollBottom={this.onScrollBottom}>
-                <LMR
-                    className="bg-white py-3 my-1"
-                    left={<i className="iconfont icon-neirong " style={{ fontSize: "30px", color: "#efb336" }}></i>}
-                    right={<i className=" px-2 iconfont icon-jiantou1"></i>}
-                    onClick={showProductCatalog}
-                >
-                    <div className="mx-3 px-2 font-weight-bold">产品目录树</div>
-                </LMR>
-                <List before={""} none={none} items={pagePosts} item={{ render: this.renderItem }} />
+            <Page header={"产品目录树"} headerClassName={consts.headerClass} onScrollBottom={this.onScrollBottom} >
+                <List before={""} none={none} items={pageProductCatalogPost} item={{ render: this.renderItem }} />
             </Page>
         );
     });
 
     private onScrollBottom = async () => {
-        await this.controller.pagePosts.more();
+        await this.controller.pageProductCatalogPost.more();
     };
 
     private renderItem = (item: any, index: number) => {
@@ -163,34 +103,3 @@ export class VMain extends VPage<CPosts> {
         );
     });
 }
-/*
-<span className="d-none d-sm-inline">&ensp;</span>
-{this.t('preview')}
-<span className="d-none d-sm-inline">&ensp;</span>
-<div
-    className="d-flex cursor-pointer justify-content-center"
-    onClick={e => this.onBtn()}
->
-    <strong className={classNames("small text-right")}>
-        {this.t('me')}
-    </strong>
-    <div
-        className="mx-2"
-        style={{ width: "40px", height: "18px", backgroundColor: "rgb(211, 209, 209)",  borderRadius: "20px" }}
-    >
-        {this.controller.isMe ? (
-            <div
-                style={{ border: "1px solid #007bff",  width: "20px", height: "18px", backgroundColor: "#007bff", borderRadius: "100%"}}
-            ></div>
-        ) : (
-                <div
-                    style={{ border: "1px solid #007bff", width: "20px", height: "18px", backgroundColor: "#007bff", borderRadius: "100%" }}
-                ></div>
-            )}
-    </div>
-    <strong className={classNames("small")}>
-        {this.t('all')}
-    </strong>
-</div>
-
-*/
