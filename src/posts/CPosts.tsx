@@ -16,7 +16,9 @@ import { VPickProduct } from "./VPickProduct";
 import { VGrade } from "./VGrade";
 import { VPickProductCatalog } from "./VPickProductCatalog";
 import { VProductCatalog } from "./VProductCatalog";
-import { VProductCatalogDetil } from "./VProductCatalogDetil";
+import { VPickSubject } from "./VPickSubject";
+import { VSubject } from "./VSubject";
+import { VSubjectDetil } from "./VSubjectDetil";
 
 /* eslint-disable */
 class PageProduct extends PageItems<any> {
@@ -46,6 +48,8 @@ export class CPosts extends CUqBase {
     @observable pagePosts: QueryPager<any>;
     @observable pageMedia: QueryPager<any>;
     @observable pageProductCatalogPost: QueryPager<any>;
+    @observable pageSubject: QueryPager<any>;
+    @observable pageSubjectPost: QueryPager<any>;
     @observable pageProduct: PageProduct;
     @observable current: any;
     @observable isMe: boolean = true;
@@ -289,8 +293,38 @@ export class CPosts extends CUqBase {
     showProductCatalogDetil = async (param: any) => {
         this.pageProductCatalogPost = new QueryPager(this.uqs.webBuilder.SearchProductCategoryPost, 15, 30);
         this.pageProductCatalogPost.first({ author: 0, productCategory: param })
-        this.openVPage(VProductCatalogDetil);
+        return await this.vCall(VPickProductCatalog);
     }
+
+
+    /** 栏目**/
+    pickSubject = async (param: any) => {
+        this.pageSubject = new QueryPager(this.uqs.webBuilder.SearchSubject, 15, 30);
+        this.pageSubject.first({})
+        return await this.vCall(VPickSubject);
+    }
+    onPickSubject = async (param: any) => {
+        let { id } = param;
+        this.uqs.webBuilder.AddPostSubject.submit({ _post: this.current.id, _subject: id });
+        this.returnCall(param);
+        this.closePage();
+    }
+
+    showSubject = async () => {
+        this.pageSubject = new QueryPager(this.uqs.webBuilder.SearchSubject, 15, 30);
+        this.pageSubject.first({})
+        return await this.vCall(VSubject);
+    }
+
+    showSubjectPost = async (param: any) => {
+        this.pageSubjectPost = new QueryPager(this.uqs.webBuilder.SearchSubjectPost, 15, 30);
+        this.pageSubjectPost.first({ author: 0, subject: param.id })
+        return await this.vCall(VSubjectDetil);
+    }
+
+
+
+
 
     tab = () => {
         return <this.render />;

@@ -58,6 +58,10 @@ export class VEdit extends VPage<CPosts> {
             productcatalog: {
                 widget: 'id', label: "目录", pickId: this.controller.pickProductCatalog, Templet: this.catalogContent
             } as UiIdItem,
+
+            subject: {
+                widget: 'id', label: "栏目", pickId: this.controller.pickSubject, Templet: this.catalogContent
+            } as UiIdItem,
             /**
             template: {
                 widget: 'id', label: this.t('template'), pickId: this.controller.pickTemplate, Templet: this.templateContent
@@ -71,7 +75,8 @@ export class VEdit extends VPage<CPosts> {
         { name: 'caption', type: 'string', required: true },
         { name: 'discription', type: 'string', required: false },
         { name: 'image', type: 'id', required: true },
-        { name: 'productcatalog', type: 'id', required: false }
+        { name: 'productcatalog', type: 'id', required: false },
+        { name: 'subject', type: 'id', required: false }
         //{ name: 'content', type: 'string', required: true },
         // { name: 'template', type: 'id', required: true },
     ];

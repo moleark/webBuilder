@@ -131,3 +131,57 @@ PAGE (
     order by p.id desc
     limit $pageSize;
 };
+
+
+/** 搜索栏目 **/
+QUERY SearchSubject()
+PAGE (
+    id bigint desc,
+    name char(100)
+) {
+    PAGE select p.id, p.name 
+    from   Subject as p
+    where  p.id < $pageStart and p.isValid = 1 
+    order by p.id desc
+    limit $pageSize;
+};
+
+/** 搜索栏目 **/
+QUERY SearchSubjectPost(    
+    author ID [$user],
+    subject ID Subject
+)
+PAGE (
+    id bigint desc,
+    caption char(100),
+    discription char(200),
+    image ID Image,
+    author ID [$user],
+    template ID Template,
+	[$update] DATETIME,
+	[$create] DATETIME,
+    isValid tinyint,
+	hits int,
+	sumHits int,
+    web     smallint,
+    agent   smallint, 
+    assist  smallint, 
+    openweb smallint
+) {
+
+    PAGE select p.id, p.caption, p.discription, p.image, p.author
+            , p.template, p.[$update], p.[$create],p.isValid
+            , c.hits, c.sumHits
+            , ifnull(ph.web, 0) as web
+            , ifnull(ph.agent,0) as agent
+            , ifnull( ph.assist,0) as assist
+            , ifnull( ph.openweb ,0) as openweb
+    from    POST as p
+            join PostSubject as pp on pp.post = p.id and pp.subject = subject
+            left join PostPublish as ph on p.id = ph.post
+			left join Hot as c on p.id=c.post
+    where   p.id < $pageStart and p.isValid = 1 
+            and ( p.author = author or author = 0 )
+    order by p.id desc
+    limit $pageSize;
+};

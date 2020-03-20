@@ -49,6 +49,9 @@ export interface WebBuilder {
     PostProductCatalog: Book;
     AddPostProductCatalog: Action;
     SearchProductCategoryPost: Query;
+    SearchSubject: Query;
+    AddPostSubject: Action;
+    SearchSubjectPost: Query;
 }
 
 export interface UQs {

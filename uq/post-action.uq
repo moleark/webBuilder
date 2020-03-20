@@ -105,6 +105,16 @@ Action AddPostProductCatalog(
     BOOK PostProductCatalog at( _post ) set productCategory =_productCategory;
 };
 
+
+Action AddPostSubject(
+    _post ID POST,
+    _subject ID Subject
+) {
+    BOOK PostSubject at( _post ) set subject =_subject;
+};
+
+
+
  
 Action test(a1 int, a2 int) {
     book contenttag at(a1, a2);

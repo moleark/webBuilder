@@ -59,7 +59,17 @@ History PostEvaluateRecord (
 
 
 
+TUID  Subject (
+    id,
+    main name char(100),
+    isValid tinyint default 1,
+    stamp (create, update),
+);
 
+BOOK PostSubject(
+    key post ID POST,
+    subject ID Subject
+);
 
 
 
