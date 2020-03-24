@@ -12,9 +12,8 @@ export class VPickProduct extends VPage<CPosts> {
     private page = observer(() => {
         let { pageProduct, searchProduct } = this.controller;
         let none = <div className="my-3 mx-2 text-warning">
-            <span className="text-primary" > {this.t('nopicture')}！</span>
         </div>;
-        let right = <SearchBox className="w-80 mt-2 mr-2"
+        let right = <SearchBox className="w-80 mt-1"
             size='sm'
             onSearch={(key: string) => searchProduct(key)}
             placeholder={this.t('pleaseselect')} />;

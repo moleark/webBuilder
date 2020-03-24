@@ -129,7 +129,7 @@ export class VRelease extends VPage<CPosts>  {
                 <button type="button" className="btn btn-outline-info ml-2" onClick={this.onPublish} >
                     {this.t('ordinarypublish')}
                 </button>
-                <button type="button" className="btn btn-primary mx-2 px-1 " onClick={showPostPublishForProduct} >
+                <button type="button" className="btn btn-primary ml-2" onClick={showPostPublishForProduct} >
                     {this.t('productpublish')}
                 </button>
             </div>

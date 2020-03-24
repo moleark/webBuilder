@@ -6,7 +6,7 @@ import { observer } from "mobx-react";
 import { VMain } from "./VMain";
 import { VShow } from "./VShow";
 import { VEdit } from "./VEdit";
-import { Context, nav, QueryPager, PageItems, Query } from "tonva";
+import { Context, nav, QueryPager } from "tonva";
 import { VPickImage } from "./VPickImage";
 import { VPickTemplate } from "./VPickTemplate";
 import { VRelease } from "./VRelease";
@@ -19,28 +19,9 @@ import { VProductCatalog } from "./VProductCatalog";
 import { VPickSubject } from "./VPickSubject";
 import { VSubject } from "./VSubject";
 import { VSubjectDetil } from "./VSubjectDetil";
+import { VProductCatalogDetil } from "./VProductCatalogDetil";
 
 /* eslint-disable */
-class PageProduct extends PageItems<any> {
-
-    private searchProductQuery: Query;
-
-    constructor(searchProductQuery: Query) {
-        super();
-        this.firstSize = this.pageSize = 10;
-        this.searchProductQuery = searchProductQuery;
-    }
-
-    protected async load(param: any, pageStart: any, pageSize: number): Promise<any[]> {
-        if (pageStart === undefined) pageStart = 0;
-        let ret = await this.searchProductQuery.page(param, pageStart, pageSize);
-        return ret;
-    }
-
-    protected setPageStart(item: any): any {
-        this.pageStart = item === undefined ? 0 : item.seq;
-    }
-}
 
 
 export class CPosts extends CUqBase {
@@ -50,7 +31,8 @@ export class CPosts extends CUqBase {
     @observable pageProductCatalogPost: QueryPager<any>;
     @observable pageSubject: QueryPager<any>;
     @observable pageSubjectPost: QueryPager<any>;
-    @observable pageProduct: PageProduct;
+    @observable pageProduct: QueryPager<any>;
+    @observable pageProductCatalog: any;
     @observable current: any;
     @observable isMe: boolean = true;
     @observable postProduct: any;
@@ -59,8 +41,6 @@ export class CPosts extends CUqBase {
     @observable ratioC: any;
     @observable ratioD: any;
     @observable ratioE: any;
-    @observable pageProductCatalog: any;
-
 
 
     protected async internalStart(param: any) {
@@ -149,6 +129,12 @@ export class CPosts extends CUqBase {
 
     showDetail = async (id: number) => {
         this.current = await this.uqs.webBuilder.Post.load(id);
+        let sublist = await this.uqs.webBuilder.SearchPostSubject.table({ _post: id })
+        this.current.subject = sublist.length > 0 ? sublist[0] : undefined;
+
+        let catalog = await this.uqs.webBuilder.SearchPostCatalog.table({ _post: id })
+        this.current.productcatalog = catalog.length > 0 ? catalog[0] : undefined;
+
         this.openVPage(VShow);
     };
 
@@ -160,6 +146,7 @@ export class CPosts extends CUqBase {
     pickProduct = async () => {
 
     }
+
 
     evaluate = async (val: number) => {
         this.closePage(2);
@@ -244,7 +231,7 @@ export class CPosts extends CUqBase {
 
 
     searchProduct = async (key: string) => {
-        this.pageProduct = new PageProduct(this.uqs.product.SearchProduct);
+        this.pageProduct = new QueryPager(this.uqs.product.SearchProduct, 15, 30);
         await this.pageProduct.first({ keyWord: key, salesRegion: 1 });
     };
 
@@ -293,7 +280,7 @@ export class CPosts extends CUqBase {
     showProductCatalogDetil = async (param: any) => {
         this.pageProductCatalogPost = new QueryPager(this.uqs.webBuilder.SearchProductCategoryPost, 15, 30);
         this.pageProductCatalogPost.first({ author: 0, productCategory: param })
-        return await this.vCall(VPickProductCatalog);
+        return await this.vCall(VProductCatalogDetil);
     }
 
 

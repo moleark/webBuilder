@@ -52,6 +52,8 @@ export interface WebBuilder {
     SearchSubject: Query;
     AddPostSubject: Action;
     SearchSubjectPost: Query;
+    SearchPostSubject: Query;
+    SearchPostCatalog: Query
 }
 
 export interface UQs {

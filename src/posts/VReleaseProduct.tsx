@@ -12,7 +12,7 @@ export class VReleaseProduct extends VPage<CPosts> {
     private page = observer((param: any) => {
         let none = (
             <div className="my-3 mx-2">
-                <span className="text-muted small">[{this.t('noposts')}]</span>
+                <span className="text-muted small">[{this.t('noproduct')}]</span>
             </div>
         );
         let pageright = <div onClick={this.controller.showProduct}>

@@ -10,8 +10,9 @@ export const en = {
 
     publish: 'Publish',
     productpublish: 'Publish For Product',
-    ordinarypublish: 'Publish Fro Ordinary',
     selectproduct: 'Select Product',
+    ordinarypublish: 'Publish Fro Ordinary',
+    noproduct: "No Product",
 
 
     sales: 'Internal Sales',
@@ -78,6 +79,7 @@ export const zh = {
     productpublish: '产品发布',
     selectproduct: '选择产品',
     ordinarypublish: '普通发布',
+    noproduct: "无产品",
 
     sales: '销售助手',
     agent: '轻代理',

@@ -185,3 +185,31 @@ PAGE (
     order by p.id desc
     limit $pageSize;
 };
+
+
+/** 搜索栏目 **/
+QUERY SearchPostSubject(    
+    _post ID POST
+)
+returns ret (
+    id ID Subject ,
+    name char(100),
+) {
+    into ret select s.id, s.name
+    from    PostSubject as ps
+			left join Subject as s on ps.subject = s.id
+    where   ps.post = _post;
+};
+
+
+/** 搜索目录 **/
+QUERY SearchPostCatalog(    
+    _post ID POST
+)
+returns ret (
+   productCategory ID ProductCategory
+) {
+    into ret select ps.productCategory
+    from    PostProductCatalog as ps
+    where   ps.post = _post;
+};

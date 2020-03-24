@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { CPosts } from "./CPosts";
-import { VPage, Context, UiSchema, Schema, Page, UiInputItem, UiIdItem, tv, Edit, ItemSchema } from "tonva";
+import { VPage, UiSchema, Schema, Page, UiInputItem, UiIdItem, tv, Edit, ItemSchema } from "tonva";
 import { observer } from 'mobx-react';
 import { consts } from 'consts';
 
@@ -12,8 +12,6 @@ export class VEdit extends VPage<CPosts> {
     }
 
     private onClickSaveButton = async () => {
-        //if (!this.form) return;
-        //await this.form.buttonClick("submit");
         let { current } = this.controller;
         let id = current && current.id;
         current.content = this.textarea.value;
@@ -26,13 +24,6 @@ export class VEdit extends VPage<CPosts> {
         this.controller.current[name] = newValue;
     }
 
-    private onFormButtonClick = async (name: string, context: Context) => {
-        let { current } = this.controller;
-        let id = current && current.id;
-        await this.controller.saveItem(id, context.form.data);
-        this.closePage();
-    }
-
     private imageContent = (boxId: any) => {
         return tv(boxId, (values) => {
             let { caption } = values;
@@ -41,6 +32,22 @@ export class VEdit extends VPage<CPosts> {
     }
 
     private catalogContent = (boxId: any) => {
+        let { productCategory } = boxId;
+        let a = tv(productCategory, (values) => {
+            let { ProductCategoryLanguage } = values
+            tv(ProductCategoryLanguage)
+            return <>{ProductCategoryLanguage}</>;
+        });
+
+        let aa = tv(productCategory, val =>
+            tv(val.ProductCategoryLanguage, v => {
+                return <>{v.name}</>
+            })
+        )
+        return aa;
+    }
+
+    private subjectContent = (boxId: any) => {
         return <>{boxId ? boxId.name : null}</>;
     }
 
@@ -60,13 +67,8 @@ export class VEdit extends VPage<CPosts> {
             } as UiIdItem,
 
             subject: {
-                widget: 'id', label: "栏目", pickId: this.controller.pickSubject, Templet: this.catalogContent
+                widget: 'id', label: "栏目", pickId: this.controller.pickSubject, Templet: this.subjectContent
             } as UiIdItem,
-            /**
-            template: {
-                widget: 'id', label: this.t('template'), pickId: this.controller.pickTemplate, Templet: this.templateContent
-            } as UiIdItem,
-            **/
             submit: { widget: 'button', label: this.t('submit') }
         }
     };
@@ -77,10 +79,8 @@ export class VEdit extends VPage<CPosts> {
         { name: 'image', type: 'id', required: true },
         { name: 'productcatalog', type: 'id', required: false },
         { name: 'subject', type: 'id', required: false }
-        //{ name: 'content', type: 'string', required: true },
-        // { name: 'template', type: 'id', required: true },
     ];
-    // ^.{3,6}$
+
     render(): JSX.Element {
         return <this.page />
     }
@@ -113,20 +113,3 @@ export class VEdit extends VPage<CPosts> {
         </Page>
     })
 }
-/*
-
-
-<Form ref={v => this.form = v} className="my-3"
-formData={current}
-schema={this.schema}
-uiSchema={this.uiSchema}
-onButtonClick={this.onFormButtonClick}
-requiredFlag={true}
-/>
-            <div className="px-1 ">
-                <div className="text-content" style={{ textAlign: "center" }}>
-                    <button type="button" className="btn btn-primary mx-2"
-                        onClick={this.onClickSaveButton} >{this.t('submit')}</button>
-                </div>
-            </div>
-*/
