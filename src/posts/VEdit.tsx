@@ -32,13 +32,14 @@ export class VEdit extends VPage<CPosts> {
     }
 
     private catalogContent = (boxId: any) => {
-        let { productCategory } = boxId;
+        if (boxId) {
+            let { productCategory } = boxId;
 
-        let aa = tv(productCategory, val => {
-            return <>{productCategory.id}</>
-        });
-
-        return aa;
+            let aa = tv(productCategory, val => {
+                return <>{productCategory.id}</>
+            });
+            return aa;
+        }
     }
 
     private subjectContent = (boxId: any) => {
