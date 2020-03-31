@@ -3,37 +3,16 @@ import { CUqBase } from "../CBase";
 import { VMe } from "./VMe";
 import { observer } from "mobx-react";
 import { observable } from "mobx";
-import { PageItems, Query, QueryPager } from "tonva";
+import { QueryPager } from "tonva";
 import { VCompileImg } from "./VCompileImg";
 import { VSetDetails } from "./VSetDetails";
 import { VAbout } from "./VAbout";
 import { VTeam } from "./VTeam";
 import { VTeamDetail } from "./VTeamDetail";
 /* eslint-disable */
-class PageMedia extends PageItems<any> {
-    private searchMediaQuery: Query;
-    constructor(searchQuery: Query) {
-        super();
-        this.firstSize = this.pageSize = 14;
-        this.searchMediaQuery = searchQuery;
-    }
-
-    protected async load(
-        param: any,
-        pageStart: any,
-        pageSize: number
-    ): Promise<any[]> {
-        if (pageStart === undefined) pageStart = 0;
-        let ret = await this.searchMediaQuery.page(param, pageStart, pageSize);
-        return ret;
-    }
-    protected setPageStart(item: any): any {
-        this.pageStart = item === undefined ? 0 : item.id;
-    }
-}
 
 export class CMe extends CUqBase {
-    @observable pageMedia: PageMedia;
+    @observable pageMedia: QueryPager<any>;
     @observable items: any[];
     @observable current: any;
     @observable PostTotal: any = 0;
@@ -46,7 +25,7 @@ export class CMe extends CUqBase {
     @observable pageTeam: QueryPager<any>;
 
     searchMadiaKey = async (key: string) => {
-        this.pageMedia = new PageMedia(this.uqs.webBuilder.SearchImage);
+        this.pageMedia = new QueryPager(this.uqs.webBuilder.SearchImage, 15, 30);
         this.pageMedia.first({ key: key });
     };
     protected async internalStart() { }
@@ -124,7 +103,8 @@ export class CMe extends CUqBase {
 
     searchTeam = async () => {
         this.pageTeam = new QueryPager(this.uqs.hr.SearchTeam, 15, 30);
-        this.pageTeam.setEachItem((item: any) => {
+
+        this.pageTeam.setEachPageItem((item: any, results: { [name: string]: any[] }) => {
             this.cApp.useUser(item.webuser);
         });
         await this.pageTeam.first({ key: "" });

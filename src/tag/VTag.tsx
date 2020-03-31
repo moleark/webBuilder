@@ -31,11 +31,13 @@ export class VTag extends VPage<CTag> {
                     label: '研究领域',
                     widget: 'tagMulti',
                     valuesView: ResearchField.view,
+                    wrapClassName: "tagSingle"
                 } as UiTagMulti,
                 business: {
                     label: '业务部门',
                     widget: 'tagMulti',
                     valuesView: Business.view,
+                    wrapClassName: "tagSingle"
                 } as UiTagMulti,
                 submit: {
                     label: "提交",

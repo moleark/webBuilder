@@ -1,4 +1,4 @@
--- 帖子
+/** 帖子 **/
 TUID POST (
     id,
     main caption char(100),
@@ -12,7 +12,7 @@ TUID POST (
 );
 
 
-/** 发布帖文记录*/
+/** 发布帖文记录 **/
 MAP PostPublish(
     key post ID POST,
     web     smallint,
@@ -24,7 +24,7 @@ MAP PostPublish(
 );
 
 
-/** 发布帖文记录--产品*/
+/** 发布帖文记录--产品 **/
 MAP PostPublishProduct(
     key product ID ProductX,
     key post ID POST,
@@ -32,12 +32,11 @@ MAP PostPublishProduct(
     update DATETIME
 );
 
-/** 帖文 目录节点 */
+/** 帖文 目录节点 **/
 BOOK PostProductCatalog(
     key post ID POST,
     productCategory ID ProductCategory
 );
-
 
 /** 评价 **/
 BOOK PostEvaluate (
@@ -56,8 +55,6 @@ History PostEvaluateRecord (
     ip ID ip,
     grade int
 );
-
-
 
 TUID  Subject (
     id,
