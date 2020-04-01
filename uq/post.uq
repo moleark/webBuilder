@@ -38,6 +38,12 @@ BOOK PostProductCatalog(
     productCategory ID ProductCategory
 );
 
+/** 帖文 目录节点 **/
+MAP PostProductCatalogExplain (
+    key productCategory ID ProductCategory,
+    post ID POST
+);
+
 /** 评价 **/
 BOOK PostEvaluate (
     key post ID POST,

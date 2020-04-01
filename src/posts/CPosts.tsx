@@ -258,9 +258,9 @@ export class CPosts extends CUqBase {
         return await this.vCall(VPickProductCatalog);
     };
 
-    onPickProductCatalog = async (param: any) => {
+    onPickProductCatalog = async (param: any, type: any) => {
         let { productCategory } = param;
-        this.uqs.webBuilder.AddPostProductCatalog.submit({ _post: this.current.id, _productCategory: productCategory.id });
+        this.uqs.webBuilder.AddPostProductCatalog.submit({ _post: this.current.id, _productCategory: productCategory.id, _type: type });
         this.returnCall(param);
         this.closePage();
     }

@@ -26,12 +26,18 @@ export class VPickProductCatalog extends VPage<CPosts> {
 
         return (
             <div className="pl-2 pl-sm-3 pr-2 pr-sm-3 pt-2 pb-3 d-flex">
-                <div className="d-flex flex-fill mx-2" onClick={() => onPickProductCatalog(model)} >
+                <div className="d-flex flex-fill mx-2">
                     <span>{name}</span>
                 </div>
                 <div>
                     <div className="small d-flex cursor-pointer text-primary text-right w-7c ">
-                        <button className="btn btn-outline-info" onClick={() => searchProductCatalogChildrenKey(productCategory.id)} >
+                        <button className="btn btn-small btn-info mx-1" onClick={() => onPickProductCatalog(model, 0)} >
+                            关联
+                        </button>
+                        <button className="btn btn-small btn-info mx-1" onClick={() => onPickProductCatalog(model, 1)} >
+                            默认
+                        </button>
+                        <button className="btn btn-small btn-outline-info mx-1" onClick={() => searchProductCatalogChildrenKey(productCategory.id)} >
                             下一级
                         </button>
                     </div>

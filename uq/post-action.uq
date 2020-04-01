@@ -100,9 +100,16 @@ Action AddPostEvaluate (
 
 Action AddPostProductCatalog(
     _post ID POST,
-    _productCategory ID ProductCategory
+    _productCategory ID ProductCategory,
+    _type int
 ) {
+
     BOOK PostProductCatalog at( _post ) set productCategory =_productCategory;
+
+    if( _type = 1){
+        delete from  PostProductCatalogExplain where productCategory= _productCategory;
+        BOOK  PostProductCatalogExplain at(_productCategory) set post = _post;
+    }
 };
 
 
