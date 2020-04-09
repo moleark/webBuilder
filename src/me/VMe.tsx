@@ -1,7 +1,6 @@
 import * as React from 'react';
-import { nav, Image, VPage, LMR, Page } from 'tonva';
+import { nav, Image, VPage, LMR } from 'tonva';
 import { CMe } from './CMe';
-import { consts } from 'consts';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
 import { EditMeInfo } from './EditMeInfo'
@@ -23,45 +22,77 @@ export class VMe extends VPage<CMe> {
         return <this.page />
     }
 
-    private page = observer(() => {
+    private divTag(titel: string, achievement: number, status: number) {
+        let onClick: any;
+        return <div className="cursor-pointer" onClick={onClick}>
+            {achievement <= 0.001 ?
+                <div className="h5"> - </div>
+                :
+                <div className="h5"><strong>{achievement.toFixed(2)}</strong> <span className="h6"><small></small></span></div>
+            }
+            <div className="h6"><small>{titel}</small></div>
+        </div >
+    }
 
-        let { onSet, user, PostTotal, PageTotal, cApp, onTeams } = this.controller;
-        PageTotal = PageTotal ? PageTotal : 0;
-        PostTotal = PostTotal ? PostTotal : 0;
-
-        if (!user) return;
-
+    private meInfo = () => {
+        let { user } = this.controller;
         let left = <Image className="ml-2 border text-center w-3c h-3c mx-3" src={user.icon} />
-        let right = <div className=" mt-3"><span className="iconfont icon-jiantou1 text-primary px-3"></span></div>
-        return <Page header={this.t('me')} headerClassName={consts.headerClass}>
-            <LMR
-                left={left}
-                className="bg-white py-3 px-3 border-bottom"
-                right={right}
-                onClick={() => { this.openVPage(EditMeInfo) }}>
-                <div className="mt-1">
-                    <div>{userSpan(user.name, user.nick)}</div>
+        return <div
+            className="px-4 py-3 cursor-pointer"
+            style={{
+                backgroundColor: "#f9f9f9",
+                width: "90%",
+                borderRadius: "8px",
+                margin: "-3rem auto 2rem auto",
+                boxShadow: "2px 2px 15px #333333"
+            }}
+        >
+            <LMR left={left} onClick={() => { this.openVPage(EditMeInfo) }}>
+                <div>
+                    <div> <small className="muted">{user.name}</small></div>
                     <div className="small pt-1"><span className="text-muted">ID：</span> {user.id > 10000 ? user.id : String(user.id + 10000).substr(1)}</div>
                 </div>
             </LMR>
-            {branch(this.t('post'), null, PostTotal, "icon-yewuzongliang", undefined)}
-            {branch(this.t('page'), null, PageTotal, "icon-shuangsechangyongtubiao-", undefined)}
-            {branch(this.t('tag'), null, PageTotal, "icon-shuangsechangyongtubiao-", cApp.cTag.showTag)}
-            {branch(this.t('team'), "0", null, "icon-shezhi3 ", onTeams)}
-            {branch(this.t('set'), null, null, "icon-shezhi3 ", onSet)}
-        </Page>;
+        </div>
+    }
+
+    private achievement = () => {
+        let { PostTotal } = this.controller;
+        PostTotal = PostTotal ? PostTotal : 0;
+        return <div className="text-center text-white pt-4 bg-primary pt-1 pb-5" style={{ borderRadius: '0  0 5rem 5rem', margin: ' 0 -2rem 0 -2rem ' }}>
+            <div className="pb-2 cursor-pointer" >
+                <div className="text-warning  pt-4" >
+                    <span className="h1">{PostTotal}</span>
+                    <small> 次</small>
+                </div>
+                <h6 className="text-warning"><small>浏览量</small></h6>
+            </div >
+            <div className="d-flex justify-content-around">
+                {this.divTag('发布量', null, 1)}
+                {this.divTag('转发量', null, 2)}
+            </div>
+            <div className="my-4"></div>
+        </div>
+    }
+
+    private page = observer(() => {
+        let { onSet, user, onTeams } = this.controller;
+        if (!user) return;// className="bg-white"
+        return <div >
+            <this.achievement />
+            <this.meInfo />
+            {branch(this.t('team'), "icon-Group- ", onTeams)}
+            {branch(this.t('set'), "icon-shezhi3 ", onSet)}
+        </div>
     })
 }
 
 
-function branch(name: string, teams: string, val: string, icon: string, action: any): JSX.Element {
-    // console.log(teams,'teams')
+function branch(name: string, icon: string, action: any): JSX.Element {
     let style = " iconfont text-primary  " + icon;
-    let count: any = val ? <div className="text-muted small mx-3 px-3">浏览量：{val}</div> : <div className="text-muted small mx-3 px-3 my-3"></div>;
-    return <div className="bg-white py-2 d-flex px-3 mt-1" style={{ justifyContent: 'space-between' }} onClick={action}>
+    return <div className="bg-white py-3 d-flex px-3 mt-1" style={{ justifyContent: 'space-between' }} onClick={action}>
         <div className={style}>
             <span className="ml-1 mx-3">{name}</span>
-            {count}
         </div>
         <div className="text-primary small">
             <span className="ml-2 iconfont icon-jiantou1"></span>
@@ -69,6 +100,3 @@ function branch(name: string, teams: string, val: string, icon: string, action: 
     </div>
 }
 
-function userSpan(name: string, nick: string): JSX.Element {
-    return <small className="muted">{name}</small>
-}
