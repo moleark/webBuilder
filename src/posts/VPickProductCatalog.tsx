@@ -32,7 +32,7 @@ export class VPickProductCatalog extends VPage<CPosts> {
                 <div>
                     <div className="small d-flex cursor-pointer text-primary text-right w-7c ">
                         <button className="btn btn-small btn-info mx-1" onClick={() => onPickProductCatalog(model, 0)} >
-                            关联
+                            分类
                         </button>
                         <button className="btn btn-small btn-info mx-1" onClick={() => onPickProductCatalog(model, 1)} >
                             描述

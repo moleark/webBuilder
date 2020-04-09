@@ -20,19 +20,10 @@ export class VPostProductCatalog extends VPage<CPosts> {
             </div>
         );
         return <Page headerClassName={consts.headerClass} header={this.t('贴文目录')} right={right}>
-            {pagePostProductCatalog.length > 0 && <List before={""} none="无" items={pagePostProductCatalog} item={{ render: this.renderItem }} />}
-            {pagePostProductCatalogExplain.length > 0 && <div>
-                <div className="px-3 py-2 strong d-flex justify-content-between">
-                    <div>
-                        <strong className="text-primary">节点描述</strong>
-                    </div>
-                    <div>
-                        <span style={{ fontSize: "18px" }} ></span>
-                    </div>
-                </div>
-                < List before={""} none="无" items={pagePostProductCatalogExplain} item={{ render: this.renderItemExplain }} />
-            </div>}
-        </Page>
+            {pagePostProductCatalogExplain.length > 0 && < List before={""} none="无" items={pagePostProductCatalogExplain} item={{ render: this.renderItemExplain }} />}
+            {pagePostProductCatalog.length > 0 && <List before={""} none="无" className="mt-1" items={pagePostProductCatalog} item={{ render: this.renderItem }} />}
+
+        </Page >
     });
 
     private renderItem = (item: any, index: number) => {
@@ -43,8 +34,9 @@ export class VPostProductCatalog extends VPage<CPosts> {
                     {item.name}
                 </div>
                 <div>
+                    <span className="small px-2 text-primary">节点分类</span>
                     <span className="text-danger" onClick={() => delPostProductCatalog(item.post.id, item.productCategory.id)}>
-                        <div className="iconfont icon-shanchu pl-1"></div>
+                        <span className="iconfont icon-shanchu pl-1"></span>
                     </span>
                 </div>
             </div>
@@ -59,10 +51,12 @@ export class VPostProductCatalog extends VPage<CPosts> {
                     {item.name}
                 </div>
                 <div>
+                    <span className="small px-2 text-primary">节点描述</span>
                     <span className="text-danger" onClick={() => delPostProductCatalogExplain(item.post.id, item.productCategory.id)}>
-                        <div className="iconfont icon-shanchu pl-1"></div>
+                        <span className="iconfont icon-shanchu pl-1"></span>
                     </span>
                 </div>
+
             </div>
         );
     };
