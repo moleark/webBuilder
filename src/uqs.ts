@@ -46,14 +46,18 @@ export interface WebBuilder {
     AddPostResearchField: Action;
     SearchPostResearchField: Query;
     SearchAchievement: Query;
-    PostProductCatalog: Book;
+    PostProductCatalog: Map;
     AddPostProductCatalog: Action;
+    AddPostProductCatalogExplain: Action;
     SearchProductCategoryPost: Query;
     SearchSubject: Query;
     AddPostSubject: Action;
     SearchSubjectPost: Query;
     SearchPostSubject: Query;
-    SearchPostCatalog: Query
+    SearchPostCatalog: Query;
+    SearchPostCatalogExplain: Query;
+    PostProductCatalogExplain: Map;
+    PostSubject: Map;
 }
 
 export interface UQs {

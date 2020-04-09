@@ -35,7 +35,7 @@ export class VPickProductCatalog extends VPage<CPosts> {
                             关联
                         </button>
                         <button className="btn btn-small btn-info mx-1" onClick={() => onPickProductCatalog(model, 1)} >
-                            默认
+                            描述
                         </button>
                         <button className="btn btn-small btn-outline-info mx-1" onClick={() => searchProductCatalogChildrenKey(productCategory.id)} >
                             下一级

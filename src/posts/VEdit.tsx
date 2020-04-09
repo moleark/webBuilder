@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { CPosts } from "./CPosts";
-import { VPage, UiSchema, Schema, Page, UiInputItem, UiIdItem, tv, Edit, ItemSchema } from "tonva";
+import { VPage, UiSchema, Schema, Page, UiInputItem, UiIdItem, tv, Edit, ItemSchema, FA } from "tonva";
 import { observer } from 'mobx-react';
 import { consts } from 'consts';
 
@@ -57,6 +57,7 @@ export class VEdit extends VPage<CPosts> {
                 widget: 'id', label: this.t('picture'), pickId: this.controller.pickImage, Templet: this.imageContent
             } as UiIdItem,
 
+            /**
             productcatalog: {
                 widget: 'id', label: "目录", pickId: this.controller.pickProductCatalog, Templet: this.catalogContent
             } as UiIdItem,
@@ -64,6 +65,7 @@ export class VEdit extends VPage<CPosts> {
             subject: {
                 widget: 'id', label: "栏目", pickId: this.controller.pickSubject, Templet: this.subjectContent
             } as UiIdItem,
+            **/
             submit: { widget: 'button', label: this.t('submit') }
         }
     };
@@ -72,8 +74,10 @@ export class VEdit extends VPage<CPosts> {
         { name: 'caption', type: 'string', required: true },
         { name: 'discription', type: 'string', required: false },
         { name: 'image', type: 'id', required: true },
+        /**
         { name: 'productcatalog', type: 'id', required: false },
         { name: 'subject', type: 'id', required: false }
+        **/
     ];
 
     render(): JSX.Element {
@@ -82,7 +86,7 @@ export class VEdit extends VPage<CPosts> {
 
     private page = observer(() => {
 
-        let { current, cApp } = this.controller;
+        let { current, cApp, showPostProductCatalog, showPostSubject } = this.controller;
 
         let right = <div>
             <button type="button"
@@ -104,7 +108,20 @@ export class VEdit extends VPage<CPosts> {
                     uiSchema={this.uiSchema}
                     onItemChanged={this.onItemChanged}
                 />
-            </div>
-        </Page>
+                {branch("目录", showPostProductCatalog)}
+                {branch("栏目", showPostSubject)}
+            </div >
+        </Page >
     })
+}
+
+function branch(name: string, action: any): JSX.Element {
+    return <div className="bg-white py-2 d-flex justify-content-between cursor-pointer mb-1" onClick={action}>
+        <div>
+            <span className="ml-1 mx-3">{name}</span>
+        </div>
+        <div >
+            <FA name='angle-right  mx-3'></FA>
+        </div>
+    </div >
 }

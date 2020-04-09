@@ -101,28 +101,27 @@ Action AddPostEvaluate (
 Action AddPostProductCatalog(
     _post ID POST,
     _productCategory ID ProductCategory,
-    _type int
+    _name char(50)
 ) {
-
-    BOOK PostProductCatalog at( _post ) set productCategory =_productCategory;
-
-    if( _type = 1){
-        delete from  PostProductCatalogExplain where productCategory= _productCategory;
-        BOOK  PostProductCatalogExplain at(_productCategory) set post = _post;
-    }
+    BOOK PostProductCatalog at( _post,_productCategory ) set name= _name;
 };
 
+Action AddPostProductCatalogExplain(
+    _post ID POST,
+    _productCategory ID ProductCategory,
+    _name char(50)
+) {
+    delete from  PostProductCatalogExplain where productCategory= _productCategory;
+    BOOK  PostProductCatalogExplain at(_post, _productCategory) set name= _name;  
+};
 
 Action AddPostSubject(
     _post ID POST,
     _subject ID Subject
 ) {
-    BOOK PostSubject at( _post ) set subject =_subject;
+    BOOK PostSubject at( _post ,_subject);
 };
 
-
-
- 
 Action test(a1 int, a2 int) {
     book contenttag at(a1, a2);
 };

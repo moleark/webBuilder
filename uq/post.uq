@@ -33,15 +33,17 @@ MAP PostPublishProduct(
 );
 
 /** 帖文 目录节点 **/
-BOOK PostProductCatalog(
+MAP PostProductCatalog(
     key post ID POST,
-    productCategory ID ProductCategory
+    key productCategory ID ProductCategory,
+    name char(50)
 );
 
-/** 帖文 目录节点 **/
+/** 帖文 目录节点说明 **/
 MAP PostProductCatalogExplain (
+    key post ID POST,
     key productCategory ID ProductCategory,
-    post ID POST
+    name char(50),
 );
 
 /** 评价 **/
@@ -69,9 +71,9 @@ TUID  Subject (
     stamp (create, update),
 );
 
-BOOK PostSubject(
+MAP PostSubject(
     key post ID POST,
-    subject ID Subject
+    key subject ID Subject
 );
 
 

@@ -27,7 +27,6 @@ export class VMain extends VPage<CApp> {
                 content: content,
                 notify: notify,
                 onShown: onShown,
-
             }
         });
         return <Page header={false} headerClassName={"bg-info"} >

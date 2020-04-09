@@ -6,6 +6,7 @@ export const appConfig: AppConfig = {
     tvs: {},
     oem: "百灵威"
 };
+
 /* eslint-disable */
 export const setting = {
     appName: "内容管理",
@@ -18,9 +19,7 @@ export const setting = {
     appUrlDomain: "cs.jkchemical.com",
     previewUrl: "https://web.jkchemical.com",
     SALESREGION_CN: 1,
-    CHINESE: 196,
-
-    // sales: undefined as Sales,
+    CHINESE: 196
 };
 
 // 生产配置

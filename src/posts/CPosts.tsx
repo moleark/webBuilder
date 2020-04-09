@@ -20,10 +20,10 @@ import { VPickSubject } from "./VPickSubject";
 import { VSubject } from "./VSubject";
 import { VSubjectDetil } from "./VSubjectDetil";
 import { VProductCatalogDetil } from "./VProductCatalogDetil";
+import { VPostProductCatalog } from "./VPostProductCatalog";
+import { VPostSubject } from "./VPostSubject";
 
 /* eslint-disable */
-
-
 export class CPosts extends CUqBase {
     @observable pageTemplate: QueryPager<any>;
     @observable pagePosts: QueryPager<any>;
@@ -42,6 +42,9 @@ export class CPosts extends CUqBase {
     @observable ratioD: any;
     @observable ratioE: any;
 
+    @observable pagePostProductCatalog: any;
+    @observable pagePostProductCatalogExplain: any;
+    @observable pagePostSubject: any;
 
     protected async internalStart(param: any) {
         this.setRes({
@@ -67,11 +70,6 @@ export class CPosts extends CUqBase {
         });
         let Auser = this.isMe ? nav.user : 0;
         await this.pagePosts.first({ key: key, author: Auser });
-		/*
-		for (let item of this.pagePosts.items) {
-			this.cApp.useUser(item.author);
-		}
-		*/
     };
     /* posts模板查询*/
     searchTemplateKey = async (key: string) => {
@@ -129,12 +127,6 @@ export class CPosts extends CUqBase {
 
     showDetail = async (id: number) => {
         this.current = await this.uqs.webBuilder.Post.load(id);
-        let sublist = await this.uqs.webBuilder.SearchPostSubject.table({ _post: id })
-        this.current.subject = sublist.length > 0 ? sublist[0] : undefined;
-
-        let catalog = await this.uqs.webBuilder.SearchPostCatalog.table({ _post: id })
-        this.current.productcatalog = catalog.length > 0 ? catalog[0] : undefined;
-
         this.openVPage(VShow);
     };
 
@@ -252,20 +244,38 @@ export class CPosts extends CUqBase {
     }
 
 
-    pickProductCatalog = async (context: Context, name: string, value: number): Promise<any> => {
+    /* 产品目录*/
+    showPostProductCatalog = async () => {
+        this.pagePostProductCatalog = await this.uqs.webBuilder.SearchPostCatalog.table({ _post: this.current.id });
+        this.pagePostProductCatalogExplain = await this.uqs.webBuilder.SearchPostCatalogExplain.table({ _post: this.current.id })
+        this.openVPage(VPostProductCatalog);
+    }
+    pickProductCatalog = async (): Promise<any> => {
         let results = await this.uqs.product.GetRootCategory.query({ salesRegion: setting.SALESREGION_CN, language: setting.CHINESE });
         this.pageProductCatalog = results.first;
         return await this.vCall(VPickProductCatalog);
     };
-
     onPickProductCatalog = async (param: any, type: any) => {
-        let { productCategory } = param;
-        this.uqs.webBuilder.AddPostProductCatalog.submit({ _post: this.current.id, _productCategory: productCategory.id, _type: type });
-        this.returnCall(param);
+        let { productCategory, name } = param;
+        if (type == 0) {
+            await this.uqs.webBuilder.AddPostProductCatalog.submit({ _post: this.current.id, _productCategory: productCategory.id, _name: name });
+            this.pagePostProductCatalog = await this.uqs.webBuilder.SearchPostCatalog.table({ _post: this.current.id });
+        } else {
+            await this.uqs.webBuilder.AddPostProductCatalogExplain.submit({ _post: this.current.id, _productCategory: productCategory.id, _name: name });
+            this.pagePostProductCatalogExplain = await this.uqs.webBuilder.SearchPostCatalogExplain.table({ _post: this.current.id })
+        }
         this.closePage();
     }
+    delPostProductCatalog = async (post: any, productCategory: any) => {
+        await this.uqs.webBuilder.PostProductCatalog.del({ post: post, arr1: [{ productCategory: productCategory }] });
+        this.pagePostProductCatalog = await this.uqs.webBuilder.SearchPostCatalog.table({ _post: post })
+    }
 
-    /* 产品目录*/
+    delPostProductCatalogExplain = async (post: any, productCategory: any) => {
+        await this.uqs.webBuilder.PostProductCatalogExplain.del({ post: post, arr1: [{ productCategory: productCategory }] });
+        this.pagePostProductCatalogExplain = await this.uqs.webBuilder.SearchPostCatalogExplain.table({ _post: post })
+    }
+
     searchProductCatalogChildrenKey = async (key: string) => {
         let results = await this.uqs.product.GetChildrenCategory.query({ parent: key, salesRegion: setting.SALESREGION_CN, language: setting.CHINESE });
         this.pageProductCatalog = results.first;
@@ -276,7 +286,6 @@ export class CPosts extends CUqBase {
         this.pageProductCatalog = results.first;
         this.openVPage(VProductCatalog);
     }
-
     showProductCatalogDetil = async (param: any) => {
         this.pageProductCatalogPost = new QueryPager(this.uqs.webBuilder.SearchProductCategoryPost, 15, 30);
         this.pageProductCatalogPost.first({ author: 0, productCategory: param })
@@ -285,16 +294,27 @@ export class CPosts extends CUqBase {
 
 
     /** 栏目**/
+
+    showPostSubject = async () => {
+        this.pagePostSubject = await this.uqs.webBuilder.SearchPostSubject.table({ _post: this.current.id })
+        this.openVPage(VPostSubject);
+    }
+
     pickSubject = async (param: any) => {
         this.pageSubject = new QueryPager(this.uqs.webBuilder.SearchSubject, 15, 30);
         this.pageSubject.first({})
         return await this.vCall(VPickSubject);
     }
+
     onPickSubject = async (param: any) => {
         let { id } = param;
-        this.uqs.webBuilder.AddPostSubject.submit({ _post: this.current.id, _subject: id });
-        this.returnCall(param);
+        await this.uqs.webBuilder.AddPostSubject.submit({ _post: this.current.id, _subject: id });
+        this.pagePostSubject = await this.uqs.webBuilder.SearchPostSubject.table({ _post: this.current.id });
         this.closePage();
+    }
+    delPostSubject = async (subject: any) => {
+        await this.uqs.webBuilder.PostSubject.del({ post: this.current.id, arr1: [{ subject: subject }] });
+        this.pagePostSubject = await this.uqs.webBuilder.SearchPostSubject.table({ _post: this.current.id })
     }
 
     showSubject = async () => {
@@ -308,10 +328,6 @@ export class CPosts extends CUqBase {
         this.pageSubjectPost.first({ author: 0, subject: param.id })
         return await this.vCall(VSubjectDetil);
     }
-
-
-
-
 
     tab = () => {
         return <this.render />;

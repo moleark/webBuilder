@@ -192,24 +192,43 @@ QUERY SearchPostSubject(
     _post ID POST
 )
 returns ret (
-    id ID Subject ,
+    subject ID Subject ,
     name char(100),
 ) {
-    into ret select s.id, s.name
+    into ret select ps.subject, s.name
     from    PostSubject as ps
 			left join Subject as s on ps.subject = s.id
     where   ps.post = _post;
 };
 
 
-/** 搜索目录 **/
+/** 搜索目录节点 **/
 QUERY SearchPostCatalog(    
     _post ID POST
 )
 returns ret (
-   productCategory ID ProductCategory
+    post ID POST,
+    productCategory ID ProductCategory,
+    name char(50)
 ) {
-    into ret select ps.productCategory
+    into ret select ps.post, ps.productCategory, ps.name
     from    PostProductCatalog as ps
     where   ps.post = _post;
 };
+
+/** 搜索目录节点说明 **/
+QUERY SearchPostCatalogExplain(    
+    _post ID POST
+)
+returns ret (
+    post ID POST,
+    productCategory ID ProductCategory,
+    name char(50)
+) {
+    into ret select ps.post, ps.productCategory, ps.name
+    from    PostProductCatalogExplain as ps
+    where   ps.post = _post;
+};
+
+ 
+ 
