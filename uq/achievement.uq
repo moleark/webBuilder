@@ -110,20 +110,24 @@ returns ret (
         from    Achievement as a
         where   a.manage = _manage
                 and a.date>=FROM_UNIXTIME(calcTick - weekTick)
-        group by a.user  as author;
+        group by a.user  as author
+        order by sum(a.postHitSum) desc;
+
 
     }else if(_type='all'){
 
         into ret select  yeara, 'all' as montha, author, sum(a.postPubSum) as postPubSum, sum(a.postTranSum) as postTranSum, sum(a.postHitSum) as postHitSum
         from    Achievement as a
         where    a.manage = _manage and year(a.date) = _year
-        group by year(a.date) as yeara, a.user  as author;
+        group by year(a.date) as yeara, a.user  as author
+        order by sum(a.postHitSum) desc;
 
     }else {
         into ret select yeara, montha, author, sum(a.postPubSum) as postPubSum, sum(a.postTranSum) as postTranSum, sum(a.postHitSum) as postHitSum
         from    Achievement as a
         where    a.manage = _manage and year(a.date) = _year and month(a.date) = _type
-        group by year(a.date) as yeara, month(a.date) as montha, a.user as author;
+        group by year(a.date) as yeara, month(a.date) as montha, a.user as author
+        order by sum(a.postHitSum) desc;
     }
 };
 
