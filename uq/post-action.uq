@@ -27,9 +27,10 @@ ACTION PublishPost(
         set newval = 0;
     };
     
-    if exists( select 1 
+    if exists( 
+        select  1 
         from    PostPublish 
-        where   post = _post and (web=1 or agent= 1 or assist=1 or openweb=1)
+        where   post = _post and ( web=1 or agent= 1 or assist=1 or openweb=1 )
     ){
         set oldval = 1;
     }else{
@@ -38,11 +39,21 @@ ACTION PublishPost(
 
     var val int = 0;
     set val = newval - oldval
-    BOOK Achievement at($user) set postPublishSum += val;
+    BOOK Achievement at( now(), 0, $user ) set postPubSum += val;
  
     BOOK PostPublish at(_post) 
     set web=_web, agent=_agent, assist=_assist, openweb=_openweb, operator = $user, update = now();
 
+};
+
+
+/** 搜索转发*/
+ACTION TransmitPost(
+    _post ID POST
+) {
+    var author ID;
+    set  author = a.author from post as a where a.id = _post;
+    BOOK Achievement at( now(), 0, $user ) set postTranSum += 1;
 };
 
 
@@ -62,8 +73,6 @@ ACTION AddPost(
     TUID POST into postId set
         caption = _caption, discription = _discription, image = _image, 
         author = $user, template = _template, content = _content, isValid = 1;
-   
-    BOOK Achievement at($user) set postSum+=1;
     into ret select postId as id;
 };
 

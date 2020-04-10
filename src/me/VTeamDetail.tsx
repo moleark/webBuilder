@@ -10,13 +10,12 @@ export class VTeamDetail extends VPage<CMe> {
         this.openPage(this.page);
     }
 
-
     private page = observer(() => {
-        let { postSum, postPulishSum, postHitSum } = this.controller;
+        let { postPubSum, postTranSum, postHitSum } = this.controller.nowAchievement;
         return <Page header={this.t('privatedetail')} headerClassName={consts.headerClass}>
-            <div className='px-3 py-2 border bg-white'>创建的post：{postSum}</div>
-            <div className='px-3 py-2 border bg-white'>发布的post：{postPulishSum}</div>
-            <div className='px-3 py-2 border bg-white'>post浏览量：{postHitSum}</div>
+            <div className='px-3 py-2 border bg-white'>发布量：{postPubSum}</div>
+            <div className='px-3 py-2 border bg-white'>转发量：{postTranSum}</div>
+            <div className='px-3 py-2 border bg-white'>浏览量：{postHitSum}</div>
         </Page>;
 
     })

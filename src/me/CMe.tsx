@@ -9,20 +9,44 @@ import { VSetDetails } from "./VSetDetails";
 import { VAbout } from "./VAbout";
 import { VTeam } from "./VTeam";
 import { VTeamDetail } from "./VTeamDetail";
+import { VAchievement } from "./VAchievement";
 /* eslint-disable */
 
 export class CMe extends CUqBase {
     @observable pageMedia: QueryPager<any>;
     @observable items: any[];
     @observable current: any;
-    @observable PostTotal: any = 0;
-    @observable PageTotal: any = 0;
-    @observable postSum: any;
-    @observable postPulishSum: any;
-    @observable postHitSum: any;
     @observable details: any;
     @observable pagePosts: any[];
     @observable pageTeam: QueryPager<any>;
+    @observable nowAchievement: any = {
+        montha: "",
+        yeara: "",
+        name: "",
+        postPubSum: 0,
+        postTranSum: 0,
+        postHitSum: 0
+
+    };
+
+    @observable Achievement: any[] = [{
+        montha: "",
+        yeara: "",
+        name: "",
+        postPubSum: 0,
+        postTranSum: 0,
+        postHitSum: 0
+    }];
+
+    @observable teamAchievement: any = {
+        montha: "",
+        yeara: "",
+        name: "",
+        postPubSum: 0,
+        postTranSum: 0,
+        postHitSum: 0
+
+    };
 
     searchMadiaKey = async (key: string) => {
         this.pageMedia = new QueryPager(this.uqs.webBuilder.SearchImage, 15, 30);
@@ -35,6 +59,7 @@ export class CMe extends CUqBase {
 
     };
 
+
     onTeams = () => {
         this.openVPage(VTeam);
 
@@ -42,17 +67,7 @@ export class CMe extends CUqBase {
 
     onDetail = async (id: number) => {
         this.openVPage(VTeamDetail)
-        let ret = await this.uqs.webBuilder.SearchAchievement.table({ _user: id });
-        if (ret[0] == undefined) {
-            this.postSum = 0;
-            this.postPulishSum = 0;
-            this.postHitSum = 0;
-        } else {
-            let { postSum, postPulishSum, postHitSum } = ret[0];
-            this.postSum = postSum;
-            this.postPulishSum = postPulishSum;
-            this.postHitSum = postHitSum;
-        }
+
     }
 
     showAbout = () => {
@@ -60,21 +75,31 @@ export class CMe extends CUqBase {
     };
 
     loadList = async () => {
+        /**
         // post用浏览量
         let postTotal = await this.uqs.webBuilder.SearchTotalBrowsing.query({});
 
         if (postTotal.ret.length && (postTotal.ret.length > 0)) {
-            this.PostTotal = postTotal.ret[0].PostTotal;
+            //this.PostTotal = postTotal.ret[0].PostTotal;
         }
 
         // page用户总浏览量
         let pageTotal = await this.uqs.webBuilder.SearchTotalBrowsing.query({});
         if (pageTotal.ret.length && (pageTotal.ret.length > 0)) {
-            this.PageTotal = pageTotal.ret[0].PageTotal;
+            // this.PageTotal = pageTotal.ret[0].PageTotal;
         }
-
+        **/
+        await this.searchAchievementDetail();
         await this.searchTeam();
     };
+
+    searchAchievementDetail = async () => {
+        let ret = await this.uqs.webBuilder.SearchAchievement.table({ _type: "nowyear", _year: "2020" });
+        if (ret[0] == undefined) {
+        } else {
+            this.nowAchievement = ret[0];
+        }
+    }
 
     onAlterImg = () => {
         this.current = undefined;
@@ -108,6 +133,11 @@ export class CMe extends CUqBase {
             this.cApp.useUser(item.webuser);
         });
         await this.pageTeam.first({ key: "" });
+    }
+
+    showAchievement = async () => {
+        this.Achievement = await this.uqs.webBuilder.SearchAchievement.table({ _type: "month", _year: "2020" });
+        this.openVPage(VAchievement)
     }
 
     render = observer(() => {

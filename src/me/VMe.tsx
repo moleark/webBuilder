@@ -25,10 +25,10 @@ export class VMe extends VPage<CMe> {
     private divTag(titel: string, achievement: number, status: number) {
         let onClick: any;
         return <div className="cursor-pointer" onClick={onClick}>
-            {achievement <= 0.001 ?
-                <div className="h5"> - </div>
-                :
-                <div className="h5"><strong>{achievement.toFixed(2)}</strong> <span className="h6"><small></small></span></div>
+            {achievement ?
+                <div className="h5"><strong>{achievement}</strong> <span className="h6"><small></small></span></div>
+                : <div className="h5"> - </div>
+
             }
             <div className="h6"><small>{titel}</small></div>
         </div >
@@ -57,19 +57,25 @@ export class VMe extends VPage<CMe> {
     }
 
     private achievement = () => {
-        let { PostTotal } = this.controller;
-        PostTotal = PostTotal ? PostTotal : 0;
-        return <div className="text-center text-white pt-4 bg-primary pt-1 pb-5" style={{ borderRadius: '0  0 5rem 5rem', margin: ' 0 -2rem 0 -2rem ' }}>
+
+        let { nowAchievement, showAchievement } = this.controller;
+        let { postPubSum, postTranSum, postHitSum } = nowAchievement;
+
+        return <div
+            className="text-center text-white pt-4 bg-primary pt-1 pb-5"
+            style={{ borderRadius: '0  0 5rem 5rem', margin: ' 0 -2rem 0 -2rem ' }}
+            onClick={showAchievement}
+        >
             <div className="pb-2 cursor-pointer" >
                 <div className="text-warning  pt-4" >
-                    <span className="h1">{PostTotal}</span>
+                    <span className="h1">{postHitSum ? postHitSum : "0"}</span>
                     <small> 次</small>
                 </div>
                 <h6 className="text-warning"><small>浏览量</small></h6>
             </div >
             <div className="d-flex justify-content-around">
-                {this.divTag('发布量', null, 1)}
-                {this.divTag('转发量', null, 2)}
+                {this.divTag('发布量', postPubSum, 1)}
+                {this.divTag('转发量', postTranSum, 2)}
             </div>
             <div className="my-4"></div>
         </div>

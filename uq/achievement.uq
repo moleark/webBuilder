@@ -1,27 +1,89 @@
 
 --绩效统计表
 BOOK Achievement(
+    key date  date,
+    key manage ID [$user],
     key user ID [$user],
-    postSum int,        --post总数
-    postPublishSum int, --post发布总数
-    postHitSum int      --post访问总数
+    postPubSum int,     --post发布次数
+    postTranSum int,    --post转发次数
+    postHitSum int      --post访问次数
 );
- 
+
 
  /** 搜索绩效*/
 QUERY SearchAchievement(
+    _type char(20), -- week month
+    _year int  
+)
+returns ret  (
+    yeara   char(10),
+    montha  char(20),
+    postPubSum int,     --post发布次数
+    postTranSum int,    --post转发次数
+    postHitSum int      --post访问次数
+) {
+
+    VAR calcTick INT, weekTick INT;
+    SET calcTick = unix_timestamp();
+    SET weekTick = 7*24*3600;
+    if(_type='week'){
+        into ret select max(year(a.date)) as yeara ,max(month(a.date)) as montha , sum(a.postPubSum) as postPubSum, sum(a.postTranSum) as postTranSum, sum(a.postHitSum) as postHitSum
+        from    Achievement as a
+        where   a.user = $user
+                and a.date>=FROM_UNIXTIME(calcTick - weekTick);
+
+    }else if(_type='month'){
+        into ret select max(year(a.date)) as yeara , '近一周' as montha , sum(a.postPubSum) as postPubSum, sum(a.postTranSum) as postTranSum, sum(a.postHitSum) as postHitSum
+        from    Achievement as a
+        where   a.user = $user
+                and a.date>=FROM_UNIXTIME(calcTick - weekTick);
+
+        into ret select yeara , montha, sum(a.postPubSum) as postPubSum, sum(a.postTranSum) as postTranSum, sum(a.postHitSum) as postHitSum
+        from    Achievement as a
+        where   a.user = $user and year(a.date) = _year
+        group by year(a.date) as yeara, month(a.date) as montha;
+
+        into ret select yeara , '合计' as montha , sum(a.postPubSum) as postPubSum, sum(a.postTranSum) as postTranSum, sum(a.postHitSum) as postHitSum
+        from    Achievement as a
+        where   a.user = $user and year(a.date) = _year
+        group by year(a.date) as yeara;
+        
+    } else if(_type='nowyear'){
+        into ret select yeara , '合计' as montha , sum(a.postPubSum) as postPubSum, sum(a.postTranSum) as postTranSum, sum(a.postHitSum) as postHitSum
+        from    Achievement as a
+        where   a.user = $user and year(a.date) = _year
+        group by year(a.date) as yeara;
+    } 
+};
+ 
+QUERY SearchAchievementOfTeam(
     _user ID [$user]
 )
 returns ret  (
-    postSum int,      --post总数
-    postPublishSum int,  --post发布总数
-    postHitSum int         --post访问总数
+    postPubSum int,     --post发布次数
+    postTranSum int,    --post转发次数
+    postHitSum int      --post访问次数
 ) {
-    into ret select a.postSum, a.postPublishSum, a.postHitSum
+    into ret select a.postPubSum, a.postTranSum, a.postHitSum
     from    Achievement as a
     where   a.user = _user;
 };
- 
+
+QUERY SearchAchievementOfTeamDetail(
+    _user ID [$user]
+)
+returns ret  (
+    postPubSum int,     --post发布次数
+    postTranSum int,    --post转发次数
+    postHitSum int      --post访问次数
+) {
+    into ret select a.postPubSum, a.postTranSum, a.postHitSum
+    from    Achievement as a
+    where   a.user = _user;
+};
+
  --文帖发布员工业绩报表： 年    月    员工    文帖发布次数    文帖浏览总量    
      
  --文帖发布次数：可能会存在已经发布了但是有取消发布了的情况， 这种情况 只做加法不做减法
+
+
