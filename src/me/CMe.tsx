@@ -11,6 +11,7 @@ import { VTeam } from "./VTeam";
 import { VTeamDetail } from "./VTeamDetail";
 import { VAchievement } from "./VAchievement";
 import { VTeamAchievement } from "./VTeamAchievement";
+import moment from 'moment'
 /* eslint-disable */
 
 export class CMe extends CUqBase {
@@ -25,7 +26,9 @@ export class CMe extends CUqBase {
     @observable teamAchievement: any[] = [{ montha: "", yeara: "", postPubSum: 0, postTranSum: 0, postHitSum: 0 }];
     @observable teamAchievementDetail: any[] = [{ montha: "", yeara: "", author: "", postPubSum: 0, postTranSum: 0, postHitSum: 0 }];
 
+    private year: any
     searchMadiaKey = async (key: string) => {
+
         this.pageMedia = new QueryPager(this.uqs.webBuilder.SearchImage, 15, 30);
         this.pageMedia.first({ key: key });
     };
@@ -110,24 +113,28 @@ export class CMe extends CUqBase {
             this.cApp.useUser(item.webuser);
         });
         await this.pageTeam.first({ key: "" });
+
     }
 
     showAchievement = async () => {
-        this.Achievement = await this.uqs.webBuilder.SearchAchievement.table({ _type: "month", _year: "2020" });
+        this.year = moment().format('YYYY')
+        this.Achievement = await this.uqs.webBuilder.SearchAchievement.table({ _type: "month", _year: this.year });
         this.openVPage(VAchievement)
     }
 
     showTeamAchievement = async () => {
-        this.teamAchievement = await this.uqs.webBuilder.SearchAchievementOfTeam.table({ _manage: 0, _year: "2020" });
-        this.getTeamAchievementDetail(0, "2020", "week");
+        this.year = moment().format('YYYY')
+        this.teamAchievement = await this.uqs.webBuilder.SearchAchievementOfTeam.table({ _manage: 0, _year: this.year });
+        this.getTeamAchievementDetail(0, this.year, "week");
         this.openVPage(VTeamAchievement);
     }
 
     getTeamAchievementDetail = async (manage: any, year: any, type: any) => {
-        this.teamAchievementDetail = await this.uqs.webBuilder.SearchAchievementOfTeamDetail.table({ _manage: 0, _year: "2020", _type: type });
+        this.teamAchievementDetail = await this.uqs.webBuilder.SearchAchievementOfTeamDetail.table({ _manage: 0, _year: year, _type: type });
     }
 
     render = observer(() => {
+
         return this.renderView(VMe);
     });
     tab = () => this.renderView(VMe);
