@@ -82,13 +82,13 @@ export class VMe extends VPage<CMe> {
     }
 
     private page = observer(() => {
-        let { onSet, user, onTeams } = this.controller;
+        let { onSet, user, showTeamAchievement } = this.controller;
         if (!user) return;// className="bg-white"
         return <div >
             <this.achievement />
             <this.meInfo />
-            {branch(this.t('team'), "icon-Group- ", onTeams)}
-            {branch(this.t('set'), "icon-shezhi3 ", onSet)}
+            {branch(this.t('team'), "icon-Group-", showTeamAchievement)}
+            {branch(this.t('set'), "icon-shezhi3", onSet)}
         </div>
     })
 }

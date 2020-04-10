@@ -58,6 +58,8 @@ export interface WebBuilder {
     SearchPostCatalogExplain: Query;
     PostProductCatalogExplain: Map;
     PostSubject: Map;
+    SearchAchievementOfTeam: Query;
+    SearchAchievementOfTeamDetail: Query;
 }
 
 export interface UQs {

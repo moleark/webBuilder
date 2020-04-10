@@ -1,10 +1,9 @@
 import * as React from 'react';
-import { VPage, Page, nav, List } from 'tonva';
+import { VPage, Page, nav } from 'tonva';
 import { CMe } from './CMe';
-import { setting, appConfig } from '../configuration';
-import { observable, observe } from 'mobx';
+import { setting } from '../configuration';
 import { observer } from 'mobx-react';
-
+/* eslint-disable */
 export class VAchievement extends VPage<CMe> {
 
     private version: any;
@@ -19,8 +18,16 @@ export class VAchievement extends VPage<CMe> {
 
         let content = Achievement.map((v, index) => {
             let { montha, postPubSum, postTranSum, postHitSum } = v;
+            let typeshow: any;
+            if (montha == "week") {
+                typeshow = "近一周"
+            } else if (montha == "all") {
+                typeshow = "合计"
+            } else {
+                typeshow = montha + "月";
+            }
             return <tr className="col dec px-3 py-2 bg-white">
-                <td className="w-3"> {montha}</td >
+                <td className="w-3"> {typeshow}</td >
                 <td className="w-3">{postPubSum}</td>
                 <td className="w-3">{postTranSum}</td>
                 <td className="w-3">{postHitSum}</td>

@@ -10,6 +10,7 @@ import { VAbout } from "./VAbout";
 import { VTeam } from "./VTeam";
 import { VTeamDetail } from "./VTeamDetail";
 import { VAchievement } from "./VAchievement";
+import { VTeamAchievement } from "./VTeamAchievement";
 /* eslint-disable */
 
 export class CMe extends CUqBase {
@@ -19,34 +20,10 @@ export class CMe extends CUqBase {
     @observable details: any;
     @observable pagePosts: any[];
     @observable pageTeam: QueryPager<any>;
-    @observable nowAchievement: any = {
-        montha: "",
-        yeara: "",
-        name: "",
-        postPubSum: 0,
-        postTranSum: 0,
-        postHitSum: 0
-
-    };
-
-    @observable Achievement: any[] = [{
-        montha: "",
-        yeara: "",
-        name: "",
-        postPubSum: 0,
-        postTranSum: 0,
-        postHitSum: 0
-    }];
-
-    @observable teamAchievement: any = {
-        montha: "",
-        yeara: "",
-        name: "",
-        postPubSum: 0,
-        postTranSum: 0,
-        postHitSum: 0
-
-    };
+    @observable nowAchievement: any = { montha: "", yeara: "", postPubSum: 0, postTranSum: 0, postHitSum: 0 };
+    @observable Achievement: any[] = [{ montha: "", yeara: "", postPubSum: 0, postTranSum: 0, postHitSum: 0 }];
+    @observable teamAchievement: any[] = [{ montha: "", yeara: "", postPubSum: 0, postTranSum: 0, postHitSum: 0 }];
+    @observable teamAchievementDetail: any[] = [{ montha: "", yeara: "", author: "", postPubSum: 0, postTranSum: 0, postHitSum: 0 }];
 
     searchMadiaKey = async (key: string) => {
         this.pageMedia = new QueryPager(this.uqs.webBuilder.SearchImage, 15, 30);
@@ -138,6 +115,16 @@ export class CMe extends CUqBase {
     showAchievement = async () => {
         this.Achievement = await this.uqs.webBuilder.SearchAchievement.table({ _type: "month", _year: "2020" });
         this.openVPage(VAchievement)
+    }
+
+    showTeamAchievement = async () => {
+        this.teamAchievement = await this.uqs.webBuilder.SearchAchievementOfTeam.table({ _manage: 0, _year: "2020" });
+        this.getTeamAchievementDetail(0, "2020", "week");
+        this.openVPage(VTeamAchievement);
+    }
+
+    getTeamAchievementDetail = async (manage: any, year: any, type: any) => {
+        this.teamAchievementDetail = await this.uqs.webBuilder.SearchAchievementOfTeamDetail.table({ _manage: 0, _year: "2020", _type: type });
     }
 
     render = observer(() => {

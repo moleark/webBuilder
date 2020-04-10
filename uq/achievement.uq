@@ -33,7 +33,7 @@ returns ret  (
                 and a.date>=FROM_UNIXTIME(calcTick - weekTick);
 
     }else if(_type='month'){
-        into ret select max(year(a.date)) as yeara , '近一周' as montha , sum(a.postPubSum) as postPubSum, sum(a.postTranSum) as postTranSum, sum(a.postHitSum) as postHitSum
+        into ret select max(year(a.date)) as yeara , 'week' as montha , sum(a.postPubSum) as postPubSum, sum(a.postTranSum) as postTranSum, sum(a.postHitSum) as postHitSum
         from    Achievement as a
         where   a.user = $user
                 and a.date>=FROM_UNIXTIME(calcTick - weekTick);
@@ -43,13 +43,13 @@ returns ret  (
         where   a.user = $user and year(a.date) = _year
         group by year(a.date) as yeara, month(a.date) as montha;
 
-        into ret select yeara , '合计' as montha , sum(a.postPubSum) as postPubSum, sum(a.postTranSum) as postTranSum, sum(a.postHitSum) as postHitSum
+        into ret select yeara , 'all' as montha , sum(a.postPubSum) as postPubSum, sum(a.postTranSum) as postTranSum, sum(a.postHitSum) as postHitSum
         from    Achievement as a
         where   a.user = $user and year(a.date) = _year
         group by year(a.date) as yeara;
         
     } else if(_type='nowyear'){
-        into ret select yeara , '合计' as montha , sum(a.postPubSum) as postPubSum, sum(a.postTranSum) as postTranSum, sum(a.postHitSum) as postHitSum
+        into ret select yeara , 'all' as montha , sum(a.postPubSum) as postPubSum, sum(a.postTranSum) as postTranSum, sum(a.postHitSum) as postHitSum
         from    Achievement as a
         where   a.user = $user and year(a.date) = _year
         group by year(a.date) as yeara;
@@ -57,29 +57,74 @@ returns ret  (
 };
  
 QUERY SearchAchievementOfTeam(
-    _user ID [$user]
+    _manage ID [$user],
+    _year int  
 )
 returns ret  (
+    yeara   char(10),
+    montha  char(20),
     postPubSum int,     --post发布次数
     postTranSum int,    --post转发次数
     postHitSum int      --post访问次数
 ) {
-    into ret select a.postPubSum, a.postTranSum, a.postHitSum
+
+    VAR calcTick INT, weekTick INT;
+    SET calcTick = unix_timestamp();
+    SET weekTick = 7*24*3600;
+    into ret select max(year(a.date)) as yeara , 'week' as montha , sum(a.postPubSum) as postPubSum, sum(a.postTranSum) as postTranSum, sum(a.postHitSum) as postHitSum
     from    Achievement as a
-    where   a.user = _user;
+    where   a.manage = _manage
+            and a.date>=FROM_UNIXTIME(calcTick - weekTick);
+
+    into ret select yeara , montha, sum(a.postPubSum) as postPubSum, sum(a.postTranSum) as postTranSum, sum(a.postHitSum) as postHitSum
+    from    Achievement as a
+    where    a.manage = _manage and year(a.date) = _year
+    group by year(a.date) as yeara, month(a.date) as montha;
+
+    into ret select yeara , 'all' as montha , sum(a.postPubSum) as postPubSum, sum(a.postTranSum) as postTranSum, sum(a.postHitSum) as postHitSum
+    from   Achievement as a
+    where  a.manage = _manage and year(a.date) = _year
+    group by year(a.date) as yeara;
+
 };
 
 QUERY SearchAchievementOfTeamDetail(
-    _user ID [$user]
+    _manage ID [$user],
+    _year int,
+    _type char(10)
 )
-returns ret  (
+returns ret (
+    yeara   char(10),
+    montha  char(20),
+    author ID [$user],
     postPubSum int,     --post发布次数
     postTranSum int,    --post转发次数
     postHitSum int      --post访问次数
 ) {
-    into ret select a.postPubSum, a.postTranSum, a.postHitSum
-    from    Achievement as a
-    where   a.user = _user;
+
+    if(_type='week'){
+        VAR calcTick INT, weekTick INT;
+        SET calcTick = unix_timestamp();
+        SET weekTick = 7*24*3600;
+        into ret select  max(year(a.date)) as yeara , 'week' as montha, author, sum(a.postPubSum) as postPubSum, sum(a.postTranSum) as postTranSum, sum(a.postHitSum) as postHitSum
+        from    Achievement as a
+        where   a.manage = _manage
+                and a.date>=FROM_UNIXTIME(calcTick - weekTick)
+        group by a.user  as author;
+
+    }else if(_type='all'){
+
+        into ret select  yeara, 'all' as montha, author, sum(a.postPubSum) as postPubSum, sum(a.postTranSum) as postTranSum, sum(a.postHitSum) as postHitSum
+        from    Achievement as a
+        where    a.manage = _manage and year(a.date) = _year
+        group by year(a.date) as yeara, a.user  as author;
+
+    }else {
+        into ret select yeara, montha, author, sum(a.postPubSum) as postPubSum, sum(a.postTranSum) as postTranSum, sum(a.postHitSum) as postHitSum
+        from    Achievement as a
+        where    a.manage = _manage and year(a.date) = _year and month(a.date) = _type
+        group by year(a.date) as yeara, month(a.date) as montha, a.user as author;
+    }
 };
 
  --文帖发布员工业绩报表： 年    月    员工    文帖发布次数    文帖浏览总量    
