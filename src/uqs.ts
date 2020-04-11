@@ -60,6 +60,9 @@ export interface WebBuilder {
     PostSubject: Map;
     SearchAchievementOfTeam: Query;
     SearchAchievementOfTeamDetail: Query;
+    ImageCat: Map;
+    SearchImageByCat: Query;
+    SearchCat: Query;
 }
 
 export interface UQs {

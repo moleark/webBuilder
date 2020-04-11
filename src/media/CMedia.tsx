@@ -8,10 +8,12 @@ import { QueryPager } from "tonva";
 import { VShowImg } from "./VShowImg";
 import { VEdit } from "./VEdit";
 import { VChangeNames } from "./VChangeNames";
+import { VCat } from "./VCat";
 
 export class CMedia extends CUqBase {
     @observable pageMedia: QueryPager<any>;
     @observable current: any;
+    @observable pageCat: any;
 
     protected async internalStart(param: any) { }
 
@@ -19,6 +21,7 @@ export class CMedia extends CUqBase {
         this.pageMedia = new QueryPager(this.uqs.webBuilder.SearchImage, 15, 30);
         this.pageMedia.first({ key: key });
     };
+
 
     //添加任务
     saveItem = async (id: any, param: any) => {
@@ -65,9 +68,19 @@ export class CMedia extends CUqBase {
     };
 
     onRem = async (id: number) => {
-        this.current = await this.uqs.webBuilder.Image.save(id, {isValid: 0});
+        this.current = await this.uqs.webBuilder.Image.save(id, { isValid: 0 });
         this.searchMadiaKey("");
     }
+
+    showCat = async () => {
+        await this.searchCat("0");
+        this.openVPage(VCat)
+    }
+
+    searchCat = async (parent: string) => {
+        this.pageCat = new QueryPager(this.uqs.webBuilder.SearchCat, 15, 30);
+        this.pageCat.first({ parent: parent });
+    };
 
     tab = () => {
         return <this.render />;

@@ -2,7 +2,7 @@ import * as React from "react";
 import { consts } from "consts";
 import { CMedia } from "./CMedia";
 import { observer } from "mobx-react";
-import { VPage, Page, SearchBox, Loading, FA, Tuid } from "tonva";
+import { VPage, Page, SearchBox, Loading, FA, Tuid, LMR } from "tonva";
 import copy from 'copy-to-clipboard';
 
 export class VMain extends VPage<CMedia> {
@@ -14,7 +14,7 @@ export class VMain extends VPage<CMedia> {
     }
 
     private page = observer(() => {
-        let { pageMedia, searchMadiaKey, onAddClick } = this.controller;
+        let { pageMedia, searchMadiaKey, onAddClick, showCat } = this.controller;
         let right = <div className="w-19c d-flex">
             <SearchBox className="w-80 mt-1 mr-2"
                 size='sm'
@@ -42,6 +42,10 @@ export class VMain extends VPage<CMedia> {
             });
         }
         return <Page header={this.t('picture')} headerClassName={consts.headerClass} right={right} onScrollBottom={this.onScrollBottom}>
+
+            <LMR className="bg-white py-3 my-1" right={<i className=" px-2 iconfont icon-jiantou1"></i>} onClick={showCat} >
+                <div className="mx-3 px-2 font-weight-bold">图片分类</div>
+            </LMR>
             <div className="mx-3">
                 <div className="row row-cols-2 row-cols-sm-3 row-cols-md-4">
                     {divItems}
