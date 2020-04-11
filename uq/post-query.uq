@@ -134,7 +134,9 @@ PAGE (
 
 
 /** 搜索栏目 **/
-QUERY SearchSubject()
+QUERY SearchSubject(
+    _parent ID Subject
+)
 PAGE (
     id bigint desc,
     name char(100)
@@ -142,6 +144,7 @@ PAGE (
     PAGE select p.id, p.name 
     from   Subject as p
     where  p.id < $pageStart and p.isValid = 1 
+           and p.parent = _parent
     order by p.id desc
     limit $pageSize;
 };

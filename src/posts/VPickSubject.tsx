@@ -20,12 +20,19 @@ export class VPickSubject extends VPage<CPosts> {
     });
 
     private renderItem = (model: any, index: number) => {
-        let { onPickSubject } = this.controller;
-        let { name } = model;
+        let { onPickSubject, searchSubject } = this.controller;
+        let { name, id } = model;
         return (
             <div className="pl-2 pl-sm-3 pr-2 pr-sm-3 pt-2 pb-3 d-flex">
                 <div className="d-flex flex-fill mx-2" onClick={() => onPickSubject(model)} >
                     <span>{name}</span>
+                </div>
+                <div onClick={() => searchSubject(id)} >
+                    <div className="small d-flex cursor-pointer text-primary text-right w-7c ">
+                        <button className="btn btn-outline-info mx-2 px-3">
+                            下一级
+                        </button>
+                    </div>
                 </div>
             </div >
         );

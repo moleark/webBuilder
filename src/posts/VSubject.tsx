@@ -20,8 +20,8 @@ export class VSubject extends VPage<CPosts> {
     });
 
     private renderItem = (model: any, index: number) => {
-        let { showSubjectPost } = this.controller;
-        let { name } = model;
+        let { showSubjectPost, searchSubject } = this.controller;
+        let { name, id } = model;
         return (
             <div className="pl-2 pl-sm-3 pr-2 pr-sm-3 pt-2 pb-3 d-flex">
                 <div className="d-flex flex-fill mx-2" >
@@ -31,6 +31,13 @@ export class VSubject extends VPage<CPosts> {
                     <div className="small d-flex cursor-pointer text-primary text-right w-7c ">
                         <button className="btn btn-outline-info mx-2 px-3">
                             贴  文
+                        </button>
+                    </div>
+                </div>
+                <div onClick={() => searchSubject(id)} >
+                    <div className="small d-flex cursor-pointer text-primary text-right w-7c ">
+                        <button className="btn btn-outline-info mx-2 px-3">
+                            下一级
                         </button>
                     </div>
                 </div>

@@ -74,7 +74,7 @@ export class VMain extends VPage<CPosts> {
                 <LMR className="bg-white py-3 my-1" right={<i className=" px-2 iconfont icon-jiantou1"></i>} onClick={showProductCatalog}>
                     <div className="mx-3 px-2 font-weight-bold">产品目录</div>
                 </LMR>
-                <LMR className="bg-white py-3 my-1" right={<i className=" px-2 iconfont icon-jiantou1"></i>} onClick={showSubject}>
+                <LMR className="bg-white py-3 my-1" right={<i className=" px-2 iconfont icon-jiantou1"></i>} onClick={() => showSubject(0)}>
                     <div className="mx-3 px-2 font-weight-bold">帖文栏目</div>
                 </LMR>
                 <List before={""} none={none} items={pagePosts} item={{ render: this.renderItem }} />

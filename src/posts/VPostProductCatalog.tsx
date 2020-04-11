@@ -33,16 +33,7 @@ export class VPostProductCatalog extends VPage<CPosts> {
                 <div>
                     {item.name}
                 </div>
-                <div
-                    className="px-4 py-3 cursor-pointer"
-                    style={{
-                        backgroundColor: "#f9f9f9",
-                        width: "90%",
-                        borderRadius: "8px",
-                        margin: "-4rem auto 2rem auto",
-                        boxShadow: "2px 2px 15px #333333"
-                    }}
-                >
+                <div>
                     <span className="small px-2 text-primary">节点分类</span>
                     <span className="text-danger" onClick={() => delPostProductCatalog(item.post.id, item.productCategory.id)}>
                         <span className="iconfont icon-shanchu pl-1"></span>

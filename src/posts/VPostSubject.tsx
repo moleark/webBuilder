@@ -13,7 +13,7 @@ export class VPostSubject extends VPage<CPosts> {
     private page = observer(() => {
         let { pagePostSubject, pickSubject } = this.controller;
         let right = (
-            <div className="d-flex align-items-center" onClick={pickSubject}>
+            <div className="d-flex align-items-center" onClick={() => pickSubject(0)}>
                 <div>
                     <span className="mx-sm-2 iconfont icon-jiahao1 cursor-pointer" style={{ fontSize: "1.7rem", color: "white" }}></span>
                 </div>

@@ -67,6 +67,7 @@ History PostEvaluateRecord (
 TUID  Subject (
     id,
     main name char(100),
+    parent ID Subject,
     isValid tinyint default 1,
     stamp (create, update),
 );

@@ -302,7 +302,7 @@ export class CPosts extends CUqBase {
 
     pickSubject = async (param: any) => {
         this.pageSubject = new QueryPager(this.uqs.webBuilder.SearchSubject, 15, 30);
-        this.pageSubject.first({})
+        this.pageSubject.first({ _parent: param })
         return await this.vCall(VPickSubject);
     }
 
@@ -317,10 +317,14 @@ export class CPosts extends CUqBase {
         this.pagePostSubject = await this.uqs.webBuilder.SearchPostSubject.table({ _post: this.current.id })
     }
 
-    showSubject = async () => {
-        this.pageSubject = new QueryPager(this.uqs.webBuilder.SearchSubject, 15, 30);
-        this.pageSubject.first({})
+    showSubject = async (param: any) => {
+        this.searchSubject(param);
         return await this.vCall(VSubject);
+    }
+
+    searchSubject = async (param: any) => {
+        this.pageSubject = new QueryPager(this.uqs.webBuilder.SearchSubject, 15, 30);
+        this.pageSubject.first({ _parent: param })
     }
 
     showSubjectPost = async (param: any) => {
