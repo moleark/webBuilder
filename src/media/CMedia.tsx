@@ -12,6 +12,8 @@ import { VCat } from "./VCat";
 import { VPickCat } from "./VPickCat";
 import { VCatImage } from "./VCatImage";
 import { VSlideShow } from "./VSlideShow";
+import { VPickImage } from "posts/VPickImage";
+import { VEditSlideShow } from "./VEditSlideShow";
 
 export class CMedia extends CUqBase {
     @observable pageMedia: QueryPager<any>;
@@ -20,6 +22,7 @@ export class CMedia extends CUqBase {
 
     @observable pageImageCat: QueryPager<any>;
     @observable pageCatImage: QueryPager<any>;
+    @observable pageSlideShow: QueryPager<any>;
 
     protected async internalStart(param: any) { }
 
@@ -125,28 +128,43 @@ export class CMedia extends CUqBase {
     };
 
 
-    showSlideShow = () => {
+    showSlideShow = async () => {
+        await this.searchSlideShow();
         this.openVPage(VSlideShow);
     }
 
     searchSlideShow = () => {
-
-    }
-
-    addSlideShow = () => {
-
-    }
-
-    delSlideShow = () => {
-
-    }
-
-    pubSlideShow = () => {
-
+        this.pageSlideShow = new QueryPager(this.uqs.webBuilder.SearchSlideShow, 15, 30);
+        this.pageSlideShow.first({});
     }
 
 
+    pickImage = async () => {
+        this.searchMadiaKey("");
+        return await this.vCall(VPickImage);
+    };
 
+    onPickedImage = async (image: any) => {
+        this.closePage();
+        await this.uqs.webBuilder.UpdateSlideShow.submit({ image: image, types: 0, sort: 1 })
+        await this.searchSlideShow();
+    };
+
+    delSlideShow = async (image: any) => {
+        //await this.uqs.webBuilder.SlideShow.del({ image: image.id, arr1: [{}] })
+        await this.uqs.webBuilder.DeleteSlideShow.submit({ _image: image.id });
+        await this.searchSlideShow();
+    }
+
+    showEditSlideShow = (param: any) => {
+        this.openVPage(VEditSlideShow, param);
+    }
+
+    updateSlideShow = async (image: any, types: any, sort: any) => {
+        let type = types ? 1 : 0;
+        await this.uqs.webBuilder.UpdateSlideShow.submit({ image: image, types: type, sort: sort })
+        await this.searchSlideShow();
+    }
 
     tab = () => {
         return <this.render />;

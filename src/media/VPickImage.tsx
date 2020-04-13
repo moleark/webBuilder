@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { VPage, Page, SearchBox, Loading, Tuid } from "tonva";
-import { CPosts } from "./CPosts";
+import { CMedia } from "./CMedia";
 import { observer } from 'mobx-react';
 import { consts } from 'consts';
 
-export class VPickImage extends VPage<CPosts> {
+export class VPickImage extends VPage<CMedia> {
     async open() {
         this.openPage(this.page);
     }

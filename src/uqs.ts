@@ -64,6 +64,11 @@ export interface WebBuilder {
     SearchImageCat: Query;
     SearchCatImage: Query;
     SearchCat: Query;
+    SlideShow: Map;
+    UpdateSlideShow: Action;
+    DeleteSlideShow: Action;
+    SearchSlideShow: Query;
+
 }
 
 export interface UQs {

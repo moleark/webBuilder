@@ -1,6 +1,6 @@
 import * as React from "react";
 import { CMedia } from './CMedia';
-import { VPage, Page, EasyTime, Tuid, FA, LMR, tv } from "tonva";
+import { VPage, Page, FA, Loading } from "tonva";
 import { observer } from "mobx-react";
 import { consts } from "consts";
 
@@ -10,27 +10,70 @@ export class VSlideShow extends VPage<CMedia> {
     }
 
     private page = observer(() => {
-        let { current } = this.controller;
-        let { caption, author, template, $update } = current;
-        let date = <span><EasyTime date={$update} /></span>;
-        let isMe = Tuid.equ(author, this.controller.user.id);
-        let right = isMe && <button className="btn btn-sm btn-success mr-2 align-self-center"><FA name="pencil-square-o" /></button>
 
-        let divUser = this.controller.cApp.renderUser(author.id);
-        return <Page header={this.t('editorpicture')} headerClassName={consts.headerClass} right={right}>
-            <div className="p-3">
-                <div className="small text-muted p-1">{this.t('title')}</div>
-                <div className="mb-1 h6 px-3 py-2 bg-white">{caption}</div>
-                <LMR className="mb-3 px-3 small text-black-50" right={date}>
-                    {divUser}
-                </LMR>
-                <div className="small text-muted p-1">{this.t('describe')}</div>
-                <div className="small text-muted p-1">{this.t('content')}</div>
-                <div className="small text-muted p-1">{this.t('template')}</div>
-                <div className="mb-3 px-3 py-2 bg-white h6">
-                    {tv(template, (values) => <>{values.caption}</>, undefined, () => <small className="text-muted" >[无]</small>)}
+        let { pageSlideShow, pickImage } = this.controller;
+        let right = <span onClick={pickImage} className="mx-sm-2 iconfont icon-jiahao1 cursor-pointer" style={{ fontSize: "1.7rem", color: "white" }}></span>
+        let { items, loading } = pageSlideShow;
+        let divItems: any;
+        if (!items) {
+            divItems = (loading === true) ?
+                <div className="m-5"><Loading /></div>
+                :
+                <div className="my-3 mx-2 text-warning">
+                    <span className="text-primary" >{this.t('nopicture')}</span>
+                </div>;
+        } else {
+            divItems = items.map((v, index) => {
+                return this.renderItem(v, index)
+            });
+        }
+
+        return <Page header={this.t('轮播图')} headerClassName={consts.headerClass} right={right}>
+            <div className="mx-3">
+                <div className="row row-cols-2 row-cols-sm-3 row-cols-md-4">
+                    {divItems}
                 </div>
             </div>
         </Page>;
     })
+
+
+
+    private preview = (path: any) => {
+        window.open(path, '_blank')
+    }
+
+
+    private renderItem = (item: any, index: number) => {
+        let { onimgNames, delSlideShow, showEditSlideShow } = this.controller;
+
+        let { caption, path, id, image, sort, types } = item;
+        let imgStyle = {
+            backgroundImage: `url(${path})`,
+        }
+        let type = types ? "是" : "否";
+        let divImg = <div className="d-flex align-items-center bg-white rounded  cursor-pointer"
+            onClick={() => this.preview(item.path)}>
+            <div className="w-100 h-100 bg-center-img h-min-12c " style={imgStyle}>
+            </div>
+        </div>;
+
+        return <div key={index} className="col px-3 py-2 border-bottom border-dark">
+            <div className="text-info bg-light p-2 d-flex text-nowrap cursor-pointer border-bottom">
+                <div className="d-flex flex-fill" onClick={() => onimgNames(id)} >
+                    <div className="overflow-hidden flex-fill small">{caption}</div>
+                    <div className="iconfont icon-shanchu pl-1" onClick={() => delSlideShow(image)} ></div>
+                </div>
+            </div>
+            {divImg}
+            <div className="text-info bg-light p-2 d-flex text-nowrap cursor-pointer border-bottom">
+                <div className="d-flex  flex-fill smallPath small my-2  text-primary cursor-pointer position-relative">
+                    <div className="overflow-hidden flex-fill small px-3">发布：{type}</div>
+                    <div className="overflow-hidden flex-fill small px-3">排序：{sort}</div>
+                    <div onClick={() => showEditSlideShow(item)}><FA name="edit" /></div>
+                </div>
+            </div>
+        </div>;
+
+    }
 }

@@ -19,6 +19,13 @@ MAP ImageCat (
 );
 
 
+MAP SlideShow (
+    key image ID IMAGE,
+    types tinyint,
+    sort tinyint
+);
+
+
 /** 搜索我的图片*/
 QUERY SearchCat( 
     parent ID IMGCat
@@ -93,4 +100,37 @@ PAGE (
             join IMGCat as p on p.id = c.cat 
     where   c.image = image
     limit $pageSize;
+};
+ 
+QUERY SearchSlideShow ()
+PAGE(
+    id bigint desc,
+    image ID IMAGE,
+    caption char(100),
+    path char(100),
+    author ID [$user],
+    sort tinyint,
+    types tinyint
+) {
+    PAGE select  s.sort as id, p.id as image, p.caption, p.path, p.author, s.sort, s.types
+    from    SlideShow as s 
+            join IMAGE as p on s.image = p.id
+    where   s.sort < $pageStart and p.isValid = 1
+    order by s.sort desc
+    limit $pageSize;
+};
+
+
+ACTION UpdateSlideShow(
+    image ID IMAGE,
+    types tinyint,
+    sort tinyint
+){
+     BOOK SlideShow at(image) set types=types, sort= sort ;
+};
+
+ACTION DeleteSlideShow(
+    _image ID IMAGE
+){
+     delete from  SlideShow  where image = _image;
 };
