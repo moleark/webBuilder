@@ -9,11 +9,17 @@ import { VShowImg } from "./VShowImg";
 import { VEdit } from "./VEdit";
 import { VChangeNames } from "./VChangeNames";
 import { VCat } from "./VCat";
+import { VPickCat } from "./VPickCat";
+import { VCatImage } from "./VCatImage";
+import { VSlideShow } from "./VSlideShow";
 
 export class CMedia extends CUqBase {
     @observable pageMedia: QueryPager<any>;
     @observable current: any;
     @observable pageCat: any;
+
+    @observable pageImageCat: QueryPager<any>;
+    @observable pageCatImage: QueryPager<any>;
 
     protected async internalStart(param: any) { }
 
@@ -51,6 +57,7 @@ export class CMedia extends CUqBase {
 
     onimgNames = async (id: number) => {
         this.current = await this.uqs.webBuilder.Image.load(id);
+        await this.searchImageCat(id);
         this.openVPage(VChangeNames);
     }
 
@@ -59,6 +66,7 @@ export class CMedia extends CUqBase {
     });
 
     showMedia = async (id: number) => {
+        await this.searchImageCat(id);
         this.current = await this.uqs.webBuilder.Image.load(id);
         this.openVPage(VShowImg);
     };
@@ -72,6 +80,30 @@ export class CMedia extends CUqBase {
         this.searchMadiaKey("");
     }
 
+
+    showPickCat = async () => {
+        await this.searchCat("0");
+        this.openVPage(VPickCat);
+    }
+
+    onPickCat = async (image: any, cat: any) => {
+        await this.uqs.webBuilder.ImageCat.add({ image: image, arr1: [{ cat: cat }] });
+        await this.searchImageCat(image);
+    }
+
+    searchImageCat = async (image: any, ) => {
+        this.pageImageCat = new QueryPager(this.uqs.webBuilder.SearchImageCat, 15, 30);
+        this.pageImageCat.first({ image: image });
+        this.closePage();
+    };
+
+    delImageCat = async (cat: any) => {
+        await this.uqs.webBuilder.ImageCat.del({ image: this.current.id, arr1: [{ cat: cat }] });
+        this.pageImageCat = new QueryPager(this.uqs.webBuilder.SearchImageCat, 15, 30);
+        this.pageImageCat.first({ image: this.current.id });
+    };
+
+
     showCat = async () => {
         await this.searchCat("0");
         this.openVPage(VCat)
@@ -81,6 +113,40 @@ export class CMedia extends CUqBase {
         this.pageCat = new QueryPager(this.uqs.webBuilder.SearchCat, 15, 30);
         this.pageCat.first({ parent: parent });
     };
+
+    showCatImage = async (cat: any) => {
+        await this.searchCatImage("", cat);
+        this.openVPage(VCatImage, cat);
+    }
+
+    searchCatImage = async (key: any, cat: any) => {
+        this.pageCatImage = new QueryPager(this.uqs.webBuilder.SearchCatImage, 15, 30);
+        this.pageCatImage.first({ key: key, cat: cat });
+    };
+
+
+    showSlideShow = () => {
+        this.openVPage(VSlideShow);
+    }
+
+    searchSlideShow = () => {
+
+    }
+
+    addSlideShow = () => {
+
+    }
+
+    delSlideShow = () => {
+
+    }
+
+    pubSlideShow = () => {
+
+    }
+
+
+
 
     tab = () => {
         return <this.render />;

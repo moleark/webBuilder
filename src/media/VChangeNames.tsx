@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { VPage, Form, UiSchema, Schema, Page, Edit, ItemSchema } from "tonva";
+import { VPage, Form, UiSchema, Schema, Page, Edit, ItemSchema, List } from "tonva";
 import { observer } from 'mobx-react';
 import { consts } from 'consts';
 import { CMedia } from './CMedia';
@@ -38,14 +38,18 @@ export class VChangeNames extends VPage<CMedia> {
     }
 
     private page = observer(() => {
-        let { current } = this.controller;
+        let { current, showPickCat, pageImageCat } = this.controller;
         let right = <div>
+            <button type="button"
+                className="btn btn-sm btn-success mr-3"
+                onClick={showPickCat} >{this.t('分类')}
+            </button>
             <button type="button"
                 className="btn btn-sm btn-success mr-3"
                 onClick={this.onClickSaveButton} >{this.t('submit')}
             </button>
         </div>;
-        return <Page header={this.t('editorpost')}
+        return <Page header={this.t('editorpicture')}
             right={right}
             headerClassName={consts.headerClass}>
             <div className="mx-3 py-2 h-100 d-flex flex-column">
@@ -54,7 +58,30 @@ export class VChangeNames extends VPage<CMedia> {
                     uiSchema={this.uiSchema}
                     onItemChanged={this.onItemChanged}
                 />
+
+                <div className="py-2 my-1 text-primary" >
+                    <strong>类型</strong>
+                </div>
+                <List before={""} none={"无"} items={pageImageCat} item={{ render: this.renderItem }} />
             </div>
         </Page>
     })
+
+    private renderItem = (item: any, index: number) => {
+        let { delImageCat } = this.controller
+        let { name, id } = item
+        return (
+            <div className="pl-2 pl-sm-3 pr-2 pr-sm-3 py-2 d-flex">
+                <div className="d-flex flex-fill mx-2"  >
+                    <span>{name}</span>
+                </div>
+                <div>
+                    <span className="text-danger" onClick={() => delImageCat(id)}>
+                        <span className="iconfont icon-shanchu pl-1"></span>
+                    </span>
+                </div>
+            </div>
+        );
+    };
+
 }

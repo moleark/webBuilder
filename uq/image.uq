@@ -57,8 +57,8 @@ PAGE (
 };
 
 
-/** 搜索我的图片*/
-QUERY SearchImageByCat( 
+/** 搜索我类型的图片*/
+QUERY SearchCatImage( 
     key char(100),
     cat ID IMGCat
 )
@@ -77,5 +77,20 @@ PAGE (
             join ImageCat as c on p.id = c.image 
     where   p.id < $pageStart and c.cat = cat and p.isValid = 1 and ( p.caption like key2 or key is null )
     order by p.id desc
+    limit $pageSize;
+};
+
+/** 搜索图片的类型*/
+QUERY SearchImageCat( 
+    image ID IMAGE
+)
+PAGE (
+    id bigint desc,
+    name char(100)
+) {
+    PAGE select p.id, p.name
+    from    ImageCat as c
+            join IMGCat as p on p.id = c.cat 
+    where   c.image = image
     limit $pageSize;
 };

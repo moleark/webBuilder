@@ -2,23 +2,23 @@ import * as React from "react";
 import { consts } from "consts";
 import { CMedia } from "./CMedia";
 import { observer } from "mobx-react";
-import { VPage, Page, SearchBox, Loading, FA, Tuid, LMR } from "tonva";
+import { VPage, Page, SearchBox, Loading, FA, Tuid } from "tonva";
 import copy from 'copy-to-clipboard';
 
-export class VMain extends VPage<CMedia> {
-    async open() {
-    }
+export class VCatImage extends VPage<CMedia> {
 
-    render(member: any): JSX.Element {
-        return <this.page />
+    private cat: any
+    async open(param: any) {
+        this.cat = param;
+        this.openPage(this.page)
     }
 
     private page = observer(() => {
-        let { pageMedia, searchMadiaKey, onAddClick, showCat } = this.controller;
+        let { pageCatImage, searchCatImage, onAddClick } = this.controller;
         let right = <div className="w-19c d-flex">
             <SearchBox className="w-80 mt-1 mr-2"
                 size='sm'
-                onSearch={(key: string) => searchMadiaKey(key)}
+                onSearch={(key: string) => searchCatImage(key, this.cat)}
                 placeholder={this.t('searchpicture')} />
             <div onClick={onAddClick}>
                 <span className="ml-2 iconfont icon-jiahao1 mr-2"
@@ -26,7 +26,7 @@ export class VMain extends VPage<CMedia> {
                 </span>
             </div>
         </div>;
-        let { items, loading } = pageMedia;
+        let { items, loading } = pageCatImage;
         let divItems: any;
         if (!items) {
             divItems = (loading === true) ?
@@ -42,13 +42,6 @@ export class VMain extends VPage<CMedia> {
             });
         }
         return <Page header={this.t('picture')} headerClassName={consts.headerClass} right={right} onScrollBottom={this.onScrollBottom}>
-
-            <LMR className="bg-white py-3 my-1" right={<i className=" px-2 iconfont icon-jiantou1"></i>} onClick={showCat} >
-                <div className="mx-3 px-2 font-weight-bold">图片分类</div>
-            </LMR>
-            <LMR className="bg-white py-3 my-1" right={<i className=" px-2 iconfont icon-jiantou1"></i>} onClick={showCat} >
-                <div className="mx-3 px-2 font-weight-bold">轮播图</div>
-            </LMR>
             <div className="mx-3">
                 <div className="row row-cols-2 row-cols-sm-3 row-cols-md-4">
                     {divItems}
@@ -129,11 +122,3 @@ export class VMain extends VPage<CMedia> {
 
     }
 }
-/*
-<button
-style={{ fontWeight: 550, padding: '0 5px', fontSize: '12px' }}
-className="mt-2 btn btn-outline-primary"
-onClick={this.copyClick}>
-{this.t('copy')}
-</button >
-*/

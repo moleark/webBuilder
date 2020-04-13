@@ -4,7 +4,7 @@ import { VPage, Page, EasyTime, Tuid, FA, LMR, tv } from "tonva";
 import { observer } from "mobx-react";
 import { consts } from "consts";
 
-export class VShowImg extends VPage<CMedia> {
+export class VSlideShow extends VPage<CMedia> {
     async open() {
         this.openPage(this.page);
     }
