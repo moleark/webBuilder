@@ -20,6 +20,7 @@ export class CMedia extends CUqBase {
     @observable current: any;
     @observable pageCat: any;
 
+
     @observable pageImageCat: QueryPager<any>;
     @observable pageCatImage: QueryPager<any>;
     @observable pageSlideShow: QueryPager<any>;
@@ -51,6 +52,7 @@ export class CMedia extends CUqBase {
             this.current = param;
         }
         this.searchMadiaKey("");
+
     };
 
     onAddClick = () => {
@@ -83,7 +85,7 @@ export class CMedia extends CUqBase {
         this.searchMadiaKey("");
     }
 
-
+    //图片分类
     showPickCat = async () => {
         await this.searchCat("0");
         this.openVPage(VPickCat);
@@ -97,7 +99,6 @@ export class CMedia extends CUqBase {
     searchImageCat = async (image: any, ) => {
         this.pageImageCat = new QueryPager(this.uqs.webBuilder.SearchImageCat, 15, 30);
         this.pageImageCat.first({ image: image });
-        this.closePage();
     };
 
     delImageCat = async (cat: any) => {
@@ -109,7 +110,7 @@ export class CMedia extends CUqBase {
 
     showCat = async () => {
         await this.searchCat("0");
-        this.openVPage(VCat)
+        this.openVPage(VCat, "图片分类")
     }
 
     searchCat = async (parent: string) => {
@@ -128,6 +129,7 @@ export class CMedia extends CUqBase {
     };
 
 
+    //轮播图
     showSlideShow = async () => {
         await this.searchSlideShow();
         this.openVPage(VSlideShow);

@@ -3,13 +3,18 @@ import { VPage, Form, UiSchema, Schema, Page, Edit, ItemSchema, List } from "ton
 import { observer } from 'mobx-react';
 import { consts } from 'consts';
 import { CMedia } from './CMedia';
-
+import { observable } from 'mobx';
 
 export class VChangeNames extends VPage<CMedia> {
+
     private form: Form;
+    @observable showTips: any = "none";
+
     async open() {
         this.openPage(this.page);
     }
+
+
 
     private onItemChanged = async (itemSchema: ItemSchema, newValue: any, preValue: any) => {
         let { name } = itemSchema;
@@ -37,9 +42,23 @@ export class VChangeNames extends VPage<CMedia> {
         return <this.page />
     }
 
+
+    sets = async () => {
+        let { current, updateSlideShow } = this.controller;
+        this.showTips = "";
+        setTimeout(() => {
+            this.showTips = "none";
+        }, 2000);
+        await updateSlideShow(current.id, 0, 1)
+    }
+
     private page = observer(() => {
         let { current, showPickCat, pageImageCat } = this.controller;
         let right = <div>
+            <button type="button"
+                className="btn btn-sm btn-success mr-3"
+                onClick={this.sets} >{this.t('设为轮播图')}
+            </button>
             <button type="button"
                 className="btn btn-sm btn-success mr-3"
                 onClick={showPickCat} >{this.t('分类')}
@@ -48,7 +67,7 @@ export class VChangeNames extends VPage<CMedia> {
                 className="btn btn-sm btn-success mr-3"
                 onClick={this.onClickSaveButton} >{this.t('submit')}
             </button>
-        </div>;
+        </div >;
         return <Page header={this.t('editorpicture')}
             right={right}
             headerClassName={consts.headerClass}>
@@ -58,11 +77,13 @@ export class VChangeNames extends VPage<CMedia> {
                     uiSchema={this.uiSchema}
                     onItemChanged={this.onItemChanged}
                 />
-
                 <div className="py-2 my-1 text-primary" >
                     <strong>类型</strong>
                 </div>
                 <List before={""} none={"无"} items={pageImageCat} item={{ render: this.renderItem }} />
+            </div>
+            <div className="w-100 text-center">
+                <div className="text-center text-white small px-2" style={{ width: '20%', margin: '-30rem auto 0 auto', padding: '4px', borderRadius: '3px', backgroundColor: '#505050', display: this.showTips }}>设置完成</div>
             </div>
         </Page>
     })
@@ -83,5 +104,4 @@ export class VChangeNames extends VPage<CMedia> {
             </div>
         );
     };
-
 }

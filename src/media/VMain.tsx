@@ -85,7 +85,6 @@ export class VMain extends VPage<CMedia> {
         let imgStyle = {
             backgroundImage: `url(${path})`,
         }
-        //let right = <div className="border p-1"><img className="h-4c w-4c" src={path} /></div>;
 
         let divImg = <div className="d-flex align-items-center bg-white rounded  cursor-pointer"
             onClick={() => this.preview(item.path)}>
