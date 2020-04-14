@@ -95,46 +95,6 @@ export class VTeamAchievement extends VPage<CMe> {
 
     });
 
-    private teamAchievementDetail = observer(() => {
-        let { teamAchievementDetail } = this.controller;
-        if (!teamAchievementDetail) return;
-
-        let contentdetail = teamAchievementDetail.map((v, index) => {
-            let { author, montha, postPubSum, postTranSum, postHitSum } = v;
-            let typeshow: any;
-            if (montha == "week") {
-                typeshow = "近一周"
-            } else if (montha == "all") {
-                typeshow = "合计"
-            } else {
-                typeshow = montha + "月";
-            }
-
-            return <tr className="col dec px-3 py-2 bg-white">
-                <td className="w-3"> {typeshow}</td >
-                <td className="w-3"> {author.id}</td >
-                <td className="w-3">{postPubSum}</td>
-                <td className="w-3">{postTranSum}</td>
-                <td className="w-3">{postHitSum}</td>
-            </tr >;
-        });
-
-        return <table className="table text-center small">
-            <thead className="text-primary">
-                <tr className="bg-white">
-                    <th>范围</th>
-                    <th>员工</th>
-                    <th>发布量</th>
-                    <th>转发量</th>
-                    <th>浏览量</th>
-                </tr>
-            </thead>
-            <tbody>
-                {contentdetail}
-            </tbody>
-        </table>
-    });
-
     private page = observer(() => {
         let header: any = <div>{this.t('团队业绩')}</div>
         return <Page header={header} headerClassName={setting.pageHeaderCss} >

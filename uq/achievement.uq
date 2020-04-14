@@ -90,7 +90,8 @@ QUERY SearchAchievementOfTeamDetail(
     _year int,
     _type char(10)
 )
-returns ret (
+PAGE (
+    id bigint desc,
     yeara   char(10),
     montha  char(20),
     author ID [$user],
@@ -98,30 +99,28 @@ returns ret (
     postTranSum int,    --post转发次数
     postHitSum int      --post访问次数
 ) {
-
     if(_type='week'){
         VAR calcTick INT, weekTick INT;
         SET calcTick = unix_timestamp();
         SET weekTick = 7*24*3600;
-        into ret select  max(year(a.date)) as yeara , 'week' as montha, author, sum(a.postPubSum) as postPubSum, sum(a.postTranSum) as postTranSum, sum(a.postHitSum) as postHitSum
+        PAGE select  0 as id, max(year(a.date)) as yeara , 'week' as montha, author, sum(a.postPubSum) as postPubSum, sum(a.postTranSum) as postTranSum, sum(a.postHitSum) as postHitSum
         from    Achievement as a
         where   a.manage = _manage
                 and a.date>=FROM_UNIXTIME(calcTick - weekTick)
                 and a.user <> 0
-        group by a.user  as author
+        group by a.user as author
         order by sum(a.postHitSum) desc;
-
 
     }else if(_type='all'){
 
-        into ret select  yeara, 'all' as montha, author, sum(a.postPubSum) as postPubSum, sum(a.postTranSum) as postTranSum, sum(a.postHitSum) as postHitSum
+        PAGE select  0 as id, yeara, 'all' as montha, author, sum(a.postPubSum) as postPubSum, sum(a.postTranSum) as postTranSum, sum(a.postHitSum) as postHitSum
         from    Achievement as a
         where    a.manage = _manage and year(a.date) = _year and a.user <> 0
         group by year(a.date) as yeara, a.user  as author
         order by sum(a.postHitSum) desc;
 
     }else {
-        into ret select yeara, montha, author, sum(a.postPubSum) as postPubSum, sum(a.postTranSum) as postTranSum, sum(a.postHitSum) as postHitSum
+        PAGE select  0 as id, yeara, montha, author, sum(a.postPubSum) as postPubSum, sum(a.postTranSum) as postTranSum, sum(a.postHitSum) as postHitSum
         from    Achievement as a
         where    a.manage = _manage and year(a.date) = _year and month(a.date) = _type and a.user <> 0
         group by year(a.date) as yeara, month(a.date) as montha, a.user as author

@@ -28,7 +28,7 @@ export class CMe extends CUqBase {
     @observable Achievement: any[] = [{ montha: "", yeara: "", postPubSum: 0, postTranSum: 0, postHitSum: 0 }];
     @observable teamAchievementWeek: any[] = [{ montha: "", yeara: "", postPubSum: 0, postTranSum: 0, postHitSum: 0 }];
     @observable teamAchievementMonth: any[] = [{ montha: "", yeara: "", postPubSum: 0, postTranSum: 0, postHitSum: 0 }];
-    @observable teamAchievementDetail: any[] = [{ montha: "", yeara: "", author: "", postPubSum: 0, postTranSum: 0, postHitSum: 0 }];
+    @observable teamAchievementDetail: QueryPager<any>;
 
     private year: any
     searchMadiaKey = async (key: string) => {
@@ -135,7 +135,12 @@ export class CMe extends CUqBase {
     }
 
     showTeamAchievementDetail = async (manage: any, year: any, type: any) => {
-        this.teamAchievementDetail = await this.uqs.webBuilder.SearchAchievementOfTeamDetail.table({ _manage: 0, _year: year, _type: type });
+        // this.teamAchievementDetail = await this.uqs.webBuilder.SearchAchievementOfTeamDetail.table({ _manage: 0, _year: year, _type: type });
+        this.teamAchievementDetail = new QueryPager(this.uqs.webBuilder.SearchAchievementOfTeamDetail, 15, 30);
+        this.teamAchievementDetail.setEachPageItem((item: any, results: { [name: string]: any[] }) => {
+            this.cApp.useUser(item.author);
+        });
+        this.teamAchievementDetail.first({ _manage: 0, _year: year, _type: type });
         this.openVPage(VTeamAchievementDetail, type)
     }
 

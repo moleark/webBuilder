@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { VPage, Page } from 'tonva';
+import { VPage, Page, Loading } from 'tonva';
 import { CMe } from './CMe';
 import { setting } from '../configuration';
 import { observer } from 'mobx-react';
@@ -13,36 +13,6 @@ export class VTeamAchievementDetail extends VPage<CMe> {
         this.openPage(this.page);
     }
 
-    private teamAchievement = observer(() => {
-        let { teamAchievementDetail, showTeamAchievementDetail } = this.controller
-        let content = teamAchievementDetail.map((v, index) => {
-            let { yeara, montha, author, postPubSum, postTranSum, postHitSum } = v;
-
-            return <tr className="col dec px-3 py-2 bg-white" onClick={() => showTeamAchievementDetail(0, yeara, montha)}>
-                <td className="w-3">{author.id}</td>
-                <td className="w-3">{postPubSum}</td>
-                <td className="w-3">{postTranSum}</td>
-                <td className="w-3">{postHitSum}</td>
-            </tr >;
-        });
-        return <div>
-            <table className="table text-center small">
-                <thead className="text-primary">
-                    <tr className="bg-white">
-                        <th>员工</th>
-                        <th>发布量</th>
-                        <th>转发量</th>
-                        <th>浏览量</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {content}
-                </tbody>
-            </table>
-        </div>
-    });
-
-
     private page = observer(() => {
         let header: any;
         if (this.type == "week") {
@@ -52,9 +22,52 @@ export class VTeamAchievementDetail extends VPage<CMe> {
         } else {
             header = <div>{this.type}月  报表明细</div>
         }
+
+        let { teamAchievementDetail } = this.controller;
+        let { items, loading } = teamAchievementDetail;
+        let divItems: any;
+        if (!items) {
+            divItems = (loading === true) ?
+                <div className="m-5"><Loading /></div>
+                :
+                <div className="my-3 mx-2 text-warning">
+                    <span className="text-primary" >{this.t('nopicture')}</span>
+                </div>;
+        }
+        else {
+            divItems = items.map((v, index) => {
+                return this.renderItem(v, index)
+            });
+        }
         return <Page header={header} headerClassName={setting.pageHeaderCss} >
-            <this.teamAchievement />
+            <div>
+                <table className="table text-center small">
+                    <thead className="text-primary">
+                        <tr className="bg-white">
+                            <th>员工</th>
+                            <th>发布量</th>
+                            <th>转发量</th>
+                            <th>浏览量</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {divItems}
+                    </tbody>
+                </table>
+            </div>
         </Page >
     })
+
+    private renderItem = (item: any, index: number) => {
+        let { showTeamAchievementDetail } = this.controller
+        let { yeara, montha, author, postPubSum, postTranSum, postHitSum } = item;
+        let authorname = this.controller.cApp.renderUser(author.id);
+        return <tr className="col dec px-3 py-2 bg-white" onClick={() => showTeamAchievementDetail(0, yeara, montha)}>
+            <td className="w-3">{authorname}</td>
+            <td className="w-3">{postPubSum}</td>
+            <td className="w-3">{postTranSum}</td>
+            <td className="w-3">{postHitSum}</td>
+        </tr >;
+    }
 
 }
