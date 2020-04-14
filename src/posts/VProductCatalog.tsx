@@ -23,7 +23,7 @@ export class VProductCatalog extends VPage<CPosts> {
     });
 
     private nextCatalog = async (model: any) => {
-        await this.controller.searchProductCatalogChildrenKey(model.id)
+        await this.controller.searchProductCatalogChildrenKey(model.productCategory.id)
         this.caption = model.name;
     }
 
