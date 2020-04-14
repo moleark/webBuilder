@@ -18,7 +18,7 @@ export class VTeamAchievement extends VPage<CMe> {
         let content = teamAchievementWeek.map((v, index) => {
             let { yeara, montha, postPubSum, postTranSum, postHitSum } = v;
 
-            return <tr className="col dec px-3 py-2 bg-white" onClick={() => showTeamAchievementDetail(0, yeara, montha)}>
+            return <tr className="col dec px-3 py-2 bg-white cursor-pointer" onClick={() => showTeamAchievementDetail(0, yeara, montha)}>
                 <td className="w-3">{postPubSum}</td>
                 <td className="w-3">{postTranSum}</td>
                 <td className="w-3">{postHitSum}</td>
@@ -60,7 +60,7 @@ export class VTeamAchievement extends VPage<CMe> {
             } else {
                 typeshow = montha + "月";
             }
-            return <tr className="col dec px-3 py-2 bg-white" onClick={() => showTeamAchievementDetail(0, yeara, montha)}>
+            return <tr className="col dec px-3 py-2 bg-white cursor-pointer" onClick={() => showTeamAchievementDetail(0, yeara, montha)}>
                 <td className="w-3"> {typeshow}</td >
                 <td className="w-3">{postPubSum}</td>
                 <td className="w-3">{postTranSum}</td>
