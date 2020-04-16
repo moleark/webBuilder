@@ -13,6 +13,8 @@ import { VAchievement } from "./VAchievement";
 import { VTeamAchievement } from "./VTeamAchievement";
 import moment from 'moment'
 import { VTeamAchievementDetail } from "./VTeamAchievementDetail";
+import { VCat } from "./VCat";
+import { VEditCat } from "./VEditCat";
 /* eslint-disable */
 
 export class CMe extends CUqBase {
@@ -29,6 +31,7 @@ export class CMe extends CUqBase {
     @observable teamAchievementWeek: any[] = [{ montha: "", yeara: "", postPubSum: 0, postTranSum: 0, postHitSum: 0 }];
     @observable teamAchievementMonth: any[] = [{ montha: "", yeara: "", postPubSum: 0, postTranSum: 0, postHitSum: 0 }];
     @observable teamAchievementDetail: QueryPager<any>;
+    @observable pageCat: any;
 
     private year: any
     searchMadiaKey = async (key: string) => {
@@ -142,6 +145,24 @@ export class CMe extends CUqBase {
         });
         this.teamAchievementDetail.first({ _manage: 0, _year: year, _type: type });
         this.openVPage(VTeamAchievementDetail, type)
+    }
+
+    showCat = async () => {
+        await this.searchCat("0");
+        this.openVPage(VCat, "图片分类")
+    }
+
+    searchCat = async (parent: string) => {
+        this.pageCat = new QueryPager(this.uqs.webBuilder.SearchCat, 15, 30);
+        this.pageCat.first({ parent: parent });
+    };
+
+    showAddCat = async () => {
+        this.openVPage(VEditCat);
+    }
+
+    saveCat = async (id: any, param: any) => {
+        await this.uqs.webBuilder.IMGCat.save(id, param);
     }
 
     render = observer(() => {

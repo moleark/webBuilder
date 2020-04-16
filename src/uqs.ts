@@ -68,6 +68,7 @@ export interface WebBuilder {
     UpdateSlideShow: Action;
     DeleteSlideShow: Action;
     SearchSlideShow: Query;
+    IMGCat: Tuid;
 
 }
 
