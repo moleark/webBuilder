@@ -13,6 +13,25 @@ export class VTeamAchievement extends VPage<CMe> {
         this.openPage(this.page);
     }
 
+    private page = observer(() => {
+        let header: any = <div>{this.t('团队业绩')}</div>
+        return <Page header={header} headerClassName={setting.pageHeaderCss} >
+            <this.teamAchievementWeek />
+            <this.teamAchievementMonth />
+            <div className="footer small px-3 text-primary bg-white">
+                <div> 注：</div>
+                <div className=" px-3">
+                    <li className="py-1">周报：显示近一周产生的业绩。</li>
+                    <li className="py-1">月报：按照自然月统计业绩。</li>
+                    <li className="py-1">发布量：统计时间范围内，发布贴文的次数。</li>
+                    <li className="py-1">转发量：所有贴文在统计时间范围内，被营销转发的次数。</li>
+                    <li className="py-1">浏览量：所有贴文在统计时间范围内，被客户浏览的次数。</li>
+                </div>
+            </div>
+        </Page >
+    })
+
+
     private teamAchievementWeek = observer(() => {
         let { teamAchievementWeek, showTeamAchievementDetail } = this.controller
         let content = teamAchievementWeek.map((v, index) => {
@@ -32,7 +51,7 @@ export class VTeamAchievement extends VPage<CMe> {
 
         return <div>
             <div className="bg-white px-3 py-2 text-primary strong">
-                <strong>  周报表</strong>
+                <strong>周报表</strong>
             </div>
             <table className="table text-center small">
                 <thead className="text-primary">
@@ -95,12 +114,5 @@ export class VTeamAchievement extends VPage<CMe> {
 
     });
 
-    private page = observer(() => {
-        let header: any = <div>{this.t('团队业绩')}</div>
-        return <Page header={header} headerClassName={setting.pageHeaderCss} >
-            <this.teamAchievementWeek />
-            <this.teamAchievementMonth />
-        </Page >
-    })
 
 }

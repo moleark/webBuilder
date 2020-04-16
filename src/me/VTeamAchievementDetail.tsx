@@ -59,10 +59,9 @@ export class VTeamAchievementDetail extends VPage<CMe> {
     })
 
     private renderItem = (item: any, index: number) => {
-        let { showTeamAchievementDetail } = this.controller
-        let { yeara, montha, author, postPubSum, postTranSum, postHitSum } = item;
+        let { author, postPubSum, postTranSum, postHitSum } = item;
         let authorname = this.controller.cApp.renderUser(author.id);
-        return <tr className="col dec px-3 py-2 bg-white" onClick={() => showTeamAchievementDetail(0, yeara, montha)}>
+        return <tr className="col dec px-3 py-2 bg-white" >
             <td className="w-3">{authorname}</td>
             <td className="w-3">{postPubSum}</td>
             <td className="w-3">{postTranSum}</td>
