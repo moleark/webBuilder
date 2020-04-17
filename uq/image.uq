@@ -9,8 +9,9 @@ TUID IMAGE (
 
 TUID IMGCat (
     id,
-    parent ID IMGCat,
-    main name char(100)
+    main parent ID IMGCat,
+    main name char(100),
+    main isValid tinyint default 1
 );
 
 MAP ImageCat (
@@ -22,6 +23,8 @@ MAP ImageCat (
 MAP SlideShow (
     key image ID IMAGE,
     types tinyint,
+    description char(100),
+    src text,
     sort tinyint
 );
 
@@ -38,6 +41,7 @@ PAGE (
     PAGE select p.id, p.parent, p.name
     from    IMGCat as p
     where   p.id < $pageStart and p.parent = parent
+            and p.isValid = 1
     order by p.id desc
     limit $pageSize;
 };
@@ -109,10 +113,12 @@ PAGE(
     caption char(100),
     path char(100),
     author ID [$user],
+    description char(100),
+    src text,
     sort tinyint,
     types tinyint
 ) {
-    PAGE select  s.sort as id, p.id as image, p.caption, p.path, p.author, s.sort, s.types
+    PAGE select  s.sort as id, p.id as image, p.caption, p.path, p.author, s.description, s.src, s.sort, s.types
     from    SlideShow as s 
             join IMAGE as p on s.image = p.id
     where   s.sort < $pageStart and p.isValid = 1
@@ -124,9 +130,11 @@ PAGE(
 ACTION UpdateSlideShow(
     image ID IMAGE,
     types tinyint,
+    description char(100),
+    src text,
     sort tinyint
 ){
-     BOOK SlideShow at(image) set types=types, sort= sort ;
+     BOOK SlideShow at(image) set types=types,description= description, src=src, sort= sort ;
 };
 
 ACTION DeleteSlideShow(

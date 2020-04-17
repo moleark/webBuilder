@@ -148,7 +148,7 @@ export class CMedia extends CUqBase {
 
     onPickedImage = async (image: any) => {
         this.closePage();
-        await this.uqs.webBuilder.UpdateSlideShow.submit({ image: image, types: 0, sort: 1 })
+        await this.uqs.webBuilder.UpdateSlideShow.submit({ image: image, description: undefined, src: undefined, types: 0, sort: 1 })
         await this.searchSlideShow();
     };
 
@@ -162,9 +162,9 @@ export class CMedia extends CUqBase {
         this.openVPage(VEditSlideShow, param);
     }
 
-    updateSlideShow = async (image: any, types: any, sort: any) => {
+    updateSlideShow = async (image: any, description: any, src: any, types: any, sort: any) => {
         let type = types ? 1 : 0;
-        await this.uqs.webBuilder.UpdateSlideShow.submit({ image: image, types: type, sort: sort })
+        await this.uqs.webBuilder.UpdateSlideShow.submit({ image: image, description: description, src: src, types: type, sort: sort })
         await this.searchSlideShow();
     }
 

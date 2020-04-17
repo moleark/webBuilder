@@ -27,11 +27,18 @@ export class VCat extends VPage<CMe> {
         this.capton = item.name;
     }
 
+    private delCat = async (model: any) => {
+        let { saveCat } = this.controller;
+        let { id, name } = model;
+        await saveCat(id, name, 0);
+    }
+
 
     private onScrollBottom = async () => {
         await this.controller.pageMedia.more();
     }
     private renderItem = (item: any, index: number) => {
+
         return (
             <div className="pl-2 pl-sm-3 pr-2 pr-sm-3 pt-2 pb-3 d-flex">
                 <div className="d-flex flex-fill mx-2"  >
@@ -39,6 +46,12 @@ export class VCat extends VPage<CMe> {
                 </div>
                 <div className="d-flex">
                     <div className="small d-flex cursor-pointer text-primary text-right w-7c ">
+                        <button className="btn btn-outline-info mx-2 px-3" onClick={() => this.delCat(item)}>
+                            删除
+                        </button>
+                        <button className="btn btn-outline-info mx-2 px-3" onClick={() => this.controller.showEditCat(item)}>
+                            编辑
+                        </button>
                         <button className="btn btn-outline-info mx-2 px-3" onClick={() => this.nextCart(item)}>
                             下一级
                         </button>

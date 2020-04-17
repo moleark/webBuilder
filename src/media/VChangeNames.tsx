@@ -43,13 +43,13 @@ export class VChangeNames extends VPage<CMedia> {
     }
 
 
-    sets = async () => {
+    setSlideShow = async () => {
         let { current, updateSlideShow } = this.controller;
         this.showTips = "";
         setTimeout(() => {
             this.showTips = "none";
         }, 2000);
-        await updateSlideShow(current.id, 0, 1)
+        await updateSlideShow(current.id, undefined, undefined, 0, 1)
     }
 
     private page = observer(() => {
@@ -57,7 +57,7 @@ export class VChangeNames extends VPage<CMedia> {
         let right = <div>
             <button type="button"
                 className="btn btn-sm btn-success mr-3"
-                onClick={this.sets} >{this.t('设为轮播图')}
+                onClick={this.setSlideShow} >{this.t('设为轮播图')}
             </button>
             <button type="button"
                 className="btn btn-sm btn-success mr-3"

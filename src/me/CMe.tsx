@@ -32,6 +32,8 @@ export class CMe extends CUqBase {
     @observable teamAchievementMonth: any[] = [{ montha: "", yeara: "", postPubSum: 0, postTranSum: 0, postHitSum: 0 }];
     @observable teamAchievementDetail: QueryPager<any>;
     @observable pageCat: any;
+    @observable currentCat: any;
+    @observable currentCatParent: any = "0";
 
     private year: any
     searchMadiaKey = async (key: string) => {
@@ -153,16 +155,25 @@ export class CMe extends CUqBase {
     }
 
     searchCat = async (parent: string) => {
+        this.currentCatParent = parent;
         this.pageCat = new QueryPager(this.uqs.webBuilder.SearchCat, 15, 30);
         this.pageCat.first({ parent: parent });
     };
 
-    showAddCat = async () => {
+    showAddCat = async (id: any) => {
+        this.currentCat = { id: null, name: null, isValid: 1 };
         this.openVPage(VEditCat);
     }
 
-    saveCat = async (id: any, param: any) => {
+    showEditCat = async (item: any) => {
+        this.currentCat = item;
+        this.openVPage(VEditCat);
+    }
+
+    saveCat = async (id: any, name: any, isValid: any) => {
+        let param = { parent: this.currentCatParent, name: name, isValid: isValid };
         await this.uqs.webBuilder.IMGCat.save(id, param);
+        this.searchCat(this.currentCatParent);
     }
 
     render = observer(() => {

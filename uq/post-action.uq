@@ -53,7 +53,9 @@ ACTION TransmitPost(
 ) {
     var author ID;
     set  author = a.author from post as a where a.id = _post;
-    BOOK Achievement at( now(), 0, $user ) set postTranSum += 1;
+    if(author){
+        BOOK Achievement at( now(), 0, author ) set postTranSum += 1;
+    }
 };
 
 

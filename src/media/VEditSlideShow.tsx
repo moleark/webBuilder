@@ -20,12 +20,14 @@ export class VEditSlideShow extends VPage<CMedia> {
 
     private onFormButtonClick = async (name: string, context: Context) => {
         this.closePage(1);
-        let { types, sort } = context.form.data;
-        await this.controller.updateSlideShow(this.media.image.id, types, sort);
+        let { description, src, types, sort } = context.form.data;
+        await this.controller.updateSlideShow(this.media.image.id, description, src, types, sort);
     }
 
     private uiSchema: UiSchema = {
         items: {
+            description: { widget: 'text', label: this.t('说明') } as UiInputItem,
+            src: { widget: 'text', label: this.t('链接') } as UiInputItem,
             types: { widget: 'checkbox', label: this.t('是否发布') } as UiInputItem,
             sort: { widget: 'updown', label: this.t('排序') } as UiInputItem,
             submit: { widget: 'button', label: this.t('submit') }
@@ -33,6 +35,8 @@ export class VEditSlideShow extends VPage<CMedia> {
     };
 
     private schema: Schema = [
+        { name: 'description', type: 'string', required: true },
+        { name: 'src', type: 'string', required: true },
         { name: 'types', type: 'string', required: true },
         { name: 'sort', type: 'string', required: true },
     ];
