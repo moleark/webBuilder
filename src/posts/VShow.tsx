@@ -61,8 +61,6 @@ export class VShow extends VPage<CPosts> {
                 {meright}
             </div>
         return <Page header={this.t('preview')} headerClassName={consts.headerClass} right={right}>
-            <a href="https://www.baidu.com" > 123</a>
-
             <div className="w-100 h-100" >
                 <iframe src={"https://web.jkchemical.com/post/" + id} className="border-0 w-100 h-100 overflow-hidden">
 
