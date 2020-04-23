@@ -42,7 +42,7 @@ ACTION hit ver 0.1 (
     
             var _user ID $user;
             set _user = p.author from POST as p where p.ID = post;
-            BOOK Achievement at( now(), 0, $user ) set postHitSum += 1;
+            BOOK Achievement at( now(), 0, _user ) set postHitSum += 1;
         }
     }
 };
