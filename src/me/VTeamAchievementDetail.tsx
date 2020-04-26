@@ -16,11 +16,11 @@ export class VTeamAchievementDetail extends VPage<CMe> {
     private page = observer(() => {
         let header: any;
         if (this.type == "week") {
-            header = <div>周报表明细</div>
+            header = <div>周 业绩排名</div>
         } else if (this.type == "all") {
-            header = <div>合计报表明细</div>
+            header = <div>合计 业绩排名</div>
         } else {
-            header = <div>{this.type}月  报表明细</div>
+            header = <div>{this.type}月  业绩排名</div>
         }
 
         let { teamAchievementDetail } = this.controller;
@@ -44,7 +44,7 @@ export class VTeamAchievementDetail extends VPage<CMe> {
                 <table className="table text-center small">
                     <thead className="text-primary">
                         <tr className="bg-white">
-                            <th>员工</th>
+                            <th>编辑</th>
                             <th>发布量</th>
                             <th>转发量</th>
                             <th>浏览量</th>

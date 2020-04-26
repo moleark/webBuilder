@@ -99,6 +99,8 @@ export class CPosts extends CUqBase {
             this.closePage();
         } else {
             let ret = await this.uqs.webBuilder.AddPost.submit(par);
+            param.isValid = 1;
+            await this.uqs.webBuilder.Post.save(ret.id, param);
             param.id = ret.id;
             param.$create = new Date();
             param.$update = new Date();
