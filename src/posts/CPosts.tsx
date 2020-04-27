@@ -29,10 +29,8 @@ export class CPosts extends CUqBase {
     @observable pagePosts: QueryPager<any>;
     @observable pageMedia: QueryPager<any>;
     @observable pageProductCatalogPost: QueryPager<any>;
-    @observable pageSubject: QueryPager<any>;
     @observable pageSubjectPost: QueryPager<any>;
     @observable pageProduct: QueryPager<any>;
-    //@observable pageProductCatalog: any;
     @observable current: any;
     @observable isMe: boolean = true;
     @observable postProduct: any;
@@ -137,11 +135,6 @@ export class CPosts extends CUqBase {
         return await this.vCall(VPickImage);
     };
 
-    pickProduct = async () => {
-
-    }
-
-
     evaluate = async (val: number) => {
         this.closePage(2);
         await this.uqs.webBuilder.AddPostEvaluate.submit({
@@ -151,6 +144,7 @@ export class CPosts extends CUqBase {
         })
 
     }
+
     onGrade = async () => {
         this.openVPage(VGrade);
         let a = await this.uqs.webBuilder.SearchPostEvaluate.table({ _post: this.current.id });
@@ -265,7 +259,6 @@ export class CPosts extends CUqBase {
             await this.uqs.webBuilder.AddPostProductCatalogExplain.submit({ _post: this.current.id, _productCategory: productCategory.id, _name: name });
             this.pagePostProductCatalogExplain = await this.uqs.webBuilder.SearchPostCatalogExplain.table({ _post: this.current.id })
         }
-        this.closePage();
     }
     delPostProductCatalog = async (post: any, productCategory: any) => {
         await this.uqs.webBuilder.PostProductCatalog.del({ post: post, arr1: [{ productCategory: productCategory }] });
@@ -307,31 +300,34 @@ export class CPosts extends CUqBase {
     }
 
     pickSubject = async (param: any) => {
-        this.pageSubject = new QueryPager(this.uqs.webBuilder.SearchSubject, 15, 30);
-        this.pageSubject.first({ _parent: param })
-        return await this.vCall(VPickSubject);
+        let pageSubject = new QueryPager(this.uqs.webBuilder.SearchSubject, 15, 100);
+        pageSubject.first({ _parent: param })
+        return await this.vCall(VPickSubject, pageSubject);
+    }
+
+    searchSubject = async (param: any) => {
+        let pageSubject = new QueryPager(this.uqs.webBuilder.SearchSubject, 15, 100);
+        pageSubject.first({ _parent: param });
+        this.openVPage(VPickSubject, pageSubject);
     }
 
     onPickSubject = async (param: any) => {
         let { id } = param;
         await this.uqs.webBuilder.AddPostSubject.submit({ _post: this.current.id, _subject: id });
         this.pagePostSubject = await this.uqs.webBuilder.SearchPostSubject.table({ _post: this.current.id });
-        this.closePage();
     }
+
     delPostSubject = async (subject: any) => {
         await this.uqs.webBuilder.PostSubject.del({ post: this.current.id, arr1: [{ subject: subject }] });
         this.pagePostSubject = await this.uqs.webBuilder.SearchPostSubject.table({ _post: this.current.id })
     }
 
     showSubject = async (param: any) => {
-        this.searchSubject(param);
-        return await this.vCall(VSubject);
+        let pageSubject = new QueryPager(this.uqs.webBuilder.SearchSubject, 15, 100);
+        pageSubject.first({ _parent: param });
+        this.openVPage(VSubject, pageSubject);
     }
 
-    searchSubject = async (param: any) => {
-        this.pageSubject = new QueryPager(this.uqs.webBuilder.SearchSubject, 15, 30);
-        this.pageSubject.first({ _parent: param })
-    }
 
     showSubjectPost = async (param: any) => {
         this.pageSubjectPost = new QueryPager(this.uqs.webBuilder.SearchSubjectPost, 15, 30);

@@ -3,24 +3,26 @@ import { observer } from "mobx-react";
 import { VPage, Page, List } from "tonva";
 import { consts } from "consts";
 import { CPosts } from "./CPosts";
+import { observable } from "mobx";
 
 export class VSubject extends VPage<CPosts> {
 
-    async open() {
+    @observable pageSubject: any;
+    async open(param: any) {
+        this.pageSubject = param;
         this.openPage(this.page);
     }
 
     private page = observer(() => {
-        let { pageSubject } = this.controller;
         return (
             <Page header={"帖文栏目"} headerClassName={consts.headerClass} >
-                <List before={""} none="无" items={pageSubject} item={{ render: this.renderItem }} />
+                <List before={""} none="无" items={this.pageSubject} item={{ render: this.renderItem }} />
             </Page>
         );
     });
 
     private renderItem = (model: any, index: number) => {
-        let { showSubjectPost, searchSubject } = this.controller;
+        let { showSubjectPost, showSubject } = this.controller;
         let { name, id } = model;
         return (
             <div className="pl-2 pl-sm-3 pr-2 pr-sm-3 pt-2 pb-3 d-flex">
@@ -34,7 +36,7 @@ export class VSubject extends VPage<CPosts> {
                         </button>
                     </div>
                 </div>
-                <div onClick={() => searchSubject(id)} >
+                <div onClick={() => showSubject(id)} >
                     <div className="small d-flex cursor-pointer text-primary text-right w-7c ">
                         <button className="btn btn-outline-info mx-2 px-3">
                             下一级

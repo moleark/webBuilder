@@ -3,18 +3,20 @@ import { observer } from "mobx-react";
 import { VPage, Page, List } from "tonva";
 import { consts } from "consts";
 import { CPosts } from "./CPosts";
+import { observable } from "mobx";
 
 export class VPickSubject extends VPage<CPosts> {
 
-    async open() {
+    @observable pageSubject: any;
+    async open(param: any) {
+        this.pageSubject = param;
         this.openPage(this.page);
     }
 
     private page = observer(() => {
-        let { pageSubject } = this.controller;
         return (
             <Page header={"栏目"} headerClassName={consts.headerClass} >
-                <List before={""} none="无" items={pageSubject} item={{ render: this.renderItem }} />
+                <List before={""} none="无" items={this.pageSubject} item={{ render: this.renderItem }} />
             </Page>
         );
     });
