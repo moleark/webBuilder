@@ -3,19 +3,21 @@ import { observer } from "mobx-react";
 import { VPage, Page, List } from "tonva";
 import { consts } from "consts";
 import { CPosts } from "./CPosts";
+import { observable } from "mobx";
 
 
 export class VPickProductCatalog extends VPage<CPosts> {
 
-    async open() {
+    @observable pageProductCatalog: any
+    async open(param: any) {
+        this.pageProductCatalog = param;
         this.openPage(this.page);
     }
 
     private page = observer(() => {
-        let { pageProductCatalog } = this.controller;
         return (
             <Page header={"目录"} headerClassName={consts.headerClass} >
-                <List before={""} none="无" items={pageProductCatalog} item={{ render: this.renderItem }} />
+                <List before={""} none="无" items={this.pageProductCatalog} item={{ render: this.renderItem }} />
             </Page>
         );
     });

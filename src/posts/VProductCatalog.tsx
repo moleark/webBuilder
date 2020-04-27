@@ -8,22 +8,23 @@ import { observable } from "mobx";
 export class VProductCatalog extends VPage<CPosts> {
 
     @observable caption: any = "产品目录树";
+    @observable pageProductCatalog: any;
 
-    async open() {
+    async open(param: any) {
+        this.pageProductCatalog = param;
         this.openPage(this.page);
     }
 
     private page = observer(() => {
-        let { pageProductCatalog } = this.controller;
         return (
             <Page header={"产品目录树"} headerClassName={consts.headerClass} >
-                <List before={""} none="无" items={pageProductCatalog} item={{ render: this.renderItem }} />
+                <List before={""} none="无" items={this.pageProductCatalog} item={{ render: this.renderItem }} />
             </Page>
         );
     });
 
     private nextCatalog = async (model: any) => {
-        await this.controller.searchProductCatalogChildrenKey(model.productCategory.id)
+        await this.controller.searchProductCatalogChildrenKeys(model.productCategory.id)
         this.caption = model.name;
     }
 

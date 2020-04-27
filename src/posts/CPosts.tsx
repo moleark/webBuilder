@@ -32,7 +32,7 @@ export class CPosts extends CUqBase {
     @observable pageSubject: QueryPager<any>;
     @observable pageSubjectPost: QueryPager<any>;
     @observable pageProduct: QueryPager<any>;
-    @observable pageProductCatalog: any;
+    //@observable pageProductCatalog: any;
     @observable current: any;
     @observable isMe: boolean = true;
     @observable postProduct: any;
@@ -254,8 +254,7 @@ export class CPosts extends CUqBase {
     }
     pickProductCatalog = async (): Promise<any> => {
         let results = await this.uqs.product.GetRootCategory.query({ salesRegion: setting.SALESREGION_CN, language: setting.CHINESE });
-        this.pageProductCatalog = results.first;
-        return await this.vCall(VPickProductCatalog);
+        return await this.vCall(VPickProductCatalog, results.first);
     };
     onPickProductCatalog = async (param: any, type: any) => {
         let { productCategory, name } = param;
@@ -280,14 +279,19 @@ export class CPosts extends CUqBase {
 
     searchProductCatalogChildrenKey = async (key: string) => {
         let results = await this.uqs.product.GetChildrenCategory.query({ parent: key, salesRegion: setting.SALESREGION_CN, language: setting.CHINESE });
-        this.pageProductCatalog = results.first;
+        this.openVPage(VPickProductCatalog, results.first)
     };
 
     showProductCatalog = async () => {
         let results = await this.uqs.product.GetRootCategory.query({ salesRegion: setting.SALESREGION_CN, language: setting.CHINESE });
-        this.pageProductCatalog = results.first;
-        this.openVPage(VProductCatalog);
+        this.openVPage(VProductCatalog, results.first);
     }
+
+    searchProductCatalogChildrenKeys = async (key: string) => {
+        let results = await this.uqs.product.GetChildrenCategory.query({ parent: key, salesRegion: setting.SALESREGION_CN, language: setting.CHINESE });
+        this.openVPage(VProductCatalog, results.first)
+    };
+
     showProductCatalogDetil = async (param: any) => {
         this.pageProductCatalogPost = new QueryPager(this.uqs.webBuilder.SearchProductCategoryPost, 15, 30);
         this.pageProductCatalogPost.first({ author: 0, productCategory: param })
