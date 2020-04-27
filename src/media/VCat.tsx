@@ -19,12 +19,6 @@ export class VCat extends VPage<CMedia> {
         </Page>;
     })
 
-    nextCart = async (item: any) => {
-        await this.controller.showCat(item.id);
-        this.capton = item.name;
-    }
-
-
     private onScrollBottom = async () => {
         await this.controller.pageMedia.more();
     }
@@ -42,7 +36,7 @@ export class VCat extends VPage<CMedia> {
                         </button>
                     </div>
                     <div className="small d-flex cursor-pointer text-primary text-right w-7c ">
-                        <button className="btn btn-outline-info mx-2 px-3" onClick={() => this.nextCart(item)}>
+                        <button className="btn btn-outline-info mx-2 px-3" onClick={() => this.controller.showCat(item.id)}>
                             下一级
                         </button>
                     </div>

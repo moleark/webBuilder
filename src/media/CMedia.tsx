@@ -83,7 +83,7 @@ export class CMedia extends CUqBase {
         this.searchMadiaKey("");
     }
 
-    //图片分类
+    //图片分类--PICK
     showPickCat = async (parent: string) => {
         let pageCat = new QueryPager(this.uqs.webBuilder.SearchCat, 15, 100);
         pageCat.first({ parent: parent });
@@ -106,13 +106,12 @@ export class CMedia extends CUqBase {
         this.pageImageCat.first({ image: this.current.id });
     };
 
-
+    //图片分类--SHOW
     showCat = async (param: any) => {
         let pageCat = new QueryPager(this.uqs.webBuilder.SearchCat, 15, 30);
         pageCat.first({ parent: param });
         this.openVPage(VCat, pageCat)
     }
-
 
     showCatImage = async (cat: any) => {
         await this.searchCatImage("", cat);
