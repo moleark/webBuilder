@@ -7,21 +7,20 @@ import { observable } from "mobx";
 
 export class VCat extends VPage<CMedia> {
     @observable capton: any = "图片分类";
-
-    async open() {
+    @observable pageCat: any;
+    async open(param: any) {
+        this.pageCat = param;
         this.openPage(this.page);
     }
 
     private page = observer(() => {
-        let { pageCat } = this.controller;
-
         return <Page header={this.capton} headerClassName={consts.headerClass} onScrollBottom={this.onScrollBottom}>
-            <List before={""} items={pageCat} item={{ render: this.renderItem }} />
+            <List before={""} items={this.pageCat} item={{ render: this.renderItem }} />
         </Page>;
     })
 
     nextCart = async (item: any) => {
-        await this.controller.searchCat(item.id);
+        await this.controller.showCat(item.id);
         this.capton = item.name;
     }
 

@@ -9,7 +9,6 @@ export class VChangeNames extends VPage<CMedia> {
 
     private form: Form;
     @observable showTips: any = "none";
-
     async open() {
         this.openPage(this.page);
     }
@@ -61,7 +60,7 @@ export class VChangeNames extends VPage<CMedia> {
             </button>
             <button type="button"
                 className="btn btn-sm btn-success mr-3"
-                onClick={showPickCat} >{this.t('分类')}
+                onClick={() => showPickCat("0")} >{this.t('分类')}
             </button>
             <button type="button"
                 className="btn btn-sm btn-success mr-3"

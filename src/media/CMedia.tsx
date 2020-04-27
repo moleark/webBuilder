@@ -18,8 +18,6 @@ import { VEditSlideShow } from "./VEditSlideShow";
 export class CMedia extends CUqBase {
     @observable pageMedia: QueryPager<any>;
     @observable current: any;
-    @observable pageCat: any;
-
 
     @observable pageImageCat: QueryPager<any>;
     @observable pageCatImage: QueryPager<any>;
@@ -86,9 +84,10 @@ export class CMedia extends CUqBase {
     }
 
     //图片分类
-    showPickCat = async () => {
-        await this.searchCat("0");
-        this.openVPage(VPickCat);
+    showPickCat = async (parent: string) => {
+        let pageCat = new QueryPager(this.uqs.webBuilder.SearchCat, 15, 100);
+        pageCat.first({ parent: parent });
+        this.openVPage(VPickCat, pageCat)
     }
 
     onPickCat = async (image: any, cat: any) => {
@@ -108,15 +107,12 @@ export class CMedia extends CUqBase {
     };
 
 
-    showCat = async () => {
-        await this.searchCat("0");
-        this.openVPage(VCat, "图片分类")
+    showCat = async (param: any) => {
+        let pageCat = new QueryPager(this.uqs.webBuilder.SearchCat, 15, 30);
+        pageCat.first({ parent: param });
+        this.openVPage(VCat, pageCat)
     }
 
-    searchCat = async (parent: string) => {
-        this.pageCat = new QueryPager(this.uqs.webBuilder.SearchCat, 15, 30);
-        this.pageCat.first({ parent: parent });
-    };
 
     showCatImage = async (cat: any) => {
         await this.searchCatImage("", cat);

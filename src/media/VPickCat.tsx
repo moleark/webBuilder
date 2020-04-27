@@ -3,24 +3,24 @@ import { consts } from "consts";
 import { CMedia } from "./CMedia";
 import { observer } from "mobx-react";
 import { VPage, Page, List } from "tonva";
+import { observable } from "mobx";
 
 export class VPickCat extends VPage<CMedia> {
-    async open() {
+
+    @observable pageCat: any;
+    async open(param: any) {
+        this.pageCat = param;
         this.openPage(this.page);
     }
 
     private page = observer(() => {
-        let { pageCat } = this.controller;
-        return <Page header={this.t('picture')} headerClassName={consts.headerClass} onScrollBottom={this.onScrollBottom}>
-            <List before={""} items={pageCat} item={{ render: this.renderItem }} />
+        return <Page header={this.t('picture')} headerClassName={consts.headerClass} >
+            <List before={""} items={this.pageCat} item={{ render: this.renderItem }} />
         </Page>;
     })
 
-    private onScrollBottom = async () => {
-        await this.controller.pageMedia.more();
-    }
     private renderItem = (item: any, index: number) => {
-        let { searchCat, onPickCat, current } = this.controller
+        let { showPickCat, onPickCat, current } = this.controller
         let { name, id } = item;
         return (
             <div className="pl-2 pl-sm-3 pr-2 pr-sm-3 pt-2 pb-3 d-flex">
@@ -34,7 +34,7 @@ export class VPickCat extends VPage<CMedia> {
                         </button>
                     </div>
                     <div className="small d-flex cursor-pointer text-primary text-right w-7c ">
-                        <button className="btn btn-outline-info mx-2 px-3" onClick={() => searchCat(id)}>
+                        <button className="btn btn-outline-info mx-2 px-3" onClick={() => showPickCat(id)}>
                             下一级
                         </button>
                     </div>
