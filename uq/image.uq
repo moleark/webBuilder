@@ -127,6 +127,25 @@ PAGE(
 };
 
 
+QUERY GetSlideShow ()
+returns ret (
+    image ID IMAGE,
+    caption char(100),
+    path char(100),
+    author ID [$user],
+    description char(100),
+    src text,
+    sort tinyint,
+    types tinyint
+) {
+    into ret select p.id as image, p.caption, p.path, p.author, s.description, s.src, s.sort, s.types
+    from    SlideShow as s 
+            join IMAGE as p on s.image = p.id
+    where   p.isValid = 1 and s.types = 1
+    order by s.sort;
+};
+
+
 ACTION UpdateSlideShow(
     image ID IMAGE,
     types tinyint,
