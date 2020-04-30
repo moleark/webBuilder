@@ -22,6 +22,7 @@ import { VSubjectDetil } from "./VSubjectDetil";
 import { VProductCatalogDetil } from "./VProductCatalogDetil";
 import { VPostProductCatalog } from "./VPostProductCatalog";
 import { VPostSubject } from "./VPostSubject";
+import { VPickClassroomType } from "./VPickClassroomType";
 
 /* eslint-disable */
 export class CPosts extends CUqBase {
@@ -333,6 +334,17 @@ export class CPosts extends CUqBase {
         this.pageSubjectPost = new QueryPager(this.uqs.webBuilder.SearchSubjectPost, 15, 30);
         this.pageSubjectPost.first({ author: 0, subject: param.id })
         return await this.vCall(VSubjectDetil);
+    }
+
+
+    showPickClassroomType = async () => {
+        let list = await this.uqs.webBuilder.ClassroomType.all();
+        this.openVPage(VPickClassroomType, list);
+    }
+
+    onPickClassroomType = async (param: any) => {
+        await this.uqs.webBuilder.PostClassroomType.add({ post: this.current.id, arr1: [{ classroomType: param.id }] });
+        this.closePage();
     }
 
     tab = () => {

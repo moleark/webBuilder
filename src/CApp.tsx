@@ -39,6 +39,8 @@ export class CApp extends CAppBase {
             setting.previewUrl = "https://tv.jkchemical.com/jk-web";
         }
 
+        await this.getBusiness();
+
         this.setRes(res);
 
         let userLoader = async (userId: number): Promise<any> => {
@@ -59,6 +61,15 @@ export class CApp extends CAppBase {
 
     showMain(initTabName?: string) {
         this.openVPage(VMain, initTabName);
+    }
+
+    getBusiness = async () => {
+        let business = await this.uqs.webBuilder.SearchBusinessScope.table({});
+        if (business.length === 1) {
+            setting.BusinessScope = business[0].businessScope.id;
+        } else if (business.length > 1) {
+            setting.BusinessScope = 3;
+        }
     }
 
     renderUser(userId: number) {

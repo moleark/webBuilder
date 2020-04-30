@@ -69,7 +69,9 @@ export interface WebBuilder {
     DeleteSlideShow: Action;
     SearchSlideShow: Query;
     IMGCat: Tuid;
-
+    SearchBusinessScope: Query;
+    ClassroomType: Tuid;
+    PostClassroomType: Map;
 }
 
 export interface UQs {

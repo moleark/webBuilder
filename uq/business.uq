@@ -1,0 +1,76 @@
+
+/** 业务范围 **/
+TUID  BusinessScope  (
+    id,
+    main name char(100)
+);
+
+MAP WebUserBusinessScope(
+    key webuser ID [$user],
+    key businessScope ID BusinessScope
+);
+
+
+/** 搜索业务范围 **/
+QUERY SearchBusinessScope(    
+)
+returns ret (
+    webuser         ID [$user] ,
+    businessScope   ID BusinessScope
+){ 
+    into ret select s.webuser, s.businessScope
+    from    WebUserBusinessScope as s
+    where   s.webuser = $user;
+};
+
+
+/** 课堂类型 **/
+TUID ClassroomType (
+    id,
+    main name char(100)
+);
+
+MAP PostClassroomType(
+    key post ID POST,
+    key classroomType ID ClassroomType
+);
+
+
+/** 根据目录树搜索文帖 **/
+QUERY SearchClassRoomPost( 
+    classroomType ID ClassroomType
+)
+PAGE (
+    id bigint desc,
+    caption char(100),
+    discription char(200),
+    image ID Image,
+    author ID [$user],
+    template ID Template,
+	[$update] DATETIME,
+	[$create] DATETIME,
+    isValid tinyint,
+	hits int,
+	sumHits int,
+    web     smallint,
+    agent   smallint, 
+    assist  smallint, 
+    openweb smallint
+) {
+
+    PAGE select p.id, p.caption, p.discription, p.image, p.author
+            , p.template, p.[$update], p.[$create],p.isValid
+            , c.hits, c.sumHits
+            , ifnull(ph.web, 0) as web
+            , ifnull(ph.agent,0) as agent
+            , ifnull( ph.assist,0) as assist
+            , ifnull( ph.openweb ,0) as openweb
+    from    POST as p
+            join PostClassroomType as pp on pp.post = p.id 
+            left join PostPublish as ph on p.id = ph.post
+			left join Hot as c on p.id=c.post
+    where   p.id < $pageStart and p.isValid = 1 
+            and ( classroomType = 0 or pp.classroomType = classroomType)
+    order by p.id desc
+    limit $pageSize;
+};

@@ -3,6 +3,7 @@ import { CPosts } from "./CPosts";
 import { VPage, UiSchema, Schema, Page, UiInputItem, UiIdItem, tv, Edit, ItemSchema, FA } from "tonva";
 import { observer } from 'mobx-react';
 import { consts } from 'consts';
+import { setting } from 'configuration';
 
 export class VEdit extends VPage<CPosts> {
 
@@ -86,7 +87,7 @@ export class VEdit extends VPage<CPosts> {
 
     private page = observer(() => {
 
-        let { current, cApp, showPostProductCatalog, showPostSubject } = this.controller;
+        let { current, cApp, showPostProductCatalog, showPostSubject, showPickClassroomType } = this.controller;
 
         let right = <div>
             <button type="button"
@@ -108,8 +109,9 @@ export class VEdit extends VPage<CPosts> {
                     uiSchema={this.uiSchema}
                     onItemChanged={this.onItemChanged}
                 />
-                {branch("目录", showPostProductCatalog)}
-                {branch("栏目", showPostSubject)}
+                {!(setting.BusinessScope === 2) && branch("目录", showPostProductCatalog)}
+                {!(setting.BusinessScope === 2) && branch("栏目", showPostSubject)}
+                {(setting.BusinessScope === 2) && branch("类型", showPickClassroomType)}
             </div >
         </Page >
     })

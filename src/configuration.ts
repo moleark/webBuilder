@@ -19,7 +19,8 @@ export const setting = {
     appUrlDomain: "cs.jkchemical.com",
     previewUrl: "https://web.jkchemical.com",
     SALESREGION_CN: 1,
-    CHINESE: 196
+    CHINESE: 196,
+    BusinessScope: 2
 };
 
 // 生产配置

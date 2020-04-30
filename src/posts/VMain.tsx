@@ -5,6 +5,7 @@ import { VPage, Page, FA, List, EasyTime, tv, SearchBox, LMR } from "tonva";
 import { CPosts } from "./CPosts";
 import classNames from "classnames";
 import { observable } from "mobx";
+import { setting } from "configuration";
 
 export class VMain extends VPage<CPosts> {
     @observable private isMe: boolean = true;
@@ -69,14 +70,18 @@ export class VMain extends VPage<CPosts> {
                 <span className="text-muted small">[{this.t('noposts')}]</span>
             </div>
         );
+        let column = <>
+            <LMR className="bg-white py-3 my-1" right={<i className=" px-2 iconfont icon-jiantou1"></i>} onClick={showProductCatalog}>
+                <div className="mx-3 px-2 font-weight-bold">产品目录</div>
+            </LMR>
+            <LMR className="bg-white py-3 my-1" right={<i className=" px-2 iconfont icon-jiantou1"></i>} onClick={() => showSubject(0)}>
+                <div className="mx-3 px-2 font-weight-bold">帖文栏目</div>
+            </LMR>
+        </>
+
         return (
             <Page header={this.t('post')} headerClassName={consts.headerClass} right={right} onScrollBottom={this.onScrollBottom}>
-                <LMR className="bg-white py-3 my-1" right={<i className=" px-2 iconfont icon-jiantou1"></i>} onClick={showProductCatalog}>
-                    <div className="mx-3 px-2 font-weight-bold">产品目录</div>
-                </LMR>
-                <LMR className="bg-white py-3 my-1" right={<i className=" px-2 iconfont icon-jiantou1"></i>} onClick={() => showSubject(0)}>
-                    <div className="mx-3 px-2 font-weight-bold">帖文栏目</div>
-                </LMR>
+                {!(setting.BusinessScope === 2) && column}
                 <List before={""} none={none} items={pagePosts} item={{ render: this.renderItem }} />
             </Page>
         );
@@ -161,6 +166,7 @@ export class VMain extends VPage<CPosts> {
         );
     });
 }
+
 /*
 <span className="d-none d-sm-inline">&ensp;</span>
 {this.t('preview')}
