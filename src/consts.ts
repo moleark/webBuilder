@@ -7,5 +7,5 @@ export const consts = {
     uqProduct: "百灵威系统工程部/product",
     uqCommon: '百灵威系统工程部/common',
     appIcon: 'http://101.200.46.56/imgs/Bear-icon.png',
-    headerClass: 'bg-primary py-1 px-2',
+    headerClass: 'bg-primary',
 }

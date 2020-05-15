@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { VPage, TabCaptionComponent, Page, Tabs } from 'tonva';
+import { VPage, TabCaptionComponent, Page } from 'tonva';
 import { CApp } from '../CApp';
 const color = (selected: boolean) => selected === true ? 'text-primary' : 'text-muted';
 
@@ -29,8 +29,7 @@ export class VMain extends VPage<CApp> {
                 onShown: onShown,
             }
         });
-        return <Page header={false} headerClassName={"bg-info"} >
-            <Tabs tabs={faceTabs} />
+        return <Page header={false} headerClassName={"bg-info"} tabsProps={{ tabs: faceTabs }}>
         </Page>;
     }
 }

@@ -29,7 +29,7 @@ ACTION hit ver 0.1 (
         tick INT,
         ip varchar(20),
         post BIGINT,
-        sales ID [$user]
+        sales ID [$user] 
     )
 ) {
     foreach oneHit {

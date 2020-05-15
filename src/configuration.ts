@@ -15,7 +15,7 @@ export const setting = {
     downloadAppurl: "http://agent.jkchemical.com/download/jk-agent.apk",
     sharelogo: "https://agent.jkchemical.com/sharelogo.png",
     logo: logo,
-    pageHeaderCss: "bg-primary py-1",
+    pageHeaderCss: "bg-primary",
     appUrlDomain: "cs.jkchemical.com",
     previewUrl: "https://web.jkchemical.com",
     SALESREGION_CN: 1,

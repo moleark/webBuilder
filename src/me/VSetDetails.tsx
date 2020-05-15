@@ -12,7 +12,7 @@ export class VSetDetails extends VPage<CMe> {
         this.openPage(this.page)
     }
 
-    private logout = () => {
+    private logouts = () => {
         nav.showLogout();
     }
 
@@ -52,7 +52,7 @@ export class VSetDetails extends VPage<CMe> {
             '',
             {
                 type: 'component',
-                component: <div className="bg-white p-2 mb-1 text-center col-12" onClick={this.logout}>
+                component: <div className="bg-white p-2 mb-1 text-center col-12" onClick={this.logouts}>
                     <span>{this.t('logout')}</span>
 
                 </div>,
