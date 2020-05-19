@@ -57,7 +57,6 @@ export class VEdit extends VPage<CPosts> {
             image: {
                 widget: 'id', label: this.t('picture'), pickId: this.controller.pickImage, Templet: this.imageContent
             } as UiIdItem,
-
             /**
             productcatalog: {
                 widget: 'id', label: "目录", pickId: this.controller.pickProductCatalog, Templet: this.catalogContent
@@ -87,7 +86,7 @@ export class VEdit extends VPage<CPosts> {
 
     private page = observer(() => {
 
-        let { current, cApp, showPostProductCatalog, showPostSubject, showPickClassroomType } = this.controller;
+        let { current, cApp, showPostProductCatalog, showPostSubject, showPickClassroomType, showPostDomain } = this.controller;
 
         let right = <div>
             <button type="button"
@@ -103,7 +102,7 @@ export class VEdit extends VPage<CPosts> {
             right={right}
             headerClassName={consts.headerClass}>
             <div className="mx-3 py-2 h-100 d-flex flex-column">
-                <textarea ref={tt => this.textarea = tt} className="flex-fill mb-2" defaultValue={current.content} />
+                <textarea ref={tt => this.textarea = tt} className="flex-fill mb-2" defaultValue={current.content} rows={20} />
                 <Edit data={current}
                     schema={this.schema}
                     uiSchema={this.uiSchema}
@@ -111,6 +110,7 @@ export class VEdit extends VPage<CPosts> {
                 />
                 {!(setting.BusinessScope === 2) && branch("目录", showPostProductCatalog)}
                 {!(setting.BusinessScope === 2) && branch("栏目", showPostSubject)}
+                {!(setting.BusinessScope === 2) && branch("领域", showPostDomain)}
                 {(setting.BusinessScope === 2) && branch("类型", showPickClassroomType)}
             </div >
         </Page >

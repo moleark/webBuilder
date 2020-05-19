@@ -14,6 +14,9 @@ export interface UqProduct {
     GetChildrenCategory: Query;
 }
 
+export interface UqCustomer {
+    SearchDomain: Query;
+}
 
 export interface WebBuilder {
     Content: Tuid;
@@ -72,10 +75,14 @@ export interface WebBuilder {
     SearchBusinessScope: Query;
     ClassroomType: Tuid;
     PostClassroomType: Map;
+    PostDomain: Map;
+    AddPostDomain: Action;
+    SearchPostDomain: Query;
 }
 
 export interface UQs {
     hr: UqHr;
     webBuilder: WebBuilder;
     product: UqProduct;
+    customer: UqCustomer;
 }

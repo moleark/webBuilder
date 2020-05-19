@@ -77,8 +77,10 @@ MAP PostSubject(
     key subject ID Subject
 );
 
-
-
+MAP PostDomain(
+    key post ID POST,
+    key domain ID Domain
+);
 
 
 

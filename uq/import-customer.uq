@@ -1,0 +1,7 @@
+import JKcustomer =  百灵威系统工程部/customer;
+
+TUID Domain  from JKcustomer (
+    id,
+    main name char(200),
+    parent ID Domain,
+);

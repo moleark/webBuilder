@@ -23,6 +23,8 @@ import { VProductCatalogDetil } from "./VProductCatalogDetil";
 import { VPostProductCatalog } from "./VPostProductCatalog";
 import { VPostSubject } from "./VPostSubject";
 import { VPickClassroomType } from "./VPickClassroomType";
+import { VPostDomain } from "./VPostDomain";
+import { VPickDomain } from "./VPickDomain";
 
 /* eslint-disable */
 export class CPosts extends CUqBase {
@@ -32,6 +34,8 @@ export class CPosts extends CUqBase {
     @observable pageProductCatalogPost: QueryPager<any>;
     @observable pageSubjectPost: QueryPager<any>;
     @observable pageProduct: QueryPager<any>;
+
+
     @observable current: any;
     @observable isMe: boolean = true;
     @observable postProduct: any;
@@ -44,6 +48,8 @@ export class CPosts extends CUqBase {
     @observable pagePostProductCatalog: any;
     @observable pagePostProductCatalogExplain: any;
     @observable pagePostSubject: any;
+    @observable pagePostDomain: any;
+
 
     protected async internalStart(param: any) {
         this.setRes({
@@ -299,19 +305,11 @@ export class CPosts extends CUqBase {
         this.pagePostSubject = await this.uqs.webBuilder.SearchPostSubject.table({ _post: this.current.id })
         this.openVPage(VPostSubject);
     }
-
     pickSubject = async (param: any) => {
         let pageSubject = new QueryPager(this.uqs.webBuilder.SearchSubject, 15, 100);
         pageSubject.first({ _parent: param })
         return await this.vCall(VPickSubject, pageSubject);
     }
-
-    searchSubject = async (param: any) => {
-        let pageSubject = new QueryPager(this.uqs.webBuilder.SearchSubject, 15, 100);
-        pageSubject.first({ _parent: param });
-        this.openVPage(VPickSubject, pageSubject);
-    }
-
     onPickSubject = async (param: any) => {
         let { id } = param;
         await this.uqs.webBuilder.AddPostSubject.submit({ _post: this.current.id, _subject: id });
@@ -328,13 +326,35 @@ export class CPosts extends CUqBase {
         pageSubject.first({ _parent: param });
         this.openVPage(VSubject, pageSubject);
     }
-
-
     showSubjectPost = async (param: any) => {
         this.pageSubjectPost = new QueryPager(this.uqs.webBuilder.SearchSubjectPost, 15, 30);
         this.pageSubjectPost.first({ author: 0, subject: param.id })
         return await this.vCall(VSubjectDetil);
     }
+
+
+    //领域
+    showPostDomain = async () => {
+        this.pagePostDomain = await this.uqs.webBuilder.SearchPostDomain.table({ _post: this.current.id });
+        this.openVPage(VPostDomain);
+    }
+    pickDomain = async (param: any) => {
+        let pageDomain = new QueryPager(this.uqs.customer.SearchDomain, 15, 100);
+        pageDomain.first({ _parent: param })
+        return await this.vCall(VPickDomain, pageDomain);
+    }
+    onPickDomain = async (param: any) => {
+        let { id } = param;
+        await this.uqs.webBuilder.AddPostDomain.submit({ _post: this.current.id, _domain: id });
+        this.pagePostDomain = await this.uqs.webBuilder.SearchPostDomain.table({ _post: this.current.id });
+    }
+    delPostDomain = async (domain: any) => {
+        await this.uqs.webBuilder.PostDomain.del({ post: this.current.id, arr1: [{ domain: domain }] });
+        this.pagePostDomain = await this.uqs.webBuilder.SearchPostDomain.table({ _post: this.current.id })
+    }
+
+
+
 
 
     showPickClassroomType = async () => {

@@ -234,6 +234,19 @@ returns ret (
 };
 
 
+/** 搜索研究领域 **/
+QUERY SearchPostDomain(    
+    _post ID POST
+)
+returns ret (
+    post ID POST,
+    domain ID Domain
+) {
+    into ret select ps.post, ps.domain
+    from    PostDomain as ps
+    where   ps.post = _post;
+};
+
 
 
 

@@ -133,6 +133,16 @@ Action AddPostSubject(
     BOOK PostSubject at( _post ,_subject);
 };
 
+
+Action AddPostDomain(
+    _post ID POST,
+    _domain ID Domain
+) {
+    BOOK PostDomain at( _post ,_domain);
+};
+
+
+
 Action test(a1 int, a2 int) {
     book contenttag at(a1, a2);
 };
