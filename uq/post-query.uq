@@ -39,7 +39,8 @@ PAGE (
             and ( p.author = author or author = 0 )
             and (
                     ( types = 1 and not exists ( select 1 from PostClassroomType as pc where pc.post = p.id ) ) or
-                    ( types = 2 and exists ( select 1 from PostClassroomType as pc where pc.post = p.id ) )
+                    ( types = 2 and exists ( select 1 from PostClassroomType as pc where pc.post = p.id ) ) or
+                    ( types = 3 )
                 )
     order by p.id desc
     limit $pageSize;
