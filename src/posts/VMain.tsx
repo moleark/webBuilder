@@ -55,7 +55,7 @@ export class VMain extends VPage<CPosts> {
     }
 
     private page = observer(() => {
-        let { pagePosts, onAdd, searchPostsKey, showProductCatalog, showSubject } = this.controller;
+        let { pagePosts, onAdd, searchPostsKey, showProductCatalog, showSubject, onScrollBottom } = this.controller;
         let right = (
             <div className="d-flex align-items-center">
                 {this.renderMeAllToggle()}
@@ -80,16 +80,13 @@ export class VMain extends VPage<CPosts> {
         </>
 
         return (
-            <Page header={this.t('post')} headerClassName={consts.headerClass} right={right} onScrollBottom={this.onScrollBottom}>
+            <Page header={this.t('post')} headerClassName={consts.headerClass} right={right} onScrollBottom={onScrollBottom}>
                 {(setting.BusinessScope !== 2) && column}
                 <List before={""} none={none} items={pagePosts} item={{ render: this.renderItem }} />
             </Page>
         );
     });
 
-    private onScrollBottom = async () => {
-        await this.controller.pagePosts.more();
-    };
 
     private renderItem = (item: any, index: number) => {
         return <this.itemRow {...item} />;

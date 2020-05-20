@@ -30,6 +30,9 @@ export class CMedia extends CUqBase {
         this.pageMedia.first({ key: key });
     };
 
+    onScrollBottom = async () => {
+        await this.pageMedia.more();
+    }
 
     //添加任务
     saveItem = async (id: any, param: any) => {

@@ -14,7 +14,7 @@ export class VMain extends VPage<CMedia> {
     }
 
     private page = observer(() => {
-        let { pageMedia, searchMadiaKey, onAddClick, showCat, showSlideShow } = this.controller;
+        let { pageMedia, searchMadiaKey, onAddClick, showCat, showSlideShow, onScrollBottom } = this.controller;
         let right = <div className="w-19c d-flex">
             <SearchBox className="w-80 mt-1 mr-2"
                 size='sm'
@@ -41,7 +41,7 @@ export class VMain extends VPage<CMedia> {
                 return this.renderItem(v, index)
             });
         }
-        return <Page header={this.t('picture')} headerClassName={consts.headerClass} right={right} onScrollBottom={this.onScrollBottom}>
+        return <Page header={this.t('picture')} headerClassName={consts.headerClass} right={right} onScrollBottom={onScrollBottom}>
 
             <LMR className="bg-white py-3 my-1" right={<i className=" px-2 iconfont icon-jiantou1"></i>} onClick={() => showCat(0)} >
                 <div className="mx-3 px-2 font-weight-bold">图片分类</div>
@@ -57,9 +57,6 @@ export class VMain extends VPage<CMedia> {
         </Page>;
     })
 
-    private onScrollBottom = async () => {
-        await this.controller.pageMedia.more();
-    }
 
     private copyClick = (e: any, path: any) => {
         let el = e.target as HTMLElement;
