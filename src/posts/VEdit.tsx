@@ -108,9 +108,9 @@ export class VEdit extends VPage<CPosts> {
                     uiSchema={this.uiSchema}
                     onItemChanged={this.onItemChanged}
                 />
-                {!(setting.BusinessScope === 2) && branch("目录", showPostProductCatalog)}
-                {!(setting.BusinessScope === 2) && branch("栏目", showPostSubject)}
-                {!(setting.BusinessScope === 2) && branch("领域", showPostDomain)}
+                {(setting.BusinessScope !== 2) && branch("目录", showPostProductCatalog)}
+                {(setting.BusinessScope !== 2) && branch("栏目", showPostSubject)}
+                {(setting.BusinessScope !== 2) && branch("领域", showPostDomain)}
                 {(setting.BusinessScope === 2) && branch("类型", showPickClassroomType)}
             </div >
         </Page >

@@ -64,6 +64,7 @@ History PostEvaluateRecord (
     grade int
 );
 
+--栏目
 TUID  Subject (
     id,
     main name char(100),
@@ -71,12 +72,12 @@ TUID  Subject (
     isValid tinyint default 1,
     stamp (create, update),
 );
-
 MAP PostSubject(
     key post ID POST,
     key subject ID Subject
 );
 
+--研究领域
 MAP PostDomain(
     key post ID POST,
     key domain ID Domain

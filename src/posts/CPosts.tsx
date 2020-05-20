@@ -74,7 +74,7 @@ export class CPosts extends CUqBase {
             this.cApp.useUser(item.author);
         });
         let Auser = this.isMe ? nav.user : 0;
-        await this.pagePosts.first({ key: key, author: Auser });
+        await this.pagePosts.first({ key: key, author: Auser, types: setting.BusinessScope });
     };
     /* posts模板查询*/
     searchTemplateKey = async (key: string) => {

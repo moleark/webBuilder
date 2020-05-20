@@ -1,5 +1,9 @@
 /** 搜索帖文*/
-QUERY SearchPost( key char(100), author ID [$user])
+QUERY SearchPost( 
+    key char(100), 
+    author ID [$user],
+    types int
+)
 PAGE (
     id bigint desc,
     caption char(100),
@@ -33,6 +37,10 @@ PAGE (
     where   p.id < $pageStart and p.isValid = 1 
             and ( p.template like key2 or p.discription like key2 or p.caption like key2 or key is null )
             and ( p.author = author or author = 0 )
+            and (
+                    ( types = 1 and not exists ( select 1 from PostClassroomType as pc where pc.post = p.id ) ) or
+                    ( types = 2 and exists ( select 1 from PostClassroomType as pc where pc.post = p.id ) )
+                )
     order by p.id desc
     limit $pageSize;
 };

@@ -81,7 +81,7 @@ export class VMain extends VPage<CPosts> {
 
         return (
             <Page header={this.t('post')} headerClassName={consts.headerClass} right={right} onScrollBottom={this.onScrollBottom}>
-                {!(setting.BusinessScope === 2) && column}
+                {(setting.BusinessScope !== 2) && column}
                 <List before={""} none={none} items={pagePosts} item={{ render: this.renderItem }} />
             </Page>
         );
