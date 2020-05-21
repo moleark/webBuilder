@@ -67,6 +67,10 @@ export class CPosts extends CUqBase {
         this.loadList();
     }
 
+    onScrollBottom = async () => {
+        await this.pagePosts.more();
+    };
+
     /* 贴文查询*/
     searchPostsKey = async (key: string, author: any) => {
         this.pagePosts = new QueryPager(this.uqs.webBuilder.SearchPost, 15, 30);
