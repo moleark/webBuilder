@@ -48,7 +48,10 @@ PAGE (
 
 
 /** 搜索已经发布了的文帖*/
-QUERY SearchPostPublish( key char(100))
+QUERY SearchPostPublish( 
+    key char(100),
+    domain ID Domain
+)
 PAGE (
     id bigint desc,
     caption char(100),
@@ -64,7 +67,10 @@ PAGE (
     from    POST as p
             join PostPublish as a on p.id = a.post
     where   p.id < $pageStart and p.isValid = 1 and ( a.openweb = 1 or a.web = 1)
-            and ( p.discription like key2 or p.caption like key2 or key is null )
+            and (
+                exists( select 1 from PostDomain as pd where pd.post = p.id and pd.domain = domain )
+                or domain = ''
+            )
     order by p.id desc
     limit $pageSize;
 };
