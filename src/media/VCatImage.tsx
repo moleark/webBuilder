@@ -114,7 +114,7 @@ export class VCatImage extends VPage<CMedia> {
 
             {divImg}
             <div className="smallPath small my-2 text-muted cursor-pointer position-relative"
-                onClick={(e) => this.copyClick(e, path)}>>
+                onClick={(e) => this.copyClick(e, path)}>
                 <span>{path}</span>
                 <small className="position-absolute text-muted" style={{ right: 0, bottom: 0 }}>{this.t('copy')}</small>
             </div>

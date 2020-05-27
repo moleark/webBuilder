@@ -25,6 +25,8 @@ import { VPostSubject } from "./VPostSubject";
 import { VPickClassroomType } from "./VPickClassroomType";
 import { VPostDomain } from "./VPostDomain";
 import { VPickDomain } from "./VPickDomain";
+import { VDomain } from "./VDomain";
+import { VDomainDetil } from "./VDomainDetil";
 
 /* eslint-disable */
 export class CPosts extends CUqBase {
@@ -33,6 +35,7 @@ export class CPosts extends CUqBase {
     @observable pageMedia: QueryPager<any>;
     @observable pageProductCatalogPost: QueryPager<any>;
     @observable pageSubjectPost: QueryPager<any>;
+    @observable pageDomainPost: QueryPager<any>;
     @observable pageProduct: QueryPager<any>;
 
 
@@ -351,10 +354,21 @@ export class CPosts extends CUqBase {
         let { id } = param;
         await this.uqs.webBuilder.AddPostDomain.submit({ _post: this.current.id, _domain: id });
         this.pagePostDomain = await this.uqs.webBuilder.SearchPostDomain.table({ _post: this.current.id });
+        this.closePage();
     }
     delPostDomain = async (domain: any) => {
         await this.uqs.webBuilder.PostDomain.del({ post: this.current.id, arr1: [{ domain: domain }] });
         this.pagePostDomain = await this.uqs.webBuilder.SearchPostDomain.table({ _post: this.current.id })
+    }
+    showDomain = async (param: any) => {
+        let domain = new QueryPager(this.uqs.customer.SearchDomain, 15, 100);
+        domain.first({ _parent: param });
+        this.openVPage(VDomain, domain);
+    }
+    showDomainPost = async (param: any) => {
+        this.pageDomainPost = new QueryPager(this.uqs.webBuilder.SearchDomainPost, 15, 100);
+        this.pageDomainPost.first({ author: 0, domain: param.id })
+        this.openVPage(VDomainDetil);
     }
 
 

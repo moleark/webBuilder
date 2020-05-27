@@ -78,6 +78,7 @@ export interface WebBuilder {
     PostDomain: Map;
     AddPostDomain: Action;
     SearchPostDomain: Query;
+    SearchDomainPost: Query;
 }
 
 export interface UQs {

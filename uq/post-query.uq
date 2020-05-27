@@ -263,6 +263,46 @@ returns ret (
 };
 
 
+/** 搜索栏目 **/
+QUERY SearchDomainPost(    
+    author ID [$user],
+    domain ID Domain
+)
+PAGE (
+    id bigint desc,
+    caption char(100),
+    discription char(200),
+    image ID Image,
+    author ID [$user],
+    template ID Template,
+	[$update] DATETIME,
+	[$create] DATETIME,
+    isValid tinyint,
+	hits int,
+	sumHits int,
+    web     smallint,
+    agent   smallint, 
+    assist  smallint, 
+    openweb smallint
+) {
+
+    PAGE select p.id, p.caption, p.discription, p.image, p.author
+            , p.template, p.[$update], p.[$create],p.isValid
+            , c.hits, c.sumHits
+            , ifnull(ph.web, 0) as web
+            , ifnull(ph.agent,0) as agent
+            , ifnull( ph.assist,0) as assist
+            , ifnull( ph.openweb ,0) as openweb
+    from    POST as p
+            join PostDomain as pp on pp.post = p.id and pp.domain = domain
+            left join PostPublish as ph on p.id = ph.post
+			left join Hot as c on p.id=c.post
+    where   p.id < $pageStart and p.isValid = 1 
+            and ( p.author = author or author = 0 )
+    order by p.id desc
+    limit $pageSize;
+};
+
 
 
 

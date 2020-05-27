@@ -119,7 +119,7 @@ export class CPage extends CUqBase {
 
     onPreviewPage = (id: number) => {
         window.open(
-            "https://c.jkchemical.com/webBuilder/webpage/" + id,
+            "https://cs.jkchemical.com/webBuilder/webpage/" + id,
             "_blank"
         );
     };

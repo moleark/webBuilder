@@ -45,7 +45,7 @@ export class VMain extends VPage<CTemplets> {
     }
 
     private onPreview = (id: number) => {
-        window.open('https://c.jkchemical.com/webBuilder/template/' + id, '_blank')
+        window.open('https://cs.jkchemical.com/webBuilder/template/' + id, '_blank')
     }
 
     private renderItem = (item: any, index: number) => {

@@ -55,7 +55,7 @@ export class VMain extends VPage<CPosts> {
     }
 
     private page = observer(() => {
-        let { pagePosts, onAdd, searchPostsKey, showProductCatalog, showSubject, onScrollBottom } = this.controller;
+        let { pagePosts, onAdd, searchPostsKey, showProductCatalog, showSubject, onScrollBottom, showDomain } = this.controller;
         let right = (
             <div className="d-flex align-items-center">
                 {this.renderMeAllToggle()}
@@ -76,6 +76,9 @@ export class VMain extends VPage<CPosts> {
             </LMR>
             <LMR className="bg-white py-3 my-1" right={<i className=" px-2 iconfont icon-jiantou1"></i>} onClick={() => showSubject(0)}>
                 <div className="mx-3 px-2 font-weight-bold">帖文栏目</div>
+            </LMR>
+            <LMR className="bg-white py-3 my-1" right={<i className=" px-2 iconfont icon-jiantou1"></i>} onClick={() => showDomain(0)}>
+                <div className="mx-3 px-2 font-weight-bold">研究领域</div>
             </LMR>
         </>
 
