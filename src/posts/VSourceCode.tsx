@@ -12,9 +12,18 @@ export class VSourceCode extends VPage<CPosts> {
     private page = observer((param: any) => {
         let { current } = this.controller;
         return <Page header={this.t('sourcecode')} headerClassName={consts.headerClass}  >
-            <div className="w-100 h-100"  >
-                <textarea className="w-100 h-100">{current.content}</textarea>
+            <div ref={this.refIframe}>
+                <textarea className="w-100 h-100" >{current.content}</textarea>
             </div>
         </Page>;
     })
+
+
+    private refIframe = (ifrm: HTMLIFrameElement) => {
+        if (!ifrm) return;
+        let article = ifrm.parentElement.parentElement;
+        let header = (article.querySelector('section.tv-page-header') as HTMLElement);
+        ifrm.style.height = (window.innerHeight - header.clientHeight) + 'px';
+        article.parentElement.style.overflowY = 'hidden';
+    }
 }
