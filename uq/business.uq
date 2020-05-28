@@ -69,7 +69,7 @@ PAGE (
             join PostClassroomType as pp on pp.post = p.id 
             left join PostPublish as ph on p.id = ph.post
 			left join Hot as c on p.id=c.post
-    where   p.id < $pageStart and p.isValid = 1 
+    where   p.id < $pageStart and p.isValid = 1 and ph.agent =1
             and ( classroomType = 0 or pp.classroomType = classroomType)
     order by p.id desc
     limit $pageSize;
