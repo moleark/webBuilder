@@ -1,0 +1,18 @@
+ACTION AddBrowsingHistory(
+    object ID, 
+    objectType  char(20), 
+    ipAddress char(20)
+) {
+   var author ID $user;
+    if(objectType='page'){
+        set author = p.author from WebPage as p where p.id = object;
+        history PageBrowsingHistory set WebPage = object, ipAddress = ipAddress;
+        BOOK PageBrowsing at (object) set totalBrowsing +=1;
+        BOOK TotalBrowsing at (author) set PageTotal +=1;
+    } else if (objectType='post'){
+        set author = p.author from POST as p where p.id = object;
+        history PostBrowsingHistory set POST = object, ipAddress = ipAddress;
+        BOOK PostBrowsing at (object) set totalBrowsing +=1;
+        BOOK TotalBrowsing at (author) set PostTotal +=1;
+    } 
+};

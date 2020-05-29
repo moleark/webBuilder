@@ -3,7 +3,7 @@ import { consts } from 'consts';
 import { CPage } from "./CPage";
 import { observer } from 'mobx-react';
 import { VEditPage } from './VEditPage';
-import { VPage, Page, LMR, tv, EasyTime, Tuid, List } from "tonva";
+import { VPage, Page, LMR, tv, EasyTime, Tuid, List, FA } from "tonva";
 
 export class VShowPage extends VPage<CPage> {
 
@@ -11,7 +11,7 @@ export class VShowPage extends VPage<CPage> {
         this.openPage(this.page);
     }
     private page = observer(() => {
-        let { current, onRedact, itemsModule, onCommonalityModule, ondisplay, lock } = this.controller;
+        let { current, onRedact, itemsModule, onCommonalityModule, ondisplay, lock, showPublish } = this.controller;
         let { titel, name, author, template, discription, $update } = current;
         const sortItemsModule = itemsModule.sort(function (m, n) {
             if (m.sort < n.sort) return -1
@@ -24,7 +24,14 @@ export class VShowPage extends VPage<CPage> {
             <div onClick={() => onCommonalityModule()}><span className="iconfont icon-tubiao106 mr-2" style={{ fontSize: "24px" }}></span></div>
             <div onClick={onRedact}><span className="iconfont icon-icon--tianjia mr-2" style={{ fontSize: "24px" }}></span></div>
         </div>
-        let right = isMe && <div onClick={() => this.openVPage(VEditPage)}><span className="iconfont icon-xiugai1 mr-2" style={{ fontSize: "26px", color: "white" }}></span></div>
+        let right = isMe && <>
+            <button className="mr-2 btn btn-sm btn-success" onClick={() => this.openVPage(VEditPage)}>
+                <FA name="pencil-square-o" /> {this.t('editor')}
+            </button>
+            <button className="mr-2 btn btn-sm btn-info" onClick={showPublish}>
+                <FA name="external-link" /> {this.t('publish')}
+            </button>
+        </>;
 
         let divUser = this.controller.cApp.renderUser(author.id);
         return <Page header={name} headerClassName={consts.headerClass} right={right}>

@@ -10,6 +10,8 @@ import { VPickTemplate } from "./VPickTemplate";
 import { Context, QueryPager } from "tonva";
 import { VResacModule } from "./VRedactModule";
 import { VPickBranch } from "./VPinkBranch";
+import { VShow } from "page/VShow";
+import { VPublish } from "./VPublish";
 
 export class CPage extends CUqBase {
     @observable pageTemplate: QueryPager<any>;
@@ -20,6 +22,9 @@ export class CPage extends CUqBase {
     @observable currentModule: any;
     @observable current: any;
     @observable lock: boolean = false;
+
+    @observable pageWebsite: any;
+
 
     protected async internalStart(param: any) { }
 
@@ -117,11 +122,8 @@ export class CPage extends CUqBase {
         this.returnCall(this.uqs.webBuilder.Template.boxId(id));
     };
 
-    onPreviewPage = (id: number) => {
-        window.open(
-            "https://cs.jkchemical.com/webBuilder/webpage/" + id,
-            "_blank"
-        );
+    onPreviewPage = (name: any) => {
+        this.openVPage(VShow, name)
     };
 
     // 网页模板
@@ -201,8 +203,13 @@ export class CPage extends CUqBase {
                 { branch: this.currentModule.id, sort: this.currentModule.sort }
             ]
         });
-    };
-    //：{ key1: key1值, arr1:[{key2: key2值}]
+    }
+
+
+    showPublish = async () => {
+        this.pageWebsite = await this.uqs.webBuilder.Website.all();
+        this.openVPage(VPublish);
+    }
 
     tab = () => {
         return <this.render />;

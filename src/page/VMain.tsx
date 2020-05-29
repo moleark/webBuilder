@@ -37,7 +37,7 @@ export class VMain extends VPage<CPage> {
             <div className="small col-2 text-muted text-right px-0">
                 <button
                     style={{ fontWeight: 550, padding: '0 5px', fontSize: '12px' }} className="mt-2 btn btn-outline-primary"
-                    onClick={() => this.controller.onPreviewPage(item.id)}
+                    onClick={() => this.controller.onPreviewPage(item.name)}
                 >{this.t('preview')}
                 </button>
                 <div className=" small pt-1 text-truncate">{divUser}</div>

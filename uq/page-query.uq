@@ -1,0 +1,70 @@
+
+/** 搜索我的*/
+QUERY SearchWebPage( key char(100), author ID [$user])
+PAGE (
+    id bigint desc,
+    name char(100),
+    discription char(200),
+    titel char(100),
+    author ID [$user],
+    template ID Template
+) {
+    var key2 char(102);
+    set key2 = concat('%', key, '%');
+
+    PAGE select p.id, p.name, p.discription, p.titel, p.author, p.template
+    from    WebPage as p
+    where   p.id < $pageStart and ( p.titel like key2 or p.template like key2 or p.discription like key2 or p.name like key2 or key is null )
+            and ( p.author = author or author = 0 )
+    order by p.id desc
+    limit $pageSize;
+};
+
+
+/** 搜索我的私有模块*/
+QUERY SearchPrivateBranch( _page ID webPage)
+returns ret (
+    id bigint,
+    content text,
+    branchType int,
+    author ID [$user],
+    sort int
+) {
+    into ret select b.id, b.content, b.branchType, b.author, p.sort
+    from    BRANCH as b
+            join WebPageBranch as p on b.id=p.branch
+    where   p.webPage = _page 
+    order by p.sort desc;
+};
+
+/** 搜索我的全部子模块*/
+QUERY SearchBranch( key char(100))
+PAGE (
+    id bigint desc,
+    author ID [$user],
+    content text,
+    branchType int
+) {
+    var key2 char(102);
+    set key2 = concat('%', key, '%');
+
+    PAGE select p.id, p.author, p.content, p.branchType
+    from    BRANCH as p
+    where   p.id < $pageStart and ( p.content like key2 or key is null )
+            and p.branchType=0
+    order by p.id desc
+    limit $pageSize;
+};
+ 
+ 
+QUERY SearchTotalBrowsing( )
+returns ret (
+    user ID [$user],
+    PostTotal bigint,
+    PageTotal bigint
+) {
+    into ret select b.user, b.PostTotal, b.PageTotal
+    from    TotalBrowsing as b
+    where   b.user = $user
+    order by b.user desc;
+};
