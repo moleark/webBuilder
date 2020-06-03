@@ -21,9 +21,9 @@ export class VPublish extends VPage<CPage>  {
 
     private renderItem = (item: any, index: number) => {
         let { name } = item;
-        return <div className="px-2 py-2 d-flex p-1 cursor-pointer">
+        return <div className="px-2 py-2 d-flex p-1 cursor-pointer" onClick={() => this.controller.onPublish(item)}>
             <b>{name}</b>
-        </div>
+        </div >
     }
 
 }

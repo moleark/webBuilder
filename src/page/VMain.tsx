@@ -25,24 +25,24 @@ export class VMain extends VPage<CPage> {
     }
 
     private itemRow = observer((item: any) => {
+
+        let { user, cApp, onPreviewPage } = this.controller;
         let { author, name, $update, titel } = item;
-        let divUser = this.controller.cApp.renderUser(author.id);
-        return <div className="px-2 d-flex p-1 cursor-pointer">
-            <div className="col-10 d-flex" onClick={() => this.controller.showDetail(item.id)}>
+        let divUser = user.id === author.id ? <span className="text-warning">[自己]</span> : cApp.renderUser(author.id);
+
+        return <div className="d-flex p-1 cursor-pointer" onClick={() => onPreviewPage(item)}>
+            <div className="col-10 d-flex">
                 <div>
                     <b>{name}</b>
                     <div className="small py-1 text-muted ">{titel}</div>
                 </div>
             </div>
-            <div className="small col-2 text-muted text-right px-0">
-                <button
-                    style={{ fontWeight: 550, padding: '0 5px', fontSize: '12px' }} className="mt-2 btn btn-outline-primary"
-                    onClick={() => this.controller.onPreviewPage(item.name)}
-                >{this.t('preview')}
-                </button>
-                <div className=" small pt-1 text-truncate">{divUser}</div>
+            <div className="small col-2 text-muted text-right">
                 <div className=" small"><EasyTime date={$update} /></div>
+                <div className=" small pt-1 text-truncate">{divUser}</div>
             </div>
+
         </div>
     });
+    // onClick={() => this.controller.showDetail(item.id)}
 }

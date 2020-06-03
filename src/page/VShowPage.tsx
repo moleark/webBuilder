@@ -2,8 +2,8 @@ import * as React from 'react';
 import { consts } from 'consts';
 import { CPage } from "./CPage";
 import { observer } from 'mobx-react';
+import { VPage, Page, LMR, tv, List, FA } from "tonva";
 import { VEditPage } from './VEditPage';
-import { VPage, Page, LMR, tv, EasyTime, Tuid, List, FA } from "tonva";
 
 export class VShowPage extends VPage<CPage> {
 
@@ -11,36 +11,26 @@ export class VShowPage extends VPage<CPage> {
         this.openPage(this.page);
     }
     private page = observer(() => {
-        let { current, onRedact, itemsModule, onCommonalityModule, ondisplay, lock, showPublish } = this.controller;
-        let { titel, name, author, template, discription, $update } = current;
+        let { current, onRedact, itemsModule, onCommonalityModule, ondisplay, lock } = this.controller;
+        let { titel, name, template, discription } = current;
         const sortItemsModule = itemsModule.sort(function (m, n) {
             if (m.sort < n.sort) return -1
             else if (m.sort > n.sort) return 1
             else return 0
         });
-        let date = <span><EasyTime date={$update} /></span>;
-        let isMe = Tuid.equ(author, this.controller.user.id);
         let addModule = <div className="d-flex" style={{ color: '#0066cc' }}>
             <div onClick={() => onCommonalityModule()}><span className="iconfont icon-tubiao106 mr-2" style={{ fontSize: "24px" }}></span></div>
             <div onClick={onRedact}><span className="iconfont icon-icon--tianjia mr-2" style={{ fontSize: "24px" }}></span></div>
         </div>
-        let right = isMe && <>
-            <button className="mr-2 btn btn-sm btn-success" onClick={() => this.openVPage(VEditPage)}>
-                <FA name="pencil-square-o" /> {this.t('editor')}
-            </button>
-            <button className="mr-2 btn btn-sm btn-info" onClick={showPublish}>
-                <FA name="external-link" /> {this.t('publish')}
-            </button>
-        </>;
 
-        let divUser = this.controller.cApp.renderUser(author.id);
-        return <Page header={name} headerClassName={consts.headerClass} right={right}>
+        let right = <button className="mr-2 btn btn-sm btn-success" onClick={() => this.openVPage(VEditPage)}>
+            <FA name="pencil-square-o" /> {this.t('editor')}
+        </button>;
+
+        return <Page header={name} headerClassName={consts.headerClass} right={right} >
             <div className="px-3 pt-2 pb-0">
                 <div className="small text-muted p-1">{this.t('titel')} :</div>
                 <div className="mb-1 h6 px-3 py-2 bg-white">{titel}</div>
-                <LMR className="mb-3 px-3 small text-black-50" right={date}>
-                    {divUser}
-                </LMR>
                 <div className="small text-muted p-1" >{this.t('describe')}:</div>
                 <LMR className="mb-3 bg-white px-3 h6">
                     <div className="py-2">{discription}</div>

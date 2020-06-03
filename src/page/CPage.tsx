@@ -122,7 +122,12 @@ export class CPage extends CUqBase {
         this.returnCall(this.uqs.webBuilder.Template.boxId(id));
     };
 
-    onPreviewPage = (name: any) => {
+    onPreviewPage = async (param: any) => {
+        let { id, name } = param;
+        this.current = await this.uqs.webBuilder.WebPage.load(id);
+        let result = await this.uqs.webBuilder.SearchPrivateBranch.query({ _page: id });
+        this.itemsModule = result.ret;
+        console.log(this.itemsModule.length, "this.itemsModule");
         this.openVPage(VShow, name)
     };
 
@@ -178,14 +183,7 @@ export class CPage extends CUqBase {
     };
 
     // 显示网页详情
-    showDetail = async (id: number) => {
-        this.current = await this.uqs.webBuilder.WebPage.load(id);
-        let result = await this.uqs.webBuilder.SearchPrivateBranch.query({
-            _page: id
-        });
-        this.itemsModule = result.ret;
-        console.log(this.itemsModule.length, "this.itemsModule");
-
+    showDetail = async () => {
         this.openVPage(VShowPage);
     };
 
@@ -209,6 +207,11 @@ export class CPage extends CUqBase {
     showPublish = async () => {
         this.pageWebsite = await this.uqs.webBuilder.Website.all();
         this.openVPage(VPublish);
+    }
+
+    onPublish = async (param: any) => {
+        await this.uqs.webBuilder.WebPageWebsite.add({ website: param, arr1: [{ webPage: this.current }] })
+        this.closePage();
     }
 
     tab = () => {

@@ -7,12 +7,13 @@ PAGE (
     discription char(200),
     titel char(100),
     author ID [$user],
-    template ID Template
+    [$update] DATETIME,
+	[$create] DATETIME
 ) {
     var key2 char(102);
     set key2 = concat('%', key, '%');
 
-    PAGE select p.id, p.name, p.discription, p.titel, p.author, p.template
+    PAGE select p.id, p.name, p.discription, p.titel, p.author, p.[$create], p.[$update]
     from    WebPage as p
     where   p.id < $pageStart and ( p.titel like key2 or p.template like key2 or p.discription like key2 or p.name like key2 or key is null )
             and ( p.author = author or author = 0 )
