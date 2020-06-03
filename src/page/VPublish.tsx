@@ -20,7 +20,7 @@ export class VPublish extends VPage<CPage>  {
     })
 
     private renderItem = (item: any, index: number) => {
-        let { name, id } = item;
+        let { name } = item;
         return <div className="px-2 py-2 d-flex p-1 cursor-pointer">
             <b>{name}</b>
         </div>

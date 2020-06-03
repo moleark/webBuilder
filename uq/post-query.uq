@@ -50,7 +50,8 @@ PAGE (
 /** 搜索已经发布了的文帖*/
 QUERY SearchPostPublish( 
     key char(100),
-    domain ID Domain
+    domain ID Domain,
+    publish int
 )
 PAGE (
     id bigint desc,
@@ -58,20 +59,37 @@ PAGE (
     discription char(200),
     image ID Image,
     author ID [$user],
-    template ID Template
+    template ID Template,
+    [$update] DATETIME,
+	[$create] DATETIME,
+    publishdate DATETIME,
+    isValid tinyint,
+	hits int,
+	sumHits int
 ) {
     var key2 char(102);
     set key2 = concat('%', key, '%');
 
     PAGE select p.id, p.caption, p.discription, p.image, p.author, p.template
+                , p.[$update], p.[$create], ph.update as publishdate
+                , p.isValid, c.hits, c.sumHits
     from    POST as p
-            join PostPublish as a on p.id = a.post
-    where   p.id < $pageStart and p.isValid = 1 and ( a.openweb = 1 or a.web = 1)
+            join PostPublish as ph on p.id = ph.post
+            left join Hot as c on p.id=c.post
+    where   p.id < $pageStart and p.isValid = 1 
+            and (
+                publish = 0
+                or (publish = 1 and ph.web = 1  )
+                or (publish = 2 and ph.agent = 1  )
+                or (publish = 3 and ph.assist = 1  )
+                or (publish = 4 and ph.openweb = 1  )
+            )
+            and ( p.discription like key2 or p.caption like key2 or key is null )
             and (
                 exists( select 1 from PostDomain as pd where pd.post = p.id and pd.domain = domain )
                 or domain = ''
             )
-    order by p.id desc
+    order by publishdate desc
     limit $pageSize;
 };
 
@@ -110,7 +128,8 @@ returns ret  (
 /** 根据目录树搜索文帖 **/
 QUERY SearchProductCategoryPost( 
     author ID [$user],
-    productCategory ID ProductCategory
+    productCategory ID ProductCategory,
+    publish int 
 )
 PAGE (
     id bigint desc,
@@ -121,6 +140,7 @@ PAGE (
     template ID Template,
 	[$update] DATETIME,
 	[$create] DATETIME,
+    publishdate DATETIME,
     isValid tinyint,
 	hits int,
 	sumHits int,
@@ -131,8 +151,8 @@ PAGE (
 ) {
 
     PAGE select p.id, p.caption, p.discription, p.image, p.author
-            , p.template, p.[$update], p.[$create],p.isValid
-            , c.hits, c.sumHits
+            , p.template, p.[$update], p.[$create], ph.update as publishdate
+            ,p.isValid, c.hits, c.sumHits
             , ifnull(ph.web, 0) as web
             , ifnull(ph.agent,0) as agent
             , ifnull( ph.assist,0) as assist
@@ -141,7 +161,14 @@ PAGE (
             join PostProductCatalog as pp on pp.post = p.id and pp.productCategory = productCategory
             left join PostPublish as ph on p.id = ph.post
 			left join Hot as c on p.id=c.post
-    where   p.id < $pageStart and p.isValid = 1 
+    where   p.id < $pageStart and p.isValid = 1
+            and (
+                publish = 0
+                or (publish = 1 and ph.web = 1  )
+                or (publish = 2 and ph.agent = 1  )
+                or (publish = 3 and ph.assist = 1  )
+                or (publish = 4 and ph.openweb = 1  )
+            )
             and ( p.author = author or author = 0 )
     order by p.id desc
     limit $pageSize;
@@ -167,7 +194,8 @@ PAGE (
 /** 搜索栏目 **/
 QUERY SearchSubjectPost(    
     author ID [$user],
-    subject ID Subject
+    subject ID Subject,
+    publish int 
 )
 PAGE (
     id bigint desc,
@@ -178,6 +206,7 @@ PAGE (
     template ID Template,
 	[$update] DATETIME,
 	[$create] DATETIME,
+    publishdate DATETIME,
     isValid tinyint,
 	hits int,
 	sumHits int,
@@ -188,8 +217,8 @@ PAGE (
 ) {
 
     PAGE select p.id, p.caption, p.discription, p.image, p.author
-            , p.template, p.[$update], p.[$create],p.isValid
-            , c.hits, c.sumHits
+            , p.template, p.[$update], p.[$create], ph.update as publishdate
+            ,p.isValid, c.hits, c.sumHits
             , ifnull(ph.web, 0) as web
             , ifnull(ph.agent,0) as agent
             , ifnull( ph.assist,0) as assist
@@ -199,6 +228,13 @@ PAGE (
             left join PostPublish as ph on p.id = ph.post
 			left join Hot as c on p.id=c.post
     where   p.id < $pageStart and p.isValid = 1 
+            and (
+                publish = 0
+                or (publish = 1 and ph.web = 1  )
+                or (publish = 2 and ph.agent = 1  )
+                or (publish = 3 and ph.assist = 1  )
+                or (publish = 4 and ph.openweb = 1  )
+            )
             and ( p.author = author or author = 0 )
     order by p.id desc
     limit $pageSize;
@@ -266,7 +302,8 @@ returns ret (
 /** 搜索栏目 **/
 QUERY SearchDomainPost(    
     author ID [$user],
-    domain ID Domain
+    domain ID Domain,
+    publish int 
 )
 PAGE (
     id bigint desc,
@@ -277,6 +314,7 @@ PAGE (
     template ID Template,
 	[$update] DATETIME,
 	[$create] DATETIME,
+    publishdate DATETIME,
     isValid tinyint,
 	hits int,
 	sumHits int,
@@ -287,8 +325,8 @@ PAGE (
 ) {
 
     PAGE select p.id, p.caption, p.discription, p.image, p.author
-            , p.template, p.[$update], p.[$create],p.isValid
-            , c.hits, c.sumHits
+            , p.template, p.[$update], p.[$create], ph.update as publishdate
+            , p.isValid, c.hits, c.sumHits
             , ifnull(ph.web, 0) as web
             , ifnull(ph.agent,0) as agent
             , ifnull( ph.assist,0) as assist
@@ -298,6 +336,13 @@ PAGE (
             left join PostPublish as ph on p.id = ph.post
 			left join Hot as c on p.id=c.post
     where   p.id < $pageStart and p.isValid = 1 
+            and (
+                publish = 0
+                or (publish = 1 and ph.web = 1  )
+                or (publish = 2 and ph.agent = 1  )
+                or (publish = 3 and ph.assist = 1  )
+                or (publish = 4 and ph.openweb = 1  )
+            )
             and ( p.author = author or author = 0 )
     order by p.id desc
     limit $pageSize;

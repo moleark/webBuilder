@@ -301,7 +301,7 @@ export class CPosts extends CUqBase {
 
     showProductCatalogDetil = async (param: any) => {
         this.pageProductCatalogPost = new QueryPager(this.uqs.webBuilder.SearchProductCategoryPost, 15, 30);
-        this.pageProductCatalogPost.first({ author: 0, productCategory: param })
+        this.pageProductCatalogPost.first({ author: 0, productCategory: param, publish: 0 })
         return await this.vCall(VProductCatalogDetil);
     }
 
@@ -335,7 +335,7 @@ export class CPosts extends CUqBase {
     }
     showSubjectPost = async (param: any) => {
         this.pageSubjectPost = new QueryPager(this.uqs.webBuilder.SearchSubjectPost, 15, 30);
-        this.pageSubjectPost.first({ author: 0, subject: param.id })
+        this.pageSubjectPost.first({ author: 0, subject: param.id, publish: 0 })
         return await this.vCall(VSubjectDetil);
     }
 
@@ -367,7 +367,7 @@ export class CPosts extends CUqBase {
     }
     showDomainPost = async (param: any) => {
         this.pageDomainPost = new QueryPager(this.uqs.webBuilder.SearchDomainPost, 15, 100);
-        this.pageDomainPost.first({ author: 0, domain: param.id })
+        this.pageDomainPost.first({ author: 0, domain: param.id, publish: 0 })
         this.openVPage(VDomainDetil);
     }
 
