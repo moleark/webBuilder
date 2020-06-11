@@ -39,7 +39,10 @@ ACTION PublishPost(
 
     var val int = 0;
     set val = newval - oldval
-    BOOK Achievement at( now(), 0, $user ) set postPubSum += val;
+
+    var alldate char(20);
+    set alldate =CONCAT( year( now() ), '-' , month( now() ), '-', day( now() ) );
+    BOOK Achievement at( alldate, 0, $user ) set postPubSum += val;
  
     BOOK PostPublish at(_post) 
     set web=_web, agent=_agent, assist=_assist, openweb=_openweb, operator = $user, update = now();
@@ -54,7 +57,9 @@ ACTION TransmitPost(
     var author ID;
     set  author = a.author from post as a where a.id = _post;
     if(author){
-        BOOK Achievement at( now(), 0, author ) set postTranSum += 1;
+        var alldate char(20);
+        set alldate =CONCAT( year( now() ), '-' , month( now() ), '-', day( now() ) );
+        BOOK Achievement at(alldate, 0, author ) set postTranSum += 1;
     }
 };
 

@@ -55,6 +55,7 @@ QUERY SearchPostPublish(
 )
 PAGE (
     id bigint desc,
+    post ID POST,
     caption char(100),
     discription char(200),
     image ID Image,
@@ -70,13 +71,13 @@ PAGE (
     var key2 char(102);
     set key2 = concat('%', key, '%');
 
-    PAGE select p.id, p.caption, p.discription, p.image, p.author, p.template
+    PAGE select unix_timestamp(ph.update) as id,p.id as post, p.caption, p.discription, p.image, p.author, p.template
                 , p.[$update], p.[$create], ph.update as publishdate
                 , p.isValid, c.hits, c.sumHits
     from    POST as p
             join PostPublish as ph on p.id = ph.post
             left join Hot as c on p.id=c.post
-    where   p.id < $pageStart and p.isValid = 1 
+    where  unix_timestamp(ph.update) < $pageStart and p.isValid = 1 
             and (
                 publish = 0
                 or (publish = 1 and ph.web = 1  )
@@ -89,7 +90,7 @@ PAGE (
                 exists( select 1 from PostDomain as pd where pd.post = p.id and pd.domain = domain )
                 or domain = ''
             )
-    order by publishdate desc
+    order by unix_timestamp(ph.update) desc
     limit $pageSize;
 };
 
