@@ -22,15 +22,17 @@ returns ret  (
     postTranSum int,    --post转发次数
     postHitSum int      --post访问次数
 ) {
+ 
+    var startdate DATE, enddate DATE;
 
-    VAR calcTick INT, weekTick INT;
-    SET calcTick = unix_timestamp();
-    SET weekTick = 7*24*3600;
     if(_type='week'){
+
+        set startdate = DATE( dateadd(week, -1, NOW() ) );
+        set enddate = DATE( NOW() );
         into ret select max(year(a.date)) as yeara ,max(month(a.date)) as montha , sum(a.postPubSum) as postPubSum, sum(a.postTranSum) as postTranSum, sum(a.postHitSum) as postHitSum
         from    Achievement as a
         where   a.user = $user
-                and a.date>=FROM_UNIXTIME(calcTick - weekTick);
+                and a.date>=startdate and a.date < enddate;
 
     }else if(_type='month'){
         into ret select yeara , montha, sum(a.postPubSum) as postPubSum, sum(a.postTranSum) as postTranSum, sum(a.postHitSum) as postHitSum
@@ -64,14 +66,17 @@ returns ret  (
     postHitSum int      --post访问次数
 ) {
 
+    var startdate DATE, enddate DATE;
+ 
     if(_type = 'week'){
-        VAR calcTick INT, weekTick INT;
-        SET calcTick = unix_timestamp();
-        SET weekTick = 7*24*3600;
+
+        set startdate = DATE( dateadd(week, -1, NOW() ) );
+        set enddate = DATE( NOW() );
         into ret select max(year(a.date)) as yeara , 'week' as montha , sum(a.postPubSum) as postPubSum, sum(a.postTranSum) as postTranSum, sum(a.postHitSum) as postHitSum
         from    Achievement as a
         where   a.manage = _manage
-                and a.date>=FROM_UNIXTIME(calcTick - weekTick);
+                and a.date>=startdate and a.date < enddate;
+
     } else if(_type = 'month'){
         into ret select yeara , montha, sum(a.postPubSum) as postPubSum, sum(a.postTranSum) as postTranSum, sum(a.postHitSum) as postHitSum
         from    Achievement as a
@@ -100,13 +105,15 @@ PAGE (
     postHitSum int      --post访问次数
 ) {
     if(_type='week'){
-        VAR calcTick INT, weekTick INT;
-        SET calcTick = unix_timestamp();
-        SET weekTick = 7*24*3600;
+        
+        var startdate DATE, enddate DATE;
+        set startdate = DATE( dateadd(week, -1, NOW() ) );
+        set enddate = DATE( NOW() );
+
         PAGE select  0 as id, max(year(a.date)) as yeara , 'week' as montha, author, sum(a.postPubSum) as postPubSum, sum(a.postTranSum) as postTranSum, sum(a.postHitSum) as postHitSum
         from    Achievement as a
         where   a.manage = _manage
-                and a.date>=FROM_UNIXTIME(calcTick - weekTick)
+                and a.date>=startdate and a.date < enddate
                 and a.user <> 0
         group by a.user as author
         order by sum(a.postHitSum) desc;
