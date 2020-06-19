@@ -1,6 +1,6 @@
 import JKProduct =  百灵威系统工程部/product;
 
-TUID Brand from JKProduct(
+TUID Brand sync JKProduct(
     id,
     main name char(50) not null,
 );
