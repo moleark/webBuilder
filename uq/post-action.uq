@@ -2,6 +2,8 @@
 /** 搜索发布帖文*/
 ACTION PublishPost(
     _post ID POST , 
+    _startDate Date,
+    _endDate   Date,
     arr tags ( 
         [tagName] int
     )
@@ -45,7 +47,8 @@ ACTION PublishPost(
     BOOK Achievement at( alldate, 0, $user ) set postPubSum += val;
  
     BOOK PostPublish at(_post) 
-    set web=_web, agent=_agent, assist=_assist, openweb=_openweb, operator = $user, update = now();
+    set web=_web, agent=_agent, assist=_assist, openweb=_openweb, operator = $user, update = now()
+    , startdate = _startDate, enddate = _endDate;
 
 };
 

@@ -20,6 +20,8 @@ MAP PostPublish(
     assist  smallint, 
     openweb smallint, 
     operator ID [$user],
+    startdate date,
+    enddate date,
     update DATETIME
 );
 
