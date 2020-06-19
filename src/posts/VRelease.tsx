@@ -167,13 +167,11 @@ export class VRelease extends VPage<CPosts>  {
     private onChangeStartdate = (evt: React.ChangeEvent<HTMLInputElement>) => {
         this.startdate = evt.currentTarget.value;
         this.starttimes = Date.parse(this.startdate.replace(/-/g, "/"))
-        console.log(this.starttimes)
     }
 
     private onChangeEnddate = (evt: React.ChangeEvent<HTMLInputElement>) => {
         this.enddate = evt.currentTarget.value;
         let endtimes = Date.parse(this.enddate.replace(/-/g, "/"))
-        console.log(endtimes)
         if (this.startdate !== "" && this.enddate !== "" && this.starttimes >= endtimes) {
             alert("开始时间必须小于结束时间！");
             evt.currentTarget.value = null
