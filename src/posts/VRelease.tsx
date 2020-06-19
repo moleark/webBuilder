@@ -3,6 +3,7 @@ import { CPosts } from './CPosts';
 import { VPage, Page, Widget, UiSchema, UiCustom, Form, Schema, Context, setRes } from 'tonva';
 import { consts } from 'consts';
 import { observable } from 'mobx';
+import { observer } from 'mobx-react';
 
 const res: { [prop: string]: string | any } = {
     sales: '销售助手',
@@ -22,6 +23,8 @@ const tt = setRes(res, res);
 
 class Discount extends Widget {
     @observable dateVisible = false;
+
+
     //private result: ReleaseType[] = observable.array([], { deep: true });
     private publicList = [
         { value: 5, title: 'a', name: 'a', checked: true },
@@ -63,20 +66,28 @@ class Discount extends Widget {
                         <input type="checkbox" value={value}
                             name={name} defaultChecked={checked}
                             onChange={this.onChange} /> {title} &nbsp;
-					</label>
+                    </label>
                 </div>
             })}
         </div>
     };
+
 }
 
 const schema: Schema = [
     { name: 'discount', type: 'string', required: false },
-    //{ name: 'submit', type: 'submit' },
+    //{name: 'submit', type: 'submit' },
 ];
+
+
 
 export class VRelease extends VPage<CPosts>  {
     private form: Form;
+    @observable showTips: any = "none";
+    @observable startdate: any;
+    @observable enddate: any;
+    @observable starttimes: any;
+
     async open() {
         this.openPage(this.page);
     }
@@ -95,7 +106,6 @@ export class VRelease extends VPage<CPosts>  {
         await this.form.buttonClick("submit");
     }
 
-
     private onFormButtonClick = async (name: string, context: Context) => {
         let { publishPost } = this.controller;
         let { discount } = context.data;
@@ -103,10 +113,10 @@ export class VRelease extends VPage<CPosts>  {
         for (let i in discount) {
             if (discount[i] === true) arr.push(Number(i))
         }
-        publishPost(arr);
+        publishPost(arr, this.startdate, this.enddate);
     }
 
-    private page = () => {
+    private page = observer(() => {
         let { showPostPublishForProduct } = this.controller;
         let def = {
             discount: {
@@ -125,14 +135,57 @@ export class VRelease extends VPage<CPosts>  {
                 fieldLabelSize={2}
                 formData={def} />
 
-            <div className="text-center">
-                <button type="button" className="btn btn-outline-info ml-2" onClick={this.onPublish} >
-                    {this.t('ordinarypublish')}
-                </button>
-                <button type="button" className="btn btn-primary ml-2" onClick={showPostPublishForProduct} >
-                    {this.t('productpublish')}
-                </button>
+            <div className="bg-white m-3 p-3 text-center">
+                <form className="form-inline p-2 ">
+                    <label className="mr-4 pl-2" >
+                        <input type="radio" name="reselse" checked onClick={() => this.changeType("")} />
+                        <span className="px-2">定时发布</span>
+                    </label>
+                    <label className="ml-4 pr-2">
+                        <input type="radio" name="reselse" checked onClick={() => this.changeType("none")} />
+                        <span className="px-2"> 长期有效 </span>
+                    </label>
+                </form>
+                <div className="small" style={{ display: this.showTips }}>
+                    <div><label> 开始日期：<input type="date" onChange={this.onChangeStartdate} /></label></div>
+                    <div><label> 结束日期：<input type="date" onChange={this.onChangeEnddate} /></label></div>
+                </div>
+                <div className="p-3 my-3">
+                    <button type="button" className="btn btn-outline-info ml-2" onClick={this.onPublish} >
+                        {this.t('ordinarypublish')}
+                    </button>
+                    <button type="button" className="btn btn-primary ml-4" onClick={showPostPublishForProduct} >
+                        {this.t('productpublish')}
+                    </button>
+                </div>
             </div>
+
+
         </Page >
+    });
+
+    private onChangeStartdate = (evt: React.ChangeEvent<HTMLInputElement>) => {
+        this.startdate = evt.currentTarget.value;
+        this.starttimes = Date.parse(this.startdate.replace(/-/g, "/"))
+        console.log(this.starttimes)
+    }
+
+    private onChangeEnddate = (evt: React.ChangeEvent<HTMLInputElement>) => {
+        this.enddate = evt.currentTarget.value;
+        let endtimes = Date.parse(this.enddate.replace(/-/g, "/"))
+        console.log(endtimes)
+        if (this.startdate !== "" && this.enddate !== "" && this.starttimes >= endtimes) {
+            alert("开始时间必须小于结束时间！");
+            evt.currentTarget.value = null
+        } else {
+            this.enddate = evt.currentTarget.value;
+        }
+
+    }
+
+    private changeType = (type: any) => {
+        this.showTips = type;
     }
 }
+
+

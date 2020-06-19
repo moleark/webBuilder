@@ -132,5 +132,7 @@ export const zh = {
     copy: '复制',
     copysuccess: '复制成功',
     editor: '编辑',
-    pleaseselect: '请选择'
+    pleaseselect: '请选择',
+
+    timepublish: "时间发布"
 }
