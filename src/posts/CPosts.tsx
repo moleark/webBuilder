@@ -365,15 +365,14 @@ export class CPosts extends CUqBase {
         domain.first({ _parent: param });
         this.openVPage(VDomain, domain);
     }
-    showDomainPost = async (param: any) => {
-        this.pageDomainPost = new QueryPager(this.uqs.webBuilder.SearchDomainPost, 15, 100);
-        this.pageDomainPost.first({ author: 0, domain: param.id, publish: 0 })
-        this.openVPage(VDomainDetil);
+    showDomainPost = async (param: any, key: any) => {
+        this.showDomainPost_Search(param, key)
+        this.openVPage(VDomainDetil, param);
     }
-
-
-
-
+    showDomainPost_Search = async (param: any, key: any) => {
+        this.pageDomainPost = new QueryPager(this.uqs.webBuilder.SearchDomainPost, 15, 100);
+        this.pageDomainPost.first({ key: key, author: 0, domain: param.id, publish: 0 })
+    }
 
     showPickClassroomType = async () => {
         let list = await this.uqs.webBuilder.ClassroomType.all();
