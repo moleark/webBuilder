@@ -149,7 +149,7 @@ export class VRelease extends VPage<CPosts>  {
                 <div className="small" style={{ display: this.showTips }}>
                     <div><label> 开始日期：<input type="date" onChange={this.onChangeStartdate} /></label></div>
                     <div><label> 结束日期：<input type="date" onChange={this.onChangeEnddate} /></label>
-                        <p id="tipun" style={{ color: "red" }}></p>
+                        <p id="remind" style={{ color: "red" }}></p>
                     </div>
                 </div>
                 <div className="p-3 my-3">
@@ -176,7 +176,7 @@ export class VRelease extends VPage<CPosts>  {
         this.enddate = evt.currentTarget.value;
         let endtimes = Date.parse(this.enddate.replace(/-/g, "/"))
         if (this.startdate !== "" && this.enddate !== "" && this.starttimes > endtimes) {
-            document.getElementById('tipun').innerHTML = ("开始时间必须小于或者等于结束时间！");
+            document.getElementById('remind').innerHTML = ("开始时间必须小于或者等于结束时间！");
             evt.currentTarget.value = null
         } else {
             this.enddate = evt.currentTarget.value;
