@@ -142,7 +142,7 @@ export class VRelease extends VPage<CPosts>  {
                         <span className="px-2">定时发布</span>
                     </label>
                     <label className="ml-4 pr-2">
-                        <input type="radio" name="reselse" value="reselse2" checked onClick={() => this.changeType("none")} />
+                        <input type="radio" name="reselse" value="reselse2" onClick={() => this.changeType("none")} />
                         <span className="px-2"> 长期有效 </span>
                     </label>
                 </form>
