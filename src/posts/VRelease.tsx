@@ -136,19 +136,21 @@ export class VRelease extends VPage<CPosts>  {
                 formData={def} />
 
             <div className="bg-white m-3 p-3 text-center">
-                <form className="form-inline p-2 ">
-                    <label className="mr-4 pl-2" >
-                        <input type="radio" name="reselse" checked onClick={() => this.changeType("")} />
+                <form className="form-inline p-2 justify-content-center">
+                    <label className="mr-4 pl-2 "  >
+                        <input id="input1" type="radio" name="reselse" value="reselse1" onClick={() => this.changeType("")} />
                         <span className="px-2">定时发布</span>
                     </label>
                     <label className="ml-4 pr-2">
-                        <input type="radio" name="reselse" checked onClick={() => this.changeType("none")} />
+                        <input type="radio" name="reselse" value="reselse2" checked onClick={() => this.changeType("none")} />
                         <span className="px-2"> 长期有效 </span>
                     </label>
                 </form>
                 <div className="small" style={{ display: this.showTips }}>
                     <div><label> 开始日期：<input type="date" onChange={this.onChangeStartdate} /></label></div>
-                    <div><label> 结束日期：<input type="date" onChange={this.onChangeEnddate} /></label></div>
+                    <div><label> 结束日期：<input type="date" onChange={this.onChangeEnddate} /></label>
+                        <p id="tipun" style={{ color: "red" }}></p>
+                    </div>
                 </div>
                 <div className="p-3 my-3">
                     <button type="button" className="btn btn-outline-info ml-2" onClick={this.onPublish} >
@@ -162,6 +164,7 @@ export class VRelease extends VPage<CPosts>  {
 
 
         </Page >
+
     });
 
     private onChangeStartdate = (evt: React.ChangeEvent<HTMLInputElement>) => {
@@ -172,18 +175,17 @@ export class VRelease extends VPage<CPosts>  {
     private onChangeEnddate = (evt: React.ChangeEvent<HTMLInputElement>) => {
         this.enddate = evt.currentTarget.value;
         let endtimes = Date.parse(this.enddate.replace(/-/g, "/"))
-        if (this.startdate !== "" && this.enddate !== "" && this.starttimes >= endtimes) {
-            alert("开始时间必须小于结束时间！");
+        if (this.startdate !== "" && this.enddate !== "" && this.starttimes > endtimes) {
+            document.getElementById('tipun').innerHTML = ("开始时间必须小于或者等于结束时间！");
             evt.currentTarget.value = null
         } else {
             this.enddate = evt.currentTarget.value;
         }
 
     }
-
     private changeType = (type: any) => {
         this.showTips = type;
+        alert('asasas')
     }
+
 }
-
-
