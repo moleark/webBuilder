@@ -1,24 +1,31 @@
 import * as React from "react";
 import { observer } from "mobx-react";
-import { VPage, Page, List, tv, FA, EasyTime } from "tonva";
+import { VPage, Page, List, tv, FA, EasyTime, SearchBox } from "tonva";
 import { consts } from "consts";
 import { CPosts } from "./CPosts";
 
 export class VDomainDetil extends VPage<CPosts> {
 
-    async open() {
+    private domain: any
+    async open(param: any) {
+        this.domain = param;
         this.openPage(this.page);
     }
 
     private page = observer(() => {
-        let { pageDomainPost } = this.controller;
+        let { pageDomainPost, showDomainPost_Search } = this.controller;
         let none = (
             <div className="my-3 mx-2">
                 <span className="text-muted small">[{this.t('noposts')}]</span>
             </div>
         );
+        let right = (
+            <div className="d-flex align-items-center">
+                <SearchBox size="sm" onSearch={(key: string) => showDomainPost_Search(this.domain, key)} placeholder={this.t('searchpost')} />
+            </div>
+        );
         return (
-            <Page header={"研究领域"} headerClassName={consts.headerClass} onScrollBottom={this.onScrollBottom} >
+            <Page header={"研究领域"} headerClassName={consts.headerClass} right={right} onScrollBottom={this.onScrollBottom} >
                 <List before={""} none={none} items={pageDomainPost} item={{ render: this.renderItem }} />
             </Page>
         );
@@ -63,12 +70,11 @@ export class VDomainDetil extends VPage<CPosts> {
                     <div className="mr-3 w-5c w-min-5c h-5c h-min-5c">
                         {tv(
                             image,
-                            values => <div className="w-100 h-100 bg-center-img h-max-6c border rounded"
+                            values => <div className="w-100 h-100 bg-center-img h-max-3c border rounded"
                                 style={{ backgroundImage: 'url(' + values.path + ')' }}></div>,
-                            undefined, //w-6c h-4c mr-2 text-black-50 justify-content-center d-flex align-items-center
+                            undefined,
                             () => (
-                                <div className="d-flex align-items-center h-100
-								justify-content-center bg-light border rounded">
+                                <div className="d-flex align-items-center h-100 justify-content-center bg-light border rounded">
                                     <FA className="text-info" name="camera" size="lg" />
                                 </div>
                             )
@@ -84,10 +90,7 @@ export class VDomainDetil extends VPage<CPosts> {
                                 {updated === true && <>&ensp;<FA name="pencil-square-o" /><EasyTime date={$update} /></>}
                             </div>
                             <div className="author">
-                                {sumHits && hits && <>阅读<b>{sumHits}</b>次
-									{sumHits > hits && <>周<b>{hits}</b>次</>}
-                                </>
-                                }
+                                {sumHits > 0 && hits > 0 && <>阅读<b>{sumHits}</b>次 周<b>{hits}</b>次</>}
                             </div>
                         </div>
                         <div className="small pt-1" style={{ overflow: "hidden" }}>

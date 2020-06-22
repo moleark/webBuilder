@@ -29,7 +29,7 @@ export class VDomain extends VPage<CPosts> {
                 <div className="d-flex flex-fill mx-2" >
                     <span>{name}</span>
                 </div>
-                <div onClick={() => showDomainPost(model)} >
+                <div onClick={() => showDomainPost(model, "")} >
                     <div className="small d-flex cursor-pointer text-primary text-right w-7c ">
                         <button className="btn btn-outline-info mx-2 px-3">
                             贴  文

@@ -302,6 +302,7 @@ returns ret (
 
 /** 搜索栏目 **/
 QUERY SearchDomainPost(    
+    key char(100), 
     author ID [$user],
     domain ID Domain,
     publish int 
@@ -325,6 +326,9 @@ PAGE (
     openweb smallint
 ) {
 
+    var key2 char(102);
+    set key2 = concat('%', key, '%');
+
     PAGE select p.id, p.caption, p.discription, p.image, p.author
             , p.template, p.[$update], p.[$create], ph.update as publishdate
             , p.isValid, c.hits, c.sumHits
@@ -333,10 +337,15 @@ PAGE (
             , ifnull( ph.assist,0) as assist
             , ifnull( ph.openweb ,0) as openweb
     from    POST as p
-            join PostDomain as pp on pp.post = p.id and pp.domain = domain
+            join PostDomain as pp on pp.post = p.id 
             left join PostPublish as ph on p.id = ph.post
 			left join Hot as c on p.id=c.post
     where   p.id < $pageStart and p.isValid = 1 
+            and (p.caption like key2 or key is null )
+            and (
+                pp.domain = domain
+                or pp.domain in( select dm.id from Domain as dm where dm.parent = domain )
+            )
             and (
                 publish = 0
                 or (publish = 1 and ph.web = 1  )
