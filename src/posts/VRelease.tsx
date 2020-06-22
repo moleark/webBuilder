@@ -185,7 +185,7 @@ export class VRelease extends VPage<CPosts>  {
     }
     private changeType = (type: any) => {
         this.showTips = type;
-        alert('asasas')
+
     }
 
 }
