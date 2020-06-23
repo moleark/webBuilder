@@ -79,8 +79,6 @@ const schema: Schema = [
     //{name: 'submit', type: 'submit' },
 ];
 
-
-
 export class VRelease extends VPage<CPosts>  {
     private form: Form;
     @observable showTips: any = "none";
@@ -151,7 +149,8 @@ export class VRelease extends VPage<CPosts>  {
                             </label>
                             <div className="small" style={{ display: this.showTips }}>
                                 <div><label> 开始日期：<input type="date" onChange={this.onChangeStartdate} /></label></div>
-                                <div><label> 结束日期：<input type="date" onChange={this.onChangeEnddate} /></label><p id="remind" style={{ color: "red" }}></p >
+                                <div><label> 结束日期：<input type="date" onChange={this.onChangeEnddate} /></label>
+                                    <p id="remind" style={{ color: "red" }}></p >
                                 </div>
                             </div>
                         </div></div>
@@ -177,7 +176,7 @@ export class VRelease extends VPage<CPosts>  {
 
     private onChangeEnddate = (evt: React.ChangeEvent<HTMLInputElement>) => {
         this.enddate = evt.currentTarget.value;
-        let endtimes = Date.parse(this.enddate.replace(/-/g, "/"))
+        let endtimes = Date.parse(this.enddate.replace(/-/g, "/"));
         if (this.startdate !== "" && this.enddate !== "" && this.starttimes > endtimes) {
             document.getElementById('remind').innerHTML = ("结束时间必须大于或等于开始时间！");
             evt.currentTarget.value = null
@@ -189,11 +188,6 @@ export class VRelease extends VPage<CPosts>  {
     }
     private changeType = (type: any) => {
         this.showTips = type;
-        // $("input1[type='radio']").prop("checked", true)
-        let radiovar = document.getElementsByName("reselse");
-        let arr = radiovar[1].attributes
-        console.log(radiovar[1].attributes)
-
     }
 
 }

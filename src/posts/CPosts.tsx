@@ -27,6 +27,7 @@ import { VPostDomain } from "./VPostDomain";
 import { VPickDomain } from "./VPickDomain";
 import { VDomain } from "./VDomain";
 import { VDomainDetil } from "./VDomainDetil";
+import { VModelarticle } from './VModelarticle';
 
 /* eslint-disable */
 export class CPosts extends CUqBase {
@@ -37,7 +38,7 @@ export class CPosts extends CUqBase {
     @observable pageSubjectPost: QueryPager<any>;
     @observable pageDomainPost: QueryPager<any>;
     @observable pageProduct: QueryPager<any>;
-
+    @observable modelpage: QueryPager<any>
 
     @observable current: any;
     @observable isMe: boolean = true;
@@ -390,4 +391,12 @@ export class CPosts extends CUqBase {
     tab = () => {
         return <this.render />;
     };
+    //范文
+    showModel = async () => {
+
+        let { hotPosts } = this.uqs.webBuilder;
+        let list = await hotPosts.query({});
+        let { ret } = list;
+        this.openVPage(VModelarticle, ret);
+    }
 }
