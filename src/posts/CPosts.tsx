@@ -202,20 +202,14 @@ export class CPosts extends CUqBase {
         this.openVPage(VRelease);
     };
 
-    publishPost = async (param: any, startdate: any, enddate: any) => {
-        this.searchPostsKey("", 0);
+    publishPost = async (param: any[], startdate: Date, enddate: Date) => {
         await this.uqs.webBuilder.PublishPost.submit({
             _post: this.current.id,
-            _startdate: startdate,
-            _enddate: enddate,
-            _operator: nav.user,
-            tags: [
-                { tagName: param[0] },
-                { tagName: param[1] },
-                { tagName: param[2] },
-                { tagName: param[3] }
-            ]
+            _startDate: startdate,
+            _endDate: enddate,
+            tags: param.map(v => { return { tagName: v } })
         });
+        this.searchPostsKey("", 0);
         this.closePage(2);
     };
 
