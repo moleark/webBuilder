@@ -134,35 +134,38 @@ export class VRelease extends VPage<CPosts>  {
                 requiredFlag={false}
                 fieldLabelSize={2}
                 formData={def} />
+            <form className="mx-3 my-3">
+                <div className="form-group row">
+                    <label className="col-sm-2 col-form-label"></label>
+                    <div className="col-sm-10">
+                        <div className=" bg-white text-center py-2" style={{
+                            borderRadius: "0.25rem", border: "1px solid #ccc"
+                        }} >
+                            <label className="p-2 mr-3" >
+                                <input type="radio" name="reselse" onClick={() => this.changeType("")} />
+                                <span className="">定时发布</span>
+                            </label>
+                            <label className="p-2 ml-3">
+                                <input type="radio" name="reselse" onClick={() => this.changeType("none")} />
+                                <span className=""> 长期有效 </span>
+                            </label>
+                            <div className="small" style={{ display: this.showTips }}>
+                                <div><label> 开始日期：<input type="date" onChange={this.onChangeStartdate} /></label></div>
+                                <div><label> 结束日期：<input type="date" onChange={this.onChangeEnddate} /></label><p id="remind" style={{ color: "red" }}></p >
+                                </div>
+                            </div>
+                        </div></div>
+                </div>
+            </form>
 
-            <div className="bg-white m-3 p-3 text-center">
-                <form className="form-inline p-2 justify-content-center">
-                    <label className="mr-4 pl-2 "  >
-                        <input id="input1" type="radio" name="reselse" value="reselse1" onClick={() => this.changeType("")} />
-                        <span className="px-2">定时发布</span>
-                    </label>
-                    <label className="ml-4 pr-2">
-                        <input type="radio" name="reselse" value="reselse2" checked onClick={() => this.changeType("none")} />
-                        <span className="px-2"> 长期有效 </span>
-                    </label>
-                </form>
-                <div className="small" style={{ display: this.showTips }}>
-                    <div><label> 开始日期：<input type="date" onChange={this.onChangeStartdate} /></label></div>
-                    <div><label> 结束日期：<input type="date" onChange={this.onChangeEnddate} /></label>
-                        <p id="remind" style={{ color: "red" }}></p>
-                    </div>
-                </div>
-                <div className="p-3 my-3">
-                    <button type="button" className="btn btn-outline-info ml-2" onClick={this.onPublish} >
-                        {this.t('ordinarypublish')}
-                    </button>
-                    <button type="button" className="btn btn-primary ml-4" onClick={showPostPublishForProduct} >
-                        {this.t('productpublish')}
-                    </button>
-                </div>
+            <div className="p-3 my-1  text-center">
+                <button type="button" className="btn btn-outline-info ml-2" onClick={this.onPublish} >
+                    {this.t('ordinarypublish')}
+                </button>
+                <button type="button" className="btn btn-primary ml-4" onClick={showPostPublishForProduct} >
+                    {this.t('productpublish')}
+                </button>
             </div>
-
-
         </Page >
 
     });
@@ -176,15 +179,21 @@ export class VRelease extends VPage<CPosts>  {
         this.enddate = evt.currentTarget.value;
         let endtimes = Date.parse(this.enddate.replace(/-/g, "/"))
         if (this.startdate !== "" && this.enddate !== "" && this.starttimes > endtimes) {
-            document.getElementById('remind').innerHTML = ("开始时间必须小于或者等于结束时间！");
+            document.getElementById('remind').innerHTML = ("结束时间必须大于或等于开始时间！");
             evt.currentTarget.value = null
         } else {
+            document.getElementById('remind').innerHTML = ("");
             this.enddate = evt.currentTarget.value;
         }
 
     }
     private changeType = (type: any) => {
         this.showTips = type;
+        // $("input1[type='radio']").prop("checked", true)
+        let radiovar = document.getElementsByName("reselse");
+        let arr = radiovar[1].attributes
+        console.log(radiovar[1].attributes)
+
     }
 
 }
