@@ -111,6 +111,7 @@ export class VRelease extends VPage<CPosts>  {
         for (let i in discount) {
             if (discount[i] === true) arr.push(Number(i))
         }
+
         publishPost(arr, this.startdate, this.enddate);
     }
 
@@ -188,6 +189,13 @@ export class VRelease extends VPage<CPosts>  {
     }
     private changeType = (type: any) => {
         this.showTips = type;
+<<<<<<< HEAD
+=======
+        // $("input1[type='radio']").prop("checked", true)
+        let radiovar = document.getElementsByName("reselse");
+        console.log(radiovar[1].attributes)
+
+>>>>>>> 51b54ad80e3f42e911bfe60f87c7ee53d63210ba
     }
 
 }
