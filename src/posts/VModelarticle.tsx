@@ -23,22 +23,7 @@ export class VModelarticle extends VPage<CPosts> {
 
     private renderItem = (item: any, index: number) => {
         let { user, showDetail } = this.controller;
-
-        let { image, caption, discription, author, $create, $update, hits, sumHits
-            , web, agent, assist, openweb } = item;
-        let $c: Date = $create, $u: Date = $update;
-        let updated: boolean = false;
-        if ($c && $u) {
-            let now = Date.now(), create = $c.getTime(), update = $u.getTime();
-            if (update - create > 3600 * 1000 && now - create < 24 * 3600 * 1000) {
-                updated = true;
-            }
-            else {
-                let cYear = $c.getFullYear(), cMonth = $c.getMonth(), cDate = $c.getDate();
-                let uYear = $u.getFullYear(), uMonth = $u.getMonth(), uDate = $u.getDate();
-                updated = cYear !== uYear || cMonth !== uMonth || cDate !== uDate;
-            }
-        }
+        let { image, caption, discription, author, $create, $update, hits, sumHits } = item;
 
         let divUser = user.id === author.id ?
             <span className="text-warning">[自己]</span>
@@ -46,8 +31,7 @@ export class VModelarticle extends VPage<CPosts> {
             this.controller.cApp.renderUser(author.id);
         return (
             <div className="pl-2 pl-sm-3 pr-2 pr-sm-3 pt-2 pb-3 d-flex">
-                {/* 点击事件要改 */}
-                <div className="d-flex flex-fill cursor-pointer" onClick={() => showDetail(541)} >
+                <div className="d-flex flex-fill cursor-pointer" onClick={() => showDetail(item.post)} >
                     {item.id}
                     <div className="mr-3 w-5c w-min-5c h-5c h-min-5c">
                         {tv(
@@ -58,7 +42,6 @@ export class VModelarticle extends VPage<CPosts> {
                             () => (
                                 <div className="d-flex align-items-center h-100
                                     justify-content-center bg-light border rounded">
-                                    {/* <FA className="text-info" name="camera" size="lg" /> */}
                                 </div>
                             )
                         )}
@@ -73,7 +56,6 @@ export class VModelarticle extends VPage<CPosts> {
                                     &ensp;<EasyTime date={$create} />
                             </div>
                             <div className="author">
-
                                 {/* {sumHits && hits && <>阅读<b>{sumHits}</b>次
                                         {sumHits > hits && <>周<b>{hits}</b>次</>}
                                 </>
@@ -83,18 +65,7 @@ export class VModelarticle extends VPage<CPosts> {
                                 </>}
                             </div>
                         </div>
-                        <div className="small pt-1" style={{ overflow: "hidden" }}>
-                            {/* {(web + agent + assist + openweb) > 0 ? <span className="mr-1 text-muted">发布：</span> : <></>}
-                            {web === 1 ? <span className="mr-1 text-primary">{this.t('privateSite')}</span> : <></>}
-                            {agent === 1 ? <span className="mr-1 text-primary">{this.t('agent')}</span> : <></>}
-                            {assist === 1 ? <span className="mr-1 text-primary">{this.t('sales')}</span> : <></>}
-                            {openweb === 1 ? <span className="mr-1 text-primary">{this.t('publicSite')}</span> : <></>} */}
-                            <span className="mr-1 text-muted">发布：</span>
-                            <span className="mr-1 text-primary">{this.t('privateSite')}</span>
-                            <span className="mr-1 text-primary">{this.t('agent')}</span>
-                            <span className="mr-1 text-primary">{this.t('sales')}</span>
-                            <span className="mr-1 text-primary">{this.t('publicSite')}</span>
-                        </div>
+
                     </div>
                 </div>
             </div>

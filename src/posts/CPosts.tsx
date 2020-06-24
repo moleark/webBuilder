@@ -390,7 +390,10 @@ export class CPosts extends CUqBase {
 
         let { hotPosts } = this.uqs.webBuilder;
         let list = await hotPosts.query({});
-        let { ret } = list;
+        let ret: any[] = list.ret;
+        ret.forEach(element => {
+            this.cApp.useUser(element.author);
+        });
         this.openVPage(VModelarticle, ret);
     }
 }
