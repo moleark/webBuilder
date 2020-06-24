@@ -1,21 +1,17 @@
 import * as React from "react";
 import { observer } from "mobx-react";
-import { VPage, Page, List, tv, EasyTime, FA } from "tonva";
-
+import { VPage, Page, List, tv, EasyTime } from "tonva";
 import { CPosts } from "./CPosts";
 
-
 export class VModelarticle extends VPage<CPosts> {
-
     private hotlist: any
     async open(param: any) {
-        param = param.slice(0, 9);
+        param = param.slice(0, 10);
         this.hotlist = param;
         this.openPage(this.page);
     }
     private page = observer((param: any) => {
-
-        return <Page header="文章案例">
+        return <Page header="一周要闻">
             <List before={""} none="没有" items={this.hotlist} item={{ render: this.renderItem }} />
         </Page >;
 
@@ -23,7 +19,7 @@ export class VModelarticle extends VPage<CPosts> {
 
     private renderItem = (item: any, index: number) => {
         let { user, showDetail } = this.controller;
-        let { image, caption, discription, author, $create, $update, hits, sumHits } = item;
+        let { image, caption, discription, author, $create, hits } = item;
 
         let divUser = user.id === author.id ?
             <span className="text-warning">[自己]</span>
@@ -65,7 +61,6 @@ export class VModelarticle extends VPage<CPosts> {
                                 </>}
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
