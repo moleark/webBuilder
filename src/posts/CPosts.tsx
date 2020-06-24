@@ -41,7 +41,7 @@ export class CPosts extends CUqBase {
     @observable modelpage: QueryPager<any>
 
     @observable current: any;
-    @observable isMe: boolean = true;
+    @observable isMyself: boolean = true;
     @observable postProduct: any;
     @observable ratioA: any;
     @observable ratioB: any;
@@ -67,7 +67,7 @@ export class CPosts extends CUqBase {
     }
 
     setMe(isMe: boolean) {
-        this.isMe = isMe;
+        this.isMyself = isMe;
         this.loadList();
     }
 
@@ -81,7 +81,7 @@ export class CPosts extends CUqBase {
         this.pagePosts.setEachPageItem((item: any, results: { [name: string]: any[] }) => {
             this.cApp.useUser(item.author);
         });
-        let Auser = this.isMe ? nav.user : 0;
+        let Auser = this.isMyself ? nav.user : 0;
         await this.pagePosts.first({ key: key, author: Auser, types: setting.BusinessScope });
     };
     /* posts模板查询*/
@@ -137,7 +137,7 @@ export class CPosts extends CUqBase {
     }
 
     loadList = async () => {
-        this.searchPostsKey("", this.isMe ? nav.user : 0);
+        this.searchPostsKey("", this.isMyself ? nav.user : 0);
     };
 
     showDetail = async (id: number) => {

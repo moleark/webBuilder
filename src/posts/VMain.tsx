@@ -8,7 +8,7 @@ import { observable } from "mobx";
 import { setting } from "configuration";
 
 export class VMain extends VPage<CPosts> {
-    @observable private isMe: boolean = true;
+    @observable private isMyself: boolean = true;
 
     async open() { }
 
@@ -31,9 +31,9 @@ export class VMain extends VPage<CPosts> {
     //};
 
     private onMeAll = (evt: React.ChangeEvent<HTMLInputElement>) => {
-        this.isMe = evt.currentTarget.value === 'me';
+        this.isMyself = evt.currentTarget.value === 'me';
         //this.controller.changeMeAll();
-        this.controller.setMe(this.isMe)
+        this.controller.setMe(this.isMyself)
     }
 
     private renderMeAllToggle() {
@@ -86,7 +86,8 @@ export class VMain extends VPage<CPosts> {
         </>
 
         return (
-            <Page header={this.t('post')} headerClassName={consts.headerClass} right={right} onScrollBottom={onScrollBottom}>
+			<Page header={this.t('post')} headerClassName={consts.headerClass} right={right} 
+				onScrollBottom={onScrollBottom}>
                 {(setting.BusinessScope !== 2) && column}
                 <List before={""} none={none} items={pagePosts} item={{ render: this.renderItem }} />
             </Page>
