@@ -1,6 +1,6 @@
 import * as React from "react";
 import { observer } from "mobx-react";
-import { VPage, Page, List, tv, EasyTime } from "tonva";
+import { VPage, Page, List, tv } from "tonva";
 import { CPosts } from "./CPosts";
 
 export class VModelarticle extends VPage<CPosts> {
@@ -11,7 +11,7 @@ export class VModelarticle extends VPage<CPosts> {
         this.openPage(this.page);
     }
     private page = observer((param: any) => {
-        return <Page header="一周要闻">
+        return <Page header="一周范文">
             <List before={""} none="没有" items={this.hotlist} item={{ render: this.renderItem }} />
         </Page >;
 
@@ -19,7 +19,7 @@ export class VModelarticle extends VPage<CPosts> {
 
     private renderItem = (item: any, index: number) => {
         let { user, showDetail } = this.controller;
-        let { image, caption, discription, author, $create, hits } = item;
+        let { image, caption, discription, author, hits } = item;
 
         let divUser = user.id === author.id ?
             <span className="text-warning">[自己]</span>
@@ -44,20 +44,14 @@ export class VModelarticle extends VPage<CPosts> {
                     </div>
                     <div className="d-flex flex-column w-100">
                         <div><b>{caption}</b></div>
-
                         <div className="small text-muted py-2 flex-fill">{discription}</div>
                         <div className="small d-flex">
                             <div className="flex-fill">
                                 {divUser}
-                                    &ensp;<EasyTime date={$create} />
                             </div>
                             <div className="author">
-                                {/* {sumHits && hits && <>阅读<b>{sumHits}</b>次
-                                        {sumHits > hits && <>周<b>{hits}</b>次</>}
-                                </>
-                                } */}
-                                {hits && <>阅读<b>{hits}</b>次
-                                        {hits && <>周<b>{hits}</b>次</>}
+                                {hits && <>阅读<b>{hits}</b>次<span className="px-1"></span>
+                                    {hits && <>周<b>{hits}</b>次</>}
                                 </>}
                             </div>
                         </div>

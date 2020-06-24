@@ -70,21 +70,47 @@ export class VMain extends VPage<CPosts> {
                 <span className="text-muted small">[{this.t('noposts')}]</span>
             </div>
         );
-        let column = <>
-            <LMR className="bg-white py-3 my-1" right={<i className=" px-2 iconfont icon-jiantou1"></i>} onClick={showProductCatalog}>
-                <div className="mx-3 px-2 font-weight-bold">产品目录</div>
-            </LMR>
-            <LMR className="bg-white py-3 my-1" right={<i className=" px-2 iconfont icon-jiantou1"></i>} onClick={() => showSubject(0)}>
-                <div className="mx-3 px-2 font-weight-bold">帖文栏目</div>
-            </LMR>
-            <LMR className="bg-white py-3 my-1" right={<i className=" px-2 iconfont icon-jiantou1"></i>} onClick={() => showDomain(0)}>
-                <div className="mx-3 px-2 font-weight-bold">研究领域</div>
-            </LMR>
-            <LMR className="bg-white py-3 my-1" right={<i className=" px-2 iconfont icon-jiantou1"></i>} onClick={() => showModel()}>
-                <div className="mx-3 px-2 font-weight-bold">一周范文</div>
-            </LMR>
-        </>
+        // let column = <>
+        //     <LMR className="bg-white py-3 my-1" right={<i className=" px-2 iconfont icon-jiantou1"></i>} onClick={showProductCatalog}>
+        //         <div className="mx-3 px-2 font-weight-bold">产品目录</div>
+        //     </LMR>
+        //     <LMR className="bg-white py-3 my-1" right={<i className=" px-2 iconfont icon-jiantou1"></i>} onClick={() => showSubject(0)}>
+        //         <div className="mx-3 px-2 font-weight-bold">帖文栏目</div>
+        //     </LMR>
+        //     <LMR className="bg-white py-3 my-1" right={<i className=" px-2 iconfont icon-jiantou1"></i>} onClick={() => showDomain(0)}>
+        //         <div className="mx-3 px-2 font-weight-bold">研究领域</div>
+        //     </LMR>
+        //     <LMR className="bg-white py-3 my-1" right={<i className=" px-2 iconfont icon-jiantou1"></i>} onClick={() => showModel()}>
+        //         <div className="mx-3 px-2 font-weight-bold">一周范文</div>
+        //     </LMR>
+        // </>
 
+        let column = <div className="d-flex justify-content-around py-3 small text-center" style={{ background: "linear-gradient(rgba(23,106,184,.5),rgba(23,162,184,.5),rgba(23,184,184,.5))" }}>
+            <div className="m-1 bg-default p-3 " onClick={showProductCatalog} >
+                <div className="py-3 my-1 ">
+                    <div className="mb-2 text-success"><i style={{ fontSize: "2rem" }} className="iconfont icon-chanpinmulu"></i></div>
+                    <div className="mx-3 p-2 font-weight-bold">产品目录</div>
+                </div>
+            </div>
+            <div className="m-1 p-3 " onClick={() => showSubject(0)} >
+                <div className="py-3 my-1 ">
+                    <div className="mb-2 text-primary"><i style={{ fontSize: "2rem" }} className="iconfont icon-mokuai"></i></div>
+                    <div className="mx-3 px-2 font-weight-bold">帖文栏目</div>
+                </div>
+            </div>
+            <div className="m-1 p-3 " onClick={() => showDomain(0)} >
+                <div className="py-3 my-1 ">
+                    <div className="mb-2 text-danger"><i style={{ fontSize: "2rem" }} className="iconfont icon-yanjiulingyu"></i></div>
+                    <div className="mx-3 px-2 font-weight-bold">研究领域</div>
+                </div>
+            </div>
+            <div className="m-1 p-3 " onClick={() => showModel()} >
+                <div className="py-3 my-1 ">
+                    <div className="mb-2 text-info"><i style={{ fontSize: "2rem" }} className="iconfont icon-mobanguanli"></i></div>
+                    <div className="mx-3 px-2 font-weight-bold">一周范文</div>
+                </div>
+            </div>
+        </div >
         return (
 			<Page header={this.t('post')} headerClassName={consts.headerClass} right={right} 
 				onScrollBottom={onScrollBottom}>
@@ -151,8 +177,8 @@ export class VMain extends VPage<CPosts> {
                                 {updated === true && <>&ensp;<FA name="pencil-square-o" /><EasyTime date={$update} /></>}
                             </div>
                             <div className="author">
-                                {sumHits && hits && <>阅读<b>{sumHits}</b>次
-									{sumHits > hits && <>周<b>{hits}</b>次</>}
+                                {sumHits && hits && <>阅读<b>{sumHits}</b>次<span className="px-1"></span>
+                                    {sumHits > hits && <>周<b>{hits}</b>次</>}
                                 </>
                                 }
                             </div>
