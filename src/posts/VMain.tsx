@@ -1,7 +1,7 @@
 import * as React from "react";
 import { consts } from "consts";
 import { observer } from "mobx-react";
-import { VPage, Page, FA, List, EasyTime, tv, SearchBox, LMR } from "tonva";
+import { VPage, Page, FA, List, EasyTime, tv, SearchBox } from "tonva";
 import { CPosts } from "./CPosts";
 import classNames from "classnames";
 import { observable } from "mobx";
@@ -112,8 +112,8 @@ export class VMain extends VPage<CPosts> {
             </div>
         </div >
         return (
-			<Page header={this.t('post')} headerClassName={consts.headerClass} right={right} 
-				onScrollBottom={onScrollBottom}>
+            <Page header={this.t('post')} headerClassName={consts.headerClass} right={right}
+                onScrollBottom={onScrollBottom}>
                 {(setting.BusinessScope !== 2) && column}
                 <List before={""} none={none} items={pagePosts} item={{ render: this.renderItem }} />
             </Page>
