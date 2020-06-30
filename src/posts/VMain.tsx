@@ -1,11 +1,12 @@
 import * as React from "react";
 import { consts } from "consts";
 import { observer } from "mobx-react";
-import { VPage, Page, FA, List, EasyTime, tv, SearchBox, LMR } from "tonva";
+import { VPage, Page, FA, List, EasyTime, tv, SearchBox } from "tonva";
 import { CPosts } from "./CPosts";
 import classNames from "classnames";
 import { observable } from "mobx";
 import { setting } from "configuration";
+
 
 export class VMain extends VPage<CPosts> {
     @observable private isMe: boolean = true;
@@ -70,20 +71,20 @@ export class VMain extends VPage<CPosts> {
                 <span className="text-muted small">[{this.t('noposts')}]</span>
             </div>
         );
-        // let column = <>
-        //     <LMR className="bg-white py-3 my-1" right={<i className=" px-2 iconfont icon-jiantou1"></i>} onClick={showProductCatalog}>
-        //         <div className="mx-3 px-2 font-weight-bold">产品目录</div>
-        //     </LMR>
-        //     <LMR className="bg-white py-3 my-1" right={<i className=" px-2 iconfont icon-jiantou1"></i>} onClick={() => showSubject(0)}>
-        //         <div className="mx-3 px-2 font-weight-bold">帖文栏目</div>
-        //     </LMR>
-        //     <LMR className="bg-white py-3 my-1" right={<i className=" px-2 iconfont icon-jiantou1"></i>} onClick={() => showDomain(0)}>
-        //         <div className="mx-3 px-2 font-weight-bold">研究领域</div>
-        //     </LMR>
-        //     <LMR className="bg-white py-3 my-1" right={<i className=" px-2 iconfont icon-jiantou1"></i>} onClick={() => showModel()}>
-        //         <div className="mx-3 px-2 font-weight-bold">一周范文</div>
-        //     </LMR>
-        // </>
+        /* let column = <>
+             <LMR className="bg-white py-3 my-1" right={<i className=" px-2 iconfont icon-jiantou1"></i>} onClick={showProductCatalog}>
+                 <div className="mx-3 px-2 font-weight-bold">产品目录</div>
+             </LMR>
+             <LMR className="bg-white py-3 my-1" right={<i className=" px-2 iconfont icon-jiantou1"></i>} onClick={() => showSubject(0)}>
+                 <div className="mx-3 px-2 font-weight-bold">帖文栏目</div>
+             </LMR>
+             <LMR className="bg-white py-3 my-1" right={<i className=" px-2 iconfont icon-jiantou1"></i>} onClick={() => showDomain(0)}>
+                 <div className="mx-3 px-2 font-weight-bold">研究领域</div>
+             </LMR>
+             <LMR className="bg-white py-3 my-1" right={<i className=" px-2 iconfont icon-jiantou1"></i>} onClick={() => showModel()}>
+                 <div className="mx-3 px-2 font-weight-bold">一周范文</div>
+             </LMR>
+         </>*/
 
         let column = <div className="d-flex justify-content-around py-3 small text-center" style={{ background: "linear-gradient(rgba(23,106,184,.5),rgba(23,162,184,.5),rgba(23,184,184,.5))" }}>
             <div className="m-1 bg-default p-3 " onClick={showProductCatalog} >
@@ -128,9 +129,8 @@ export class VMain extends VPage<CPosts> {
         let { user, showDetail } = this.controller;
         if (!user) return;
         let { image, caption, discription, author, $update, $create
-            , hits, sumHits
-            , web, agent, assist, openweb } = item;
-
+            , hits, sumHits, web, agent, assist, openweb } = item;
+        // console.log(sumHits, item)
         let $c: Date = $create, $u: Date = $update;
         let updated: boolean = false;
         if ($c && $u) {
@@ -152,7 +152,7 @@ export class VMain extends VPage<CPosts> {
         return (
             <div className="pl-2 pl-sm-3 pr-2 pr-sm-3 pt-2 pb-3 d-flex">
                 <div className="d-flex flex-fill cursor-pointer" onClick={() => showDetail(item.id)} >
-                    <div className="mr-3 w-5c w-min-5c h-5c h-min-5c">
+                    <div className="mr-1 w-5c w-min-5c h-5c h-min-5c">
                         {tv(
                             image,
                             values => <div className="w-100 h-100 bg-center-img h-max-6c border rounded"
@@ -167,27 +167,29 @@ export class VMain extends VPage<CPosts> {
                         )}
                     </div>
                     <div className="d-flex flex-column w-100">
-                        <div><b>{caption}</b></div>
-                        <div className="small text-muted py-2 flex-fill">{discription}</div>
-                        <div className="small d-flex">
+                        <div className="ml-1"><b>{caption}</b></div>
+                        <div className="small ml-1 text-muted py-2 flex-fill">{discription}</div>
+                        <div className="small d-flex ml-1">
                             <div className="flex-fill">
                                 {divUser}
 								&ensp;<EasyTime date={$create} />
                                 {updated === true && <>&ensp;<FA name="pencil-square-o" /><EasyTime date={$update} /></>}
                             </div>
                             <div className="author">
-                                {sumHits && hits && <>阅读<b>{sumHits}</b>次<span className="px-1"></span>
+                                {sumHits === 0 && hits === 0 ? <>{} </> : <>阅读<b>{sumHits}</b>次</>}{<span className="ml-1"></span>}{sumHits >= hits && hits > 0 && <>周<b>{hits}</b>次</>}
+                                {/* {sumHits && hits && <>阅读<b>{sumHits}</b>次<span className="px-1"></span>
                                     {sumHits > hits && <>周<b>{hits}</b>次</>}
                                 </>
-                                }
+                                } */}
                             </div>
                         </div>
-                        <div className="small pt-1" style={{ overflow: "hidden" }}>
-                            {(web + agent + assist + openweb) > 0 ? <span className="mr-1 text-muted">发布：</span> : <></>}
-                            {web === 1 ? <span className="mr-1 text-primary">{this.t('privateSite')}</span> : <></>}
-                            {agent === 1 ? <span className="mr-1 text-primary">{this.t('agent')}</span> : <></>}
-                            {assist === 1 ? <span className="mr-1 text-primary">{this.t('sales')}</span> : <></>}
-                            {openweb === 1 ? <span className="mr-1 text-primary">{this.t('publicSite')}</span> : <></>}
+                        <div className="small pt-1 nowrap" style={{ overflow: "hidden" }}>
+                            {(web + agent + assist + openweb) > 0 ? <span className=" text-muted">发布：</span> : <></>}
+                            {agent === 1 ? <span style={{ borderRadius: "15%/48%" }} className="bg-success mr-1 text-white px-1">{this.t('agent')}</span> : <></>}
+                            {assist === 1 ? <span style={{ borderRadius: "15%/48%" }} className="bg-warning mr-1 text-white px-1">{this.t('sales')}</span> : <></>}
+                            {openweb === 1 ? <span style={{ borderRadius: "15%/48%" }} className="bg-info mr-1 text-white px-1">{this.t('publicSite')}</span> : <></>}
+                            {web === 1 ? <span style={{ borderRadius: "15%/48%" }} className="bg-primary text-white px-1">{this.t('internationSite')}</span> : <></>}
+                            {/* {web === 1 ? <span style={{ borderRadius: "15%/48%" }} className="bg-primary text-white px-1">{this.t('privateSite')}</span> : <></>} */}
                         </div>
                     </div>
                 </div>

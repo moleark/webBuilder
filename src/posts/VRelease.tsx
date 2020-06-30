@@ -8,13 +8,15 @@ import { observer } from 'mobx-react';
 const res: { [prop: string]: string | any } = {
     sales: '销售助手',
     agent: '轻代理',
-    privateSite: '内部网站',
     publicSite: '内容网站',
+    internationSite: '国际网站',
+    // privateSite: '内部网站',
     $en: {
         sales: 'Sales',
         agent: 'Agent',
-        privateSite: 'Private Site',
         publicSite: 'Public Site',
+        internationSite: 'Internation Site',
+        // privateSite: 'Private Site',
     }
 };
 
@@ -46,7 +48,8 @@ class Discount extends Widget {
         let list = [
             { value: 1, title: tt('sales'), name: 'a', checked: this.value['1'] },
             { value: 2, title: tt('agent'), name: 'a', checked: this.value['2'] },
-            { value: 3, title: tt('privateSite'), name: 'a', checked: this.value['3'] },
+            // { value: 3, title: tt('privateSite'), name: 'a', checked: this.value['3'] },
+            { value: 3, title: tt('internationSite'), name: 'a', checked: this.value['3'] },
             {
                 value: 4, title: tt('publicSite'), name: 'a', checked: this.value['4'],
                 subList: [

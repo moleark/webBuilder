@@ -54,7 +54,6 @@ export class CPosts extends CUqBase {
     @observable pagePostSubject: any;
     @observable pagePostDomain: any;
 
-
     protected async internalStart(param: any) {
         this.setRes({
             'me-sm': 'M',
@@ -100,7 +99,6 @@ export class CPosts extends CUqBase {
         param.author = this.user.id;
         let { caption, discription, image, template, content } = param;
         let par = { _caption: caption, _discription: discription, _image: image, _template: template, _content: content };
-
         if (id) {
             await this.uqs.webBuilder.Post.save(id, param);
             let item = this.pagePosts.items.find(v => v.id === id);
@@ -296,6 +294,12 @@ export class CPosts extends CUqBase {
         let results = await this.uqs.product.GetChildrenCategory.query({ parent: key, salesRegion: setting.SALESREGION_CN, language: setting.CHINESE });
         this.openVPage(VProductCatalog, results.first)
     };
+    // nextCatalogname = async (model: any) => {
+    //     let resultes = await this.searchProductCatalogChildrenKeys(model.productCategory.id);
+
+    //     // this.caption = model.name;
+    //     console.log(resultes)
+    // }
 
     showProductCatalogDetil = async (param: any) => {
         this.pageProductCatalogPost = new QueryPager(this.uqs.webBuilder.SearchProductCategoryPost, 15, 30);

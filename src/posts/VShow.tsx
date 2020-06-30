@@ -60,12 +60,14 @@ export class VShow extends VPage<CPosts> {
                 </button>
                 {meright}
             </div>
-        return <Page header={this.t('preview')} headerClassName={consts.headerClass} right={right}>
+
+        return <Page header={this.t('preview')} headerClassName={consts.headerClass} right={right} >
             <iframe
                 ref={this.refIframe}
                 src={"https://web.jkchemical.com/post/" + id}
                 className="w-100 position-relative" frameBorder={0}>
             </iframe>
+
         </Page>;
     });
 

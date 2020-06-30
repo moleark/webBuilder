@@ -20,7 +20,6 @@ export class VModelarticle extends VPage<CPosts> {
     private renderItem = (item: any, index: number) => {
         let { user, showDetail } = this.controller;
         let { image, caption, discription, author, hits } = item;
-
         let divUser = user.id === author.id ?
             <span className="text-warning">[自己]</span>
             :
@@ -28,7 +27,6 @@ export class VModelarticle extends VPage<CPosts> {
         return (
             <div className="pl-2 pl-sm-3 pr-2 pr-sm-3 pt-2 pb-3 d-flex">
                 <div className="d-flex flex-fill cursor-pointer" onClick={() => showDetail(item.post)} >
-                    {item.id}
                     <div className="mr-3 w-5c w-min-5c h-5c h-min-5c">
                         {tv(
                             image,
@@ -50,9 +48,7 @@ export class VModelarticle extends VPage<CPosts> {
                                 {divUser}
                             </div>
                             <div className="author">
-                                {hits && <>阅读<b>{hits}</b>次<span className="px-1"></span>
-                                    {hits && <>周<b>{hits}</b>次</>}
-                                </>}
+                                {hits && <>阅读<b>{hits}</b>次</>}
                             </div>
                         </div>
                     </div>

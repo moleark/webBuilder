@@ -34,7 +34,6 @@ export class VDomainDetil extends VPage<CPosts> {
     private onScrollBottom = async () => {
         await this.controller.pageDomainPost.more();
     };
-
     private renderItem = (item: any, index: number) => {
         return <this.itemRow {...item} />;
     };
@@ -45,7 +44,7 @@ export class VDomainDetil extends VPage<CPosts> {
         let { image, caption, discription, author, $update, $create
             , hits, sumHits
             , web, agent, assist, openweb } = item;
-
+        console.log(item)
         let $c: Date = $create, $u: Date = $update;
         let updated: boolean = false;
         if ($c && $u) {
@@ -67,38 +66,44 @@ export class VDomainDetil extends VPage<CPosts> {
         return (
             <div className="pl-2 pl-sm-3 pr-2 pr-sm-3 pt-2 pb-3 d-flex">
                 <div className="d-flex flex-fill cursor-pointer" onClick={() => showDetail(item.id)} >
-                    <div className="mr-3 w-5c w-min-5c h-5c h-min-5c">
+                    <div className="mr-1 w-5c w-min-5c h-5c h-min-5c">
                         {tv(
                             image,
-                            values => <div className="w-100 h-100 bg-center-img h-max-3c border rounded"
+                            values => <div className="w-100 h-100 bg-center-img h-max-6c border rounded"
                                 style={{ backgroundImage: 'url(' + values.path + ')' }}></div>,
-                            undefined,
+                            undefined, //w-6c h-4c mr-2 text-black-50 justify-content-center d-flex align-items-center
                             () => (
-                                <div className="d-flex align-items-center h-100 justify-content-center bg-light border rounded">
+                                <div className="d-flex align-items-center h-100
+								justify-content-center bg-light border rounded">
                                     <FA className="text-info" name="camera" size="lg" />
                                 </div>
                             )
                         )}
                     </div>
                     <div className="d-flex flex-column w-100">
-                        <div><b>{caption}</b></div>
-                        <div className="small text-muted py-2 flex-fill">{discription}</div>
-                        <div className="small d-flex">
+                        <div className="ml-1"><b>{caption}</b></div>
+                        <div className="small ml-1 text-muted py-2 flex-fill">{discription}</div>
+                        <div className="small d-flex ml-1">
                             <div className="flex-fill">
                                 {divUser}
 								&ensp;<EasyTime date={$create} />
                                 {updated === true && <>&ensp;<FA name="pencil-square-o" /><EasyTime date={$update} /></>}
                             </div>
                             <div className="author">
-                                {sumHits > 0 && hits > 0 && <>阅读<b>{sumHits}</b>次 周<b>{hits}</b>次</>}
+                                {sumHits === 0 && hits === 0 ? <>{} </> : <>阅读<b>{sumHits}</b>次</>}{<span className="ml-1"></span>}{sumHits >= hits && hits > 0 && <>周<b>{hits}</b>次</>}
+                                {/* {sumHits && hits && <>阅读<b>{sumHits}</b>次<span className="px-1"></span>
+                                    {sumHits > hits && <>周<b>{hits}</b>次</>}
+                                </>
+                                } */}
                             </div>
                         </div>
-                        <div className="small pt-1" style={{ overflow: "hidden" }}>
-                            {(web + agent + assist + openweb) > 0 ? <span className="mr-1 text-muted">发布：</span> : <></>}
-                            {web === 1 ? <span className="mr-1 text-primary">{this.t('privateSite')}</span> : <></>}
-                            {agent === 1 ? <span className="mr-1 text-primary">{this.t('agent')}</span> : <></>}
-                            {assist === 1 ? <span className="mr-1 text-primary">{this.t('sales')}</span> : <></>}
-                            {openweb === 1 ? <span className="mr-1 text-primary">{this.t('publicSite')}</span> : <></>}
+                        <div className="small pt-1 nowrap" style={{ overflow: "hidden" }}>
+                            {(web + agent + assist + openweb) > 0 ? <span className=" text-muted">发布：</span> : <></>}
+                            {agent === 1 ? <span style={{ borderRadius: "15%/48%" }} className="bg-success mr-1 text-white px-1">{this.t('agent')}</span> : <></>}
+                            {assist === 1 ? <span style={{ borderRadius: "15%/48%" }} className="bg-warning mr-1 text-white px-1">{this.t('sales')}</span> : <></>}
+                            {openweb === 1 ? <span style={{ borderRadius: "15%/48%" }} className="bg-info mr-1 text-white px-1">{this.t('publicSite')}</span> : <></>}
+                            {web === 1 ? <span style={{ borderRadius: "15%/48%" }} className="bg-primary text-white px-1">{this.t('internationSite')}</span> : <></>}
+                            {/* {web === 1 ? <span style={{ borderRadius: "15%/48%" }} className="bg-primary text-white px-1">{this.t('privateSite')}</span> : <></>} */}
                         </div>
                     </div>
                 </div>

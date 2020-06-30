@@ -19,6 +19,7 @@ export const en = {
     agent: 'ight Agent',
     privateSite: 'Private Site',
     publicSite: 'Public Site',
+    internationSite: 'Internation Site',
 
     sourcecode: 'Code',
     picture: 'Picture',
@@ -85,6 +86,7 @@ export const zh = {
     agent: '轻代理',
     privateSite: '内部网页',
     publicSite: '内容网站',
+    internationSite: '国际网站',
 
     sourcecode: '源码',
 

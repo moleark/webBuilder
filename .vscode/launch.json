@@ -3,13 +3,12 @@
     // 悬停以查看现有属性的描述。
     // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
-    "configurations": [
-        {
-            "type": "chrome",
-            "request": "launch",
-            "name": "Launch Chrome against localhost",
-            "url": "http://localhost:7798/test",
-            "webRoot": "${workspaceFolder}"
-        }
-    ]
+    "configurations": [{
+        "type": "chrome",
+        "request": "launch",
+        "name": "Launch Chrome against localhost",
+        "url": "http://localhost:7798/test",
+        "webRoot": "${workspaceFolder}/app.js",
+        "sourceMaps": true
+    }]
 }

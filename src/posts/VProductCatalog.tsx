@@ -7,7 +7,7 @@ import { observable } from "mobx";
 
 export class VProductCatalog extends VPage<CPosts> {
 
-    @observable caption: any = "产品目录树";
+    @observable caption: any;
     @observable pageProductCatalog: any;
 
     async open(param: any) {
@@ -16,8 +16,10 @@ export class VProductCatalog extends VPage<CPosts> {
     }
 
     private page = observer(() => {
+        // let header = this.caption;
+        // if () { } else { }
         return (
-            <Page header={"产品目录树"} headerClassName={consts.headerClass} >
+            <Page header={'产品目录'} headerClassName={consts.headerClass} >
                 <List before={""} none="无" items={this.pageProductCatalog} item={{ render: this.renderItem }} />
             </Page>
         );
@@ -26,13 +28,14 @@ export class VProductCatalog extends VPage<CPosts> {
     private nextCatalog = async (model: any) => {
         await this.controller.searchProductCatalogChildrenKeys(model.productCategory.id)
         this.caption = model.name;
+        console.log(this.caption)
     }
 
     private renderItem = (model: any, index: number) => {
         let { productCategory, name } = model;
         return (
             <div className="pl-2 pl-sm-3 pr-2 pr-sm-3 pt-2 pb-3 d-flex">
-                <div className="d-flex flex-fill mx-2" >
+                <div className="d-flex flex-fill mx-2 bg-success" >
                     <span>{name}</span>
                 </div>
                 <div>
