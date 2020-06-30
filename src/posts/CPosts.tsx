@@ -294,12 +294,6 @@ export class CPosts extends CUqBase {
         let results = await this.uqs.product.GetChildrenCategory.query({ parent: key, salesRegion: setting.SALESREGION_CN, language: setting.CHINESE });
         this.openVPage(VProductCatalog, results.first)
     };
-    // nextCatalogname = async (model: any) => {
-    //     let resultes = await this.searchProductCatalogChildrenKeys(model.productCategory.id);
-
-    //     // this.caption = model.name;
-    //     console.log(resultes)
-    // }
 
     showProductCatalogDetil = async (param: any) => {
         this.pageProductCatalogPost = new QueryPager(this.uqs.webBuilder.SearchProductCategoryPost, 15, 30);

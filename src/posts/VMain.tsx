@@ -7,9 +7,8 @@ import classNames from "classnames";
 import { observable } from "mobx";
 import { setting } from "configuration";
 
-
 export class VMain extends VPage<CPosts> {
-    @observable private isMyself: boolean = true;
+    @observable private isMe: boolean = true;
 
     async open() { }
 
@@ -32,9 +31,9 @@ export class VMain extends VPage<CPosts> {
     //};
 
     private onMeAll = (evt: React.ChangeEvent<HTMLInputElement>) => {
-        this.isMyself = evt.currentTarget.value === 'me';
+        this.isMe = evt.currentTarget.value === 'me';
         //this.controller.changeMeAll();
-        this.controller.setMe(this.isMyself)
+        this.controller.setMe(this.isMe)
     }
 
     private renderMeAllToggle() {
@@ -177,7 +176,7 @@ export class VMain extends VPage<CPosts> {
                                 {updated === true && <>&ensp;<FA name="pencil-square-o" /><EasyTime date={$update} /></>}
                             </div>
                             <div className="author">
-                                {sumHits === 0 && hits === 0 ? <>{} </> : <>阅读<b>{sumHits}</b>次</>}{<span className="ml-1"></span>}{sumHits >= hits && hits > 0 && <>周<b>{hits}</b>次</>}
+                                {sumHits === 0 && hits === 0 ? <>{} </> : <>阅读<b>{sumHits}</b>次</>}{sumHits >= hits && hits > 0 && <>周<b>{hits}</b>次</>}
                                 {/* {sumHits && hits && <>阅读<b>{sumHits}</b>次<span className="px-1"></span>
                                     {sumHits > hits && <>周<b>{hits}</b>次</>}
                                 </>
