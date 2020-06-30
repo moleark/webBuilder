@@ -8,7 +8,7 @@ import { observable } from "mobx";
 import { setting } from "configuration";
 
 export class VMain extends VPage<CPosts> {
-    @observable private isMe: boolean = true;
+    @observable private isMes: boolean = true;
 
     async open() { }
 
@@ -31,21 +31,21 @@ export class VMain extends VPage<CPosts> {
     //};
 
     private onMeAll = (evt: React.ChangeEvent<HTMLInputElement>) => {
-        this.isMe = evt.currentTarget.value === 'me';
+        this.isMes = evt.currentTarget.value === 'me';
         //this.controller.changeMeAll();
-        this.controller.setMe(this.isMe)
+        this.controller.setMe(this.isMes)
     }
 
     private renderMeAllToggle() {
         let cnButton = ['btn', 'btn-outline-warning', 'btn-sm', 'text-nowrap'];
         return <div className="px-sm-2 d-flex align-items-center">
             <div className="btn-group btn-group-toggle" data-toggle="buttons">
-                <label className={classNames(cnButton, { active: this.isMe })}>
+                <label className={classNames(cnButton, { active: this.isMes })}>
                     <input type="radio" name="options" value="me" defaultChecked={true} onChange={this.onMeAll} />
                     <span className="d-inline d-sm-none">{this.t('me-sm')}</span>
                     <span className="d-none d-sm-inline">{this.t('me')}</span>
                 </label>
-                <label className={classNames(cnButton, { active: !this.isMe })}>
+                <label className={classNames(cnButton, { active: !this.isMes })}>
                     <input type="radio" name="options" value="all" defaultChecked={false} onChange={this.onMeAll} />
                     <span className="d-inline d-sm-none">{this.t('all-sm')}</span>
                     <span className="d-none d-sm-inline">{this.t('all')}</span>
@@ -92,13 +92,13 @@ export class VMain extends VPage<CPosts> {
                     <div className="mx-3 p-2 font-weight-bold">产品目录</div>
                 </div>
             </div>
-            <div className="m-1 p-3 " onClick={() => showSubject(0)} >
+            <div className="m-1 p-3 " onClick={() => showSubject({ name: "帖文栏目", id: 0 })} >
                 <div className="py-3 my-1 ">
                     <div className="mb-2 text-primary"><i style={{ fontSize: "2rem" }} className="iconfont icon-mokuai"></i></div>
                     <div className="mx-3 px-2 font-weight-bold">帖文栏目</div>
                 </div>
             </div>
-            <div className="m-1 p-3 " onClick={() => showDomain(0)} >
+            <div className="m-1 p-3 " onClick={() => showDomain({ name: '研究领域', id: 0 })} >
                 <div className="py-3 my-1 ">
                     <div className="mb-2 text-danger"><i style={{ fontSize: "2rem" }} className="iconfont icon-yanjiulingyu"></i></div>
                     <div className="mx-3 px-2 font-weight-bold">研究领域</div>
@@ -130,7 +130,7 @@ export class VMain extends VPage<CPosts> {
         if (!user) return;
         let { image, caption, discription, author, $update, $create
             , hits, sumHits, web, agent, assist, openweb } = item;
-        // console.log(sumHits, item)
+
         let $c: Date = $create, $u: Date = $update;
         let updated: boolean = false;
         if ($c && $u) {
@@ -176,8 +176,8 @@ export class VMain extends VPage<CPosts> {
                                 {updated === true && <>&ensp;<FA name="pencil-square-o" /><EasyTime date={$update} /></>}
                             </div>
                             <div className="author">
-                                {sumHits === 0 && hits === 0 ? <>{} </> : <>阅读<b>{sumHits}</b>次</>}{sumHits >= hits && hits > 0 && <>周<b>{hits}</b>次</>}
-                                {/* {sumHits && hits && <>阅读<b>{sumHits}</b>次<span className="px-1"></span>
+                                {sumHits && sumHits > 0 && <>阅读<b>{sumHits}</b>次</>}{<span className="px-1"></span>}{sumHits >= hits && hits > 0 && <>周<b>{hits}</b>次</>}
+                                {/* {sumHits && hits && sumHits > 0 && <>阅读<b>{sumHits}</b>次<span className="px-1"></span>
                                     {sumHits > hits && <>周<b>{hits}</b>次</>}
                                 </>
                                 } */}

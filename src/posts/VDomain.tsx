@@ -6,16 +6,17 @@ import { CPosts } from "./CPosts";
 import { observable } from "mobx";
 
 export class VDomain extends VPage<CPosts> {
-
+    @observable name: any;
     @observable pageDomain: any;
     async open(param: any) {
-        this.pageDomain = param;
+        this.pageDomain = param.domain;
+        this.name = param.name;
         this.openPage(this.page);
     }
 
     private page = observer(() => {
         return (
-            <Page header={"研究领域"} headerClassName={consts.headerClass} >
+            <Page header={this.name} headerClassName={consts.headerClass} >
                 <List before={""} none="无" items={this.pageDomain} item={{ render: this.renderItem }} />
             </Page>
         );
@@ -23,11 +24,11 @@ export class VDomain extends VPage<CPosts> {
 
     private renderItem = (model: any, index: number) => {
         let { showDomainPost, showDomain } = this.controller;
-        let { name, id } = model;
+
         return (
             <div className="pl-2 pl-sm-3 pr-2 pr-sm-3 pt-2 pb-3 d-flex">
                 <div className="d-flex flex-fill mx-2" >
-                    <span>{name}</span>
+                    <span>{model.name}</span>
                 </div>
                 <div onClick={() => showDomainPost(model, "")} >
                     <div className="small d-flex cursor-pointer text-primary text-right w-7c ">
@@ -36,7 +37,7 @@ export class VDomain extends VPage<CPosts> {
                         </button>
                     </div>
                 </div>
-                <div onClick={() => showDomain(id)} >
+                <div onClick={() => showDomain(model)} >
                     <div className="small d-flex cursor-pointer text-primary text-right w-7c ">
                         <button className="btn btn-outline-info mx-2 px-3">
                             下一级

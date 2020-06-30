@@ -3,12 +3,14 @@ import { observer } from "mobx-react";
 import { VPage, Page, List, tv, FA, EasyTime, SearchBox } from "tonva";
 import { consts } from "consts";
 import { CPosts } from "./CPosts";
+import { observable } from "mobx";
 
 export class VDomainDetil extends VPage<CPosts> {
-
+    @observable name: any;
     private domain: any
     async open(param: any) {
         this.domain = param;
+        this.name = param.name;
         this.openPage(this.page);
     }
 
@@ -25,7 +27,7 @@ export class VDomainDetil extends VPage<CPosts> {
             </div>
         );
         return (
-            <Page header={"研究领域"} headerClassName={consts.headerClass} right={right} onScrollBottom={this.onScrollBottom} >
+            <Page header={this.name} headerClassName={consts.headerClass} right={right} onScrollBottom={this.onScrollBottom} >
                 <List before={""} none={none} items={pageDomainPost} item={{ render: this.renderItem }} />
             </Page>
         );
@@ -44,7 +46,7 @@ export class VDomainDetil extends VPage<CPosts> {
         let { image, caption, discription, author, $update, $create
             , hits, sumHits
             , web, agent, assist, openweb } = item;
-        console.log(item)
+
         let $c: Date = $create, $u: Date = $update;
         let updated: boolean = false;
         if ($c && $u) {
@@ -90,11 +92,7 @@ export class VDomainDetil extends VPage<CPosts> {
                                 {updated === true && <>&ensp;<FA name="pencil-square-o" /><EasyTime date={$update} /></>}
                             </div>
                             <div className="author">
-                                {sumHits === 0 && hits === 0 ? <>{} </> : <>阅读<b>{sumHits}</b>次</>}{<span className="ml-1"></span>}{sumHits >= hits && hits > 0 && <>周<b>{hits}</b>次</>}
-                                {/* {sumHits && hits && <>阅读<b>{sumHits}</b>次<span className="px-1"></span>
-                                    {sumHits > hits && <>周<b>{hits}</b>次</>}
-                                </>
-                                } */}
+                                {sumHits && sumHits > 0 && <>阅读<b>{sumHits}</b>次</>}{<span className="px-1"></span>}{sumHits >= hits && hits > 0 && <>周<b>{hits}</b>次</>}
                             </div>
                         </div>
                         <div className="small pt-1 nowrap" style={{ overflow: "hidden" }}>

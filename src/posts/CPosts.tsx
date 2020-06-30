@@ -287,23 +287,28 @@ export class CPosts extends CUqBase {
 
     showProductCatalog = async () => {
         let results = await this.uqs.product.GetRootCategory.query({ salesRegion: setting.SALESREGION_CN, language: setting.CHINESE });
-        this.openVPage(VProductCatalog, results.first);
+        let param = { data: results.first, name: "产品目录" };
+        this.openVPage(VProductCatalog, param);
     }
 
-    searchProductCatalogChildrenKeys = async (key: string) => {
-        let results = await this.uqs.product.GetChildrenCategory.query({ parent: key, salesRegion: setting.SALESREGION_CN, language: setting.CHINESE });
-        this.openVPage(VProductCatalog, results.first)
+    searchProductCatalogChildrenKeys = async (key: any) => {
+        let { productCategory, name } = key
+        let results = await this.uqs.product.GetChildrenCategory.query({ parent: productCategory.id, salesRegion: setting.SALESREGION_CN, language: setting.CHINESE });
+        let param = { data: results.first, name: name };
+        this.openVPage(VProductCatalog, param)
     };
 
     showProductCatalogDetil = async (param: any) => {
+        let { id, name } = param;
         this.pageProductCatalogPost = new QueryPager(this.uqs.webBuilder.SearchProductCategoryPost, 15, 30);
-        this.pageProductCatalogPost.first({ author: 0, productCategory: param, publish: 0 })
-        return await this.vCall(VProductCatalogDetil);
+        let pageProductCatalogPost = this.pageProductCatalogPost
+        this.pageProductCatalogPost.first({ author: 0, productCategory: id, publish: 0 })
+        let spcdetil = { pageProductCatalogPost, name: name }
+        return await this.vCall(VProductCatalogDetil, spcdetil);
     }
 
 
     /** 栏目**/
-
     showPostSubject = async () => {
         this.pagePostSubject = await this.uqs.webBuilder.SearchPostSubject.table({ _post: this.current.id })
         this.openVPage(VPostSubject);
@@ -325,14 +330,21 @@ export class CPosts extends CUqBase {
     }
 
     showSubject = async (param: any) => {
+        let { name, id } = param;
+
         let pageSubject = new QueryPager(this.uqs.webBuilder.SearchSubject, 15, 100);
-        pageSubject.first({ _parent: param });
-        this.openVPage(VSubject, pageSubject);
+        pageSubject.first({ _parent: id });
+
+        let sub = { pageSubject, name: name }
+        this.openVPage(VSubject, sub);
     }
     showSubjectPost = async (param: any) => {
+        let { name, id } = param;
         this.pageSubjectPost = new QueryPager(this.uqs.webBuilder.SearchSubjectPost, 15, 30);
-        this.pageSubjectPost.first({ author: 0, subject: param.id, publish: 0 })
-        return await this.vCall(VSubjectDetil);
+        this.pageSubjectPost.first({ author: 0, subject: id, publish: 0 })
+        let pageSubjectPost = this.pageSubjectPost;
+        let showsubpost = { pageSubjectPost, name: name }
+        return await this.vCall(VSubjectDetil, showsubpost);
     }
 
 
@@ -357,9 +369,11 @@ export class CPosts extends CUqBase {
         this.pagePostDomain = await this.uqs.webBuilder.SearchPostDomain.table({ _post: this.current.id })
     }
     showDomain = async (param: any) => {
+        let { id, name } = param;
         let domain = new QueryPager(this.uqs.customer.SearchDomain, 15, 100);
-        domain.first({ _parent: param });
-        this.openVPage(VDomain, domain);
+        domain.first({ _parent: id });
+        let sdomain = { domain, name: name }
+        this.openVPage(VDomain, sdomain);
     }
     showDomainPost = async (param: any, key: any) => {
         this.showDomainPost_Search(param, key)

@@ -3,10 +3,12 @@ import { observer } from "mobx-react";
 import { VPage, Page, List, tv, FA, EasyTime } from "tonva";
 import { consts } from "consts";
 import { CPosts } from "./CPosts";
+import { observable } from "mobx";
 
 export class VProductCatalogDetil extends VPage<CPosts> {
-
-    async open() {
+    @observable name: any;
+    async open(param: any) {
+        this.name = param.name;
         this.openPage(this.page);
     }
 
@@ -18,7 +20,7 @@ export class VProductCatalogDetil extends VPage<CPosts> {
             </div>
         );
         return (
-            <Page header={"产品目"} headerClassName={consts.headerClass} onScrollBottom={this.onScrollBottom} >
+            <Page header={this.name} headerClassName={consts.headerClass} onScrollBottom={this.onScrollBottom} >
                 <List before={""} none={none} items={pageProductCatalogPost} item={{ render: this.renderItem }} />
             </Page>
         );
@@ -84,11 +86,7 @@ export class VProductCatalogDetil extends VPage<CPosts> {
                                 {updated === true && <>&ensp;<FA name="pencil-square-o" /><EasyTime date={$update} /></>}
                             </div>
                             <div className="author">
-                                {sumHits === 0 && hits === 0 ? <>{} </> : <>阅读<b>{sumHits}</b>次</>}{<span className="ml-1"></span>}{sumHits >= hits && hits > 0 && <>周<b>{hits}</b>次</>}
-                                {/* {sumHits && hits && <>阅读<b>{sumHits}</b>次<span className="px-1"></span>
-                                    {sumHits > hits && <>周<b>{hits}</b>次</>}
-                                </>
-                                } */}
+                                {sumHits && sumHits > 0 && <>阅读<b>{sumHits}</b>次</>}{<span className="px-1"></span>}{sumHits >= hits && hits > 0 && <>周<b>{hits}</b>次</>}
                             </div>
                         </div>
                         <div className="small pt-1 nowrap" style={{ overflow: "hidden" }}>
