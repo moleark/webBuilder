@@ -41,7 +41,8 @@ export class VMain extends VPage<CMedia> {
                 return this.renderItem(v, index)
             });
         }
-        return <Page header={this.t('picture')} headerClassName={consts.headerClass} right={right} onScrollBottom={onScrollBottom}>
+		return <Page header={this.t('picture')} headerClassName={consts.headerClass} right={right} 
+			onScrollBottom={onScrollBottom}>
 
             <LMR className="bg-white py-3 my-1" right={<i className=" px-2 iconfont icon-jiantou1"></i>} onClick={() => showCat(0)} >
                 <div className="mx-3 px-2 font-weight-bold">图片分类</div>

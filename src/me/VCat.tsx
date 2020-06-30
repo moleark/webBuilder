@@ -17,7 +17,8 @@ export class VCat extends VPage<CMe> {
         let right = <div onClick={showAddCat}>
             <span className="mx-sm-2 iconfont icon-jiahao1 cursor-pointer" style={{ fontSize: "1.7rem", color: "white" }}></span>
         </div>;
-        return <Page header={this.capton} headerClassName={consts.headerClass} onScrollBottom={this.onScrollBottom} right={right}>
+		return <Page header={this.capton} headerClassName={consts.headerClass} 
+			onScrollBottom={this.onScrollBottom} right={right}>
             <List before={""} items={pageCat} item={{ render: this.renderItem }} />
         </Page>;
     })

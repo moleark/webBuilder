@@ -14,7 +14,8 @@ export class VCat extends VPage<CMedia> {
     }
 
     private page = observer(() => {
-        return <Page header={this.capton} headerClassName={consts.headerClass} onScrollBottom={this.onScrollBottom}>
+        return <Page header={this.capton} headerClassName={consts.headerClass}
+            onScrollBottom={this.onScrollBottom}>
             <List before={""} items={this.pageCat} item={{ render: this.renderItem }} />
         </Page>;
     })

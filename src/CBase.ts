@@ -8,7 +8,7 @@ export abstract class CUqBase extends CBase {
 
 }
 
-export abstract class CUqSub extends CSub {
+export abstract class CUqSub<T extends CUqBase> extends CSub<T> {
     get cApp(): CApp { return this.cApp; }
     protected get uqs(): UQs { return this._uqs as UQs };
     protected get owner(): CUqBase { return this._owner as CUqBase }
