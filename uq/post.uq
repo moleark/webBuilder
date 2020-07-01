@@ -7,6 +7,7 @@ TUID POST (
     main author ID [$user],
     template ID Template,
     content text(medium),
+    emphasis tinyint default 0,
     isValid tinyint default 1,
     stamp (create, update),
 );
