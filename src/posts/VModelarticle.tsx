@@ -1,6 +1,6 @@
 import * as React from "react";
 import { observer } from "mobx-react";
-import { VPage, Page, List, tv } from "tonva";
+import { VPage, Page, List, tv, FA } from "tonva";
 import { CPosts } from "./CPosts";
 
 export class VModelarticle extends VPage<CPosts> {
@@ -19,11 +19,14 @@ export class VModelarticle extends VPage<CPosts> {
 
     private renderItem = (item: any, index: number) => {
         let { user, showDetail } = this.controller;
-        let { image, caption, discription, author, hits } = item;
+        let { image, caption, discription, author, hits, emphasis } = item;
         let divUser = user.id === author.id ?
             <span className="text-warning">[自己]</span>
             :
             this.controller.cApp.renderUser(author.id);
+
+        let showImport = emphasis === 1 ?
+            <FA className="text-danger ml-3 " name="star" /> : null
         return (
             <div className="pl-2 pl-sm-3 pr-2 pr-sm-3 pt-2 pb-3 d-flex">
                 <div className="d-flex flex-fill cursor-pointer" onClick={() => showDetail(item.post)} >
@@ -46,9 +49,10 @@ export class VModelarticle extends VPage<CPosts> {
                         <div className="small d-flex">
                             <div className="flex-fill">
                                 {divUser}
+                                {showImport}
                             </div>
                             <div className="author">
-                                {hits && <>阅读<b>{hits}</b>次</>}
+                                {hits && hits > 0 ? <>阅读<b>{hits}</b>次</> : null}
                             </div>
                         </div>
                     </div>

@@ -7,7 +7,7 @@ import { observable } from "mobx";
 
 export class VProductCatalog extends VPage<CPosts> {
 
-    @observable caption: any = '产品目录';
+    @observable caption: any;
     @observable pageProductCatalog: any;
 
     async open(param: any) {
@@ -26,15 +26,15 @@ export class VProductCatalog extends VPage<CPosts> {
 
 
     private renderItem = (model: any, index: number) => {
-        let { name } = model;
+        // let { name } = model;
         let { showProductCatalogDetil, searchProductCatalogChildrenKeys } = this.controller;
         return (
-            <div className="pl-2 pl-sm-3 pr-2 pr-sm-3 pt-2 pb-3 d-flex">
-                <div className="d-flex flex-fill mx-2 " >
-                    <span>{name}</span>
+            <div className="pl-2 pl-sm-3 pr-2 pr-sm-3 pt-2 pb-2 d-flex align-items-center ">
+                <div className="d-flex align-items-center flex-fill mx-2 " >
+                    <span>{model.name}</span>
                 </div>
                 <div>
-                    <div className="small d-flex cursor-pointer text-primary text-right w-7c ">
+                    <div className="small d-flex align-items-center cursor-pointer text-primary text-right w-7c ">
                         <button className="btn btn-outline-info mx-2 px-3" onClick={() => showProductCatalogDetil(model)} >
                             贴  文
                         </button>

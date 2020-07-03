@@ -82,6 +82,8 @@ export interface WebBuilder {
     WebPageWebsite: Map;
     Website: Tuid;
     hotPosts: Query;
+    InformationPost: Map;
+    SearchInformationPost: Query;
 }
 
 export interface UQs {

@@ -128,6 +128,7 @@ export class VRelease extends VPage<CPosts>  {
                 "4": true
             }
         };
+
         return <Page header={this.t('publish')} headerClassName={consts.headerClass} >
             <Form ref={v => this.form = v} className="my-3 mx-3"
                 schema={schema}

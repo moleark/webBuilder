@@ -4,9 +4,11 @@ import { VPage, UiSchema, Schema, Page, UiInputItem, UiIdItem, tv, Edit, ItemSch
 import { observer } from 'mobx-react';
 import { consts } from 'consts';
 import { setting } from 'configuration';
-
+import classNames from "classnames";
+import { observable } from 'mobx';
 export class VEdit extends VPage<CPosts> {
 
+    @observable isOn: boolean = true;
     private textarea: HTMLTextAreaElement;
     async open() {
         this.openPage(this.page);
@@ -16,6 +18,8 @@ export class VEdit extends VPage<CPosts> {
         let { current } = this.controller;
         let id = current && current.id;
         current.content = this.textarea.value;
+        current.showStar = this.isOn;
+
         await this.controller.saveItem(id, current);
         this.closePage();
     }
@@ -83,6 +87,27 @@ export class VEdit extends VPage<CPosts> {
     render(): JSX.Element {
         return <this.page />
     }
+    private onOff = (evt: React.ChangeEvent<HTMLInputElement>) => {
+        this.isOn = evt.currentTarget.value === '重要';
+        // console.log(this.isOn)
+    }
+    private isimport() {
+        let cnButton = ['btn', 'btn-outline-primary', 'btn-sm', 'text-nowrap'];
+        return <div className="px-sm-2 d-flex align-items-center">
+            <div className="btn-group btn-group-toggle" data-toggle="buttons">
+                <label className={classNames(cnButton, { active: this.isOn })}>
+                    <input type="radio" name="options" value="重要" defaultChecked={true} onChange={this.onOff} />
+                    {/* <span className="d-inline d-sm-none">非</span> */}
+                    <span className="d-none d-sm-inline">重要</span>
+                </label>
+                <label className={classNames(cnButton, { active: !this.isOn })}>
+                    <input type="radio" name="options" value="普通" defaultChecked={false} onChange={this.onOff} />
+                    {/* <span className="d-inline d-sm-none">非</span> */}
+                    <span className="d-none d-sm-inline">普通</span>
+                </label>
+            </div>
+        </div>
+    }
 
     private page = observer(() => {
 
@@ -98,9 +123,7 @@ export class VEdit extends VPage<CPosts> {
                 onClick={cApp.cTag.showTag} >{this.t('tag')}
             </button>
         </div>;
-        return <Page header={this.t('editorpost')}
-            right={right}
-            headerClassName={consts.headerClass}>
+        return <Page header={this.t('editorpost')} right={right} headerClassName={consts.headerClass}>
             <div className="mx-3 py-2 h-100 d-flex flex-column">
                 <textarea ref={tt => this.textarea = tt} className="flex-fill mb-2" defaultValue={current.content} rows={20} />
                 <Edit data={current}
@@ -111,7 +134,8 @@ export class VEdit extends VPage<CPosts> {
                 {(setting.BusinessScope !== 2) && branch("目录", showPostProductCatalog)}
                 {(setting.BusinessScope !== 2) && branch("栏目", showPostSubject)}
                 {(setting.BusinessScope !== 2) && branch("领域", showPostDomain)}
-                {(setting.BusinessScope === 2) && branch("类型", showPickClassroomType)}
+                {(setting.BusinessScope !== 2) && branch("类型", showPickClassroomType)}
+                <div className="bg-white py-2 d-flex justify-content-end cursor-pointer "> {this.isimport()}</div>
             </div >
         </Page >
     })

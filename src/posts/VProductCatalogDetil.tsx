@@ -39,7 +39,7 @@ export class VProductCatalogDetil extends VPage<CPosts> {
         if (!user) return;
         let { image, caption, discription, author, $update, $create
             , hits, sumHits
-            , web, agent, assist, openweb } = item;
+            , web, agent, assist, openweb, emphasis } = item;
         // console.log(item)
         let $c: Date = $create, $u: Date = $update;
         let updated: boolean = false;
@@ -59,6 +59,9 @@ export class VProductCatalogDetil extends VPage<CPosts> {
             <span className="text-warning">[自己]</span>
             :
             this.controller.cApp.renderUser(author.id);
+
+        let showImport = emphasis === 1 ?
+            <FA className="text-danger ml-3 " name="star" /> : null
         return (
             <div className="pl-2 pl-sm-3 pr-2 pr-sm-3 pt-2 pb-3 d-flex">
                 <div className="d-flex flex-fill cursor-pointer" onClick={() => showDetail(item.id)} >
@@ -84,6 +87,7 @@ export class VProductCatalogDetil extends VPage<CPosts> {
                                 {divUser}
 								&ensp;<EasyTime date={$create} />
                                 {updated === true && <>&ensp;<FA name="pencil-square-o" /><EasyTime date={$update} /></>}
+                                {showImport}
                             </div>
                             <div className="author">
                                 {sumHits && sumHits > 0 && <>阅读<b>{sumHits}</b>次</>}{<span className="px-1"></span>}{sumHits >= hits && hits > 0 && <>周<b>{hits}</b>次</>}

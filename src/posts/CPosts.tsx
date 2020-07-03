@@ -28,7 +28,9 @@ import { VPickDomain } from "./VPickDomain";
 import { VDomain } from "./VDomain";
 import { VDomainDetil } from "./VDomainDetil";
 import { VModelarticle } from './VModelarticle';
-
+import { VInformation } from './VInformation';
+import { VInformationPost } from './VInformationPost';
+import { VEditpostSort } from './VEditpostSort';
 /* eslint-disable */
 export class CPosts extends CUqBase {
     @observable pageTemplate: QueryPager<any>;
@@ -39,7 +41,8 @@ export class CPosts extends CUqBase {
     @observable pageDomainPost: QueryPager<any>;
     @observable pageProduct: QueryPager<any>;
     @observable modelpage: QueryPager<any>
-
+    @observable selectPosts: QueryPager<any>;
+    @observable pageInformationPosts: QueryPager<any>;
     @observable current: any;
     @observable isMyself: boolean = true;
     @observable postProduct: any;
@@ -97,8 +100,8 @@ export class CPosts extends CUqBase {
     // 保存Post
     saveItem = async (id: number, param: any) => {
         param.author = this.user.id;
-        let { caption, discription, image, template, content } = param;
-        let par = { _caption: caption, _discription: discription, _image: image, _template: template, _content: content };
+        let { caption, discription, image, template, content, showStar } = param;
+        let par = { _caption: caption, _discription: discription, _image: image, _template: template, _content: content, emphasis: showStar };
         if (id) {
             await this.uqs.webBuilder.Post.save(id, param);
             let item = this.pagePosts.items.find(v => v.id === id);
@@ -111,6 +114,7 @@ export class CPosts extends CUqBase {
         } else {
             let ret = await this.uqs.webBuilder.AddPost.submit(par);
             param.isValid = 1;
+            param.emphasis = 0;
             await this.uqs.webBuilder.Post.save(ret.id, param);
             param.id = ret.id;
             param.$create = new Date();
@@ -408,4 +412,41 @@ export class CPosts extends CUqBase {
         });
         this.openVPage(VModelarticle, ret);
     }
+    //资讯中心 
+    InformationCente = async () => {
+        await this.searchInformationPost();
+        this.openVPage(VInformation)
+    }
+    searchInformationPost = async () => {
+        this.pageInformationPosts = new QueryPager(this.uqs.webBuilder.SearchInformationPost, 15, 30);
+        this.pageInformationPosts.first({});
+    };
+
+    //去添加贴文
+    toaddPost = async () => {
+        return await this.vCall(VInformationPost);
+    };
+    //添加到资讯中心  , arr1: [{ sort: this.current.sort }] 
+    addInformation = async (param: any) => {
+        this.closePage();
+        await this.uqs.webBuilder.InformationPost.add({ post: param, arr1: [{ sort: 0 }] });
+        await this.searchInformationPost();
+    };
+    //删除贴文
+    delPostItem = async (param: any) => {
+        let { id, sort } = param;
+        await this.uqs.webBuilder.InformationPost.del({ post: id, arr1: [{ sort: sort }] });
+        await this.searchInformationPost()
+    }
+
+    //贴文排序页面
+    editPostShow = async (param: any) => {
+        this.openVPage(VEditpostSort, param);
+    }
+
+    //编辑贴文排序
+    saveSort = async (id: number, sort: any) => {
+        await this.uqs.webBuilder.InformationPost.add({ post: id, arr1: [{ sort: sort }] });
+        this.searchInformationPost();
+    };
 }

@@ -16,20 +16,6 @@ export class VMain extends VPage<CPosts> {
         return <this.page />;
     }
 
-    //onBtn = () => {
-    /*
-    if (this.controller.flg) {
-        this.controller.flg = false;
-        this.controller.loadList();
-    } else {
-        this.controller.flg = true;
-        this.controller.loadList();
-    }
-    */
-    //this.controller.isMe = !this.controller.isMe;
-    //this.controller.loadList();
-    //};
-
     private onMeAll = (evt: React.ChangeEvent<HTMLInputElement>) => {
         this.isMes = evt.currentTarget.value === 'me';
         //this.controller.changeMeAll();
@@ -55,7 +41,7 @@ export class VMain extends VPage<CPosts> {
     }
 
     private page = observer(() => {
-        let { pagePosts, onAdd, searchPostsKey, showProductCatalog, showSubject, onScrollBottom, showDomain, showModel } = this.controller;
+        let { pagePosts, onAdd, searchPostsKey, showProductCatalog, showSubject, onScrollBottom, showDomain, showModel, InformationCente } = this.controller;
         let right = (
             <div className="d-flex align-items-center">
                 {this.renderMeAllToggle()}
@@ -70,22 +56,9 @@ export class VMain extends VPage<CPosts> {
                 <span className="text-muted small">[{this.t('noposts')}]</span>
             </div>
         );
-        /* let column = <>
-             <LMR className="bg-white py-3 my-1" right={<i className=" px-2 iconfont icon-jiantou1"></i>} onClick={showProductCatalog}>
-                 <div className="mx-3 px-2 font-weight-bold">产品目录</div>
-             </LMR>
-             <LMR className="bg-white py-3 my-1" right={<i className=" px-2 iconfont icon-jiantou1"></i>} onClick={() => showSubject(0)}>
-                 <div className="mx-3 px-2 font-weight-bold">帖文栏目</div>
-             </LMR>
-             <LMR className="bg-white py-3 my-1" right={<i className=" px-2 iconfont icon-jiantou1"></i>} onClick={() => showDomain(0)}>
-                 <div className="mx-3 px-2 font-weight-bold">研究领域</div>
-             </LMR>
-             <LMR className="bg-white py-3 my-1" right={<i className=" px-2 iconfont icon-jiantou1"></i>} onClick={() => showModel()}>
-                 <div className="mx-3 px-2 font-weight-bold">一周范文</div>
-             </LMR>
-         </>*/
 
-        let column = <div className="d-flex justify-content-around py-3 small text-center" style={{ background: "linear-gradient(rgba(23,106,184,.5),rgba(23,162,184,.5),rgba(23,184,184,.5))" }}>
+        let column = <div className="d-flex justify-content-around py-4 small text-center"
+            style={{ background: "linear-gradient(rgba(23,106,184,.5),rgba(23,162,184,.5),rgba(23,184,184,.5))" }}>
             <div className="m-1 bg-default p-3 " onClick={showProductCatalog} >
                 <div className="py-3 my-1 ">
                     <div className="mb-2 text-success"><i style={{ fontSize: "2rem" }} className="iconfont icon-chanpinmulu"></i></div>
@@ -110,6 +83,12 @@ export class VMain extends VPage<CPosts> {
                     <div className="mx-3 px-2 font-weight-bold">一周范文</div>
                 </div>
             </div>
+            <div className="m-1 p-3 " onClick={() => InformationCente()} >
+                <div className="py-3 my-1 ">
+                    <div className="mb-2 text-warning"><i style={{ fontSize: "2rem" }} className="iconfont icon-zixun"></i></div>
+                    <div className="mx-3 px-2 font-weight-bold">资讯中心</div>
+                </div>
+            </div>
         </div >
         return (
             <Page header={this.t('post')} headerClassName={consts.headerClass} right={right}
@@ -129,8 +108,7 @@ export class VMain extends VPage<CPosts> {
         let { user, showDetail } = this.controller;
         if (!user) return;
         let { image, caption, discription, author, $update, $create
-            , hits, sumHits, web, agent, assist, openweb } = item;
-
+            , hits, sumHits, web, agent, assist, openweb, emphasis } = item;
         let $c: Date = $create, $u: Date = $update;
         let updated: boolean = false;
         if ($c && $u) {
@@ -149,6 +127,9 @@ export class VMain extends VPage<CPosts> {
             <span className="text-warning">[自己]</span>
             :
             this.controller.cApp.renderUser(author.id);
+
+        let showImport = emphasis === 1 ?
+            <FA className="text-danger ml-3 " name="star" /> : null
         return (
             <div className="pl-2 pl-sm-3 pr-2 pr-sm-3 pt-2 pb-3 d-flex">
                 <div className="d-flex flex-fill cursor-pointer" onClick={() => showDetail(item.id)} >
@@ -157,7 +138,7 @@ export class VMain extends VPage<CPosts> {
                             image,
                             values => <div className="w-100 h-100 bg-center-img h-max-6c border rounded"
                                 style={{ backgroundImage: 'url(' + values.path + ')' }}></div>,
-                            undefined, //w-6c h-4c mr-2 text-black-50 justify-content-center d-flex align-items-center
+                            undefined,
                             () => (
                                 <div className="d-flex align-items-center h-100
 								justify-content-center bg-light border rounded">
@@ -174,13 +155,10 @@ export class VMain extends VPage<CPosts> {
                                 {divUser}
 								&ensp;<EasyTime date={$create} />
                                 {updated === true && <>&ensp;<FA name="pencil-square-o" /><EasyTime date={$update} /></>}
+                                {showImport}
                             </div>
                             <div className="author">
                                 {sumHits && sumHits > 0 && <>阅读<b>{sumHits}</b>次</>}{<span className="px-1"></span>}{sumHits >= hits && hits > 0 && <>周<b>{hits}</b>次</>}
-                                {/* {sumHits && hits && sumHits > 0 && <>阅读<b>{sumHits}</b>次<span className="px-1"></span>
-                                    {sumHits > hits && <>周<b>{hits}</b>次</>}
-                                </>
-                                } */}
                             </div>
                         </div>
                         <div className="small pt-1 nowrap" style={{ overflow: "hidden" }}>
