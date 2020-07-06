@@ -89,7 +89,6 @@ export class VEdit extends VPage<CPosts> {
     }
     private onOff = (evt: React.ChangeEvent<HTMLInputElement>) => {
         this.isOn = evt.currentTarget.value === '重要';
-        // console.log(this.isOn)
     }
     private isimport() {
         let cnButton = ['btn', 'btn-outline-primary', 'btn-sm', 'text-nowrap'];
@@ -97,12 +96,12 @@ export class VEdit extends VPage<CPosts> {
             <div className="btn-group btn-group-toggle" data-toggle="buttons">
                 <label className={classNames(cnButton, { active: this.isOn })}>
                     <input type="radio" name="options" value="重要" defaultChecked={true} onChange={this.onOff} />
-                    {/* <span className="d-inline d-sm-none">非</span> */}
+                    <span className="d-inline d-sm-none">非</span>
                     <span className="d-none d-sm-inline">重要</span>
                 </label>
                 <label className={classNames(cnButton, { active: !this.isOn })}>
                     <input type="radio" name="options" value="普通" defaultChecked={false} onChange={this.onOff} />
-                    {/* <span className="d-inline d-sm-none">非</span> */}
+                    <span className="d-inline d-sm-none">非</span>
                     <span className="d-none d-sm-inline">普通</span>
                 </label>
             </div>

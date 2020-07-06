@@ -21,10 +21,8 @@ export class VEditpostSort extends VPage<CPosts> {
 
 	private onFormButtonClick = async (name: any, context: Context) => {
 		let { sort } = context.form.data;
-		let id = this.itempost.post;
-		let param = { sort, id }
-		await this.controller.addInformation(param);
-		// this.closePage();
+		let id = this.itempost.post.id
+		await this.controller.addInformation({ sort, id });
 	}
 
 	private uiSchema: UiSchema = {
