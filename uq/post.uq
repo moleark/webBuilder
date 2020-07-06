@@ -89,7 +89,7 @@ MAP PostDomain(
 --资讯中心
 MAP InformationPost(
     key post ID POST,
-    sort int
+    key sort int
 );
 
 

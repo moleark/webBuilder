@@ -382,21 +382,23 @@ PAGE (
     web     smallint,
     agent   smallint, 
     assist  smallint, 
-    openweb smallint
+    openweb smallint, 
+    sort int
 ) {
  
-    PAGE select p.id, p.caption, p.discription, p.image, p.author
+    PAGE select pp.sort as id, p.caption, p.discription, p.image, p.author
             , p.[$update], p.[$create], ph.update as publishdate
             , p.isValid, p.emphasis
             , ifnull(ph.web, 0) as web
             , ifnull(ph.agent,0) as agent
             , ifnull( ph.assist,0) as assist
             , ifnull( ph.openweb ,0) as openweb
+            , pp.sort
     from    POST as p
             join InformationPost as pp on pp.post = p.id 
             left join PostPublish as ph on p.id = ph.post
     where   p.id < $pageStart
-    order by p.id desc
+    order by pp.sort
     limit $pageSize;
 };
 
