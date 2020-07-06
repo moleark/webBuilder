@@ -70,9 +70,7 @@ export class VInformationPost extends VPage<CPosts> {
 								{divUser}
 								{showImport}
 							</div>
-
 						</div>
-
 					</div>
 				</div>
 			</div>

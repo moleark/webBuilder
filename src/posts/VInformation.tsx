@@ -60,7 +60,14 @@ export class VInformation extends VPage<CPosts> {
 			<FA className="text-danger ml-3 " name="star" /> : null
 		return (
 			<div className="pl-2 pl-sm-3 pr-2 pr-sm-3 pt-2 pb-3 d-flex flex-column mb-1">
-				<div className="d-flex flex-fill cursor-pointer" onClick={() => showDetail(item.id)} >
+				<div className="text-info d-flex justify-content-between cursor-pointer mb-2 py-1">
+					<div className="d-flex smallPath text-primary cursor-pointer">
+						<div className="overflow-hidden flex-fill small px-3">排序：{sort}</div>
+						<div className="" onClick={() => editPostShow(item)}><FA name="edit" /></div>
+					</div>
+					<div className="iconfont icon-shanchu mx-3 text-primary" onClick={() => delPostItem(item)} ></div>
+				</div>
+				<div className="d-flex flex-fill cursor-pointer" onClick={() => showDetail(item.post)} >
 					<div className="mr-1 w-5c w-min-5c h-5c h-min-5c" >
 						{tv(
 							image,
@@ -95,13 +102,7 @@ export class VInformation extends VPage<CPosts> {
 						</div>
 					</div>
 				</div>
-				<div className="text-info d-flex justify-content-between cursor-pointer mt-2 py-1 bg-light">
-					<div className="d-flex smallPath text-primary cursor-pointer">
-						<div className="overflow-hidden flex-fill small px-3">排序：{sort}</div>
-						<div className="" onClick={() => editPostShow(item)}><FA name="edit" /></div>
-					</div>
-					<div className="iconfont icon-shanchu mx-3 text-primary" onClick={() => delPostItem(item)} ></div>
-				</div>
+
 			</div >
 		);
 	});
