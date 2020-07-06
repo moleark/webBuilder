@@ -39,7 +39,7 @@ export class VInformationPost extends VPage<CPosts> {
 		</div>
 	}
 	private page = observer(() => {
-		let { pagePosts, searchPostsKey } = this.controller;
+		let { pagePosts, searchPostsKey, onScrollBottom } = this.controller;
 		let none = (
 			<div className="my-3 mx-2">
 				<span className="text-muted small">[{this.t('noposts')}]</span>
@@ -51,7 +51,7 @@ export class VInformationPost extends VPage<CPosts> {
 				<SearchBox size="sm" onSearch={(key: string) => searchPostsKey(key, "")} placeholder={this.t('searchpost')} />
 			</div>
 		);
-		return <Page header={'选择贴文'} headerClassName={consts.headerClass} right={right} >
+		return <Page header={'选择贴文'} headerClassName={consts.headerClass} right={right} onScrollBottom={onScrollBottom}>
 			<List before={""} none={none} items={pagePosts} item={{ render: this.renderItem }} />
 		</Page>;
 	});
@@ -63,7 +63,7 @@ export class VInformationPost extends VPage<CPosts> {
 		let { user, addInformation } = this.controller;
 
 		if (!user) return;
-		let { image, caption, discription, author, emphasis } = item;
+		let { image, caption, discription, author, emphasis, web, agent, assist, openweb } = item;
 		// console.log(item)
 		let divUser = user.id === author.id ?
 			<span className="text-warning">[自己]</span>
@@ -96,6 +96,13 @@ export class VInformationPost extends VPage<CPosts> {
 								{divUser}
 								{showImport}
 							</div>
+						</div>
+						<div className="small pt-1 nowrap" style={{ overflow: "hidden" }}>
+							{(web + agent + assist + openweb) > 0 ? <span className=" text-muted">发布：</span> : <></>}
+							{agent === 1 ? <span style={{ borderRadius: "15%/48%" }} className="bg-success mr-1 text-white px-1">{this.t('agent')}</span> : <></>}
+							{assist === 1 ? <span style={{ borderRadius: "15%/48%" }} className="bg-warning mr-1 text-white px-1">{this.t('sales')}</span> : <></>}
+							{openweb === 1 ? <span style={{ borderRadius: "15%/48%" }} className="bg-info mr-1 text-white px-1">{this.t('publicSite')}</span> : <></>}
+							{web === 1 ? <span style={{ borderRadius: "15%/48%" }} className="bg-primary text-white px-1">{this.t('internationSite')}</span> : <></>}
 						</div>
 					</div>
 				</div>
