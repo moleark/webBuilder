@@ -370,6 +370,7 @@ PAGE (
 QUERY SearchInformationPost()
 PAGE (
     id bigint desc,
+    post ID POST,
     caption char(100),
     discription char(200),
     image ID Image,
@@ -386,7 +387,7 @@ PAGE (
     sort int
 ) {
  
-    PAGE select pp.sort as id, p.caption, p.discription, p.image, p.author
+    PAGE select pp.sort as id, p.id as post, p.caption, p.discription, p.image, p.author
             , p.[$update], p.[$create], ph.update as publishdate
             , p.isValid, p.emphasis
             , ifnull(ph.web, 0) as web

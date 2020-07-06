@@ -429,13 +429,14 @@ export class CPosts extends CUqBase {
     //添加到资讯中心  , arr1: [{ sort: this.current.sort }] 
     addInformation = async (param: any) => {
         this.closePage();
-        await this.uqs.webBuilder.InformationPost.add({ post: param, arr1: [{ sort: 0 }] });
+        await this.uqs.webBuilder.AddInformationPost.submit({ _post: param, _sort: 0 });
+        //await this.uqs.webBuilder.InformationPost.add({ post: param, arr1: [{ sort: 0 }] });
         await this.searchInformationPost();
     };
     //删除贴文
     delPostItem = async (param: any) => {
-        let { id, sort } = param;
-        await this.uqs.webBuilder.InformationPost.del({ post: id, arr1: [{ sort: sort }] });
+        let { post, sort } = param;
+        await this.uqs.webBuilder.InformationPost.del({ post: post.id, arr1: [{ sort: sort }] });
         await this.searchInformationPost()
     }
 
@@ -446,7 +447,8 @@ export class CPosts extends CUqBase {
 
     //编辑贴文排序
     saveSort = async (id: number, sort: any) => {
-        await this.uqs.webBuilder.InformationPost.add({ post: id, arr1: [{ sort: sort }] });
+        await this.uqs.webBuilder.AddInformationPost.submit({ _post: id, _sort: sort });
+        //await this.uqs.webBuilder.InformationPost.add({ post: id, arr1: [{ sort: sort }] });
         this.searchInformationPost();
     };
 }

@@ -151,6 +151,16 @@ Action AddPostDomain(
 };
 
 
+Action AddInformationPost(
+    _post ID POST,
+    _sort int 
+) {
+    delete from InformationPost where post = _post;
+    BOOK InformationPost at( _post ,_sort);
+};
+
+
+
 
 Action test(a1 int, a2 int) {
     book contenttag at(a1, a2);
