@@ -430,11 +430,7 @@ export class CPosts extends CUqBase {
     addInformation = async (param: any) => {
         this.closePage();
         let { sort, id } = param;
-        if (sort) {
-            await this.uqs.webBuilder.AddInformationPost.submit({ _post: id, _sort: sort });
-        } else {
-            await this.uqs.webBuilder.AddInformationPost.submit({ _post: param, _sort: 0 });
-        }
+        await this.uqs.webBuilder.AddInformationPost.submit({ _post: id, _sort: sort });
         await this.searchInformationPost();
     };
     //删除贴文
