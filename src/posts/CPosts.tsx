@@ -43,8 +43,8 @@ export class CPosts extends CUqBase {
     @observable modelpage: QueryPager<any>
     @observable selectPosts: QueryPager<any>;
     @observable pageInformationPosts: QueryPager<any>;
+    @observable informationpagePosts: QueryPager<any>;
     @observable current: any;
-    @observable isMyself: boolean = true;
     @observable postProduct: any;
     @observable ratioA: any;
     @observable ratioB: any;
@@ -56,6 +56,10 @@ export class CPosts extends CUqBase {
     @observable pagePostProductCatalogExplain: any;
     @observable pagePostSubject: any;
     @observable pagePostDomain: any;
+
+    @observable isMyself: boolean = true;
+    @observable searchKey: any;
+    @observable searchAuthor: any;
 
     protected async internalStart(param: any) {
         this.setRes({
@@ -70,7 +74,7 @@ export class CPosts extends CUqBase {
 
     setMe(isMe: boolean) {
         this.isMyself = isMe;
-        this.loadList();
+        this.searchPostsKey(this.searchKey, this.isMyself ? nav.user : 0);
     }
 
     onScrollBottom = async () => {
@@ -79,10 +83,13 @@ export class CPosts extends CUqBase {
 
     /* 贴文查询*/
     searchPostsKey = async (key: string, author: any) => {
+        this.searchKey = key;
+        this.searchAuthor = author;
         this.pagePosts = new QueryPager(this.uqs.webBuilder.SearchPost, 15, 30);
         this.pagePosts.setEachPageItem((item: any, results: { [name: string]: any[] }) => {
             this.cApp.useUser(item.author);
         });
+
         let Auser = this.isMyself ? nav.user : 0;
         await this.pagePosts.first({ key: key, author: Auser, types: setting.BusinessScope });
     };
@@ -424,7 +431,16 @@ export class CPosts extends CUqBase {
 
     //去添加贴文
     toaddPost = async () => {
+        this.informationsearchPostsKey("", "")
         return await this.vCall(VInformationPost);
+    };
+    informationsearchPostsKey = async (key: string, author: any) => {
+        this.informationpagePosts = new QueryPager(this.uqs.webBuilder.SearchPost, 15, 30);
+        this.informationpagePosts.setEachPageItem((item: any, results: { [name: string]: any[] }) => {
+            this.cApp.useUser(item.author);
+        });
+        let Auser = 0;
+        await this.informationpagePosts.first({ key: key, author: Auser, types: setting.BusinessScope });
     };
     //添加到资讯中心  
     addInformation = async (param: any) => {

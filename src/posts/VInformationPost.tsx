@@ -3,7 +3,7 @@ import { consts } from "consts";
 import { observer } from "mobx-react";
 import { VPage, Page, List, FA, tv, SearchBox } from "tonva";
 import { CPosts } from "./CPosts";
-import classNames from "classnames";
+// import classNames from "classnames";
 import { observable } from "mobx";
 export class VInformationPost extends VPage<CPosts> {
 	@observable private isMes: boolean = true;
@@ -16,30 +16,30 @@ export class VInformationPost extends VPage<CPosts> {
 		return <this.page />;
 	}
 
-	private onMeAll = (evt: React.ChangeEvent<HTMLInputElement>) => {
-		this.isMes = evt.currentTarget.value === 'me';
-		this.controller.setMe(this.isMes)
-	}
+	// private onMeAll = (evt: React.ChangeEvent<HTMLInputElement>) => {
+	// 	this.isMes = evt.currentTarget.value === 'me';
+	// 	this.controller.setMe(this.isMes)
+	// }
 
-	private renderMeAllToggle() {
-		let cnButton = ['btn', 'btn-outline-warning', 'btn-sm', 'text-nowrap'];
-		return <div className="px-sm-2 d-flex align-items-center">
-			<div className="btn-group btn-group-toggle" data-toggle="buttons">
-				<label className={classNames(cnButton, { active: this.isMes })}>
-					<input type="radio" name="options" value="me" defaultChecked={true} onChange={this.onMeAll} />
-					<span className="d-inline d-sm-none">{this.t('me-sm')}</span>
-					<span className="d-none d-sm-inline">{this.t('me')}</span>
-				</label>
-				<label className={classNames(cnButton, { active: !this.isMes })}>
-					<input type="radio" name="options" value="all" defaultChecked={false} onChange={this.onMeAll} />
-					<span className="d-inline d-sm-none">{this.t('all-sm')}</span>
-					<span className="d-none d-sm-inline">{this.t('all')}</span>
-				</label>
-			</div>
-		</div>
-	}
+	// private MeAllToggle() {
+	// 	let cnButton = ['btn', 'btn-outline-warning', 'btn-sm', 'text-nowrap'];
+	// 	return <div className="px-sm-2 d-flex align-items-center">
+	// 		<div className="btn-group btn-group-toggle" data-toggle="buttons">
+	// 			<label className={classNames(cnButton, { active: this.isMes })}>
+	// 				<input type="radio" name="options" value="me" defaultChecked={true} onChange={this.onMeAll} />
+	// 				<span className="d-inline d-sm-none">{this.t('me-sm')}</span>
+	// 				<span className="d-none d-sm-inline">{this.t('me')}</span>
+	// 			</label>
+	// 			<label className={classNames(cnButton, { active: !this.isMes })}>
+	// 				<input type="radio" name="options" value="all" defaultChecked={false} onChange={this.onMeAll} />
+	// 				<span className="d-inline d-sm-none">{this.t('all-sm')}</span>
+	// 				<span className="d-none d-sm-inline">{this.t('all')}</span>
+	// 			</label>
+	// 		</div>
+	// 	</div>
+	// }
 	private page = observer(() => {
-		let { pagePosts, searchPostsKey, onScrollBottom } = this.controller;
+		let { informationpagePosts, informationsearchPostsKey, onScrollBottom } = this.controller;
 		let none = (
 			<div className="my-3 mx-2">
 				<span className="text-muted small">[{this.t('noposts')}]</span>
@@ -47,12 +47,12 @@ export class VInformationPost extends VPage<CPosts> {
 		);
 		let right = (
 			<div className="d-flex align-items-center mr-1">
-				{this.renderMeAllToggle()}
-				<SearchBox size="sm" onSearch={(key: string) => searchPostsKey(key, "")} placeholder={this.t('searchpost')} />
+				{/* {this.MeAllToggle()} */}
+				<SearchBox size="sm" onSearch={(key: string) => informationsearchPostsKey(key, "")} placeholder={this.t('searchpost')} />
 			</div>
 		);
 		return <Page header={'选择贴文'} headerClassName={consts.headerClass} right={right} onScrollBottom={onScrollBottom}>
-			<List before={""} none={none} items={pagePosts} item={{ render: this.renderItem }} />
+			<List before={""} none={none} items={informationpagePosts} item={{ render: this.renderItem }} />
 		</Page>;
 	});
 	private renderItem = (item: any, index: number) => {

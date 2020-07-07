@@ -18,7 +18,6 @@ export class VMain extends VPage<CPosts> {
 
     private onMeAll = (evt: React.ChangeEvent<HTMLInputElement>) => {
         this.isMes = evt.currentTarget.value === 'me';
-        //this.controller.changeMeAll();
         this.controller.setMe(this.isMes)
     }
 
@@ -41,11 +40,11 @@ export class VMain extends VPage<CPosts> {
     }
 
     private page = observer(() => {
-        let { pagePosts, onAdd, searchPostsKey, showProductCatalog, showSubject, onScrollBottom, showDomain, showModel, InformationCente } = this.controller;
+        let { pagePosts, onAdd, searchPostsKey, showProductCatalog, showSubject, onScrollBottom, showDomain, showModel, InformationCente, searchAuthor } = this.controller;
         let right = (
             <div className="d-flex align-items-center">
                 {this.renderMeAllToggle()}
-                <SearchBox size="sm" onSearch={(key: string) => searchPostsKey(key, "")} placeholder={this.t('searchpost')} />
+                <SearchBox size="sm" onSearch={(key: string) => searchPostsKey(key, searchAuthor)} placeholder={this.t('searchpost')} />
                 <div onClick={onAdd}>
                     <span className="mx-sm-2 iconfont icon-jiahao1 cursor-pointer" style={{ fontSize: "1.7rem", color: "white" }}></span>
                 </div>
