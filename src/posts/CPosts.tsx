@@ -434,13 +434,16 @@ export class CPosts extends CUqBase {
         this.informationsearchPostsKey("", "")
         return await this.vCall(VInformationPost);
     };
+    onScrollBottoms = async () => {
+        await this.informationpagePosts.more();
+    };
     informationsearchPostsKey = async (key: string, author: any) => {
         this.informationpagePosts = new QueryPager(this.uqs.webBuilder.SearchPost, 15, 30);
         this.informationpagePosts.setEachPageItem((item: any, results: { [name: string]: any[] }) => {
             this.cApp.useUser(item.author);
         });
-        let Auser = 0;
-        await this.informationpagePosts.first({ key: key, author: Auser, types: setting.BusinessScope });
+        // let Auser = 0;
+        await this.informationpagePosts.first({ key: key, author: 0, types: setting.BusinessScope });
     };
     //添加到资讯中心  
     addInformation = async (param: any) => {

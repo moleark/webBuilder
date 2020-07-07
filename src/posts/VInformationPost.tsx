@@ -17,7 +17,7 @@ export class VInformationPost extends VPage<CPosts> {
 	}
 
 	private page = observer(() => {
-		let { informationpagePosts, informationsearchPostsKey, onScrollBottom } = this.controller;
+		let { informationpagePosts, informationsearchPostsKey, onScrollBottoms } = this.controller;
 		let none = (
 			<div className="my-3 mx-2">
 				<span className="text-muted small">[{this.t('noposts')}]</span>
@@ -28,7 +28,7 @@ export class VInformationPost extends VPage<CPosts> {
 				<SearchBox size="sm" onSearch={(key: string) => informationsearchPostsKey(key, "")} placeholder={this.t('searchpost')} />
 			</div>
 		);
-		return <Page header={'选择贴文'} headerClassName={consts.headerClass} right={right} onScrollBottom={onScrollBottom}>
+		return <Page header={'选择贴文'} headerClassName={consts.headerClass} right={right} onScrollBottom={onScrollBottoms}>
 			<List before={""} none={none} items={informationpagePosts} item={{ render: this.renderItem }} />
 		</Page>;
 	});
