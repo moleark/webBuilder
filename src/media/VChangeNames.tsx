@@ -48,7 +48,7 @@ export class VChangeNames extends VPage<CMedia> {
         setTimeout(() => {
             this.showTips = "none";
         }, 2000);
-        await updateSlideShow(current.id, undefined, undefined, 0, 1)
+        await updateSlideShow(current.id, undefined, undefined, undefined, 0, 1)
     }
 
     private page = observer(() => {
