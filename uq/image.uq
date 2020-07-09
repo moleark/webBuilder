@@ -110,16 +110,16 @@ PAGE (
 QUERY SearchSlideShow ()
 PAGE(
     id bigint desc,
-    image ID IMAGE,
     caption char(100),
+    description char(100),
+    image ID IMAGE,
     path char(100),
     author ID [$user],
-    description char(100),
     src text,
     sort tinyint,
     types tinyint
 ) {
-    PAGE select  s.sort as id, p.id as image, p.caption, p.path, p.author, s.description, s.src, s.sort, s.types
+    PAGE select  s.sort as id, s.caption, s.description, p.id as image, p.path, p.author, s.src, s.sort, s.types
     from    SlideShow as s 
             join IMAGE as p on s.image = p.id
     where   s.sort < $pageStart and p.isValid = 1
@@ -155,7 +155,7 @@ ACTION UpdateSlideShow(
     src text,
     sort tinyint
 ){
-     BOOK SlideShow at(image) set types=types, caption = caption ,description= description, src=src, sort= sort ;
+    BOOK SlideShow at(image) set types=types, caption = caption ,description= description, src=src, sort= sort ;
 };
 
 ACTION DeleteSlideShow(

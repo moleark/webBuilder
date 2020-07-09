@@ -162,7 +162,7 @@ export class CMedia extends CUqBase {
     // title 接口  
     updateSlideShow = async (image: any, caption: any, description: any, src: any, types: any, sort: any) => {
         let type = types ? 1 : 0;
-        await this.uqs.webBuilder.UpdateSlideShow.submit({ image: image, caption: caption, description: description, src: src, types: type, sort: sort })
+        await this.uqs.webBuilder.UpdateSlideShow.submit({ image: image, types: type, caption: caption, description: description, src: src, sort: sort })
         await this.searchSlideShow();
     }
 
