@@ -107,8 +107,8 @@ export class CPosts extends CUqBase {
     // 保存Post
     saveItem = async (id: number, param: any) => {
         param.author = this.user.id;
-        let { caption, discription, image, template, content, showStar } = param;
-        let par = { _caption: caption, _discription: discription, _image: image, _template: template, _content: content, emphasis: showStar };
+        let { caption, discription, image, template, content, emphasis } = param;
+        let par = { _caption: caption, _discription: discription, _image: image, _template: template, _content: content, _emphasis: emphasis };
         if (id) {
             await this.uqs.webBuilder.Post.save(id, param);
             let item = this.pagePosts.items.find(v => v.id === id);
@@ -121,7 +121,7 @@ export class CPosts extends CUqBase {
         } else {
             let ret = await this.uqs.webBuilder.AddPost.submit(par);
             param.isValid = 1;
-            param.emphasis = 0;
+            // param.emphasis = 0;
             await this.uqs.webBuilder.Post.save(ret.id, param);
             param.id = ret.id;
             param.$create = new Date();

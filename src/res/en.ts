@@ -62,7 +62,10 @@ export const en = {
     copy: 'Copy',
     copysuccess: 'Copy Success',
     editor: 'Editor',
-    pleaseselect: 'Please select'
+    pleaseselect: 'Please select',
+
+    veryimport: 'Very Import',
+    general: 'General'
 }
 
 export const zh = {
@@ -136,5 +139,8 @@ export const zh = {
     editor: '编辑',
     pleaseselect: '请选择',
 
-    timepublish: "时间发布"
+    timepublish: "时间发布",
+
+    veryimport: "重要",
+    general: "普通"
 }

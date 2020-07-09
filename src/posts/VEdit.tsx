@@ -18,7 +18,7 @@ export class VEdit extends VPage<CPosts> {
         let { current } = this.controller;
         let id = current && current.id;
         current.content = this.textarea.value;
-        current.showStar = this.isOn;
+        current.emphasis = this.isOn ? 1 : 0;
 
         await this.controller.saveItem(id, current);
         this.closePage();
@@ -88,21 +88,21 @@ export class VEdit extends VPage<CPosts> {
         return <this.page />
     }
     private onOff = (evt: React.ChangeEvent<HTMLInputElement>) => {
-        this.isOn = evt.currentTarget.value === '重要';
+        this.isOn = evt.currentTarget.value === 'veryimport';
     }
     private isimport() {
         let cnButton = ['btn', 'btn-outline-primary', 'btn-sm', 'text-nowrap'];
         return <div className="px-sm-2 d-flex align-items-center">
             <div className="btn-group btn-group-toggle" data-toggle="buttons">
                 <label className={classNames(cnButton, { active: this.isOn })}>
-                    <input type="radio" name="options" value="重要" defaultChecked={true} onChange={this.onOff} />
-                    <span className="d-inline d-sm-none">非</span>
-                    <span className="d-none d-sm-inline">重要</span>
+                    <input type="radio" name="options" value="veryimport" defaultChecked={true} onChange={this.onOff} />
+                    <span className="d-inline d-sm-none">{this.t('重')}</span>
+                    <span className="d-none d-sm-inline">{this.t('veryimport')}</span>
                 </label>
                 <label className={classNames(cnButton, { active: !this.isOn })}>
-                    <input type="radio" name="options" value="普通" defaultChecked={false} onChange={this.onOff} />
-                    <span className="d-inline d-sm-none">非</span>
-                    <span className="d-none d-sm-inline">普通</span>
+                    <input type="radio" name="options" value="general" defaultChecked={false} onChange={this.onOff} />
+                    <span className="d-inline d-sm-none">{this.t('普')}</span>
+                    <span className="d-none d-sm-inline">{this.t('general')}</span>
                 </label>
             </div>
         </div>
