@@ -23,6 +23,7 @@ MAP ImageCat (
 MAP SlideShow (
     key image ID IMAGE,
     types tinyint,
+    caption char(100),
     description char(100),
     src text,
     sort tinyint
@@ -149,11 +150,12 @@ returns ret (
 ACTION UpdateSlideShow(
     image ID IMAGE,
     types tinyint,
+    caption text,
     description char(100),
     src text,
     sort tinyint
 ){
-     BOOK SlideShow at(image) set types=types,description= description, src=src, sort= sort ;
+     BOOK SlideShow at(image) set types=types, caption = caption ,description= description, src=src, sort= sort ;
 };
 
 ACTION DeleteSlideShow(

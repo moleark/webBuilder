@@ -85,6 +85,7 @@ export interface WebBuilder {
     InformationPost: Map;
     SearchInformationPost: Query;
     AddInformationPost: Action;
+    hit: Action;
 }
 
 export interface UQs {

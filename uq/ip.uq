@@ -9,6 +9,8 @@ HISTORY hits (
     ip ID IP,
     post ID,
     sales ID [$user],
+    source INT
+
 );
 
 MAP hitted (
@@ -29,14 +31,15 @@ ACTION hit ver 0.1 (
         tick INT,
         ip varchar(20),
         post BIGINT,
-        sales ID [$user] 
+        sales ID [$user],
+        source int 
     )
 ) {
     foreach oneHit {
         var ipId ID;
         TUID ip INTO ipId unique(ip);
         IF not exists(select a.post from hitted as a where a.post=post and a.ip=ipId) {
-            HISTORY hits DATE = from_unixtime(tick) SET ip = ipId, post = post, sales = sales;
+            HISTORY hits DATE = from_unixtime(tick) SET ip = ipId, post = post, sales = sales, source = source;
             BOOK hitted at(post, ipId);
             BOOK hot at (post) set sumHits+=1;
     
