@@ -442,7 +442,7 @@ export class CPosts extends CUqBase {
         this.informationpagePosts.setEachPageItem((item: any, results: { [name: string]: any[] }) => {
             this.cApp.useUser(item.author);
         });
-        // let Auser = 0;
+        // let Auser = 0;console.log(item)
         await this.informationpagePosts.first({ key: key, author: 0, types: setting.BusinessScope });
     };
     //添加到资讯中心  

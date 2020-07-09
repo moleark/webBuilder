@@ -98,7 +98,7 @@ export class CMedia extends CUqBase {
         await this.searchImageCat(image);
     }
 
-    searchImageCat = async (image: any, ) => {
+    searchImageCat = async (image: any) => {
         this.pageImageCat = new QueryPager(this.uqs.webBuilder.SearchImageCat, 15, 30);
         this.pageImageCat.first({ image: image });
     };
@@ -146,7 +146,7 @@ export class CMedia extends CUqBase {
 
     onPickedImage = async (image: any) => {
         this.closePage();
-        await this.uqs.webBuilder.UpdateSlideShow.submit({ image: image, description: undefined, src: undefined, types: 0, sort: 1 })
+        await this.uqs.webBuilder.UpdateSlideShow.submit({ image: image, caption: undefined, description: undefined, src: undefined, types: 0, sort: 1 })
         await this.searchSlideShow();
     };
 
@@ -159,10 +159,10 @@ export class CMedia extends CUqBase {
     showEditSlideShow = (param: any) => {
         this.openVPage(VEditSlideShow, param);
     }
-
-    updateSlideShow = async (image: any, description: any, src: any, types: any, sort: any) => {
+    // title 接口  
+    updateSlideShow = async (image: any, caption: any, description: any, src: any, types: any, sort: any) => {
         let type = types ? 1 : 0;
-        await this.uqs.webBuilder.UpdateSlideShow.submit({ image: image, description: description, src: src, types: type, sort: sort })
+        await this.uqs.webBuilder.UpdateSlideShow.submit({ image: image, caption: caption, description: description, src: src, types: type, sort: sort })
         await this.searchSlideShow();
     }
 
