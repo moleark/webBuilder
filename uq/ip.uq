@@ -44,8 +44,24 @@ ACTION hit ver 0.1 (
             BOOK hot at (post) set sumHits+=1;
     
             var _user ID $user;
+            var hitdate DATE;
+            set  hitdate = DATE( NOW() );
             set _user = p.author from POST as p where p.ID = post;
-            BOOK Achievement at( now(), 0, _user ) set postHitSum += 1;
+
+            BOOK Achievement at( hitdate, 0, _user ) set postHitSum += 1;
+
+            if( source = 0 ){
+                BOOK Achievement at( hitdate, 0, _user ) set hitWeb += 1;
+            } else if ( source = 1 ){
+                BOOK Achievement at( hitdate, 0, _user ) set hitAgent += 1;  
+            } else if ( source = 2 ){
+                BOOK Achievement at( hitdate, 0, _user ) set hitAssist += 1;  
+            } else if ( source = 3 ){
+                BOOK Achievement at( hitdate, 0, _user ) set hitEmail += 1;  
+            }else {
+                BOOK Achievement at( hitdate, 0, _user ) set hitOther += 1;  
+            }
+
         }
     }
 };
