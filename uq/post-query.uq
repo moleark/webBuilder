@@ -185,10 +185,14 @@ QUERY SearchSubject(
 )
 PAGE (
     id bigint desc,
-    name char(100)
+    name char(100),
+    counts int,
+    child  int
 ) {
-    PAGE select p.id, p.name 
+    PAGE select p.id, p.name, sp.counts,
+            (select count(*) from Subject as a where a.parent = p.id ) as child
     from   Subject as p
+           left join SubjectPostCount as sp on sp.subject = p.id
     where  p.id < $pageStart and p.isValid = 1 
            and p.parent = _parent
     order by p.id desc

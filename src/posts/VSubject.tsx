@@ -24,23 +24,20 @@ export class VSubject extends VPage<CPosts> {
 
     private renderItem = (model: any, index: number) => {
         let { showSubjectPost, showSubject } = this.controller;
+        let { name, counts, child } = model;
         return (
             <div className="pl-2 pl-sm-3 pr-2 pr-sm-3 pt-2 pb-3 d-flex">
                 <div className="d-flex flex-fill mx-2" >
-                    <span>{model.name}</span>
+                    <span className="pt-2 mr-2">{name}</span>
                 </div>
                 <div onClick={() => showSubjectPost(model)} >
-                    <div className="small d-flex cursor-pointer text-primary text-right w-7c ">
-                        <button className="btn btn-outline-info mx-2 px-3">
-                            贴  文
-                        </button>
+                    <div className="small d-flex cursor-pointer text-primary text-center w-7c ">
+                        {counts > 0 && <span className="header-login">{counts}</span>}
                     </div>
                 </div>
                 <div onClick={() => showSubject(model)} >
                     <div className="small d-flex cursor-pointer text-primary text-right w-7c ">
-                        <button className="btn btn-outline-info mx-2 px-3">
-                            下一级
-                        </button>
+                        {child > 0 && <button className="btn btn-outline-info mx-2 px-3">下一级</button>}
                     </div>
                 </div>
             </div >

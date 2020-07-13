@@ -75,10 +75,19 @@ TUID  Subject (
     isValid tinyint default 1,
     stamp (create, update),
 );
+
+BOOK SubjectPostCount(
+    key subject ID Subject,
+    counts int 
+);
+ 
 MAP PostSubject(
     key post ID POST,
     key subject ID Subject
 );
+
+
+
 
 --研究领域
 MAP PostDomain(
