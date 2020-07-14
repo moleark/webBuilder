@@ -18,7 +18,7 @@ export class VTeamAchievement extends VPage<CMe> {
         return <Page header={header} headerClassName={setting.pageHeaderCss} >
             <this.teamAchievementWeek />
             <this.teamAchievementMonth />
-            <div className="footer small px-3 text-primary bg-white">
+            <div className="footer small px-3 text-muted bg-white">
                 <div> 注：</div>
                 <div className=" px-3">
                     <li className="py-1">周报：显示近一周产生的业绩。</li>
@@ -43,7 +43,7 @@ export class VTeamAchievement extends VPage<CMe> {
                 <td className="w-3">{postHitSum}</td>
                 <td className="w-3 text-primary">
                     <div className="text-primary small">
-                        <span className="ml-2 iconfont icon-jiantou1"></span>
+                        <span className="ml-2 iconfont icon-more"></span>
                     </div>
                 </td>
             </tr >;
@@ -86,7 +86,7 @@ export class VTeamAchievement extends VPage<CMe> {
                 <td className="w-3">{postHitSum}</td>
                 <td className="w-3 text-primary">
                     <div className="text-primary small">
-                        <span className="ml-2 iconfont icon-jiantou1"></span>
+                        <span className="ml-2 iconfont icon-more"></span>
                     </div>
                 </td>
             </tr >;

@@ -58,31 +58,31 @@ export class VMain extends VPage<CPosts> {
 
         let column = <div className="d-flex justify-content-around py-4 small text-center"
             style={{ background: "linear-gradient(rgba(23,106,184,.5),rgba(23,162,184,.5),rgba(23,184,184,.5))" }}>
-            <div className="m-1 bg-default p-3 " onClick={showProductCatalog} >
-                <div className="py-3 my-1 ">
+            <div className="m-1 p-3 cursor-pointer" onClick={showProductCatalog} >
+                <div className="py-3 my-1">
                     <div className="mb-2 text-success"><i style={{ fontSize: "2rem" }} className="iconfont icon-chanpinmulu"></i></div>
                     <div className="mx-3 p-2 font-weight-bold">产品目录</div>
                 </div>
             </div>
-            <div className="m-1 p-3 " onClick={() => showSubject({ name: "帖文栏目", id: 0 })} >
+            <div className="m-1 p-3 cursor-pointer" onClick={() => showSubject({ name: "帖文栏目", id: 0 })} >
                 <div className="py-3 my-1 ">
                     <div className="mb-2 text-primary"><i style={{ fontSize: "2rem" }} className="iconfont icon-mokuai"></i></div>
                     <div className="mx-3 px-2 font-weight-bold">帖文栏目</div>
                 </div>
             </div>
-            <div className="m-1 p-3 " onClick={() => showDomain({ name: '研究领域', id: 0 })} >
+            <div className="m-1 p-3 cursor-pointer" onClick={() => showDomain({ name: '研究领域', id: 0 })} >
                 <div className="py-3 my-1 ">
                     <div className="mb-2 text-danger"><i style={{ fontSize: "2rem" }} className="iconfont icon-yanjiulingyu"></i></div>
                     <div className="mx-3 px-2 font-weight-bold">研究领域</div>
                 </div>
             </div>
-            <div className="m-1 p-3 " onClick={() => showModel()} >
+            <div className="m-1 p-3 cursor-pointer" onClick={() => showModel()} >
                 <div className="py-3 my-1 ">
                     <div className="mb-2 text-info"><i style={{ fontSize: "2rem" }} className="iconfont icon-mobanguanli"></i></div>
                     <div className="mx-3 px-2 font-weight-bold">一周范文</div>
                 </div>
             </div>
-            <div className="m-1 p-3 " onClick={() => InformationCente()} >
+            <div className="m-1 p-3 cursor-pointer" onClick={() => InformationCente()} >
                 <div className="py-3 my-1 ">
                     <div className="mb-2 text-warning"><i style={{ fontSize: "2rem" }} className="iconfont icon-zixun"></i></div>
                     <div className="mx-3 px-2 font-weight-bold">资讯中心</div>
@@ -128,7 +128,7 @@ export class VMain extends VPage<CPosts> {
             this.controller.cApp.renderUser(author.id);
 
         let showImport = emphasis === 1 ?
-            <FA className="text-danger ml-3 " name="star" /> : null
+            <FA className="text-danger ml-3 " name="star" /> : "";
         return (
             <div className="pl-2 pl-sm-3 pr-2 pr-sm-3 pt-2 pb-3 d-flex">
                 <div className="d-flex flex-fill cursor-pointer" onClick={() => showDetail(item.id)} >

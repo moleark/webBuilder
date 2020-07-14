@@ -29,7 +29,22 @@ export class VProductCatalog extends VPage<CPosts> {
         // let { name } = model;
         let { showProductCatalogDetil, searchProductCatalogChildrenKeys } = this.controller;
         return (
-            <div className="pl-2 pl-sm-3 pr-2 pr-sm-3 pt-2 pb-2 d-flex align-items-center ">
+            <div className="pl-2 pl-sm-3 pr-2 pr-sm-3 pt-2 pb-3 d-flex ">
+                <div className="d-flex  mx-2 w-50 small" >
+                    <span>{model.name}</span>
+                </div>
+                <div className="w-25 text-right w-7c" onClick={() => showProductCatalogDetil(model)} >
+                    <span className="p-2 small pl-4 text-primary cursor-pointer">
+                        贴  文
+                </span>
+                </div>
+                <div className="w-25  text-right w-7c" onClick={() => searchProductCatalogChildrenKeys(model)} >
+                    <span className="p-2 small pl-4 text-primary cursor-pointer">
+                        下一级
+                </span>
+                </div>
+            </div >
+            /*<div className="pl-2 pl-sm-3 pr-2 pr-sm-3 pt-2 pb-2 d-flex align-items-center ">
                 <div className="d-flex align-items-center flex-fill mx-2 " >
                     <span>{model.name}</span>
                 </div>
@@ -43,7 +58,7 @@ export class VProductCatalog extends VPage<CPosts> {
                         </button>
                     </div>
                 </div>
-            </div >
+            </div >*/
         );
     };
 }

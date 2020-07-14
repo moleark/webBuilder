@@ -46,7 +46,7 @@ export class VSlideShow extends VPage<CMedia> {
     private renderItem = (item: any, index: number) => {
         let { delSlideShow, showEditSlideShow } = this.controller;
 
-        let { caption, path, image, sort, types } = item; console.log(item)
+        let { caption, path, image, sort, types } = item;
         let imgStyle = {
             backgroundImage: `url(${path})`,
         }

@@ -30,11 +30,10 @@ export class CPage extends CUqBase {
 
     /* 网页查询*/
     searchPageKey = async (key: string, author: any) => {
-        this.searchwebPage = new QueryPager(
-            this.uqs.webBuilder.SearchWebPage,
-            15,
-            30
-        );
+        this.searchwebPage = new QueryPager(this.uqs.webBuilder.SearchWebPage, 15, 30);
+        this.searchwebPage.setEachPageItem((item: any, results: { [name: string]: any[] }) => {
+            this.cApp.useUser(item.author);
+        });
         this.searchwebPage.first({ key: key, author: author });
     };
 

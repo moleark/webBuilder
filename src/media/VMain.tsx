@@ -41,13 +41,13 @@ export class VMain extends VPage<CMedia> {
                 return this.renderItem(v, index)
             });
         }
-		return <Page header={this.t('picture')} headerClassName={consts.headerClass} right={right} 
-			onScrollBottom={onScrollBottom}>
+        return <Page header={this.t('picture')} headerClassName={consts.headerClass} right={right}
+            onScrollBottom={onScrollBottom}>
 
-            <LMR className="bg-white py-3 my-1" right={<i className=" px-2 iconfont icon-jiantou1"></i>} onClick={() => showCat(0)} >
+            <LMR className="bg-white py-3 my-1" right={<i className=" px-2 iconfont icon-more"></i>} onClick={() => showCat({ name: "图片分类", id: 0 })} >
                 <div className="mx-3 px-2 font-weight-bold">图片分类</div>
             </LMR>
-            <LMR className="bg-white py-3 my-1" right={<i className=" px-2 iconfont icon-jiantou1"></i>} onClick={showSlideShow} >
+            <LMR className="bg-white py-3 my-1" right={<i className=" px-2 iconfont icon-more"></i>} onClick={showSlideShow} >
                 <div className="mx-3 px-2 font-weight-bold">轮播图</div>
             </LMR>
             <div className="mx-3">
@@ -100,10 +100,10 @@ export class VMain extends VPage<CMedia> {
                 </div>
 
                 {divImg}
-                <div className="smallPath small my-2 text-muted cursor-pointer position-relative"
+                <div className="smallPath small my-2 text-muted cursor-pointer"
                     onClick={(e) => this.copyClick(e, path)}>
                     <span>{path}</span>
-                    <small className="position-absolute text-muted" style={{ right: 0, bottom: 0 }}>{this.t('copy')}</small>
+                    <span><small className=" text-muted float-right" >{this.t('copy')}</small></span>
                 </div>
             </div>;
 
@@ -117,10 +117,10 @@ export class VMain extends VPage<CMedia> {
             </div>
 
             {divImg}
-            <div className="smallPath small my-2 text-muted cursor-pointer position-relative"
+            <div className="smallPath small my-2 text-muted cursor-pointer "
                 onClick={(e) => this.copyClick(e, path)}>
                 <span>{path}</span>
-                <small className="position-absolute text-muted" style={{ right: 0, bottom: 0 }}>{this.t('copy')}</small>
+                <span><small className=" text-muted float-right" >{this.t('copy')}</small></span>
             </div>
         </div>;
 

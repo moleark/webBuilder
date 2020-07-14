@@ -6,6 +6,27 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "5861493",
+      "name": "箭头 右",
+      "font_class": "more",
+      "unicode": "e603",
+      "unicode_decimal": 58883
+    },
+    {
+      "icon_id": "14474593",
+      "name": "箭头 右",
+      "font_class": "jiantouyou",
+      "unicode": "e624",
+      "unicode_decimal": 58916
+    },
+    {
+      "icon_id": "10046991",
+      "name": "类目 品类 分类 类别-2-02 (3)",
+      "font_class": "leimupinleifenleileibie--",
+      "unicode": "e6f9",
+      "unicode_decimal": 59129
+    },
+    {
       "icon_id": "1546616",
       "name": "咨询",
       "font_class": "zixun",

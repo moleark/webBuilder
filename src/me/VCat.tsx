@@ -6,27 +6,30 @@ import { observable } from "mobx";
 import { CMe } from "./CMe";
 
 export class VCat extends VPage<CMe> {
-    @observable capton: any = "图片分类";
+    @observable capton: any;
+    @observable pageCat: any;
 
-    async open() {
+    async open(param: any) {
+        this.pageCat = param.pageCat;
+        this.capton = param.name;
         this.openPage(this.page);
     }
 
     private page = observer(() => {
-        let { pageCat, showAddCat } = this.controller;
+        let { showAddCat } = this.controller;
         let right = <div onClick={showAddCat}>
             <span className="mx-sm-2 iconfont icon-jiahao1 cursor-pointer" style={{ fontSize: "1.7rem", color: "white" }}></span>
         </div>;
-		return <Page header={this.capton} headerClassName={consts.headerClass} 
-			onScrollBottom={this.onScrollBottom} right={right}>
-            <List before={""} items={pageCat} item={{ render: this.renderItem }} />
+        return <Page header={this.capton} headerClassName={consts.headerClass}
+            onScrollBottom={this.onScrollBottom} right={right}>
+            <List before={""} items={this.pageCat} item={{ render: this.renderItem }} />
         </Page>;
     })
 
-    nextCart = async (item: any) => {
-        await this.controller.searchCat(item.id);
-        this.capton = item.name;
-    }
+    // nextCart = async (item: any) => {
+    //     await this.controller.searchCat(item);
+    //     // this.capton = item.name;
+    // }
 
     private delCat = async (model: any) => {
         let { saveCat } = this.controller;
@@ -39,26 +42,48 @@ export class VCat extends VPage<CMe> {
         await this.controller.pageMedia.more();
     }
     private renderItem = (item: any, index: number) => {
-
         return (
-            <div className="pl-2 pl-sm-3 pr-2 pr-sm-3 pt-2 pb-3 d-flex">
-                <div className="d-flex flex-fill mx-2"  >
+            <div className="pl-2 pl-sm-3 pr-2 pr-sm-3 py-3 d-flex justify-content-between">
+                <div className="mx-2 small" >
                     <span>{item.name}</span>
                 </div>
                 <div className="d-flex">
-                    <div className="small d-flex cursor-pointer text-primary text-right w-7c ">
-                        <button className="btn btn-outline-info mx-2 px-3" onClick={() => this.delCat(item)}>
-                            删除
-                        </button>
-                        <button className="btn btn-outline-info mx-2 px-3" onClick={() => this.controller.showEditCat(item)}>
-                            编辑
-                        </button>
-                        <button className="btn btn-outline-info mx-2 px-3" onClick={() => this.nextCart(item)}>
+                    <div className="text-right w-7c" onClick={() => this.delCat(item)} >
+                        <span className="p-2 small pl-4 text-primary cursor-pointer">
+                            删 除
+                </span>
+                    </div>
+                    <div className="text-right w-7c" onClick={() => this.controller.showEditCat(item)} >
+                        <span className="p-2 small pl-4 text-primary cursor-pointer">
+                            编 辑
+                </span>
+                    </div>
+                    <div className="  text-right w-7c" onClick={() => this.controller.showCat(item)} >
+                        <span className="p-2 small pl-4 text-primary cursor-pointer">
                             下一级
-                        </button>
+                </span>
                     </div>
                 </div>
+
             </div >
+            /* <div className="pl-2 pl-sm-3 pr-2 pr-sm-3 pt-2 pb-3 d-flex">
+                 <div className="d-flex flex-fill mx-2"  >
+                     <span>{item.name}</span>
+                 </div>
+                 <div className="d-flex">
+                     <div className="small d-flex cursor-pointer text-primary text-right w-7c ">
+                         <button className="btn btn-outline-info mx-2 px-3" onClick={() => this.delCat(item)}>
+                             删除
+                         </button>
+                         <button className="btn btn-outline-info mx-2 px-3" onClick={() => this.controller.showEditCat(item)}>
+                             编辑
+                         </button>
+                         <button className="btn btn-outline-info mx-2 px-3" onClick={() => this.controller.showCat(item)}>
+                             下一级
+                         </button>
+                     </div>
+                 </div>
+             </div >*/
         );
     };
 

@@ -89,7 +89,7 @@ export class VMe extends VPage<CMe> {
             <this.meInfo />
             {branch(this.t('team'), "icon-Group-", showTeamAchievement)}
             {branch(this.t('set'), "icon-shezhi3", onSet)}
-            {branch(this.t('图片分类'), "icon-shezhi3", showCat)}
+            {branch(this.t('图片分类'), "icon-Fill", () => showCat({ name: "图片分类", id: 0 }))}
         </div>
     })
 }
@@ -102,7 +102,7 @@ function branch(name: string, icon: string, action: any): JSX.Element {
             <span className="ml-1 mx-3">{name}</span>
         </div>
         <div className="text-primary small">
-            <span className="ml-2 iconfont icon-jiantou1"></span>
+            <span className="ml-2 iconfont icon-more"></span>
         </div>
     </div>
 }

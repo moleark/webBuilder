@@ -14,7 +14,7 @@ export class VPickImage extends VPage<CPosts> {
     }
 
     private page = observer(() => {
-        let { pageMedia, searchMadiaKey } = this.controller;
+        let { pageMedia, searchMadiaKey, onScrollBottom } = this.controller;
 
         let right = <SearchBox className="w-80 mt-2 mr-2"
             size='sm'
@@ -35,7 +35,7 @@ export class VPickImage extends VPage<CPosts> {
                 return this.renderItem(v, index)
             });
         }
-        return <Page header={this.t('selectpicture')} headerClassName={consts.headerClass} right={right}>
+        return <Page header={this.t('selectpicture')} headerClassName={consts.headerClass} right={right} onScrollBottom={onScrollBottom}>
             <div className="mx-3">
                 <div className="row row-cols-2 row-cols-sm-3 row-cols-md-4">
                     {divItems}

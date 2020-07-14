@@ -29,20 +29,31 @@ export class VMain extends VPage<CPage> {
         let { user, cApp, onPreviewPage } = this.controller;
         let { author, name, $update, titel } = item;
         let divUser = user.id === author.id ? <span className="text-warning">[自己]</span> : cApp.renderUser(author.id);
-
-        return <div className="d-flex p-1 cursor-pointer" onClick={() => onPreviewPage(item)}>
-            <div className="col-10 d-flex">
-                <div>
+        return (
+            <div className="p-1 cursor-pointer d-flex flex-column" onClick={() => onPreviewPage(item)}>
+                <div className="ml-3 small">
                     <b>{name}</b>
-                    <div className="small py-1 text-muted ">{titel}</div>
+                </div>
+                <div className=" d-flex">
+                    <div className="small py-1 col-7 ">{titel}</div>
+                    <div className="col-5 text-right my-1">
+                        <span className=" small mr-1"><EasyTime date={$update} /></span> <span className=" small text-truncate">{divUser}</span>
+                    </div>
                 </div>
             </div>
-            <div className="small col-2 text-muted text-right">
-                <div className=" small"><EasyTime date={$update} /></div>
-                <div className=" small pt-1 text-truncate">{divUser}</div>
-            </div>
-
-        </div>
+            /*<div className="d-flex p-1 cursor-pointer" onClick={() => onPreviewPage(item)}>
+                <div className="col-9 d-flex">
+                    <div>
+                        <b>{name}</b>
+                        <div className="small py-1">{titel}</div>
+                    </div>
+                </div>
+                <div className="small col-3 text-muted text-right">
+                    <div className=" small pt-1"><EasyTime date={$update} /></div>
+                    <div className=" small pt-2 text-truncate">{divUser}</div>
+                </div>
+            </div>*/
+        )
     });
     // onClick={() => this.controller.showDetail(item.id)}
 }

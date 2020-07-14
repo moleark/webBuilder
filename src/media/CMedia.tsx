@@ -111,9 +111,11 @@ export class CMedia extends CUqBase {
 
     //图片分类--SHOW
     showCat = async (param: any) => {
+        let { id, name } = param
         let pageCat = new QueryPager(this.uqs.webBuilder.SearchCat, 15, 30);
         pageCat.first({ parent: param });
-        this.openVPage(VCat, pageCat)
+        let pageCats = { pageCat, id, name }
+        this.openVPage(VCat, pageCats)
     }
 
     showCatImage = async (cat: any) => {

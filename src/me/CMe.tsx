@@ -149,9 +149,13 @@ export class CMe extends CUqBase {
         this.openVPage(VTeamAchievementDetail, type)
     }
 
-    showCat = async () => {
-        await this.searchCat("0");
-        this.openVPage(VCat, "图片分类")
+    showCat = async (param: any) => {
+        let { id, name } = param;
+        // await this.searchCat("0");
+        let pageCat = new QueryPager(this.uqs.webBuilder.SearchCat, 15, 30);
+        pageCat.first({ parent: param });
+        let pageCats = { pageCat, name, id };
+        this.openVPage(VCat, pageCats)
     }
 
     searchCat = async (parent: string) => {
