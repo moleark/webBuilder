@@ -35,8 +35,7 @@ export class VSubject extends VPage<CPosts> {
                         {counts && <span className="p-2 small pl-4 text-primary cursor-pointer">{counts}</span>}
                     </div>
                     <div className="w-7c ml-3" onClick={() => showSubject(model)} >
-                        {child > 0 && < span className="p-2 small pl-4 text-primary cursor-pointer">
-                            下一级
+                        {child > 0 && < span className="p-2 small pl-4 text-primary cursor-pointer iconfont icon-jiantouyou" style={{ fontSize: "12px" }}>
                         </span>}
                     </div>
                 </div>

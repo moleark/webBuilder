@@ -35,10 +35,9 @@ export class VDomain extends VPage<CPosts> {
                         贴  文
                 </span>
                 </div>
-                <div className="w-25  text-right w-7c" onClick={() => showDomain(model)} >
-                    <span className="p-2 small pl-4 text-primary cursor-pointer">
-                        下一级
-                </span>
+                <div className="w-25 text-right w-7c" onClick={() => showDomain(model)} >
+                    <span className="p-2 small pl-4 text-primary cursor-pointer iconfont icon-jiantouyou" style={{ fontSize: "12px" }}>
+                    </span>
                 </div>
             </div >
             /* <div className="pl-2 pl-sm-3 pr-2 pr-sm-3 pt-2 pb-3 d-flex">
