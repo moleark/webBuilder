@@ -18,13 +18,7 @@ export class VTeamAchievement extends VPage<CMe> {
         return <Page header={header} headerClassName={setting.pageHeaderCss} >
             <this.teamAchievementWeek />
             <this.teamAchievementMonth />
-<<<<<<< HEAD
             <div className="footer small px-3 text-muted bg-white">
-=======
-            <this.teamChannelMonth />
-
-            <div className="footer small px-3 text-primary bg-white">
->>>>>>> b24ab89211dd378c7c665ca5092b39249998fa8c
                 <div> 注：</div>
                 <div className=" px-3">
                     <li className="py-1">周报：显示近一周产生的业绩。</li>
