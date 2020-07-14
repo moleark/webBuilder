@@ -24,7 +24,7 @@ export class VDomain extends VPage<CPosts> {
 
     private renderItem = (model: any, index: number) => {
         let { showDomainPost, showDomain } = this.controller;
-
+        console.log(model)
         return (
             <div className="pl-2 pl-sm-3 pr-2 pr-sm-3 py-3 d-flex ">
                 <div className="mx-2 w-50 small" >
