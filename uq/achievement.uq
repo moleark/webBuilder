@@ -4,9 +4,14 @@ BOOK Achievement(
     key date  date,
     key manage ID [$user],
     key user ID [$user],
-    postPubSum int,     --post发布次数
+    postPubSum  int,    --post发布次数
     postTranSum int,    --post转发次数
-    postHitSum int      --post访问次数
+    postHitSum  int,    --post访问次数
+    hitWeb      int,    --post访问次数--网站
+    hitAgent    int,    --post访问次数--轻代理
+    hitAssist   int,    --post访问次数--销售助手
+    hitEmail    int,    --post访问次数--邮件
+    hitOther    int     --post访问次数--其他
 );
 
 
@@ -63,7 +68,12 @@ returns ret  (
     montha  char(20),
     postPubSum int,     --post发布次数
     postTranSum int,    --post转发次数
-    postHitSum int      --post访问次数
+    postHitSum  int,    --post访问次数
+    hitWeb      int,    --post访问次数--网站
+    hitAgent    int,    --post访问次数--轻代理
+    hitAssist   int,    --post访问次数--销售助手
+    hitEmail    int,    --post访问次数--邮件
+    hitOther    int     --post访问次数--其他
 ) {
 
     var startdate DATE, enddate DATE;
@@ -73,17 +83,20 @@ returns ret  (
         set startdate = DATE( dateadd(week, -1, NOW() ) );
         set enddate = DATE( NOW() );
         into ret select max(year(a.date)) as yeara , 'week' as montha , sum(a.postPubSum) as postPubSum, sum(a.postTranSum) as postTranSum, sum(a.postHitSum) as postHitSum
+                        , sum(a.hitWeb) as hitWeb, sum(a.hitAgent) as hitAgent, sum(a.hitAssist) as hitAssist, sum( a.hitEmail ) as hitEmail,  sum(a.hitOther) as hitOther
         from    Achievement as a
         where   a.manage = _manage
                 and a.date>=startdate and a.date < enddate;
 
     } else if(_type = 'month'){
         into ret select yeara , montha, sum(a.postPubSum) as postPubSum, sum(a.postTranSum) as postTranSum, sum(a.postHitSum) as postHitSum
+                        , sum(a.hitWeb) as hitWeb, sum(a.hitAgent) as hitAgent, sum(a.hitAssist) as hitAssist, sum( a.hitEmail ) as hitEmail,  sum(a.hitOther) as hitOther
         from    Achievement as a
         where    a.manage = _manage and year(a.date) = _year
         group by year(a.date) as yeara, month(a.date) as montha;
 
         into ret select yeara , 'all' as montha , sum(a.postPubSum) as postPubSum, sum(a.postTranSum) as postTranSum, sum(a.postHitSum) as postHitSum
+                        , sum(a.hitWeb) as hitWeb, sum(a.hitAgent) as hitAgent, sum(a.hitAssist) as hitAssist, sum( a.hitEmail ) as hitEmail,  sum(a.hitOther) as hitOther
         from   Achievement as a
         where  a.manage = _manage and year(a.date) = _year
         group by year(a.date) as yeara;
@@ -102,7 +115,12 @@ PAGE (
     author ID [$user],
     postPubSum int,     --post发布次数
     postTranSum int,    --post转发次数
-    postHitSum int      --post访问次数
+    postHitSum  int,    --post访问次数
+    hitWeb      int,    --post访问次数--网站
+    hitAgent    int,    --post访问次数--轻代理
+    hitAssist   int,    --post访问次数--销售助手
+    hitEmail    int,    --post访问次数--邮件
+    hitOther    int     --post访问次数--其他
 ) {
     if(_type='week'){
         
@@ -111,6 +129,7 @@ PAGE (
         set enddate = DATE( NOW() );
 
         PAGE select  0 as id, max(year(a.date)) as yeara , 'week' as montha, author, sum(a.postPubSum) as postPubSum, sum(a.postTranSum) as postTranSum, sum(a.postHitSum) as postHitSum
+                    , sum(a.hitWeb) as hitWeb, sum(a.hitAgent) as hitAgent, sum(a.hitAssist) as hitAssist, sum( a.hitEmail ) as hitEmail,  sum(a.hitOther) as hitOther
         from    Achievement as a
         where   a.manage = _manage
                 and a.date>=startdate and a.date < enddate
@@ -121,6 +140,7 @@ PAGE (
     }else if(_type='all'){
 
         PAGE select  0 as id, yeara, 'all' as montha, author, sum(a.postPubSum) as postPubSum, sum(a.postTranSum) as postTranSum, sum(a.postHitSum) as postHitSum
+                    , sum(a.hitWeb) as hitWeb, sum(a.hitAgent) as hitAgent, sum(a.hitAssist) as hitAssist, sum( a.hitEmail ) as hitEmail,  sum(a.hitOther) as hitOther
         from    Achievement as a
         where    a.manage = _manage and year(a.date) = _year and a.user <> 0
         group by year(a.date) as yeara, a.user  as author
@@ -128,6 +148,7 @@ PAGE (
 
     }else {
         PAGE select  0 as id, yeara, montha, author, sum(a.postPubSum) as postPubSum, sum(a.postTranSum) as postTranSum, sum(a.postHitSum) as postHitSum
+                    , sum(a.hitWeb) as hitWeb, sum(a.hitAgent) as hitAgent, sum(a.hitAssist) as hitAssist, sum( a.hitEmail ) as hitEmail,  sum(a.hitOther) as hitOther
         from    Achievement as a
         where    a.manage = _manage and year(a.date) = _year and month(a.date) = _type and a.user <> 0
         group by year(a.date) as yeara, month(a.date) as montha, a.user as author

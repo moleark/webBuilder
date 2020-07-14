@@ -93,3 +93,11 @@
 }
 
 .author {color: #99f}
+
+.header-login{
+	padding: 5px 20px;
+	background: #9a9a9a;
+	border-radius: 50px;
+	color: #fff!important;
+	margin-top: 3px;
+}

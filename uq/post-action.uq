@@ -140,8 +140,17 @@ Action AddPostSubject(
     _subject ID Subject
 ) {
     BOOK PostSubject at( _post ,_subject);
-};
+    BOOK SubjectPostCount at(_subject) set counts +=1 ;
 
+    var parent ID Subject;
+    set  parent = a.parent 
+    from    Subject as a 
+    where   a.id  = _subject;
+    if(parent){
+         BOOK SubjectPostCount at(parent) set counts +=1 ;
+    }
+
+};
 
 Action AddPostDomain(
     _post ID POST,
@@ -150,7 +159,6 @@ Action AddPostDomain(
     BOOK PostDomain at( _post ,_domain);
 };
 
-
 Action AddInformationPost(
     _post ID POST,
     _sort int 
@@ -158,9 +166,6 @@ Action AddInformationPost(
     delete from InformationPost where post = _post;
     BOOK InformationPost at( _post ,_sort);
 };
-
-
-
 
 Action test(a1 int, a2 int) {
     book contenttag at(a1, a2);

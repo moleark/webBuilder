@@ -18,7 +18,13 @@ export class VTeamAchievement extends VPage<CMe> {
         return <Page header={header} headerClassName={setting.pageHeaderCss} >
             <this.teamAchievementWeek />
             <this.teamAchievementMonth />
+<<<<<<< HEAD
             <div className="footer small px-3 text-muted bg-white">
+=======
+            <this.teamChannelMonth />
+
+            <div className="footer small px-3 text-primary bg-white">
+>>>>>>> b24ab89211dd378c7c665ca5092b39249998fa8c
                 <div> 注：</div>
                 <div className=" px-3">
                     <li className="py-1">周报：显示近一周产生的业绩。</li>
@@ -104,6 +110,51 @@ export class VTeamAchievement extends VPage<CMe> {
                         <th>转发量</th>
                         <th>浏览量</th>
                         <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {content}
+                </tbody>
+            </table>
+        </div>
+
+    });
+
+
+    private teamChannelMonth = observer(() => {
+        let { teamAchievementMonth, showTeamAchievementDetail } = this.controller
+        let content = teamAchievementMonth.map((v, index) => {
+            let { yeara, montha, hitWeb, hitAgent, hitAssist, hitEmail, hitOther } = v;
+            let typeshow: any;
+            if (montha == "all") {
+                typeshow = "合计"
+            } else {
+                typeshow = montha + "月";
+            }
+            return <tr className="col dec px-3 py-2 bg-white cursor-pointer" onClick={() => showTeamAchievementDetail(0, yeara, montha)}>
+                <td className="w-3"> {typeshow}</td >
+                <td className="w-3">{hitWeb}</td>
+                <td className="w-3">{hitAgent}</td>
+                <td className="w-3">{hitAssist}</td>
+                <td className="w-3">{hitEmail}</td>
+                <td className="w-3">{hitOther}</td>
+
+            </tr >;
+        });
+
+        return <div>
+            <div className="bg-white px-3 py-2 text-primary strong">
+                <strong>渠道</strong>
+            </div>
+            <table className="table text-center small">
+                <thead className="text-primary">
+                    <tr className="bg-white">
+                        <th></th>
+                        <th>网站</th>
+                        <th>代理</th>
+                        <th>助手</th>
+                        <th>邮件</th>
+                        <th>其他</th>
                     </tr>
                 </thead>
                 <tbody>
