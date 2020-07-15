@@ -59,9 +59,8 @@ export class VCat extends VPage<CMe> {
                 </span>
                     </div>
                     <div className="  text-right w-7c" onClick={() => this.controller.showCat(item)} >
-                        <span className="p-2 small pl-4 text-primary cursor-pointer">
-                            下一级
-                </span>
+                        <span className="p-2 small pl-4 text-primary cursor-pointer iconfont icon-more" style={{ fontSize: "12px" }}>
+                        </span>
                     </div>
                 </div>
 
