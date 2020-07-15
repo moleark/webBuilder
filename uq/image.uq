@@ -4,7 +4,7 @@ TUID IMAGE (
     main path char(100),
     main author ID [$user],
     main isValid tinyint default 1,
-    stamp (create),
+    stamp (create,update),
 );
 
 TUID IMGCat (

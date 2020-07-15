@@ -139,14 +139,13 @@ export class CMe extends CUqBase {
         this.openVPage(VTeamAchievement);
     }
 
-    showTeamAchievementDetail = async (manage: any, year: any, type: any) => {
-        // this.teamAchievementDetail = await this.uqs.webBuilder.SearchAchievementOfTeamDetail.table({ _manage: 0, _year: year, _type: type });
+    showTeamAchievementDetail = async (title: any, manage: any, year: any, month: any, day: any, type: any) => {
         this.teamAchievementDetail = new QueryPager(this.uqs.webBuilder.SearchAchievementOfTeamDetail, 15, 30);
         this.teamAchievementDetail.setEachPageItem((item: any, results: { [name: string]: any[] }) => {
             this.cApp.useUser(item.author);
         });
-        this.teamAchievementDetail.first({ _manage: 0, _year: year, _type: type });
-        this.openVPage(VTeamAchievementDetail, type)
+        this.teamAchievementDetail.first({ _manage: manage, _year: year, _month: month, _day: day, _type: type });
+        this.openVPage(VTeamAchievementDetail, title)
     }
 
     showCat = async (param: any) => {

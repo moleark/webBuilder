@@ -18,6 +18,7 @@ export class VTeamAchievement extends VPage<CMe> {
         return <Page header={header} headerClassName={setting.pageHeaderCss} >
             <this.teamAchievementWeek />
             <this.teamAchievementMonth />
+            <this.teamChannelMonth />
             <div className="footer small px-3 text-muted bg-white">
                 <div> 注：</div>
                 <div className=" px-3">
@@ -35,12 +36,21 @@ export class VTeamAchievement extends VPage<CMe> {
     private teamAchievementWeek = observer(() => {
         let { teamAchievementWeek, showTeamAchievementDetail } = this.controller
         let content = teamAchievementWeek.map((v, index) => {
-            let { yeara, montha, postPubSum, postTranSum, postHitSum } = v;
-
-            return <tr className="col dec px-3 py-2 bg-white cursor-pointer" onClick={() => showTeamAchievementDetail(0, yeara, montha)}>
+            let { yeara, montha, daya, postPubSum, postTranSum, postHitSum, percent } = v;
+            let typeshow: any, searchType: any;
+            if (daya == "all") {
+                typeshow = "合计"
+                searchType = "week";
+            } else {
+                typeshow = daya;
+                searchType = "day";
+            }
+            return <tr className="col dec px-3 py-2 bg-white cursor-pointer" onClick={() => showTeamAchievementDetail(typeshow, 0, yeara, montha, daya, searchType)}>
+                <td className="w-3">{typeshow}</td>
                 <td className="w-3">{postPubSum}</td>
                 <td className="w-3">{postTranSum}</td>
                 <td className="w-3">{postHitSum}</td>
+                <td className="w-3">{percent}</td>
                 <td className="w-3 text-primary">
                     <div className="text-primary small">
                         <span className="ml-2 iconfont icon-more"></span>
@@ -56,9 +66,11 @@ export class VTeamAchievement extends VPage<CMe> {
             <table className="table text-center small">
                 <thead className="text-primary">
                     <tr className="bg-white">
+                        <th></th>
                         <th>发布量</th>
                         <th>转发量</th>
                         <th>浏览量</th>
+                        <th>转换率</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -72,18 +84,21 @@ export class VTeamAchievement extends VPage<CMe> {
     private teamAchievementMonth = observer(() => {
         let { teamAchievementMonth, showTeamAchievementDetail } = this.controller
         let content = teamAchievementMonth.map((v, index) => {
-            let { yeara, montha, postPubSum, postTranSum, postHitSum } = v;
-            let typeshow: any;
+            let { yeara, montha, postPubSum, postTranSum, postHitSum, percent } = v;
+            let typeshow: any, searchType: any = "month";
             if (montha == "all") {
-                typeshow = "合计"
+                typeshow = "合计";
+                searchType = "year";
             } else {
                 typeshow = montha + "月";
+                searchType = "month";
             }
-            return <tr className="col dec px-3 py-2 bg-white cursor-pointer" onClick={() => showTeamAchievementDetail(0, yeara, montha)}>
+            return <tr className="col dec px-3 py-2 bg-white cursor-pointer" onClick={() => showTeamAchievementDetail(typeshow, 0, yeara, montha, 'all', searchType)}>
                 <td className="w-3"> {typeshow}</td >
                 <td className="w-3">{postPubSum}</td>
                 <td className="w-3">{postTranSum}</td>
                 <td className="w-3">{postHitSum}</td>
+                <td className="w-3">{percent}</td>
                 <td className="w-3 text-primary">
                     <div className="text-primary small">
                         <span className="ml-2 iconfont icon-more"></span>
@@ -103,6 +118,7 @@ export class VTeamAchievement extends VPage<CMe> {
                         <th>发布量</th>
                         <th>转发量</th>
                         <th>浏览量</th>
+                        <th>转换率</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -116,16 +132,16 @@ export class VTeamAchievement extends VPage<CMe> {
 
 
     private teamChannelMonth = observer(() => {
-        let { teamAchievementMonth, showTeamAchievementDetail } = this.controller
+        let { teamAchievementMonth } = this.controller
         let content = teamAchievementMonth.map((v, index) => {
-            let { yeara, montha, hitWeb, hitAgent, hitAssist, hitEmail, hitOther } = v;
+            let { montha, hitWeb, hitAgent, hitAssist, hitEmail, hitOther } = v;
             let typeshow: any;
             if (montha == "all") {
                 typeshow = "合计"
             } else {
                 typeshow = montha + "月";
             }
-            return <tr className="col dec px-3 py-2 bg-white cursor-pointer" onClick={() => showTeamAchievementDetail(0, yeara, montha)}>
+            return <tr className="col dec px-3 py-2 bg-white cursor-pointer" >
                 <td className="w-3"> {typeshow}</td >
                 <td className="w-3">{hitWeb}</td>
                 <td className="w-3">{hitAgent}</td>

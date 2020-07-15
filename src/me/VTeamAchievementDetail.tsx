@@ -14,15 +14,8 @@ export class VTeamAchievementDetail extends VPage<CMe> {
     }
 
     private page = observer(() => {
-        let header: any;
-        if (this.type == "week") {
-            header = <div>周 业绩排名</div>
-        } else if (this.type == "all") {
-            header = <div>合计 业绩排名</div>
-        } else {
-            header = <div>{this.type}月  业绩排名</div>
-        }
 
+        let header: any = <div>{this.type}  业绩排名</div>
         let { teamAchievementDetail } = this.controller;
         let { items, loading } = teamAchievementDetail;
         let divItems: any;
@@ -48,6 +41,7 @@ export class VTeamAchievementDetail extends VPage<CMe> {
                             <th>发布量</th>
                             <th>转发量</th>
                             <th>浏览量</th>
+                            <th>转换率</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -59,13 +53,14 @@ export class VTeamAchievementDetail extends VPage<CMe> {
     })
 
     private renderItem = (item: any, index: number) => {
-        let { author, postPubSum, postTranSum, postHitSum } = item;
+        let { author, postPubSum, postTranSum, postHitSum, percent } = item;
         let authorname = this.controller.cApp.renderUser(author.id);
         return <tr className="col dec px-3 py-2 bg-white" >
             <td className="w-3">{authorname}</td>
             <td className="w-3">{postPubSum}</td>
             <td className="w-3">{postTranSum}</td>
             <td className="w-3">{postHitSum}</td>
+            <td className="w-3">{percent}</td>
         </tr >;
     }
 

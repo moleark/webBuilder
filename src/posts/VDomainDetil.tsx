@@ -69,7 +69,7 @@ export class VDomainDetil extends VPage<CPosts> {
             <FA className="text-danger ml-3 " name="star" /> : null
         return (
             <div className="pl-2 pl-sm-3 pr-2 pr-sm-3 pt-2 pb-3 d-flex">
-                <div className="d-flex flex-fill cursor-pointer" onClick={() => showDetail(item.id)} >
+                <div className="d-flex flex-fill cursor-pointer" onClick={() => showDetail(item.post.id)} >
                     <div className="mr-1 w-5c w-min-5c h-5c h-min-5c">
                         {tv(
                             image,
