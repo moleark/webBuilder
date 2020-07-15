@@ -31,8 +31,8 @@ export class VSubject extends VPage<CPosts> {
                     <span>{name}</span>
                 </div>
                 <div className="d-flex">
-                    <div className="w-7c mr-3" onClick={() => showSubjectPost(model)} >
-                        {counts && <span className="p-2 small pl-4 text-primary cursor-pointer">{counts}</span>}
+                    <div className="w-7c mr-3  text-primary text-center cursor-pointer" onClick={() => showSubjectPost(model)} >
+                        {counts && <span className="d-block small p-2" style={{ width: '3rem', background: '#E6E6FA', borderRadius: "50%" }}>{counts}</span>}
                     </div>
                     <div className="w-7c ml-3" onClick={() => showSubject(model)} >
                         {child > 0 && < span className="p-2 small pl-4 text-primary cursor-pointer iconfont icon-jiantouyou" style={{ fontSize: "12px" }}>
