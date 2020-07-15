@@ -149,8 +149,24 @@ Action AddPostSubject(
     if(parent){
          BOOK SubjectPostCount at(parent) set counts +=1 ;
     }
-
 };
+
+Action DelPostSubject(
+    _post ID POST,
+    _subject ID Subject
+) {
+    delete from PostSubject where post = _post and subject = _subject;
+    BOOK SubjectPostCount at(_subject) set counts -=1 ;
+
+    var parent ID Subject;
+    set  parent = a.parent 
+    from    Subject as a 
+    where   a.id  = _subject;
+    if(parent){
+         BOOK SubjectPostCount at(parent) set counts -=1 ;
+    }
+};
+
 
 Action AddPostDomain(
     _post ID POST,

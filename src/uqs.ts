@@ -55,6 +55,7 @@ export interface WebBuilder {
     SearchProductCategoryPost: Query;
     SearchSubject: Query;
     AddPostSubject: Action;
+    DelPostSubject: Action;
     SearchSubjectPost: Query;
     SearchPostSubject: Query;
     SearchPostCatalog: Query;

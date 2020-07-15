@@ -336,7 +336,8 @@ export class CPosts extends CUqBase {
     }
 
     delPostSubject = async (subject: any) => {
-        await this.uqs.webBuilder.PostSubject.del({ post: this.current.id, arr1: [{ subject: subject }] });
+        //await this.uqs.webBuilder.PostSubject.del({ post: this.current.id, arr1: [{ subject: subject }] });
+        await this.uqs.webBuilder.DelPostSubject.submit({ _post: this.current.id, _subject: subject })
         this.pagePostSubject = await this.uqs.webBuilder.SearchPostSubject.table({ _post: this.current.id })
     }
 

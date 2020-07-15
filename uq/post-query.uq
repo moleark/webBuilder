@@ -38,11 +38,11 @@ PAGE (
     where   p.id < $pageStart and p.isValid = 1 
             and ( p.template like key2 or p.discription like key2 or p.caption like key2 or key is null )
             and ( p.author = author or author = 0 )
-            and (
+           and (
                     ( types = 1 and not exists ( select 1 from PostClassroomType as pc where pc.post = p.id ) ) or
                     ( types = 2 and exists ( select 1 from PostClassroomType as pc where pc.post = p.id ) ) or
                     ( types = 3 )
-                )
+                ) 
     order by p.id desc
     limit $pageSize;
 };
@@ -136,6 +136,7 @@ QUERY SearchProductCategoryPost(
 )
 PAGE (
     id bigint desc,
+    post ID POST,
     caption char(100),
     discription char(200),
     image ID Image,
@@ -154,7 +155,7 @@ PAGE (
     openweb smallint
 ) {
 
-    PAGE select p.id, p.caption, p.discription, p.image, p.author
+    PAGE select unix_timestamp(ph.update) as id, p.id as post, p.caption, p.discription, p.image, p.author
             , p.template, p.[$update], p.[$create], ph.update as publishdate
             ,p.isValid, p.emphasis, c.hits, c.sumHits
             , ifnull(ph.web, 0) as web
@@ -174,7 +175,7 @@ PAGE (
                 or (publish = 4 and ph.openweb = 1  )
             )
             and ( p.author = author or author = 0 )
-    order by p.id desc
+    order by unix_timestamp(ph.update) desc
     limit $pageSize;
 };
 
@@ -196,10 +197,11 @@ PAGE (
     where  p.id < $pageStart and p.isValid = 1 
            and p.parent = _parent
     order by p.id desc
+    
     limit $pageSize;
 };
 
-/** 搜索栏目 **/
+/** 搜索栏目贴文 **/
 QUERY SearchSubjectPost(    
     author ID [$user],
     subject ID Subject,
@@ -207,6 +209,7 @@ QUERY SearchSubjectPost(
 )
 PAGE (
     id bigint desc,
+    post ID POST,
     caption char(100),
     discription char(200),
     image ID Image,
@@ -225,7 +228,7 @@ PAGE (
     openweb smallint
 ) {
 
-    PAGE select p.id, p.caption, p.discription, p.image, p.author
+    PAGE select unix_timestamp(ph.update) as id, p.id as post, p.caption, p.discription, p.image, p.author
             , p.template, p.[$update], p.[$create], ph.update as publishdate
             ,p.isValid, p.emphasis, c.hits, c.sumHits
             , ifnull(ph.web, 0) as web
@@ -245,7 +248,7 @@ PAGE (
                 or (publish = 4 and ph.openweb = 1  )
             )
             and ( p.author = author or author = 0 )
-    order by p.id desc
+    order by unix_timestamp(ph.update)  desc
     limit $pageSize;
 };
 
@@ -317,6 +320,7 @@ QUERY SearchDomainPost(
 )
 PAGE (
     id bigint desc,
+    post ID POST,
     caption char(100),
     discription char(200),
     image ID Image,
@@ -338,7 +342,7 @@ PAGE (
     var key2 char(102);
     set key2 = concat('%', key, '%');
 
-    PAGE select p.id, p.caption, p.discription, p.image, p.author
+    PAGE select  unix_timestamp(ph.update)  as id , p.id as post, p.caption, p.discription, p.image, p.author
             , p.template, p.[$update], p.[$create], ph.update as publishdate
             , p.isValid, p.emphasis, c.hits, c.sumHits
             , ifnull(ph.web, 0) as web
@@ -363,7 +367,7 @@ PAGE (
                 or (publish = 4 and ph.openweb = 1  )
             )
             and ( p.author = author or author = 0 )
-    order by p.id desc
+    order by  unix_timestamp(ph.update)  desc
     limit $pageSize;
 };
 
