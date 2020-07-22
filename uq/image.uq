@@ -139,7 +139,7 @@ returns ret (
     sort tinyint,
     types tinyint
 ) {
-    into ret select p.id as image, p.caption, p.path, p.author, s.description, s.src, s.sort, s.types
+    into ret select p.id as image, s.caption, p.path, p.author, s.description, s.src, s.sort, s.types
     from    SlideShow as s 
             join IMAGE as p on s.image = p.id
     where   p.isValid = 1 and s.types = 1
