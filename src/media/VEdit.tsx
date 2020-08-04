@@ -5,6 +5,7 @@ import { CMedia } from "./CMedia";
 import { observer } from "mobx-react";
 import { VPage, UiSchema, Schema, UiInputItem, Page, Form, Context, ImageUploader, nav, AudioUploader } from "tonva";
 import { observable } from "mobx";
+import { FileUploader } from "upLoader/upLoader";
 /* eslint-disable */
 export class VEdit extends VPage<CMedia> {
     @observable private media: any;
@@ -60,6 +61,11 @@ export class VEdit extends VPage<CMedia> {
         this.openPageElement(<AudioUploader onSaved={this.onSaved} />);
     }
 
+    private onUploadFilePDF = () => {
+        this.media = this.form.data;
+        //this.openPageElement(<ImageUploader onSaved={this.onSaved} />);
+        this.openPageElement(<FileUploader onSaved={this.onSaved} />);
+    }
     private page = observer(() => {
         let image: any;
         let saveButton: any;
@@ -75,6 +81,7 @@ export class VEdit extends VPage<CMedia> {
             image = <div className="text-content text-center">
                 <button className="btn btn-primary mr-3" onClick={this.onUpload}>{this.t('uploadpicture')}</button>
                 <button className="btn btn-outline-primary" onClick={this.onUploadFile}>{this.t('uploadaudio')}</button>
+                <button className="btn btn-outline-primary" onClick={this.onUploadFilePDF}>{this.t('PDF')}</button>
             </div>;
         }
 
