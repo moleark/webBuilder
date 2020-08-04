@@ -24,21 +24,32 @@ export class VDomain extends VPage<CPosts> {
 
     private renderItem = (model: any, index: number) => {
         let { showDomainPost, showDomain, renderDomainPostCount } = this.controller;
-        let { name, id } = model;
-        let counts = renderDomainPostCount(id);
+        let { name, id, counts } = model;
+        let postcount = renderDomainPostCount(id);
+
+        let next: any;
+        if (counts > 0) {
+            next = <div className="w-7c ml-3" onClick={() => showDomain(model)} >
+                <span className="p-2 small pl-4 text-primary cursor-pointer iconfont icon-jiantouyou" style={{ fontSize: "12px" }}>
+                </span>
+            </div>
+        } else {
+            next = < div className="w-7c ml-3" >
+                <span className="p-2 small pl-4 text-primary cursor-pointer" >
+                    &nbsp;&nbsp;&nbsp;
+                </span>
+            </div>
+        }
+
         return <div className="pl-2 pl-sm-3 pr-2 pr-sm-3 py-3 d-flex justify-content-between">
             <div className="mx-2  small" >
                 <span>{name}</span>
             </div>
             <div className="d-flex">
                 <div className="w-7c mr-3  text-primary text-center cursor-pointer" onClick={() => showDomainPost(model, "")} >
-                    {counts}
+                    {postcount}
                 </div>
-
-                <div className="w-7c ml-3" onClick={() => showDomain(model)} >
-                    <span className="p-2 small pl-4 text-primary cursor-pointer iconfont icon-jiantouyou" style={{ fontSize: "12px" }}>
-                    </span>
-                </div>
+                {next}
             </div>
         </div >
     };

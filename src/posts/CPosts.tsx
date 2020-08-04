@@ -304,11 +304,10 @@ export class CPosts extends CUqBase {
         this.openVPage(VProductCatalog, param);
     }
 
-    searchProductCatalogChildrenKeys = async (key: any) => {
-        let { productCategory, name } = key
+    searchProductCatalogChildrenKeys = async (param: any) => {
+        let { productCategory, name } = param
         let results = await this.uqs.product.GetChildrenCategory.query({ parent: productCategory.id, salesRegion: setting.SALESREGION_CN, language: setting.CHINESE });
-        let param = { data: results.first, name: name };
-        this.openVPage(VProductCatalog, param)
+        this.openVPage(VProductCatalog, { data: results.first, childdata: results.secend, name: name })
     };
 
     showProductCatalogDetil = async (param: any) => {
