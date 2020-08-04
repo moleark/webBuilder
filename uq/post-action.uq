@@ -140,15 +140,6 @@ Action AddPostSubject(
     _subject ID Subject
 ) {
     BOOK PostSubject at( _post ,_subject);
-    BOOK SubjectPostCount at(_subject) set counts +=1 ;
-
-    var parent ID Subject;
-    set  parent = a.parent 
-    from    Subject as a 
-    where   a.id  = _subject;
-    if(parent){
-         BOOK SubjectPostCount at(parent) set counts +=1 ;
-    }
 };
 
 Action DelPostSubject(
@@ -156,15 +147,6 @@ Action DelPostSubject(
     _subject ID Subject
 ) {
     delete from PostSubject where post = _post and subject = _subject;
-    BOOK SubjectPostCount at(_subject) set counts -=1 ;
-
-    var parent ID Subject;
-    set  parent = a.parent 
-    from    Subject as a 
-    where   a.id  = _subject;
-    if(parent){
-         BOOK SubjectPostCount at(parent) set counts -=1 ;
-    }
 };
 
 

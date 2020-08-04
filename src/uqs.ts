@@ -87,6 +87,8 @@ export interface WebBuilder {
     SearchInformationPost: Query;
     AddInformationPost: Action;
     hit: Action;
+    SearchProductCategoryPostCount: Query;
+    SearchDomainPostCount: Query;
 }
 
 export interface UQs {

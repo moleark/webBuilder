@@ -26,38 +26,25 @@ export class VProductCatalog extends VPage<CPosts> {
 
 
     private renderItem = (model: any, index: number) => {
-        // let { name } = model;
-        let { showProductCatalogDetil, searchProductCatalogChildrenKeys } = this.controller;
+        let { showProductCatalogDetil, searchProductCatalogChildrenKeys, renderProductCatalogPostCount } = this.controller;
+        let { name, productCategory } = model;
+        let counts = renderProductCatalogPostCount(productCategory.id);
         return (
-            <div className="pl-2 pl-sm-3 pr-2 pr-sm-3 pt-2 pb-3 d-flex ">
-                <div className="d-flex  mx-2 w-50 small" >
-                    <span>{model.name}</span>
+            <div className="pl-2 pl-sm-3 pr-2 pr-sm-3 py-3 d-flex justify-content-between">
+                <div className="mx-2  small" >
+                    <span>{name}</span>
                 </div>
-                <div className="w-25 text-right w-7c" onClick={() => showProductCatalogDetil(model)} >
-                    <span className="p-2 small pl-4 text-primary cursor-pointer">
-                        贴  文
-                </span>
-                </div>
-                <div className="w-25  text-right w-7c" onClick={() => searchProductCatalogChildrenKeys(model)} >
-                    <span className="p-2 pl-4 text-primary cursor-pointer  iconfont icon-jiantouyou" style={{ fontSize: "12px" }}>
-                    </span>
-                </div>
-            </div >
-            /*<div className="pl-2 pl-sm-3 pr-2 pr-sm-3 pt-2 pb-2 d-flex align-items-center ">
-                <div className="d-flex align-items-center flex-fill mx-2 " >
-                    <span>{model.name}</span>
-                </div>
-                <div>
-                    <div className="small d-flex align-items-center cursor-pointer text-primary text-right w-7c ">
-                        <button className="btn btn-outline-info mx-2 px-3" onClick={() => showProductCatalogDetil(model)} >
-                            贴  文
-                        </button>
-                        <button className="btn btn-outline-info" onClick={() => searchProductCatalogChildrenKeys(model)} >
-                            下一级
-                        </button>
+                <div className="d-flex">
+                    <div className="w-7c mr-3  text-primary text-center cursor-pointer" onClick={() => showProductCatalogDetil(model)} >
+                        {counts}
+                    </div>
+
+                    <div className="w-7c ml-3" onClick={() => searchProductCatalogChildrenKeys(model)} >
+                        <span className="p-2 small pl-4 text-primary cursor-pointer iconfont icon-jiantouyou" style={{ fontSize: "12px" }}>
+                        </span>
                     </div>
                 </div>
-            </div >*/
+            </div >
         );
     };
 }

@@ -31,6 +31,8 @@ import { VModelarticle } from './VModelarticle';
 import { VInformation } from './VInformation';
 import { VInformationPost } from './VInformationPost';
 import { VEditpostSort } from './VEditpostSort';
+import { VProductCatalogPostCount } from "./VProductCatalogPostCount";
+import { VDomainPostCount } from "./VDomainPostCount";
 /* eslint-disable */
 export class CPosts extends CUqBase {
     @observable pageTemplate: QueryPager<any>;
@@ -310,14 +312,22 @@ export class CPosts extends CUqBase {
     };
 
     showProductCatalogDetil = async (param: any) => {
-        let { id, name } = param;
+        let { productCategory, name } = param;
         this.pageProductCatalogPost = new QueryPager(this.uqs.webBuilder.SearchProductCategoryPost, 15, 30);
         let pageProductCatalogPost = this.pageProductCatalogPost
-        this.pageProductCatalogPost.first({ author: 0, productCategory: id, publish: 0 })
+        this.pageProductCatalogPost.first({ author: 0, productCategory: productCategory, publish: 0 })
         let spcdetil = { pageProductCatalogPost, name: name }
         return await this.vCall(VProductCatalogDetil, spcdetil);
     }
 
+    renderProductCatalogPostCount = (productcatolg: any) => {
+        return this.renderView(VProductCatalogPostCount, productcatolg);
+    }
+
+    searchProductCatalogPostCount = async (productcategory: any) => {
+        let list = await this.uqs.webBuilder.SearchProductCategoryPostCount.obj({ productCategory: productcategory });
+        return list.postcounts;
+    }
 
     /** 栏目**/
     showPostSubject = async () => {
@@ -336,7 +346,6 @@ export class CPosts extends CUqBase {
     }
 
     delPostSubject = async (subject: any) => {
-        //await this.uqs.webBuilder.PostSubject.del({ post: this.current.id, arr1: [{ subject: subject }] });
         await this.uqs.webBuilder.DelPostSubject.submit({ _post: this.current.id, _subject: subject })
         this.pagePostSubject = await this.uqs.webBuilder.SearchPostSubject.table({ _post: this.current.id })
     }
@@ -404,6 +413,15 @@ export class CPosts extends CUqBase {
     onPickClassroomType = async (param: any) => {
         await this.uqs.webBuilder.PostClassroomType.add({ post: this.current.id, arr1: [{ classroomType: param.id }] });
         this.closePage();
+    }
+
+    renderDomainPostCount = (domain: any) => {
+        return this.renderView(VDomainPostCount, domain);
+    }
+
+    searchDomainCount = async (domain: any) => {
+        let list = await this.uqs.webBuilder.SearchDomainPostCount.obj({ domain: domain });
+        return list.postcounts;
     }
 
     tab = () => {

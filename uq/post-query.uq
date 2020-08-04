@@ -46,8 +46,7 @@ PAGE (
     order by p.id desc
     limit $pageSize;
 };
-
-
+ 
 /** 搜索已经发布了的文帖*/
 QUERY SearchPostPublish( 
     key char(100),
@@ -97,7 +96,7 @@ PAGE (
 };
 
 
-/** 搜索已经发布了的文帖*/
+/** 搜索已经发布了的产品文帖*/
 QUERY SearchPostPublishForProduct( 
     _post ID POST
 )
@@ -112,7 +111,7 @@ returns ret  (
     where a.post = _post;
 };
 
-/** 搜索已经发布了的文帖*/
+/** 搜索贴文评价等级*/
 QUERY SearchPostEvaluate( _post ID POST)
 returns ret  (
     post ID POST,
@@ -179,6 +178,18 @@ PAGE (
     limit $pageSize;
 };
 
+/** 根据目录树搜索文帖数量 **/
+QUERY SearchProductCategoryPostCount( 
+    productCategory ID ProductCategory
+)
+returns ret (
+   postcounts int
+) {
+    into ret select count(*) as postcounts
+    from    PostProductCatalog as ps
+    where   ps.productCategory = productCategory;
+};
+
 
 /** 搜索栏目 **/
 QUERY SearchSubject(
@@ -190,16 +201,17 @@ PAGE (
     counts int,
     child  int
 ) {
-    PAGE select p.id, p.name, sp.counts,
-            (select count(*) from Subject as a where a.parent = p.id ) as child
+    PAGE select p.id, p.name, 
+            ( select count(*) from PostSubject as a where a.subject = p.id) as counts,
+            ( select count(*) from Subject as a where a.parent = p.id ) as child
     from   Subject as p
-           left join SubjectPostCount as sp on sp.subject = p.id
     where  p.id < $pageStart and p.isValid = 1 
            and p.parent = _parent
     order by p.id desc
     
     limit $pageSize;
 };
+
 
 /** 搜索栏目贴文 **/
 QUERY SearchSubjectPost(    
@@ -268,6 +280,7 @@ returns ret (
 };
 
 
+
 /** 搜索目录节点 **/
 QUERY SearchPostCatalog(    
     _post ID POST
@@ -308,6 +321,18 @@ returns ret (
     into ret select ps.post, ps.domain
     from    PostDomain as ps
     where   ps.post = _post;
+};
+
+/** 根据目录树搜索文帖数量 **/
+QUERY SearchDomainPostCount( 
+    domain ID Domain
+)
+returns ret (
+   postcounts int
+) {
+    into ret select count(*) as postcounts
+    from    PostDomain as ps
+    where   ps.domain = domain;
 };
 
 
