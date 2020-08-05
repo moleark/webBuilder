@@ -14,11 +14,11 @@ export class VMain extends VPage<CMedia> {
     }
 
     private page = observer(() => {
-        let { pageMedia, searchMadiaKey, onAddClick, showCat, showSlideShow, onScrollBottom } = this.controller;
+        let { pageMedia, searchMadiaKey, onAddClick, showCat, showSlideShow, showOtherMedia, onScrollBottom } = this.controller;
         let right = <div className="w-19c d-flex">
             <SearchBox className="w-80 mt-1 mr-2"
                 size='sm'
-                onSearch={(key: string) => searchMadiaKey(key)}
+                onSearch={(key: string) => searchMadiaKey(key, 1)}
                 placeholder={this.t('searchpicture')} />
             <div onClick={onAddClick}>
                 <span className="ml-2 iconfont icon-jiahao1 mr-2"
@@ -41,7 +41,7 @@ export class VMain extends VPage<CMedia> {
                 return this.renderItem(v, index)
             });
         }
-        return <Page header={this.t('picture')} headerClassName={consts.headerClass} right={right}
+        return <Page header={this.t('其他文件')} headerClassName={consts.headerClass} right={right}
             onScrollBottom={onScrollBottom}>
 
             <LMR className="bg-white py-3 my-1" right={<i className=" px-2 iconfont icon-more"></i>} onClick={() => showCat({ name: "图片分类", id: 0 })} >
@@ -50,6 +50,10 @@ export class VMain extends VPage<CMedia> {
             <LMR className="bg-white py-3 my-1" right={<i className=" px-2 iconfont icon-more"></i>} onClick={showSlideShow} >
                 <div className="mx-3 px-2 font-weight-bold">轮播图</div>
             </LMR>
+            <LMR className="bg-white py-3 my-1" right={<i className=" px-2 iconfont icon-more"></i>} onClick={showOtherMedia} >
+                <div className="mx-3 px-2 font-weight-bold">其他文件</div>
+            </LMR>
+
             <div className="mx-3">
                 <div className="row row-cols-2 row-cols-sm-3 row-cols-md-4">
                     {divItems}

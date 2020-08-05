@@ -4,7 +4,13 @@ TUID IMAGE (
     main path char(100),
     main author ID [$user],
     main isValid tinyint default 1,
+    main types ID MadiaType,
     stamp (create,update),
+);
+
+TUID MadiaType (
+    id,
+    main name char(50)
 );
 
 TUID IMGCat (
@@ -50,20 +56,24 @@ PAGE (
 
 
 /** 搜索我的图片*/
-QUERY SearchImage( key char(100))
+QUERY SearchImage( key char(100), types int)
 PAGE (
     id bigint desc,
     caption char(100),
     path char(100),
     author ID [$user],
-    isValid tinyint 
+    isValid tinyint,
+    types ID MadiaType
+
 ) {
     var key2 char(102);
     set key2 = concat('%', key, '%');
 
-    PAGE select p.id, p.caption, p.path, p.author, p.isValid
+    PAGE select p.id, p.caption, p.path, p.author, p.isValid, p.types
     from    IMAGE as p
-    where   p.id < $pageStart and p.isValid = 1 and ( p.caption like key2 or key is null )
+    where   p.id < $pageStart 
+            and ( p.types = types or (types = 0 and p.types <> 1) )
+            and p.isValid = 1 and ( p.caption like key2 or key is null )
     order by p.id desc
     limit $pageSize;
 };

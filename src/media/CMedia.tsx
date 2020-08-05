@@ -14,6 +14,9 @@ import { VCatImage } from "./VCatImage";
 import { VSlideShow } from "./VSlideShow";
 import { VPickImage } from "posts/VPickImage";
 import { VEditSlideShow } from "./VEditSlideShow";
+import { VFile } from "./VFile";
+import { VAddFile } from "./VAddFile";
+import { MadiaType } from "configuration";
 
 export class CMedia extends CUqBase {
     @observable pageMedia: QueryPager<any>;
@@ -22,37 +25,43 @@ export class CMedia extends CUqBase {
     @observable pageImageCat: QueryPager<any>;
     @observable pageCatImage: QueryPager<any>;
     @observable pageSlideShow: QueryPager<any>;
+    @observable pageFile: QueryPager<any>;
 
     protected async internalStart(param: any) { }
 
-    searchMadiaKey = async (key: string) => {
+    searchMadiaKey = async (key: string, types: number) => {
         this.pageMedia = new QueryPager(this.uqs.webBuilder.SearchImage, 15, 30);
-        this.pageMedia.first({ key: key });
+        this.pageMedia.first({ key: key, types: types });
     };
 
     onScrollBottom = async () => {
         await this.pageMedia.more();
     }
 
-    //添加任务
+    //添加文件
     saveItem = async (id: any, param: any) => {
-        let pa = { caption: param.caption, path: param.path, author: this.user.id, isValid: 1 };
+        let { caption, path, types } = param;
+        let pa = { caption: caption, path: path, author: this.user.id, isValid: 1, types: types };
         let ret = await this.uqs.webBuilder.Image.save(id, pa);
-        if (id) {
-            let item = this.pageMedia.items.find(v => v.id === id);
-            if (item !== undefined) {
-                _.merge(item, param);
-                item.$update = new Date();
+        if (types === MadiaType.IAMGE) {
+            if (id) {
+                let item = this.pageMedia.items.find(v => v.id === id);
+                if (item !== undefined) {
+                    _.merge(item, param);
+                    item.$update = new Date();
+                }
+                this.current = item;
+            } else {
+                param.id = ret.id;
+                param.$create = new Date();
+                param.$update = new Date();
+                this.pageMedia.items.unshift(param);
+                this.current = param;
             }
-            this.current = item;
+            this.searchMadiaKey("", MadiaType.IAMGE);
         } else {
-            param.id = ret.id;
-            param.$create = new Date();
-            param.$update = new Date();
-            this.pageMedia.items.unshift(param);
-            this.current = param;
+            this.searcFileKey("", MadiaType.NOTIMAGE);
         }
-        this.searchMadiaKey("");
 
     };
 
@@ -78,12 +87,12 @@ export class CMedia extends CUqBase {
     };
 
     loadList = async () => {
-        this.searchMadiaKey("");
+        this.searchMadiaKey("", MadiaType.IAMGE);
     };
 
     onRem = async (id: number) => {
         this.current = await this.uqs.webBuilder.Image.save(id, { isValid: 0 });
-        this.searchMadiaKey("");
+        this.searchMadiaKey("", MadiaType.IAMGE);
     }
 
     //图片分类--PICK
@@ -142,7 +151,7 @@ export class CMedia extends CUqBase {
 
 
     pickImage = async () => {
-        this.searchMadiaKey("");
+        this.searchMadiaKey("", MadiaType.IAMGE);
         return await this.vCall(VPickImage);
     };
 
@@ -166,6 +175,28 @@ export class CMedia extends CUqBase {
         await this.uqs.webBuilder.UpdateSlideShow.submit({ image: image, types: type, caption: caption, description: description, src: src, sort: sort })
         await this.searchSlideShow();
     }
+
+    //其他文件
+    //搜索其他文件
+    searcFileKey = async (key: string, types: number) => {
+        this.pageFile = new QueryPager(this.uqs.webBuilder.SearchImage, 15, 30);
+        this.pageFile.first({ key: key, types: types });
+    };
+    //显示其他文件列表
+    showOtherMedia = async () => {
+        await this.searcFileKey("", MadiaType.NOTIMAGE);
+        this.openVPage(VFile);
+    }
+    //显示其他文件
+    addAddFile = () => {
+        this.openVPage(VAddFile);
+    }
+    //删除文件
+    delFile = async (id: number) => {
+        this.current = await this.uqs.webBuilder.Image.save(id, { isValid: 0 });
+        this.searchMadiaKey("", MadiaType.PDF);
+    };
+
 
     tab = () => {
         return <this.render />;

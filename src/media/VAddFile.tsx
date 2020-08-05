@@ -1,18 +1,20 @@
 import * as React from "react";
-import _, { partialRight } from 'lodash';
+import _ from 'lodash';
 import { consts } from "consts";
 import { CMedia } from "./CMedia";
 import { observer } from "mobx-react";
-import { VPage, UiSchema, Schema, UiInputItem, Page, Form, Context, ImageUploader, nav } from "tonva";
+import { VPage, UiSchema, Schema, UiInputItem, Page, Form, Context, nav, AudioUploader } from "tonva";
 import { observable } from "mobx";
-
+import { FileUploader } from "upLoader/upLoader";
+import { MadiaType } from "configuration";
 /* eslint-disable */
-export class VEdit extends VPage<CMedia> {
+export class VAddFile extends VPage<CMedia> {
+
     @observable private media: any;
     @observable private mediaPath: string;
-
-    private types: any;
     private form: Form;
+    private mediaType: any = MadiaType.PDF;
+
     async open(media: any) {
         this.media = media;
         this.openPage(this.page);
@@ -30,9 +32,8 @@ export class VEdit extends VPage<CMedia> {
         this.closePage(1);
         let param = _.clone(context.form.data);
         param.path = this.mediaPath;
-        param.types = 1;
+        param.types = this.mediaType;
         await this.controller.saveItem(this.mediaId, param);
-
     }
 
     private uiSchema: UiSchema = {
@@ -52,9 +53,16 @@ export class VEdit extends VPage<CMedia> {
         return;
     }
 
-    private onUpload = () => {
+    private onUploadFile = () => {
         this.media = this.form.data;
-        this.openPageElement(<ImageUploader onSaved={this.onSaved} />);
+        this.mediaType = MadiaType.VIDEO;
+        this.openPageElement(<AudioUploader onSaved={this.onSaved} />);
+    }
+
+    private onUploadFilePDF = () => {
+        this.media = this.form.data;
+        this.mediaType = MadiaType.PDF;
+        this.openPageElement(<FileUploader onSaved={this.onSaved} />);
     }
 
     private page = observer(() => {
@@ -70,11 +78,12 @@ export class VEdit extends VPage<CMedia> {
         }
         else {
             image = <div className="text-content text-center">
-                <button className="btn btn-primary mr-3" onClick={this.onUpload}>{this.t('uploadpicture')}</button>
+                <button className="btn btn-primary mr-3" onClick={this.onUploadFilePDF}>{this.t('上传文件')}</button>
+                <button className="btn btn-outline-primary" onClick={this.onUploadFile}>{this.t('uploadaudio')}</button>
             </div>;
         }
 
-        return <Page header={this.t('editorpicture')} headerClassName={consts.headerClass}>
+        return <Page header={this.t('上传文件')} headerClassName={consts.headerClass}>
             <div className="mx-3">
                 <Form ref={v => this.form = v} className="my-3"
                     formData={this.media}

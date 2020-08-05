@@ -18,7 +18,7 @@ export class VPickImage extends VPage<CMedia> {
 
         let right = <SearchBox className="w-80 mt-2 mr-2"
             size='sm'
-            onSearch={(key: string) => searchMadiaKey(key)}
+            onSearch={(key: string) => searchMadiaKey(key, 1)}
             placeholder={this.t('selectpicture')} />;
 
         let { items, loading } = pageMedia;

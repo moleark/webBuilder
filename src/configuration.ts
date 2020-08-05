@@ -37,5 +37,13 @@ const GLOABLE_TEST = {
     SALESREGION_CN: 4
 };
 
+// 生产配置
+const MadiaType = {
+    IAMGE: 1,
+    PDF: 2,
+    VIDEO: 3,
+    NOTIMAGE: 0
+};
+
 // export { GLOABLE_PRODUCTION as GLOABLE };
-export { GLOABLE_TEST as GLOABLE };
+export { GLOABLE_TEST as GLOABLE, MadiaType };
