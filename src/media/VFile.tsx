@@ -53,7 +53,6 @@ export class VFile extends VPage<CMedia> {
     private renderItem = (item: any, index: number) => {
         let { delFile, editFile } = this.controller;
         let { caption, path, id, types } = item;
-
         let icon = types.id === 2 ? "iconfont icon-PDF mx-3" : "iconfont icon-shipin mx-3";
         return <div key={index} className="row py-2 cursor-pointer">
             <div className="col-10 d-flex" onClick={() => this.preview(item.path)}>
@@ -70,4 +69,5 @@ export class VFile extends VPage<CMedia> {
             </div>
         </div>
     }
+
 }

@@ -19,7 +19,7 @@ interface FileUploaderProps {
 
 @observer
 export class FileUploader extends React.Component<FileUploaderProps> {
-    private static audioTypes = ['pdf'];
+    private static audioTypes = ['pdf', 'mp4'];
 
     private suffix: string;
     private resUploader: ResUploader;

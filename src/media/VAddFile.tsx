@@ -32,8 +32,16 @@ export class VAddFile extends VPage<CMedia> {
         this.closePage(1);
         let param = _.clone(context.form.data);
         param.path = this.mediaPath;
-        param.types = this.mediaType;
+        param.types = this.getFileExtension(param.path);
         await this.controller.saveItem(this.mediaId, param);
+    }
+    private getFileExtension = (path: any) => {
+        var fileExtension = path.substring(path.lastIndexOf('.') + 1);
+        if (fileExtension === "pdf") {
+            return 2;
+        } else {
+            return 3;
+        }
     }
 
     private uiSchema: UiSchema = {
