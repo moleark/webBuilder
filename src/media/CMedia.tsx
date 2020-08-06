@@ -17,6 +17,7 @@ import { VEditSlideShow } from "./VEditSlideShow";
 import { VFile } from "./VFile";
 import { VAddFile } from "./VAddFile";
 import { MadiaType } from "configuration";
+import { VFileEdit } from "./VFileEdit";
 
 export class CMedia extends CUqBase {
     @observable pageMedia: QueryPager<any>;
@@ -194,8 +195,13 @@ export class CMedia extends CUqBase {
     //删除文件
     delFile = async (id: number) => {
         this.current = await this.uqs.webBuilder.Image.save(id, { isValid: 0 });
-        this.searchMadiaKey("", MadiaType.PDF);
+        await this.searchMadiaKey("", MadiaType.NOTIMAGE);
     };
+    //编辑文件
+    editFile = async (id: number) => {
+        this.current = await this.uqs.webBuilder.Image.load(id);
+        this.openVPage(VFileEdit);
+    }
 
 
     tab = () => {

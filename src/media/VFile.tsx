@@ -2,7 +2,7 @@ import * as React from "react";
 import { consts } from "consts";
 import { CMedia } from "./CMedia";
 import { observer } from "mobx-react";
-import { VPage, Page, SearchBox, FA, List } from "tonva";
+import { VPage, Page, SearchBox, List } from "tonva";
 import copy from 'copy-to-clipboard';
 
 export class VFile extends VPage<CMedia> {
@@ -39,7 +39,7 @@ export class VFile extends VPage<CMedia> {
         let el = e.target as HTMLElement;
         let innerHTML = el.innerHTML;
         copy(path);
-        el.innerHTML = '<div class="text-center text-danger w-100"> <span style="color:transparent">- - - - - -</span> url ' + this.t('copysuccess') + '<span style="color:transparent">- - - - - -</span> </div>';
+        el.innerHTML = '<div class="text-center text-danger samll"><small>' + this.t('copysuccess') + '</small></div>';
         setTimeout(() => {
             el.innerHTML = innerHTML;
         }, 1000);
@@ -51,25 +51,22 @@ export class VFile extends VPage<CMedia> {
     }
 
     private renderItem = (item: any, index: number) => {
-        let { onRem } = this.controller;
-        let { caption, path, id } = item;
-        let { onimgNames } = this.controller
-        return <div key={index} className="col px-3 py-2 border-bottom border-dark">
-            <div className="text-info bg-light p-2 d-flex text-nowrap cursor-pointer border-bottom">
-                <div className="d-flex flex-fill" onClick={() => onimgNames(id)} >
-                    <div className="overflow-hidden flex-fill small">{caption}</div>
-                    <div className=""><FA name="edit" /></div>
-                </div>
-                <div className="iconfont icon-shanchu pl-1" onClick={() => onRem(id)}></div>
-            </div>
+        let { delFile, editFile } = this.controller;
+        let { caption, path, id, types } = item;
 
-            <div className="d-flex align-items-center bg-white rounded  cursor-pointer"
-                onClick={() => this.preview(item.path)}>
+        let icon = types === 1 ? "iconfont icon-PDF mx-3" : "iconfont icon-shipin mx-3";
+        return <div key={index} className="row py-2 cursor-pointer">
+            <div className="col-10 d-flex" onClick={() => this.preview(item.path)}>
+                <div className={icon} style={{ fontSize: "35px" }}></div>
+                <div>
+                    <div className="mr-3 strong">{caption}</div>
+                    <div className="small">{path}</div>
+                </div>
             </div>
-            <div className="smallPath small my-2 text-muted cursor-pointer"
-                onClick={(e) => this.copyClick(e, path)}>
-                <span>{path}</span>
-                <span><small className=" text-muted float-right" >{this.t('copy')}</small></span>
+            <div className="col-2 pt-2">
+                <span className="iconfont icon-xiugai1 mx-2" onClick={() => editFile(id)}></span>
+                <span className="iconfont icon-shanchu mx-2" onClick={() => delFile(id)}></span>
+                <span onClick={(e) => this.copyClick(e, path)}> {this.t('copy')}</span>
             </div>
         </div>
     }

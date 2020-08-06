@@ -6,6 +6,27 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "8075496",
+      "name": "视频",
+      "font_class": "shipin",
+      "unicode": "e640",
+      "unicode_decimal": 58944
+    },
+    {
+      "icon_id": "11735975",
+      "name": "PDF",
+      "font_class": "PDF",
+      "unicode": "e630",
+      "unicode_decimal": 58928
+    },
+    {
+      "icon_id": "11761639",
+      "name": "Word",
+      "font_class": "Word",
+      "unicode": "e722",
+      "unicode_decimal": 59170
+    },
+    {
       "icon_id": "5861493",
       "name": "箭头 右",
       "font_class": "more",
