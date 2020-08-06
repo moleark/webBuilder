@@ -54,7 +54,7 @@ export class VFile extends VPage<CMedia> {
         let { delFile, editFile } = this.controller;
         let { caption, path, id, types } = item;
 
-        let icon = types === 1 ? "iconfont icon-PDF mx-3" : "iconfont icon-shipin mx-3";
+        let icon = types.id === 2 ? "iconfont icon-PDF mx-3" : "iconfont icon-shipin mx-3";
         return <div key={index} className="row py-2 cursor-pointer">
             <div className="col-10 d-flex" onClick={() => this.preview(item.path)}>
                 <div className={icon} style={{ fontSize: "35px" }}></div>
