@@ -43,12 +43,15 @@ ACTION hit ver 0.1 (
             BOOK hitted at(post, ipId);
             BOOK hot at (post) set sumHits+=1;
     
-            var _user ID $user;
-            var hitdate DATE;
-            set  hitdate = DATE( NOW() );
+            var _user ID $user, _month int, _year int;
+            var hitdate DATE, businessdate DATE ;
+            set hitdate = DATE( NOW() );
+            set businessdate = case when DAY(hitdate) > 20 then dateadd(month, 1, hitdate) else hitdate end;
+            set _month = month(businessdate);
+            set _year = year(businessdate);
             set _user = p.author from POST as p where p.ID = post;
 
-            BOOK Achievement at( hitdate, 0, _user ) set postHitSum += 1;
+            BOOK Achievement at( hitdate, 0, _user ) set postHitSum += 1, year = _year, month = _month;
 
             if( source = 0 ){
                 BOOK Achievement at( hitdate, 0, _user ) set hitWeb += 1;

@@ -10,7 +10,7 @@ import { Context, nav, QueryPager } from "tonva";
 import { VPickImage } from "./VPickImage";
 import { VPickTemplate } from "./VPickTemplate";
 import { VRelease } from "./VRelease";
-import { setting } from "configuration";
+import { setting, MadiaType } from "configuration";
 import { VReleaseProduct } from "./VReleaseProduct";
 import { VPickProduct } from "./VPickProduct";
 import { VGrade } from "./VGrade";
@@ -103,7 +103,7 @@ export class CPosts extends CUqBase {
 
     searchMadiaKey = async (key: string) => {
         this.pageMedia = new QueryPager(this.uqs.webBuilder.SearchImage, 15, 30);
-        this.pageMedia.first({ key: key });
+        this.pageMedia.first({ key: key, types: MadiaType.IAMGE });
     };
 
     // 保存Post

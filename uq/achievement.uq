@@ -4,6 +4,8 @@ BOOK Achievement(
     key date  date,
     key manage ID [$user],
     key user ID [$user],
+    year        int,    --业务年
+    month       int,    --业务月
     postPubSum  int,    --post发布次数
     postTranSum int,    --post转发次数
     postHitSum  int,    --post访问次数
@@ -105,16 +107,16 @@ returns ret  (
                         , case  when ifnull(sum(a.postTranSum),0 )= 0 or ifnull(sum(a.postHitSum),0 )= 0  then 0.0 else sum(a.postHitSum) / sum(a.postTranSum)  end as percent
                         , sum(a.hitWeb) as hitWeb, sum(a.hitAgent) as hitAgent, sum(a.hitAssist) as hitAssist, sum( a.hitEmail ) as hitEmail,  sum(a.hitOther) as hitOther
         from    Achievement as a
-        where    a.manage = _manage and year(a.date) = _year
-        group by year(a.date) as yeara, month(a.date) as montha
-        order by  montha desc ;
+        where    a.manage = _manage and a.year = _year
+        group by a.year as yeara , a.month as montha
+        order by  montha desc;
 
         into ret select yeara , 'all' as montha ,'all' as daya, sum(a.postPubSum) as postPubSum, sum(a.postTranSum) as postTranSum, sum(a.postHitSum) as postHitSum
                         , case  when ifnull(sum(a.postTranSum),0 )= 0 or ifnull(sum(a.postHitSum),0 )= 0  then 0.0 else sum(a.postHitSum) / sum(a.postTranSum) end as percent
                         , sum(a.hitWeb) as hitWeb, sum(a.hitAgent) as hitAgent, sum(a.hitAssist) as hitAssist, sum( a.hitEmail ) as hitEmail,  sum(a.hitOther) as hitOther
         from   Achievement as a
-        where  a.manage = _manage and year(a.date) = _year
-        group by year(a.date) as yeara;
+        where  a.manage = _manage and a.year = _year
+        group by a.year as yeara;
     }
 };
 
@@ -172,8 +174,8 @@ PAGE (
                     , case  when ifnull(sum(a.postTranSum),0 )= 0 or ifnull(sum(a.postHitSum),0 )= 0  then 0.0 else sum(a.postHitSum) / sum(a.postTranSum) end as percent
                     , sum(a.hitWeb) as hitWeb, sum(a.hitAgent) as hitAgent, sum(a.hitAssist) as hitAssist, sum( a.hitEmail ) as hitEmail,  sum(a.hitOther) as hitOther
         from    Achievement as a
-        where    a.manage = _manage and year(a.date) = _year and month(a.date) = _month and a.user <> 0
-        group by year(a.date) as yeara, month(a.date) as montha, a.user as author
+        where    a.manage = _manage and a.year = _year and  a.month = _month and a.user <> 0
+        group by a.year as yeara, a.month as montha, a.user as author
         order by sum(a.postHitSum) desc;
 
     } else if(_type='year'){
@@ -182,8 +184,8 @@ PAGE (
                     , case  when ifnull(sum(a.postTranSum),0 )= 0 or ifnull(sum(a.postHitSum),0 )= 0  then 0.0 else sum(a.postHitSum) / sum(a.postTranSum) end as percent
                     , sum(a.hitWeb) as hitWeb, sum(a.hitAgent) as hitAgent, sum(a.hitAssist) as hitAssist, sum( a.hitEmail ) as hitEmail,  sum(a.hitOther) as hitOther
         from    Achievement as a
-        where    a.manage = _manage and year(a.date) = _year and a.user <> 0
-        group by year(a.date) as yeara, a.user  as author
+        where   a.manage = _manage and  a.year = _year and a.user <> 0
+        group by a.year as yeara, a.user  as author
         order by sum(a.postHitSum) desc;
     }
 };

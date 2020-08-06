@@ -15,6 +15,7 @@ import moment from 'moment'
 import { VTeamAchievementDetail } from "./VTeamAchievementDetail";
 import { VCat } from "./VCat";
 import { VEditCat } from "./VEditCat";
+import { MadiaType } from "configuration";
 /* eslint-disable */
 
 export class CMe extends CUqBase {
@@ -39,7 +40,7 @@ export class CMe extends CUqBase {
     searchMadiaKey = async (key: string) => {
 
         this.pageMedia = new QueryPager(this.uqs.webBuilder.SearchImage, 15, 30);
-        this.pageMedia.first({ key: key });
+        this.pageMedia.first({ key: key, types: MadiaType.IAMGE });
     };
     protected async internalStart() { }
 
