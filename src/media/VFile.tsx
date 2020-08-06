@@ -67,7 +67,7 @@ export class VFile extends VPage<CMedia> {
                 <span className="iconfont icon-shanchu mx-2" onClick={() => delFile(id)}></span>
                 <span onClick={(e) => this.copyClick(e, path)}> {this.t('copy')}</span>
             </div>
-        </div>
+        </div >
     }
 
 }

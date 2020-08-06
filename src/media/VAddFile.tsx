@@ -3,7 +3,7 @@ import _ from 'lodash';
 import { consts } from "consts";
 import { CMedia } from "./CMedia";
 import { observer } from "mobx-react";
-import { VPage, UiSchema, Schema, UiInputItem, Page, Form, Context, nav, AudioUploader } from "tonva";
+import { VPage, UiSchema, Schema, UiInputItem, Page, Form, Context, nav } from "tonva";
 import { observable } from "mobx";
 import { FileUploader } from "upLoader/upLoader";
 import { MadiaType } from "configuration";
@@ -61,11 +61,6 @@ export class VAddFile extends VPage<CMedia> {
         return;
     }
 
-    private onUploadFile = () => {
-        this.media = this.form.data;
-        this.mediaType = MadiaType.VIDEO;
-        this.openPageElement(<AudioUploader onSaved={this.onSaved} />);
-    }
 
     private onUploadFilePDF = () => {
         this.media = this.form.data;
@@ -87,7 +82,6 @@ export class VAddFile extends VPage<CMedia> {
         else {
             image = <div className="text-content text-center">
                 <button className="btn btn-primary mr-3" onClick={this.onUploadFilePDF}>{this.t('上传文件')}</button>
-                <button className="btn btn-outline-primary" onClick={this.onUploadFile}>{this.t('uploadaudio')}</button>
             </div>;
         }
 
