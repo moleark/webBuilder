@@ -6,21 +6,20 @@ import { observable } from "mobx";
 import { CMe } from "./CMe";
 
 export class VCat extends VPage<CMe> {
-    @observable capton: any;
     @observable pageCat: any;
 
     async open(param: any) {
         this.pageCat = param.pageCat;
-        this.capton = param.name;
-        this.openPage(this.page);
+        this.openPage(this.page, param);
     }
 
-    private page = observer(() => {
+    private page = observer((param: any) => {
+        let { name } = param;
         let { showAddCat } = this.controller;
-        let right = <div onClick={showAddCat}>
+        let right = <div onClick={() => showAddCat(param)}>
             <span className="mx-sm-2 iconfont icon-jiahao1 cursor-pointer" style={{ fontSize: "1.7rem", color: "white" }}></span>
         </div>;
-        return <Page header={this.capton} headerClassName={consts.headerClass}
+        return <Page header={name} headerClassName={consts.headerClass}
             onScrollBottom={this.onScrollBottom} right={right}>
             <List before={""} items={this.pageCat} item={{ render: this.renderItem }} />
         </Page>;
@@ -34,7 +33,7 @@ export class VCat extends VPage<CMe> {
     private delCat = async (model: any) => {
         let { saveCat } = this.controller;
         let { id, name } = model;
-        await saveCat(id, name, 0);
+        await saveCat(id, id, name, 0);
     }
 
 

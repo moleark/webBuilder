@@ -8,8 +8,9 @@ import { CMe } from "./CMe";
 export class VEditCat extends VPage<CMe> {
     @observable capton: any = "图片分类";
     private form: Form;
-
-    async open() {
+    private cat: any;
+    async open(cat: any) {
+        this.cat = cat;
         this.openPage(this.page);
     }
 
@@ -31,9 +32,13 @@ export class VEditCat extends VPage<CMe> {
     }
 
     private onFormButtonClick = async (names: string, context: Context) => {
-        let { saveCat, currentCat } = this.controller;
+        let { saveCat } = this.controller;
         let { name } = context.form.data;
-        await saveCat(currentCat.id, name, 1);
+        if (this.cat.id === -1) {
+            await saveCat(null, this.cat.parent, name, 1);
+        } else {
+            await saveCat(this.cat.id, this.cat.parent, name, 1);
+        }
         this.closePage();
     }
 
@@ -44,7 +49,7 @@ export class VEditCat extends VPage<CMe> {
         return <Page header={this.capton} headerClassName={consts.headerClass} right={right}>
             <div className="mx-3">
                 <Form ref={v => this.form = v} className="my-3"
-                    formData={this.controller.currentCat}
+                    formData={this.cat}
                     schema={this.schema}
                     uiSchema={this.uiSchema}
                     onButtonClick={this.onFormButtonClick}

@@ -1,5 +1,5 @@
 import * as React from "react";
-import _, { partialRight } from 'lodash';
+import _ from 'lodash';
 import { consts } from "consts";
 import { CMedia } from "./CMedia";
 import { observer } from "mobx-react";
@@ -11,7 +11,6 @@ export class VEdit extends VPage<CMedia> {
     @observable private media: any;
     @observable private mediaPath: string;
 
-    private types: any;
     private form: Form;
     async open(media: any) {
         this.media = media;
@@ -32,7 +31,6 @@ export class VEdit extends VPage<CMedia> {
         param.path = this.mediaPath;
         param.types = 1;
         await this.controller.saveItem(this.mediaId, param);
-
     }
 
     private uiSchema: UiSchema = {

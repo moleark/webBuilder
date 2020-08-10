@@ -33,8 +33,6 @@ export class CMe extends CUqBase {
     @observable teamAchievementMonth: any[] = [{ montha: "", yeara: "", postPubSum: 0, postTranSum: 0, postHitSum: 0 }];
     @observable teamAchievementDetail: QueryPager<any>;
     @observable pageCat: any;
-    @observable currentCat: any;
-    @observable currentCatParent: any = "0";
 
     private year: any
     searchMadiaKey = async (key: string) => {
@@ -118,12 +116,10 @@ export class CMe extends CUqBase {
 
     searchTeam = async () => {
         this.pageTeam = new QueryPager(this.uqs.hr.SearchTeam, 15, 30);
-
         this.pageTeam.setEachPageItem((item: any, results: { [name: string]: any[] }) => {
             this.cApp.useUser(item.webuser);
         });
         await this.pageTeam.first({ key: "" });
-
     }
 
     showAchievement = async () => {
@@ -151,7 +147,6 @@ export class CMe extends CUqBase {
 
     showCat = async (param: any) => {
         let { id, name } = param;
-        // await this.searchCat("0");
         let pageCat = new QueryPager(this.uqs.webBuilder.SearchCat, 15, 30);
         pageCat.first({ parent: param });
         let pageCats = { pageCat, name, id };
@@ -159,30 +154,30 @@ export class CMe extends CUqBase {
     }
 
     searchCat = async (parent: string) => {
-        this.currentCatParent = parent;
         this.pageCat = new QueryPager(this.uqs.webBuilder.SearchCat, 15, 30);
         this.pageCat.first({ parent: parent });
     };
 
-    showAddCat = async (id: any) => {
-        this.currentCat = { id: null, name: null, isValid: 1 };
-        this.openVPage(VEditCat);
+    showAddCat = async (param: any) => {
+        let par = { id: -1, parent: param.id, name: param.name, isValid: 1 };
+        this.openVPage(VEditCat, par);
     }
 
-    showEditCat = async (item: any) => {
-        this.currentCat = item;
-        this.openVPage(VEditCat);
+    showEditCat = async (param: any) => {
+        let par = { id: param.id, parent: param.parent, name: param.name, isValid: 1 };
+        this.openVPage(VEditCat, par);
     }
 
-    saveCat = async (id: any, name: any, isValid: any) => {
-        let param = { parent: this.currentCatParent, name: name, isValid: isValid };
+    saveCat = async (id: any, parent: any, name: any, isValid: any) => {
+
+        let param = { parent: parent ? parent : 0, name: name, isValid: isValid };
         await this.uqs.webBuilder.IMGCat.save(id, param);
-        this.searchCat(this.currentCatParent);
+        await this.searchCat(parent);
     }
 
     render = observer(() => {
-
         return this.renderView(VMe);
     });
+
     tab = () => this.renderView(VMe);
 }
