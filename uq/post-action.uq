@@ -24,31 +24,16 @@ ACTION PublishPost(
 
     VAR newval int = 0, oldval int = 0;
     if( _web = 1 or _agent = 1 or _assist = 1 or _openweb = 1 ){
-        set newval = 1;
-    }else{
-        set newval = 0;
+        if not exists( select 1 from PostPublish where post = _post ){
+            var alldate char(20);
+            set alldate =CONCAT( year( now() ), '-' , month( now() ), '-', day( now() ) );
+            BOOK Achievement at( alldate, 0, $user ) set postPubSum += 1;
+        }
     };
-    
-    if exists( 
-        select  1 
-        from    PostPublish 
-        where   post = _post and ( web=1 or agent= 1 or assist=1 or openweb=1 )
-    ){
-        set oldval = 1;
-    }else{
-        set oldval = 0;
-    };
-
-    var val int = 0;
-    set val = newval - oldval
-
-    var alldate char(20);
-    set alldate =CONCAT( year( now() ), '-' , month( now() ), '-', day( now() ) );
-    BOOK Achievement at( alldate, 0, $user ) set postPubSum += val;
  
     BOOK PostPublish at(_post) 
-    set web=_web, agent=_agent, assist=_assist, openweb=_openweb, operator = $user, update = now()
-    , startdate = _startDate, enddate = _endDate;
+        set web=_web, agent=_agent, assist=_assist, openweb=_openweb, operator = $user, update = now()
+            , startdate = _startDate, enddate = _endDate;
 
 };
 
