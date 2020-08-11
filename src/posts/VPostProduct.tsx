@@ -29,8 +29,15 @@ export class VPostProduct extends VPage<CPosts> {
             <div className=" px-3 py-2 d-flex justify-content-between">
                 <div>
                     {tv(item.product, v => <div>
-                        <div>  {v.description}</div>
-                        <div>  {v.origin}</div>
+                        <div className="py-1">  {v.description}</div>
+                        <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 " >
+                            <div className="col d-flex align-items-center">
+                                <small>品牌： {tv(v.brand, vv => vv.name)}</small>
+                            </div>
+                            <div className="col d-flex align-items-center">
+                                <small>产品编号：{v.origin}</small>
+                            </div>
+                        </div>
                     </div>)}
                 </div>
                 <div>
