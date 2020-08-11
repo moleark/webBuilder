@@ -29,6 +29,7 @@ export class VPickProduct extends VPage<CPosts> {
 
     private itemClick = async (item: any) => {
         await this.controller.onPickedProduct(item.id.id);
+        this.closePage();
     };
 
     private renderItem = (item: any, index: number) => {

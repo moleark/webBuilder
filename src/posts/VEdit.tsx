@@ -110,7 +110,7 @@ export class VEdit extends VPage<CPosts> {
 
     private page = observer(() => {
 
-        let { current, cApp, showPostProductCatalog, showPostSubject, showPickClassroomType, showPostDomain } = this.controller;
+        let { current, cApp, showPostProductCatalog, showPostSubject, showPickClassroomType, showPostDomain, showPostProduct } = this.controller;
 
         let right = <div>
             <button type="button"
@@ -134,6 +134,7 @@ export class VEdit extends VPage<CPosts> {
                 {(setting.BusinessScope !== 2) && branch("栏目", showPostSubject)}
                 {(setting.BusinessScope !== 2) && branch("领域", showPostDomain)}
                 {(setting.BusinessScope !== 2) && branch("类型", showPickClassroomType)}
+                {(setting.BusinessScope !== 2) && branch("产品", showPostProduct)}
                 <div className="bg-white py-2 d-flex justify-content-end cursor-pointer "> {this.isimport()}</div>
             </div >
         </Page >

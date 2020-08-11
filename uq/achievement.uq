@@ -66,9 +66,9 @@ QUERY SearchAchievementOfTeam(
     _type char(10)
 )
 returns ret  (
-    yeara   char(10),
-    montha  char(20),
-    daya    char(20),
+    year   char(10),
+    month  char(20),
+    day   char(20),
     postPubSum int,     --post发布次数
     postTranSum int,    --post转发次数
     postHitSum  int,    --post访问次数
@@ -82,20 +82,27 @@ returns ret  (
 
     var startdate DATE, enddate DATE;
  
-    if(_type = 'week'){
+    if(_type = 'day'){
+        into ret select  a.year, a.month, a.date as day, a.postPubSum, a.postTranSum, a.postHitSum
+                , case  when ifnull( a.postTranSum, 0 )= 0 or ifnull( a.postHitSum, 0 )= 0 then 0.0 else  a.postHitSum / a.postTranSum end  as percent
+                , a.hitWeb, a.hitAgent, a.hitAssist, a.hitEmail, a.hitOther
+        from    Achievement as a 
+        where   a.year = _year;
+
+    }else if(_type = 'week'){
 
         set startdate = DATE( dateadd(week, -1, NOW() ) );
         set enddate = DATE( NOW() );
-        into ret select max(year(a.date)) as yeara , 'week' as montha, daya, sum(a.postPubSum) as postPubSum, sum(a.postTranSum) as postTranSum, sum(a.postHitSum) as postHitSum
+        into ret select max(year(a.date)) as year , 'week' as month, day, sum(a.postPubSum) as postPubSum, sum(a.postTranSum) as postTranSum, sum(a.postHitSum) as postHitSum
                         , case  when ifnull(sum(a.postTranSum),0 )= 0 or ifnull(sum(a.postHitSum),0 )= 0  then 0.0 else sum(a.postHitSum) / sum(a.postTranSum)  end as percent
                         , sum(a.hitWeb) as hitWeb, sum(a.hitAgent) as hitAgent, sum(a.hitAssist) as hitAssist, sum( a.hitEmail ) as hitEmail,  sum(a.hitOther) as hitOther
         from    Achievement as a
         where   a.manage = _manage
                 and a.date >= startdate and a.date < enddate
-        group by DATE( a.date ) as daya
-        order by  daya desc ;
+        group by DATE( a.date ) as day
+        order by  day desc ;
 
-        into ret select max(year(a.date)) as yeara , 'week' as montha, 'all' as daya, sum(a.postPubSum) as postPubSum, sum(a.postTranSum) as postTranSum, sum(a.postHitSum) as postHitSum
+        into ret select max(year(a.date)) as year , 'week' as month, 'all' as day, sum(a.postPubSum) as postPubSum, sum(a.postTranSum) as postTranSum, sum(a.postHitSum) as postHitSum
                         , case  when ifnull(sum(a.postTranSum),0 )= 0 or ifnull(sum(a.postHitSum),0 )= 0  then 0.0 else sum(a.postHitSum) / sum(a.postTranSum)  end as percent
                         , sum(a.hitWeb) as hitWeb, sum(a.hitAgent) as hitAgent, sum(a.hitAssist) as hitAssist, sum( a.hitEmail ) as hitEmail,  sum(a.hitOther) as hitOther
         from    Achievement as a
@@ -103,20 +110,20 @@ returns ret  (
                 and a.date>=startdate and a.date < enddate;
 
     } else if(_type = 'month'){
-        into ret select yeara , montha, 'all' as daya, sum(a.postPubSum) as postPubSum, sum(a.postTranSum) as postTranSum, sum(a.postHitSum) as postHitSum
+        into ret select year , month, 'all' as day, sum(a.postPubSum) as postPubSum, sum(a.postTranSum) as postTranSum, sum(a.postHitSum) as postHitSum
                         , case  when ifnull(sum(a.postTranSum),0 )= 0 or ifnull(sum(a.postHitSum),0 )= 0  then 0.0 else sum(a.postHitSum) / sum(a.postTranSum)  end as percent
                         , sum(a.hitWeb) as hitWeb, sum(a.hitAgent) as hitAgent, sum(a.hitAssist) as hitAssist, sum( a.hitEmail ) as hitEmail,  sum(a.hitOther) as hitOther
         from    Achievement as a
         where    a.manage = _manage and a.year = _year
-        group by a.year as yeara , a.month as montha
-        order by  montha desc;
+        group by a.year as year , a.month as month
+        order by  month desc;
 
-        into ret select yeara , 'all' as montha ,'all' as daya, sum(a.postPubSum) as postPubSum, sum(a.postTranSum) as postTranSum, sum(a.postHitSum) as postHitSum
+        into ret select year , 'all' as month ,'all' as day, sum(a.postPubSum) as postPubSum, sum(a.postTranSum) as postTranSum, sum(a.postHitSum) as postHitSum
                         , case  when ifnull(sum(a.postTranSum),0 )= 0 or ifnull(sum(a.postHitSum),0 )= 0  then 0.0 else sum(a.postHitSum) / sum(a.postTranSum) end as percent
                         , sum(a.hitWeb) as hitWeb, sum(a.hitAgent) as hitAgent, sum(a.hitAssist) as hitAssist, sum( a.hitEmail ) as hitEmail,  sum(a.hitOther) as hitOther
         from   Achievement as a
         where  a.manage = _manage and a.year = _year
-        group by a.year as yeara;
+        group by a.year as year;
     }
 };
 

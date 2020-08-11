@@ -119,7 +119,6 @@ export class VRelease extends VPage<CPosts>  {
     }
 
     private page = observer(() => {
-        let { showPostPublishForProduct } = this.controller;
         let def = {
             discount: {
                 "1": true,
@@ -165,9 +164,6 @@ export class VRelease extends VPage<CPosts>  {
             <div className="p-3 my-1  text-center">
                 <button type="button" className="btn btn-outline-info ml-2" onClick={this.onPublish} >
                     {this.t('ordinarypublish')}
-                </button>
-                <button type="button" className="btn btn-primary ml-4" onClick={showPostPublishForProduct} >
-                    {this.t('productpublish')}
                 </button>
             </div>
         </Page >

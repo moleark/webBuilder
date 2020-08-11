@@ -94,27 +94,9 @@ MAP InformationPost(
     key post ID POST,
     key sort int
 );
-
-
-
-/** POST发布  已作废
-MAP WebPost(
+ 
+--产品
+MAP PostProduct(
     key post ID POST,
-    operator ID [$user] 
+    key product ID ProductX,
 );
-
-MAP AgentPost(
-    key post ID POST,
-    operator ID [$user] 
-);
-
-MAP AssistPost(
-    key post ID POST,
-    operator ID [$user] 
-);
-
-MAP CustomerPost(
-    key post ID POST,
-    operator ID [$user] 
-);
-**/

@@ -11,7 +11,6 @@ import { VPickImage } from "./VPickImage";
 import { VPickTemplate } from "./VPickTemplate";
 import { VRelease } from "./VRelease";
 import { setting, MadiaType } from "configuration";
-import { VReleaseProduct } from "./VReleaseProduct";
 import { VPickProduct } from "./VPickProduct";
 import { VGrade } from "./VGrade";
 import { VPickProductCatalog } from "./VPickProductCatalog";
@@ -33,6 +32,7 @@ import { VInformationPost } from './VInformationPost';
 import { VEditpostSort } from './VEditpostSort';
 import { VProductCatalogPostCount } from "./VProductCatalogPostCount";
 import { VDomainPostCount } from "./VDomainPostCount";
+import { VPostProduct } from "./VPostProduct";
 /* eslint-disable */
 export class CPosts extends CUqBase {
     @observable pageTemplate: QueryPager<any>;
@@ -58,6 +58,7 @@ export class CPosts extends CUqBase {
     @observable pagePostProductCatalogExplain: any;
     @observable pagePostSubject: any;
     @observable pagePostDomain: any;
+    @observable pagePostProdut: any;
 
     @observable isMyself: boolean = true;
     @observable searchKey: any;
@@ -230,38 +231,6 @@ export class CPosts extends CUqBase {
         console.log(setting.previewUrl + "/post/" + id, 'aa')
     };
 
-    searchPostProduct = async () => {
-        this.postProduct = await this.uqs.webBuilder.SearchPostPublishForProduct.table({ _post: this.current.id });
-
-    };
-
-    showPostPublishForProduct = async () => {
-        await this.searchPostProduct();
-        this.openVPage(VReleaseProduct);
-    }
-
-
-    searchProduct = async (key: string) => {
-        this.pageProduct = new QueryPager(this.uqs.product.SearchProduct, 15, 30);
-        await this.pageProduct.first({ keyWord: key, salesRegion: 1 });
-    };
-
-    showProduct = async (param: any) => {
-        await this.searchProduct(undefined);
-        this.openVPage(VPickProduct);
-    }
-
-    onPickedProduct = async (id: number) => {
-        await this.searchPostProduct();
-        this.closePage();
-        await this.uqs.webBuilder.PostPublishProduct.add({ product: id, arr1: [{ post: this.current.id, operator: nav.user.id }] });
-    };
-
-    delPostProduct = async (param: any) => {
-        await this.searchPostProduct();
-        this.uqs.webBuilder.PostPublishProduct.del({ product: param.id, arr1: [{ post: this.current.id }] });
-    }
-
 
     /* 产品目录*/
     showPostProductCatalog = async () => {
@@ -423,9 +392,42 @@ export class CPosts extends CUqBase {
         return list.postcounts;
     }
 
+    //贴文产品
+    //显示贴文产品列表
+    showPostProduct = async () => {
+        await this.searchPostProduct();
+        this.openVPage(VPostProduct);
+    }
+    //搜索贴文产品列表
+    searchPostProduct = async () => {
+        this.pagePostProdut = await this.uqs.webBuilder.SearchPostProduct.table({ _post: this.current.id });
+    };
+    //显示产品页面
+    showProduct = async (param: any) => {
+        await this.searchProduct(undefined);
+        this.openVPage(VPickProduct);
+    }
+    //搜索产品
+    searchProduct = async (key: string) => {
+        this.pageProduct = new QueryPager(this.uqs.product.SearchProduct, 15, 30);
+        await this.pageProduct.first({ keyWord: key, salesRegion: 1 });
+    };
+    //添加产品
+    onPickedProduct = async (id: any) => {
+        await this.uqs.webBuilder.PostProduct.add({ post: this.current.id, arr1: [{ product: id }] });
+        this.searchPostProduct();
+    };
+    //删除产品
+    delPostProduct = async (param: any) => {
+        await this.uqs.webBuilder.PostProduct.del({ post: this.current.id, arr1: [{ product: param.product }] });
+        await this.searchPostProduct();
+    }
+
+
     tab = () => {
         return <this.render />;
     };
+
     //范文
     showModel = async () => {
 
@@ -460,7 +462,6 @@ export class CPosts extends CUqBase {
         this.informationpagePosts.setEachPageItem((item: any, results: { [name: string]: any[] }) => {
             this.cApp.useUser(item.author);
         });
-        // let Auser = 0;console.log(item)
         await this.informationpagePosts.first({ key: key, author: 0, types: setting.BusinessScope });
     };
     //添加到资讯中心  
@@ -481,5 +482,8 @@ export class CPosts extends CUqBase {
     editPostShow = async (param: any) => {
         this.openVPage(VEditpostSort, param);
     }
+
+
+
 
 }

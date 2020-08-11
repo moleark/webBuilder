@@ -33,7 +33,7 @@ export class VReleaseProduct extends VPage<CPosts> {
 
     private renderItem = (item: any, index: number) => {
         let { product } = item;
-        let { delPostProduct } = this.controller;
+
         return <div>
             {
                 tv(product, vl => <div className="w-100 mx-3 py-3" >
@@ -43,7 +43,7 @@ export class VReleaseProduct extends VPage<CPosts> {
                         <div className="col d-flex pt-2">品牌：{tv(vl.brand, val => val.name)}</div>
                         <div className="col d-flex pt-2">产品编号：{vl.origin}</div>
                     </div>
-                    <button className="btn btn-outline-info pt-2" onClick={() => delPostProduct(product)}> 删除</button>
+                    <button className="btn btn-outline-info pt-2"  > 删除</button>
                 </div>
                 )
             }

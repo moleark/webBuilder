@@ -335,6 +335,19 @@ returns ret (
     where   ps.domain = domain;
 };
 
+/** 搜索贴文产品 **/
+QUERY SearchPostProduct( 
+     _post ID POST
+)
+returns ret (
+    post ID POST,
+    product ID ProductX
+) {
+    into ret select ps.post, ps.product
+    from    PostProduct as ps
+    where   ps.post = _post;
+};
+
 
 /** 搜索栏目 **/
 QUERY SearchDomainPost(    
