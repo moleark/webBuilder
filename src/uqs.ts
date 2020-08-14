@@ -92,6 +92,7 @@ export interface WebBuilder {
 
     PostProduct: Map;
     SearchPostProduct: Query;
+    SearchRecommendProduct: Query;
 
 }
 

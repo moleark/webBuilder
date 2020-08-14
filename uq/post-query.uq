@@ -450,5 +450,80 @@ PAGE (
 };
 
 
+
+/** 搜索推荐产品 **/
+QUERY SearchRecommendProduct(
+    post ID POST
+)
+returns ret (
+    id ID ProductX,
+    NO char(100),
+    brand ID,
+    origin char(100),
+    description char(100),
+    descriptionc char(100),
+    imageurl char(100),
+    chemical char(100),
+    cas char(100),
+    purity char(100),
+    brandname char(100)
+) {
  
+    /-mysql
+	DECLARE `_$row_1` INT; DECLARE `_$row_2` INT;
+
+	DROP TABLE IF EXISTS `back_productcategory`;
+	CREATE TABLE `back_productcategory` (`$id` INT NOT NULL AUTO_INCREMENT,`productcategory` BIGINT NULL ,PRIMARY KEY(`$id`)) ENGINE=MyISAM;
+	
+	INSERT INTO  `back_productcategory`( productcategory )
+ 	SELECT	productcategory
+	FROM 		webbuilder.tv_postproductcatalog
+	WHERE 	post = `_post`;
+	 
+	INSERT INTO  `back_productcategory`( productcategory )
+ 	SELECT   id
+	FROM		product.tv_productcategory
+	WHERE 	parent IN( SELECT	productcategory FROM back_productcategory );
+	
+	 
+	DROP TABLE IF EXISTS `back_child`;
+	CREATE TABLE `back_child` (`$id` INT NOT NULL AUTO_INCREMENT,`productcategory` BIGINT NULL ,PRIMARY KEY(`$id`)) ENGINE=MyISAM;
+	
+	INSERT INTO  `back_child`( productcategory )
+ 	SELECT   id
+	FROM		product.tv_productcategory
+	WHERE 	parent IN( SELECT	productcategory FROM back_productcategory ) AND isleaf = 0;
+ 
+	SET `_$row_1`=1;
+  	__loop_3: WHILE 1=1 DO
+
+		SELECT COUNT(*)  INTO `_$row_2` FROM `back_child`;
+		IF `_$row_2` = 0 THEN
+			LEAVE __loop_3;
+		END IF;
+		
+		INSERT INTO  `back_productcategory`( productcategory )
+	 	SELECT   id
+		FROM		product.tv_productcategory
+		WHERE 	parent IN( SELECT	productcategory FROM back_child );
+		
+		DELETE FROM `back_child`;
+		INSERT INTO  `back_child`( productcategory )
+	 	SELECT   id
+		FROM		product.tv_productcategory
+		WHERE 	parent IN( SELECT	productcategory FROM back_child ) AND isleaf = 0;
+		       
+	END WHILE;  
+ 
+	SELECT	 p.id, p.NO, p.brand, p.origin, p.description, p.descriptionc, p.imageurl, pc.chemical
+         	, pc.cas, pc.purity, b.name AS brandname
+	FROM 		back_productcategory AS a
+				INNER JOIN product.tv_productproductcategorycache as pp ON a.productcategory = pp.category
+				INNER JOIN product.tv_productx as p on p.id = pp.product
+				LEFT JOIN  product.tv_brand as b on p.$unit = b.$unit and p.brand = b.id
+				LEFT JOIN  product.tv_productchemical as pc on p.$unit = pc.$unit and p.id = pc.product
+	WHERE 	pp.`$unit` = 24 AND pp.salesregion = 1
+	LIMIT 10;
+    -/
+};
  
