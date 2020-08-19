@@ -129,7 +129,7 @@ QUERY SearchAchievementOfTeamNew(
 returns ret  (
     year   char(10),
     month  char(20),
-    day   char(20),
+    day    char(20),
     postPubSum int,     --post发布次数
     postTranSum int,    --post转发次数
     postHitSum  int,    --post访问次数
@@ -146,7 +146,7 @@ returns ret  (
         from    Achievement as a 
         where   a.year = _year
         group by a.year as year, a.month as month, a.date as day
-        order by  day desc ;
+        order by  day ;
 
     } else if(_type = 'month') {
         into ret select year, month, 'all' as day, sum(ifnull(a.postPubSum,0)) as postPubSum , sum( ifnull(a.postTranSum,0)) as postTranSum, sum(ifnull(a.postHitSum,0)) as postHitSum
@@ -155,27 +155,26 @@ returns ret  (
         from    Achievement as a 
         where   a.year = _year
         group by a.year, a.month
-        order by  month desc ;
-    }
+        order by  month ;
+    } 
 };
 
 
 QUERY SearchAchievementOfTeamDetail(
     _manage ID [$user],
+    _type   char(10),
     _year   char(10),
-    _month  char(10),
-    _day    char(10),
-    _type   char(10)
+    _month  char(10)
 )
-PAGE (
-    id bigint desc,
-    yeara   char(10),
-    montha  char(20),
+returns ret (
+    year   char(10),
+    month  char(20),
+    day    char(20),
     author ID [$user],
     postPubSum int,     --post发布次数
     postTranSum int,    --post转发次数
     postHitSum  int,    --post访问次数
-    percent  dec(12, 2),
+    percent dec(12, 2),
     hitWeb      int,    --post访问次数--网站
     hitAgent    int,    --post访问次数--轻代理
     hitAssist   int,    --post访问次数--销售助手
@@ -184,50 +183,24 @@ PAGE (
 ) {
      if(_type='day'){
         
-        PAGE select  0 as id, max(year(a.date)) as yeara , 'week' as montha, author, sum(a.postPubSum) as postPubSum, sum(a.postTranSum) as postTranSum, sum(a.postHitSum) as postHitSum
-                    , case  when ifnull(sum(a.postTranSum),0 )= 0 or ifnull(sum(a.postHitSum),0 )= 0  then 0.0 else sum(a.postHitSum) / sum(a.postTranSum) end as percent
-                    , sum(a.hitWeb) as hitWeb, sum(a.hitAgent) as hitAgent, sum(a.hitAssist) as hitAssist, sum( a.hitEmail ) as hitEmail,  sum(a.hitOther) as hitOther
-        from    Achievement as a
-        where   a.manage = _manage and DATE(a.date) = _day and a.user <> 0
-        group by a.user as author
-        order by sum(a.postHitSum) desc;
-
-    } else if(_type='week'){
-        
-        var startdate DATE, enddate DATE;
-        set startdate = DATE( dateadd(week, -1, NOW() ) );
-        set enddate = DATE( NOW() );
-
-        PAGE select  0 as id, max(year(a.date)) as yeara , 'week' as montha, author, sum(a.postPubSum) as postPubSum, sum(a.postTranSum) as postTranSum, sum(a.postHitSum) as postHitSum
-                    , case  when ifnull(sum(a.postTranSum),0 )= 0 or ifnull(sum(a.postHitSum),0 )= 0  then 0.0 else sum(a.postHitSum) / sum(a.postTranSum) end as percent
-                    , sum(a.hitWeb) as hitWeb, sum(a.hitAgent) as hitAgent, sum(a.hitAssist) as hitAssist, sum( a.hitEmail ) as hitEmail,  sum(a.hitOther) as hitOther
-        from    Achievement as a
-        where   a.manage = _manage
-                and a.date>=startdate and a.date < enddate
-                and a.user <> 0
-        group by a.user as author
-        order by sum(a.postHitSum) desc;
+        into ret  select year, month, day, author, sum(ifnull(a.postPubSum,0)) as postPubSum , sum( ifnull(a.postTranSum,0)) as postTranSum, sum(ifnull(a.postHitSum,0)) as postHitSum
+                , case  when ifnull(sum(a.postTranSum),0 )= 0 or ifnull(sum(a.postHitSum),0 )= 0  then 0.0 else sum(a.postHitSum) / sum(a.postTranSum)  end as percent
+                , sum(a.hitWeb) as hitWeb, sum(a.hitAgent) as hitAgent, sum(a.hitAssist) as hitAssist, sum( a.hitEmail ) as hitEmail,  sum(a.hitOther) as hitOther
+        from    Achievement as a 
+        where   a.year = _year
+        group by a.year as year, a.month as month, a.date as day, a.user as author
+        order by day;
 
     } else if(_type='month'){
 
-        PAGE select  0 as id, yeara, montha, author, sum(a.postPubSum) as postPubSum, sum(a.postTranSum) as postTranSum, sum(a.postHitSum) as postHitSum
-                    , case  when ifnull(sum(a.postTranSum),0 )= 0 or ifnull(sum(a.postHitSum),0 )= 0  then 0.0 else sum(a.postHitSum) / sum(a.postTranSum) end as percent
-                    , sum(a.hitWeb) as hitWeb, sum(a.hitAgent) as hitAgent, sum(a.hitAssist) as hitAssist, sum( a.hitEmail ) as hitEmail,  sum(a.hitOther) as hitOther
-        from    Achievement as a
-        where    a.manage = _manage and a.year = _year and  a.month = _month and a.user <> 0
-        group by a.year as yeara, a.month as montha, a.user as author
-        order by sum(a.postHitSum) desc;
-
-    } else if(_type='year'){
-
-        PAGE select  0 as id, yeara, 'all' as montha, author, sum(a.postPubSum) as postPubSum, sum(a.postTranSum) as postTranSum, sum(a.postHitSum) as postHitSum
-                    , case  when ifnull(sum(a.postTranSum),0 )= 0 or ifnull(sum(a.postHitSum),0 )= 0  then 0.0 else sum(a.postHitSum) / sum(a.postTranSum) end as percent
-                    , sum(a.hitWeb) as hitWeb, sum(a.hitAgent) as hitAgent, sum(a.hitAssist) as hitAssist, sum( a.hitEmail ) as hitEmail,  sum(a.hitOther) as hitOther
-        from    Achievement as a
-        where   a.manage = _manage and  a.year = _year and a.user <> 0
-        group by a.year as yeara, a.user  as author
-        order by sum(a.postHitSum) desc;
-    }
+        into ret  select year, month, 'all' as day, author, sum(ifnull(a.postPubSum,0)) as postPubSum , sum( ifnull(a.postTranSum,0)) as postTranSum, sum(ifnull(a.postHitSum,0)) as postHitSum
+                , case  when ifnull(sum(a.postTranSum),0 )= 0 or ifnull(sum(a.postHitSum),0 )= 0  then 0.0 else sum(a.postHitSum) / sum(a.postTranSum)  end as percent
+                , sum(a.hitWeb) as hitWeb, sum(a.hitAgent) as hitAgent, sum(a.hitAssist) as hitAssist, sum( a.hitEmail ) as hitEmail,  sum(a.hitOther) as hitOther
+        from    Achievement as a 
+        where   a.year = _year and a.month = _month
+        group by a.year as year, a.month as month, a.user as author
+        order by  month;
+    } 
 };
 
  --文帖发布员工业绩报表： 年    月    员工    文帖发布次数    文帖浏览总量    
