@@ -28,27 +28,27 @@ export class VTeamMonthPipeDetail extends VPage<CMe> {
         })
         teamAchievementlist.forEach(v => {
             let { year, day, month, hitWeb, hitAgent, hitAssist, hitEmail, hitOther, author, name } = v;
-            // let authorname = this.controller.cApp.renderUser(author.id);
+            let authorname = author ? this.controller.cApp.renderUser(author.id) : name;
             console.log(v)
             if (name) {
                 datahitWebdetail.push(
                     {
                         date: month,
-                        type: `${name}`,
+                        type: authorname,
                         value: hitWeb
                     },
                 )
                 datahitAgentdetail.push(
                     {
                         date: month,
-                        type: `${name}`,
+                        type: authorname,
                         value: hitAgent
                     },
                 )
                 datahitAssistdetail.push(
                     {
                         date: month,
-                        type: `${name}`,
+                        type: authorname,
                         value: hitAssist
                     },
                 )

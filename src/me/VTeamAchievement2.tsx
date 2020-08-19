@@ -42,6 +42,7 @@ export class VTeamAchievement2 extends VPage<CMe> {
         let dataSource: any = []
         teamAchievementMonthchart.forEach(val => {
             let { month, postPubSum, postTranSum, postHitSum, percent, hitWeb, hitAgent, hitAssist, hitEmail, hitOther } = val;
+            month = month + "月";
             dataMonth.push(
                 {
                     date: month,
@@ -104,7 +105,8 @@ export class VTeamAchievement2 extends VPage<CMe> {
                 <h3 className='p-3 small text-center'>贴文系统运行日报</h3>
                 <Chart scale={{ value: { min: 0 }, type: 'linear' }} autoFit height={400} data={dataMonth} padding={[20, 10, 50, 40]}
                     onAxisClick={(e: any) => {
-                        let month = e.target.attrs.text
+                        let month = e.target.attrs.text;
+                        month = month.replace("月", "");
                         if (month !== '0') {
                             this.controller.showTeamAchievementMonDetail2(month)
                         }
@@ -116,6 +118,7 @@ export class VTeamAchievement2 extends VPage<CMe> {
                 <Chart scale={{ value: { min: 0 } }} autoFit height={400} data={dataSource} padding={[20, 10, 50, 40]}
                     onAxisClick={(e: any) => {
                         let month = e.target.attrs.text
+                        month = month.replace("月", "");
                         if (month !== '0') {
                             this.controller.showTeamAchievementPipeDetail(month)
                         }
