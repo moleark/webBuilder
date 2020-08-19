@@ -34,21 +34,21 @@ export class VTeamAchievementDetail2 extends VPage<CMe> {
                 dataDayPubSumdetail.push(
                     {
                         date: day,
-                        type: `${name}`,
+                        type: authorname,
                         value: postPubSum
                     },
                 )
                 dataDayHitSumdetail.push(
                     {
                         date: day,
-                        type: `${name}`,
+                        type: authorname,
                         value: postHitSum
                     },
                 )
                 dataDaypercentdetail.push(
                     {
                         date: day,
-                        type: `${name}`,
+                        type: authorname,
                         value: percent
                     },
                 )

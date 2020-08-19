@@ -18,12 +18,9 @@ export class VModelarticle extends VPage<CPosts> {
     });
 
     private renderItem = (item: any, index: number) => {
-        let { user, showDetail } = this.controller;
+        let { showDetail } = this.controller;
         let { image, caption, discription, author, hits, emphasis } = item;
-        let divUser = user.id === author.id ?
-            <span className="text-warning">[自己]</span>
-            :
-            this.controller.cApp.renderUser(author.id);
+        let divUser = this.controller.cApp.renderUser(author.id);
 
         let showImport = emphasis === 1 ?
             <FA className="text-danger ml-3 " name="star" /> : null

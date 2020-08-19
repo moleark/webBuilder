@@ -164,12 +164,9 @@ export class CMe extends CUqBase {
     showTeamAchievementDetail2 = async () => {
         this.year = moment().format('YYYY')
         this.teamAchievementDetail2 = await this.uqs.webBuilder.SearchAchievementOfTeamDetail.table({ _manage: 0, _year: this.year, _month: '', _type: "day" });
-        this.teamAchievementDetail2.forEach(v => {
-            if (v.author) {
-                this.cApp.useUser(v.author.id);
-            }
+        this.teamAchievementDetail2.forEach(element => {
+            this.cApp.useUser(element.author);
         });
-
         this.openVPage(VTeamAchievementDetail2)
     }
 

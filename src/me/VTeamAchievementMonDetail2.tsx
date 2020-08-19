@@ -27,27 +27,27 @@ export class VTeamAchievementMonDetail2 extends VPage<CMe> {
             return obj
         })
         teamAchievementlist.forEach(v => {
-            let { year, day, month, postPubSum, postTranSum, postHitSum, percent, author, name } = v;
-            // let authorname = this.controller.cApp.renderUser(author.id);
+            let { month, postPubSum, postHitSum, percent, author, name } = v;
+            let authorname = author ? this.controller.cApp.renderUser(author.id) : name;
             if (name) {
                 dataMonPubSumdetail.push(
                     {
                         date: month,
-                        type: `${name}`,
+                        type: authorname,
                         value: postPubSum
                     },
                 )
                 dataMonHitSumdetail.push(
                     {
                         date: month,
-                        type: `${name}`,
+                        type: authorname,
                         value: postHitSum
                     },
                 )
                 dataMonpercentdetail.push(
                     {
                         date: month,
-                        type: `${name}`,
+                        type: authorname,
                         value: percent
                     },
                 )
