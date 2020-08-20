@@ -58,7 +58,7 @@ export class VTeamAchievementDetail2 extends VPage<CMe> {
         let header: any = <div> 日报明细</div>
         return <Page header={header} headerClassName={setting.pageHeaderCss} >
             <div className='pb-4'>
-                <Chart scale={{ date: { type: 'time' }, value: { min: 0 } }} autoFit height={400} data={dataDayPubSumdetail} padding={[20, 10, 90, 40]}>
+                <Chart scale={{ date: { type: 'time' }, value: { min: 0 } }} autoFit={true} height={400} data={dataDayPubSumdetail} padding={[20, 10, 90, 40]}>
                     {this.Lineadvance}
                 </Chart>
                 <h3 className='p-3 small text-center'>生产量/人</h3>

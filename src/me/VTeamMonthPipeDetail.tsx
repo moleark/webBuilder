@@ -27,9 +27,8 @@ export class VTeamMonthPipeDetail extends VPage<CMe> {
             return obj
         })
         teamAchievementlist.forEach(v => {
-            let { year, day, month, hitWeb, hitAgent, hitAssist, hitEmail, hitOther, author, name } = v;
+            let { year, day, month, hitWeb, hitAgent, hitAssist, author, name } = v;
             let authorname = author ? this.controller.cApp.renderUser(author.id) : name;
-            console.log(v)
             if (name) {
                 datahitWebdetail.push(
                     {
@@ -38,21 +37,21 @@ export class VTeamMonthPipeDetail extends VPage<CMe> {
                         value: hitWeb
                     },
                 )
-                datahitAgentdetail.push(
-                    {
-                        date: month,
-                        type: authorname,
-                        value: hitAgent
-                    },
-                )
-                datahitAssistdetail.push(
-                    {
-                        date: month,
-                        type: authorname,
-                        value: hitAssist
-                    },
-                )
-            }
+
+            } datahitAgentdetail.push(
+                {
+                    date: month,
+                    type: authorname,
+                    value: hitAgent
+                },
+            )
+            datahitAssistdetail.push(
+                {
+                    date: month,
+                    type: authorname,
+                    value: hitAssist
+                },
+            )
         })
         datahitWebdetail.sort(creatCompare("value"))
         datahitAgentdetail.sort(creatCompare("value"))
@@ -85,10 +84,10 @@ export function creatCompare(propertyName: any) {
     return function (obj1: any, obj2: any) {
         var value1 = obj1[propertyName];
         var value2 = obj2[propertyName];
-        if (value1 < value2) {
-            return 1
-        } else if (value1 > value2) {
+        if (value1 > value2) {
             return -1
+        } else if (value1 < value2) {
+            return 1
         } else {
             return 0
         }

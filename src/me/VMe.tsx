@@ -90,7 +90,7 @@ export class VMe extends VPage<CMe> {
             {branch(this.t('team'), "icon-Group-", showTeamAchievement)}
             {branch(this.t('set'), "icon-shezhi3", onSet)}
             {branch(this.t('图片分类'), "icon-Fill", () => showCat({ name: "图片分类", id: 0 }))}
-            {branch(this.t('可视图形'), "icon-Group-", showTeamAchievement2)}
+            {branch(this.t('team'), "icon-Group-", showTeamAchievement2)}
         </div>
     })
 }

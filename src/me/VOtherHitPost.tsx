@@ -1,12 +1,8 @@
 import * as React from "react";
-import { consts } from "consts";
 import { observer } from "mobx-react";
 import { VPage, Page, List, FA, tv, SearchBox } from "tonva";
 import { CMe } from "./CMe";
-// import classNames from "classnames";
-import { observable } from "mobx";
-export class VInformationPost extends VPage<CMe> {
-    @observable private isMes: boolean = true;
+export class VOtherHitPost extends VPage<CMe> {
 
     async open() {
         this.openPage(this.page)
@@ -39,7 +35,7 @@ export class VInformationPost extends VPage<CMe> {
 
     private itemRow = observer((item: any) => {
         let { user, cApp } = this.controller;
-        let { addInformation, informationpagePosts, informationsearchPostsKey, onScrollBottoms, } = cApp.cPosts
+        let { } = cApp.cPosts
         if (!user) return;
         let { image, caption, discription, author, emphasis, web, agent, assist, openweb } = item;
         let divUser = user.id === author.id ?

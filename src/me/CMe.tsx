@@ -20,8 +20,7 @@ import { VTeamInputPost } from "./VTeamInputPost";
 import { VTeamAchievementDetail2 } from "./VTeamAchievementDetail2";
 import { VTeamAchievementMonDetail2 } from "./VTeamAchievementMonDetail2";
 import { VTeamMonthPipeDetail } from "./VTeamMonthPipeDetail";
-import { VInformationPost } from './VInformationPost';
-import { VTeamPostSource } from './VTeamPostSource';
+import { VOtherHitPost } from './VOtherHitPost';
 /* eslint-disable */
 
 export class CMe extends CUqBase {
@@ -45,7 +44,6 @@ export class CMe extends CUqBase {
     @observable pageCat: any;
     @observable currentCat: any;
     @observable currentCatParent: any = "0";
-
     private year: any
     searchMadiaKey = async (key: string) => {
 
@@ -152,11 +150,14 @@ export class CMe extends CUqBase {
     /** 
      * 团队折线图
      * **/
-    showTeamAchievement2 = async () => {
-        this.year = moment().format('YYYY')
+    getTeamAchievement2 = async () => {
         this.teamAchievementDay = await this.uqs.webBuilder.SearchAchievementOfTeamNew.table({ _manage: 0, _year: this.year, _type: "day" });
         this.teamAchievementMonthchart = await this.uqs.webBuilder.SearchAchievementOfTeamNew.table({ _manage: 0, _year: this.year, _type: "month" });
-        this.openVPage(VTeamAchievement2);
+    }
+    showTeamAchievement2 = async () => {
+        this.year = moment().format('YYYY')
+        await this.getTeamAchievement2()
+        await this.openVPage(VTeamAchievement2);
     }
     /**
      * 日报详细
@@ -199,10 +200,16 @@ export class CMe extends CUqBase {
     };
     pickPost = async (context: Context, name: string, value: number): Promise<any> => {
         this.cApp.cPosts.informationsearchPostsKey("", "")
-        return await this.vCall(VInformationPost);
+        return await this.vCall(VOtherHitPost);
     };
-    pickSource = async (context: Context, name: string, value: number): Promise<any> => {
-        return await this.vCall(VTeamPostSource);
+    /**
+     * 其他网站浏览量提交
+     */
+    addSourceHit = async (param: any) => {
+        this.closePage();
+        let { post, source, postReadSum, date } = param;
+        await this.uqs.webBuilder.hitOfManual.submit({ post: post, source: source, hit: postReadSum, hitdate: date });
+        await this.getTeamAchievement2()
     };
     onPickedPost = (id: number) => {
         this.closePage();
@@ -212,6 +219,7 @@ export class CMe extends CUqBase {
         this.closePage();
         this.returnCall(this.uqs.webBuilder.Template.boxId(id));
     };
+
     showTeamAchievementDetail = async (title: any, manage: any, year: any, month: any, day: any, type: any) => {
         this.teamAchievementDetail = new QueryPager(this.uqs.webBuilder.SearchAchievementOfTeamDetail, 15, 30);
         this.teamAchievementDetail.setEachPageItem((item: any, results: { [name: string]: any[] }) => {
