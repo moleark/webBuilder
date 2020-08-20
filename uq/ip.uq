@@ -9,7 +9,8 @@ HISTORY hits (
     ip ID IP,
     post ID,
     sales ID [$user],
-    source INT
+    source INT,
+    hit INT
 
 );
 
@@ -45,6 +46,7 @@ ACTION hit ver 0.1 (
     
             var _user ID $user, _month int, _year int;
             var hitdate DATE, businessdate DATE ;
+
             set hitdate = DATE( NOW() );
             set businessdate = case when DAY(hitdate) > 20 then dateadd(month, 1, hitdate) else hitdate end;
             set _month = month(businessdate);
@@ -68,6 +70,44 @@ ACTION hit ver 0.1 (
         }
     }
 };
+
+
+ACTION hitOfManual  ver 0.1 (
+    post BIGINT,
+    source int,
+    hit int,
+    hitdate DATE 
+) {
+ 
+    var ipId ID;
+    TUID ip INTO ipId unique(0);
+    
+    HISTORY hits DATE = hitdate SET ip = ipId, post = post, sales = 0, source = source, hit = hit;
+    BOOK hot at (post) set sumHits+=hit;
+
+    var _user ID $user, _month int, _year int;
+    
+    var businessdate DATE ;
+    set businessdate = case when DAY(hitdate) > 20 then dateadd(month, 1, hitdate) else hitdate end;
+    set _month = month(businessdate);
+    set _year = year(businessdate);
+    set _user = p.author from POST as p where p.ID = post;
+
+    BOOK Achievement at( hitdate, 0, _user ) set postHitSum += hit, year = _year, month = _month;
+
+    if( source = 0 ){
+        BOOK Achievement at( hitdate, 0, _user ) set hitWeb += hit;
+    } else if ( source = 1 ){
+        BOOK Achievement at( hitdate, 0, _user ) set hitAgent += hit;  
+    } else if ( source = 2 ){
+        BOOK Achievement at( hitdate, 0, _user ) set hitAssist += hit;  
+    } else if ( source = 3 ){
+        BOOK Achievement at( hitdate, 0, _user ) set hitEmail += hit;  
+    } else {
+        BOOK Achievement at( hitdate, 0, _user ) set hitOther += hit;  
+    }
+};
+
 
 QUERY hotPosts() 
 RETURNS ret (
