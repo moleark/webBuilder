@@ -98,11 +98,18 @@ export class VTeamAchievement extends VPage<CMe> {
         </div>
         return <Page header={'数据折线图'} headerClassName={setting.pageHeaderCss} right={right}>
             <div className='pb-4'>
+                <div className="py-4 text-center text-muted">
+                    <strong> 贴文系统运行日报</strong>
+                </div>
                 <Chart scale={{ value: { min: 0 } }} autoFit height={400} data={dataDay} padding={[20, 10, 90, 40]}
                     onPlotClick={this.handleClickDaydetail}>
                     {this.lineAdvance}
+
                 </Chart>
-                <h3 className='p-3 small text-center'>贴文系统运行日报</h3>
+
+                <div className="py-4 text-center text-muted">
+                    <strong> 贴文系统运行月报</strong>
+                </div>
                 <Chart scale={{ value: { min: 0 }, type: 'linear' }} autoFit height={400} data={dataMonth} padding={[20, 10, 50, 40]}
                     onAxisClick={(e: any) => {
                         let month = e.target.attrs.text;
@@ -114,7 +121,9 @@ export class VTeamAchievement extends VPage<CMe> {
                 >
                     {this.lineAdvance}
                 </Chart>
-                <h3 className='p-3 small text-center'>贴文系统运行月报</h3>
+                <div className="py-4 text-center text-muted">
+                    <strong> 渠道报表</strong>
+                </div>
                 <Chart scale={{ value: { min: 0 } }} autoFit height={400} data={dataSource} padding={[20, 10, 50, 40]}
                     onAxisClick={(e: any) => {
                         let month = e.target.attrs.text
@@ -125,7 +134,6 @@ export class VTeamAchievement extends VPage<CMe> {
                     }}>
                     {this.lineAdvance}
                 </Chart>
-                <h3 className='p-3 small text-center'>渠道报表</h3>
             </div>
         </Page >
     })
@@ -135,7 +143,6 @@ export class VTeamAchievement extends VPage<CMe> {
         position="date*value"
         color="type"
     />
-
     private handleClickDaydetail = (e: any) => {
         this.controller.showTeamAchievementDetail()
     }

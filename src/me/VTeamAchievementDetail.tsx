@@ -58,18 +58,24 @@ export class VTeamAchievementDetail extends VPage<CMe> {
         let header: any = <div> 日报明细</div>
         return <Page header={header} headerClassName={setting.pageHeaderCss} >
             <div className='pb-4'>
+                <div className="py-4 text-center text-muted">
+                    <strong> 生产量/人</strong>
+                </div>
                 <Chart scale={{ date: { type: 'time' }, value: { min: 0 } }} autoFit={true} height={400} data={dataDayPubSumdetail} padding={[20, 10, 90, 40]}>
                     {this.Lineadvance}
                 </Chart>
-                <h3 className='p-3 small text-center'>生产量/人</h3>
+                <div className="py-4 text-center text-muted">
+                    <strong> 浏览量/人</strong>
+                </div>
                 <Chart scale={{ date: { type: 'time' }, value: { min: 0 } }} autoFit height={400} data={dataDayHitSumdetail} padding={[20, 10, 90, 40]}>
                     {this.Lineadvance}
                 </Chart>
-                <h3 className='p-3 small text-center'>浏览量/人</h3>
+                <div className="py-4 text-center text-muted">
+                    <strong> 转化率/人</strong>
+                </div>
                 <Chart scale={{ date: { type: 'time' }, value: { min: 0 } }} autoFit height={400} data={dataDaypercentdetail} padding={[20, 10, 90, 40]}>
                     {this.Lineadvance}
                 </Chart>
-                <h3 className='p-3 small text-center'>转化率/人</h3>
             </div>
         </Page >
     })
