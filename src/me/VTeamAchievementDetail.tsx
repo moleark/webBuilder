@@ -1,67 +1,82 @@
 import * as React from 'react';
-import { VPage, Page, Loading } from 'tonva';
+import { VPage, Page } from 'tonva';
 import { CMe } from './CMe';
 import { setting } from '../configuration';
 import { observer } from 'mobx-react';
 import { observable } from 'mobx';
+import { Chart, LineAdvance } from 'bizcharts';
+
 /* eslint-disable */
 export class VTeamAchievementDetail extends VPage<CMe> {
 
     @observable type: any;
     async open(param: any) {
-        this.type = param;
-        this.openPage(this.page);
+        this.openPage(this.page, param);
     }
 
-    private page = observer(() => {
+    private page = observer((param: any) => {
+        let { teamAchievementDetail2 } = this.controller;
+        let dataDayPubSumdetail: any = []
+        let dataDayHitSumdetail: any = []
+        let dataDaypercentdetail: any = []
 
-        let header: any = <div>{this.type}  业绩排名</div>
-        let { teamAchievementDetail } = this.controller;
-        let { items, loading } = teamAchievementDetail;
-        let divItems: any;
-        if (!items) {
-            divItems = (loading === true) ?
-                <div className="m-5"><Loading /></div>
-                :
-                <div className="my-3 mx-2 text-warning">
-                    <span className="text-primary" >{this.t('nopicture')}</span>
-                </div>;
-        }
-        else {
-            divItems = items.map((v, index) => {
-                return this.renderItem(v, index)
-            });
-        }
+        const teamAchievementlist = teamAchievementDetail2.map(item => {
+            const obj = { ...item }
+            if (item.author && item.author.id) {
+                obj.name = this.controller.cApp.renderUser(item.author.id);
+            }
+            return obj
+        })
+        teamAchievementlist.forEach(v => {
+            let { day, postPubSum, postHitSum, percent, author, name } = v;
+            // let authorname = author ? this.controller.cApp.renderUser(author.id) : name;
+            if (name) {
+                dataDayPubSumdetail.push(
+                    {
+                        date: day,
+                        type: `${name}`,
+                        value: postPubSum
+                    },
+                )
+                dataDayHitSumdetail.push(
+                    {
+                        date: day,
+                        type: `${name}`,
+                        value: postHitSum
+                    },
+                )
+                dataDaypercentdetail.push(
+                    {
+                        date: day,
+                        type: `${name}`,
+                        value: percent
+                    },
+                )
+            }
+        })
+
+        let header: any = <div> 日报明细</div>
         return <Page header={header} headerClassName={setting.pageHeaderCss} >
-            <div>
-                <table className="table text-center small">
-                    <thead className="text-primary">
-                        <tr className="bg-white">
-                            <th>编辑</th>
-                            <th>发布量</th>
-                            <th>转发量</th>
-                            <th>浏览量</th>
-                            <th>转换率</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {divItems}
-                    </tbody>
-                </table>
+            <div className='pb-4'>
+                <Chart scale={{ date: { type: 'time' }, value: { min: 0 } }} autoFit={true} height={400} data={dataDayPubSumdetail} padding={[20, 10, 90, 40]}>
+                    {this.Lineadvance}
+                </Chart>
+                <h3 className='p-3 small text-center'>生产量/人</h3>
+                <Chart scale={{ date: { type: 'time' }, value: { min: 0 } }} autoFit height={400} data={dataDayHitSumdetail} padding={[20, 10, 90, 40]}>
+                    {this.Lineadvance}
+                </Chart>
+                <h3 className='p-3 small text-center'>浏览量/人</h3>
+                <Chart scale={{ date: { type: 'time' }, value: { min: 0 } }} autoFit height={400} data={dataDaypercentdetail} padding={[20, 10, 90, 40]}>
+                    {this.Lineadvance}
+                </Chart>
+                <h3 className='p-3 small text-center'>转化率/人</h3>
             </div>
         </Page >
     })
-
-    private renderItem = (item: any, index: number) => {
-        let { author, postPubSum, postTranSum, postHitSum, percent } = item;
-        let authorname = this.controller.cApp.renderUser(author.id);
-        return <tr className="col dec px-3 py-2 bg-white" >
-            <td className="w-3">{authorname}</td>
-            <td className="w-3">{postPubSum}</td>
-            <td className="w-3">{postTranSum}</td>
-            <td className="w-3">{postHitSum}</td>
-            <td className="w-3">{percent}</td>
-        </tr >;
-    }
-
+    private Lineadvance = <LineAdvance
+        shape="smooth"
+        area
+        position="date*value"
+        color="type"
+    />
 }

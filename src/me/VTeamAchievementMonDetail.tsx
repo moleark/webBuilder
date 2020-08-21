@@ -7,7 +7,7 @@ import { observable } from 'mobx';
 import { Chart, Interval } from 'bizcharts';
 
 /* eslint-disable */
-export class VTeamAchievementMonDetail2 extends VPage<CMe> {
+export class VTeamAchievementMonDetail extends VPage<CMe> {
     @observable Month: any;
     async open(param: any) {
         this.Month = param
@@ -22,32 +22,32 @@ export class VTeamAchievementMonDetail2 extends VPage<CMe> {
         const teamAchievementlist = teamAchievementMonDetail2.map(item => {
             const obj = { ...item }
             if (item.author && item.author.id) {
-                obj.name = item.author.id
+                obj.name = this.controller.cApp.renderUser(item.author.id);
             }
             return obj
         })
         teamAchievementlist.forEach(v => {
             let { month, postPubSum, postHitSum, percent, author, name } = v;
-            let authorname = author ? this.controller.cApp.renderUser(author.id) : name;
+            // let authorname = author ? this.controller.cApp.renderUser(author.id) : name;
             if (name) {
                 dataMonPubSumdetail.push(
                     {
                         date: month,
-                        type: authorname,
+                        type: `${name}`,
                         value: postPubSum
                     },
                 )
                 dataMonHitSumdetail.push(
                     {
                         date: month,
-                        type: authorname,
+                        type: `${name}`,
                         value: postHitSum
                     },
                 )
                 dataMonpercentdetail.push(
                     {
                         date: month,
-                        type: authorname,
+                        type: `${name}`,
                         value: percent
                     },
                 )

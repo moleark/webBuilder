@@ -22,18 +22,18 @@ export class VTeamMonthPipeDetail extends VPage<CMe> {
         const teamAchievementlist = teamAchievementMonDetail2.map(item => {
             const obj = { ...item }
             if (item.author && item.author.id) {
-                obj.name = item.author.id
+                obj.name = this.controller.cApp.renderUser(item.author.id);
             }
             return obj
         })
         teamAchievementlist.forEach(v => {
             let { year, day, month, hitWeb, hitAgent, hitAssist, author, name } = v;
-            let authorname = author ? this.controller.cApp.renderUser(author.id) : name;
+            // let authorname = author ? this.controller.cApp.renderUser(author.id) : name;
             if (name) {
                 datahitWebdetail.push(
                     {
                         date: month,
-                        type: authorname,
+                        type: `${name}`,
                         value: hitWeb
                     },
                 )
@@ -41,14 +41,14 @@ export class VTeamMonthPipeDetail extends VPage<CMe> {
             } datahitAgentdetail.push(
                 {
                     date: month,
-                    type: authorname,
+                    type: `${name}`,
                     value: hitAgent
                 },
             )
             datahitAssistdetail.push(
                 {
                     date: month,
-                    type: authorname,
+                    type: `${name}`,
                     value: hitAssist
                 },
             )

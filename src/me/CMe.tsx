@@ -11,14 +11,12 @@ import { VTeam } from "./VTeam";
 import { VTeamDetail } from "./VTeamDetail";
 import { VAchievement } from "./VAchievement";
 import { VTeamAchievement } from "./VTeamAchievement";
-import { VTeamAchievement2 } from "./VTeamAchievement2";
 import moment from 'moment'
-import { VTeamAchievementDetail } from "./VTeamAchievementDetail";
 import { VCat } from "./VCat";
 import { VEditCat } from "./VEditCat";
 import { VTeamInputPost } from "./VTeamInputPost";
-import { VTeamAchievementDetail2 } from "./VTeamAchievementDetail2";
-import { VTeamAchievementMonDetail2 } from "./VTeamAchievementMonDetail2";
+import { VTeamAchievementDetail } from "./VTeamAchievementDetail";
+import { VTeamAchievementMonDetail } from "./VTeamAchievementMonDetail";
 import { VTeamMonthPipeDetail } from "./VTeamMonthPipeDetail";
 import { VOtherHitPost } from './VOtherHitPost';
 /* eslint-disable */
@@ -33,8 +31,8 @@ export class CMe extends CUqBase {
     @observable nowAchievement: any = { montha: "", yeara: "", postPubSum: 0, postTranSum: 0, postHitSum: 0 };
     @observable AchievementWeek: any[] = [{ montha: "", yeara: "", postPubSum: 0, postTranSum: 0, postHitSum: 0 }];
     @observable AchievementMonth: any[] = [{ montha: "", yeara: "", postPubSum: 0, postTranSum: 0, postHitSum: 0 }];
-    @observable Achievement: any[] = [{ montha: "", yeara: "", postPubSum: 0, postTranSum: 0, postHitSum: 0 }];
-    @observable teamAchievementWeek: any[] = [{ montha: "", yeara: "", postPubSum: 0, postTranSum: 0, postHitSum: 0 }];
+    // @observable Achievement: any[] = [{ montha: "", yeara: "", postPubSum: 0, postTranSum: 0, postHitSum: 0 }];
+    // @observable teamAchievementWeek: any[] = [{ montha: "", yeara: "", postPubSum: 0, postTranSum: 0, postHitSum: 0 }];
     @observable teamAchievementMonth: any[] = [{ montha: "", yeara: "", postPubSum: 0, postTranSum: 0, postHitSum: 0 }];
     @observable teamAchievementDay: any[] = [{ month: "", year: "", postPubSum: 0, postTranSum: 0, postHitSum: 0 }];
     @observable teamAchievementMonthchart: any[] = [{ month: "", year: "", postPubSum: 0, postTranSum: 0, postHitSum: 0 }];
@@ -141,12 +139,6 @@ export class CMe extends CUqBase {
         this.openVPage(VAchievement)
     }
 
-    showTeamAchievement = async () => {
-        this.year = moment().format('YYYY')
-        this.teamAchievementWeek = await this.uqs.webBuilder.SearchAchievementOfTeam.table({ _manage: 0, _year: this.year, _type: "week" });
-        this.teamAchievementMonth = await this.uqs.webBuilder.SearchAchievementOfTeam.table({ _manage: 0, _year: this.year, _type: "month" });
-        this.openVPage(VTeamAchievement);
-    }
     /** 
      * 团队折线图
      * **/
@@ -157,30 +149,30 @@ export class CMe extends CUqBase {
     showTeamAchievement2 = async () => {
         this.year = moment().format('YYYY')
         await this.getTeamAchievement2()
-        await this.openVPage(VTeamAchievement2);
+        await this.openVPage(VTeamAchievement);
     }
     /**
      * 日报详细
      */
-    showTeamAchievementDetail2 = async () => {
+    showTeamAchievementDetail = async () => {
         this.year = moment().format('YYYY')
         this.teamAchievementDetail2 = await this.uqs.webBuilder.SearchAchievementOfTeamDetail.table({ _manage: 0, _year: this.year, _month: '', _type: "day" });
         this.teamAchievementDetail2.forEach(element => {
             this.cApp.useUser(element.author);
         });
-        this.openVPage(VTeamAchievementDetail2)
+        this.openVPage(VTeamAchievementDetail)
     }
 
     /**  
      * 月报详细
      */
-    showTeamAchievementMonDetail2 = async (param: any) => {
+    showTeamAchievementMonDetail = async (param: any) => {
         this.year = moment().format('YYYY')
         this.teamAchievementMonDetail2 = await this.uqs.webBuilder.SearchAchievementOfTeamDetail.table({ _manage: 0, _type: "month", _year: this.year, _month: param });
         this.teamAchievementMonDetail2.forEach(v => {
             this.cApp.useUser(v.author);
         });
-        this.openVPage(VTeamAchievementMonDetail2, param)
+        this.openVPage(VTeamAchievementMonDetail, param)
     }
 
     /**
@@ -219,15 +211,6 @@ export class CMe extends CUqBase {
         this.closePage();
         this.returnCall(this.uqs.webBuilder.Template.boxId(id));
     };
-
-    showTeamAchievementDetail = async (title: any, manage: any, year: any, month: any, day: any, type: any) => {
-        this.teamAchievementDetail = new QueryPager(this.uqs.webBuilder.SearchAchievementOfTeamDetail, 15, 30);
-        this.teamAchievementDetail.setEachPageItem((item: any, results: { [name: string]: any[] }) => {
-            this.cApp.useUser(item.author);
-        });
-        this.teamAchievementDetail.first({ _manage: manage, _year: year, _month: month, _day: day, _type: type });
-        this.openVPage(VTeamAchievementDetail, title)
-    }
 
     showCat = async (param: any) => {
         let { id, name } = param;

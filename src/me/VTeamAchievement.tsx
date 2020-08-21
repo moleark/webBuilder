@@ -1,179 +1,177 @@
 import * as React from 'react';
-import { VPage, Page, nav } from 'tonva';
+import { VPage, Page } from 'tonva';
 import { CMe } from './CMe';
 import { setting } from '../configuration';
 import { observer } from 'mobx-react';
-/* eslint-disable */
-export class VTeamAchievement extends VPage<CMe> {
+import { Chart, LineAdvance } from 'bizcharts';
 
-    private version: any;
-    async open() {
-        this.version = await nav.checkVersion();
-        console.log(this.version, 'this.version');
+export class VTeamAchievement extends VPage<CMe> {
+    async open(param: any) {
         this.openPage(this.page);
     }
-
     private page = observer(() => {
-        let header: any = <div>{this.t('团队业绩')}</div>
-        return <Page header={header} headerClassName={setting.pageHeaderCss} >
-            <this.teamAchievementWeek />
-            <this.teamAchievementMonth />
-            <this.teamChannelMonth />
-            <div className="footer small px-3 text-muted bg-white">
-                <div> 注：</div>
-                <div className=" px-3">
-                    <li className="py-1">周报：显示近一周产生的业绩。</li>
-                    <li className="py-1">月报：按照自然月统计业绩。</li>
-                    <li className="py-1">发布量：统计时间范围内，发布贴文的次数。</li>
-                    <li className="py-1">转发量：所有贴文在统计时间范围内，被营销转发的次数。</li>
-                    <li className="py-1">浏览量：所有贴文在统计时间范围内，被客户浏览的次数。</li>
-                </div>
+
+        let { teamAchievementDay, teamAchievementMonthchart, addInputPostSum } = this.controller;
+        let dataDay: any = []
+        teamAchievementDay.forEach(v => {
+            let { day, postPubSum, postTranSum, postHitSum, percent } = v;
+            dataDay.push(
+                {
+                    date: day,
+                    type: '浏览量',
+                    value: postHitSum
+                },
+                {
+                    date: day,
+                    type: '转发量',
+                    value: postTranSum
+                },
+                {
+                    date: day,
+                    type: '发布量',
+                    value: postPubSum
+                },
+                {
+                    date: day,
+                    type: '转换率',
+                    value: percent
+                }
+            )
+        })
+        let dataMonth: any = []
+        let dataSource: any = []
+        teamAchievementMonthchart.forEach(val => {
+            let { month, postPubSum, postTranSum, postHitSum, percent, hitWeb, hitAgent, hitAssist, hitEmail, hitOther } = val;
+            month = month + "月";
+            dataMonth.push(
+                {
+                    date: month,
+                    type: '浏览量',
+                    value: postHitSum
+                },
+                {
+                    date: month,
+                    type: '转发量',
+                    value: postTranSum
+                },
+                {
+                    date: month,
+                    type: '发布量',
+                    value: postPubSum
+                },
+                {
+                    date: month,
+                    type: '转换率',
+                    value: percent
+                }
+            )
+            dataSource.push(
+                {
+                    date: month,
+                    type: '网站',
+                    value: hitWeb
+                },
+                {
+                    date: month,
+                    type: '轻代理',
+                    value: hitAgent
+                },
+                {
+                    date: month,
+                    type: '销售助手',
+                    value: hitAssist
+                },
+                {
+                    date: month,
+                    type: '邮件',
+                    value: hitEmail
+                },
+                {
+                    date: month,
+                    type: '其他',
+                    value: hitOther
+                }
+            )
+        })
+        let right = <div onClick={addInputPostSum}>
+            <span className="mx-sm-2 iconfont icon-jiahao1 cursor-pointer" style={{ fontSize: "1.7rem", color: "white" }}></span>
+        </div>
+        return <Page header={'数据折线图'} headerClassName={setting.pageHeaderCss} right={right}>
+            <div className='pb-4'>
+                <Chart scale={{ value: { min: 0 } }} autoFit height={400} data={dataDay} padding={[20, 10, 90, 40]}
+                    onPlotClick={this.handleClickDaydetail}>
+                    {this.lineAdvance}
+                </Chart>
+                <h3 className='p-3 small text-center'>贴文系统运行日报</h3>
+                <Chart scale={{ value: { min: 0 }, type: 'linear' }} autoFit height={400} data={dataMonth} padding={[20, 10, 50, 40]}
+                    onAxisClick={(e: any) => {
+                        let month = e.target.attrs.text;
+                        month = month.replace("月", "");
+                        if (month !== '0') {
+                            this.controller.showTeamAchievementMonDetail(month)
+                        }
+                    }}
+                >
+                    {this.lineAdvance}
+                </Chart>
+                <h3 className='p-3 small text-center'>贴文系统运行月报</h3>
+                <Chart scale={{ value: { min: 0 } }} autoFit height={400} data={dataSource} padding={[20, 10, 50, 40]}
+                    onAxisClick={(e: any) => {
+                        let month = e.target.attrs.text
+                        month = month.replace("月", "");
+                        if (month !== '0') {
+                            this.controller.showTeamAchievementPipeDetail(month)
+                        }
+                    }}>
+                    {this.lineAdvance}
+                </Chart>
+                <h3 className='p-3 small text-center'>渠道报表</h3>
             </div>
         </Page >
     })
+    private lineAdvance = <LineAdvance
+        shape="smooth"
+        area
+        position="date*value"
+        color="type"
+    />
 
-
-    private teamAchievementWeek = observer(() => {
-        let { teamAchievementWeek, showTeamAchievementDetail } = this.controller
-        let content = teamAchievementWeek.map((v, index) => {
-            let { yeara, montha, daya, postPubSum, postTranSum, postHitSum, percent } = v;
-            let typeshow: any, searchType: any;
-            if (daya == "all") {
-                typeshow = "合计"
-                searchType = "week";
-            } else {
-                typeshow = daya;
-                searchType = "day";
-            }
-            return <tr className="col dec px-3 py-2 bg-white cursor-pointer" onClick={() => showTeamAchievementDetail(typeshow, 0, yeara, montha, daya, searchType)}>
-                <td className="w-3">{typeshow}</td>
-                <td className="w-3">{postPubSum}</td>
-                <td className="w-3">{postTranSum}</td>
-                <td className="w-3">{postHitSum}</td>
-                <td className="w-3">{percent}</td>
-                <td className="w-3 text-primary">
-                    <div className="text-primary small">
-                        <span className="ml-2 iconfont icon-more"></span>
-                    </div>
-                </td>
-            </tr >;
-        });
-
-        return <div>
-            <div className="bg-white px-3 py-2 text-primary strong">
-                <strong>周报表</strong>
-            </div>
-            <table className="table text-center small">
-                <thead className="text-primary">
-                    <tr className="bg-white">
-                        <th></th>
-                        <th>发布量</th>
-                        <th>转发量</th>
-                        <th>浏览量</th>
-                        <th>转换率</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {content}
-                </tbody>
-            </table>
-        </div>
-    });
-
-    private teamAchievementMonth = observer(() => {
-        let { teamAchievementMonth, showTeamAchievementDetail } = this.controller
-        let content = teamAchievementMonth.map((v, index) => {
-            let { yeara, montha, postPubSum, postTranSum, postHitSum, percent } = v;
-            let typeshow: any, searchType: any = "month";
-            if (montha == "all") {
-                typeshow = "合计";
-                searchType = "year";
-            } else {
-                typeshow = montha + "月";
-                searchType = "month";
-            }
-            return <tr className="col dec px-3 py-2 bg-white cursor-pointer" onClick={() => showTeamAchievementDetail(typeshow, 0, yeara, montha, 'all', searchType)}>
-                <td className="w-3"> {typeshow}</td >
-                <td className="w-3">{postPubSum}</td>
-                <td className="w-3">{postTranSum}</td>
-                <td className="w-3">{postHitSum}</td>
-                <td className="w-3">{percent}</td>
-                <td className="w-3 text-primary">
-                    <div className="text-primary small">
-                        <span className="ml-2 iconfont icon-more"></span>
-                    </div>
-                </td>
-            </tr >;
-        });
-
-        return <div>
-            <div className="bg-white px-3 py-2 text-primary strong">
-                <strong>月报表</strong>
-            </div>
-            <table className="table text-center small">
-                <thead className="text-primary">
-                    <tr className="bg-white">
-                        <th></th>
-                        <th>发布量</th>
-                        <th>转发量</th>
-                        <th>浏览量</th>
-                        <th>转换率</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {content}
-                </tbody>
-            </table>
-        </div>
-
-    });
-
-
-    private teamChannelMonth = observer(() => {
-        let { teamAchievementMonth } = this.controller
-        let content = teamAchievementMonth.map((v, index) => {
-            let { montha, hitWeb, hitAgent, hitAssist, hitEmail, hitOther } = v;
-            let typeshow: any;
-            if (montha == "all") {
-                typeshow = "合计"
-            } else {
-                typeshow = montha + "月";
-            }
-            return <tr className="col dec px-3 py-2 bg-white cursor-pointer" >
-                <td className="w-3"> {typeshow}</td >
-                <td className="w-3">{hitWeb}</td>
-                <td className="w-3">{hitAgent}</td>
-                <td className="w-3">{hitAssist}</td>
-                <td className="w-3">{hitEmail}</td>
-                <td className="w-3">{hitOther}</td>
-
-            </tr >;
-        });
-
-        return <div>
-            <div className="bg-white px-3 py-2 text-primary strong">
-                <strong>渠道</strong>
-            </div>
-            <table className="table text-center small">
-                <thead className="text-primary">
-                    <tr className="bg-white">
-                        <th></th>
-                        <th>网站</th>
-                        <th>代理</th>
-                        <th>助手</th>
-                        <th>邮件</th>
-                        <th>其他</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {content}
-                </tbody>
-            </table>
-        </div>
-
-    });
-
-
+    private handleClickDaydetail = (e: any) => {
+        this.controller.showTeamAchievementDetail()
+    }
 }
+
+
+
+
+
+
+
+
+/*
+ 点击事件 e是该图形和数据；
+ 一种 ：在<Chart  onClick={(e: any) => {
+                    const data = e.data;
+                    console.log("data", data);
+                    this.controller.showTeamAchievement()
+                }} >
+    data是点击获取该点的对象 ，但必须点击在 点 上，不在点上则是整条线上的所有对象（个数组）
+
+二种 ： 在<Chart onPlotClick={this.handleClick} >
+  private handleClick = (e: any) => {
+       数据在e.data.data中是该数据线的对象
+      a:::  console.log(e, e.data.data.city, e.data.data.month, e.data.data.temperature)
+         //点击 点 上回出现相应的对象值，不再点 上则是整个数组,,点击过快会报错
+
+        // this.controller.showTeamAchievement()
+    b:::
+        // let arr = e.view.filteredData.length;
+        // console.log(arr, e, arr.city, e.view.filteredData.month, e.view.filteredData.temperature)
+
+    }
+
+     e.view.filteredData.forEatch((item: any) => console.log(item.city))
+
+
+
+*/
