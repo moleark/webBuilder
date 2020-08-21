@@ -140,38 +140,3 @@ export class VTeamAchievement extends VPage<CMe> {
         this.controller.showTeamAchievementDetail()
     }
 }
-
-
-
-
-
-
-
-
-/*
- 点击事件 e是该图形和数据；
- 一种 ：在<Chart  onClick={(e: any) => {
-                    const data = e.data;
-                    console.log("data", data);
-                    this.controller.showTeamAchievement()
-                }} >
-    data是点击获取该点的对象 ，但必须点击在 点 上，不在点上则是整条线上的所有对象（个数组）
-
-二种 ： 在<Chart onPlotClick={this.handleClick} >
-  private handleClick = (e: any) => {
-       数据在e.data.data中是该数据线的对象
-      a:::  console.log(e, e.data.data.city, e.data.data.month, e.data.data.temperature)
-         //点击 点 上回出现相应的对象值，不再点 上则是整个数组,,点击过快会报错
-
-        // this.controller.showTeamAchievement()
-    b:::
-        // let arr = e.view.filteredData.length;
-        // console.log(arr, e, arr.city, e.view.filteredData.month, e.view.filteredData.temperature)
-
-    }
-
-     e.view.filteredData.forEatch((item: any) => console.log(item.city))
-
-
-
-*/

@@ -15,12 +15,12 @@ export class VTeamAchievementDetail extends VPage<CMe> {
     }
 
     private page = observer((param: any) => {
-        let { teamAchievementDetail2 } = this.controller;
+        let { teamAchievementDetail } = this.controller;
         let dataDayPubSumdetail: any = []
         let dataDayHitSumdetail: any = []
         let dataDaypercentdetail: any = []
 
-        const teamAchievementlist = teamAchievementDetail2.map(item => {
+        const teamAchievementlist = teamAchievementDetail.map(item => {
             const obj = { ...item }
             if (item.author && item.author.id) {
                 obj.name = this.controller.cApp.renderUser(item.author.id);

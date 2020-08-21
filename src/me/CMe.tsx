@@ -31,14 +31,10 @@ export class CMe extends CUqBase {
     @observable nowAchievement: any = { montha: "", yeara: "", postPubSum: 0, postTranSum: 0, postHitSum: 0 };
     @observable AchievementWeek: any[] = [{ montha: "", yeara: "", postPubSum: 0, postTranSum: 0, postHitSum: 0 }];
     @observable AchievementMonth: any[] = [{ montha: "", yeara: "", postPubSum: 0, postTranSum: 0, postHitSum: 0 }];
-    // @observable Achievement: any[] = [{ montha: "", yeara: "", postPubSum: 0, postTranSum: 0, postHitSum: 0 }];
-    // @observable teamAchievementWeek: any[] = [{ montha: "", yeara: "", postPubSum: 0, postTranSum: 0, postHitSum: 0 }];
-    @observable teamAchievementMonth: any[] = [{ montha: "", yeara: "", postPubSum: 0, postTranSum: 0, postHitSum: 0 }];
     @observable teamAchievementDay: any[] = [{ month: "", year: "", postPubSum: 0, postTranSum: 0, postHitSum: 0 }];
     @observable teamAchievementMonthchart: any[] = [{ month: "", year: "", postPubSum: 0, postTranSum: 0, postHitSum: 0 }];
-    @observable teamAchievementDetail2: any[] = [{ month: "", year: "", postPubSum: 0, postTranSum: 0, postHitSum: 0 }];
-    @observable teamAchievementMonDetail2: any[] = [{ month: "", year: "", postPubSum: 0, postTranSum: 0, postHitSum: 0 }];
-    @observable teamAchievementDetail: QueryPager<any>;
+    @observable teamAchievementDetail: any[] = [{ month: "", year: "", postPubSum: 0, postTranSum: 0, postHitSum: 0 }];
+    @observable teamAchievementMonDetail: any[] = [{ month: "", year: "", postPubSum: 0, postTranSum: 0, postHitSum: 0 }];
     @observable pageCat: any;
     @observable currentCat: any;
     @observable currentCatParent: any = "0";
@@ -156,8 +152,8 @@ export class CMe extends CUqBase {
      */
     showTeamAchievementDetail = async () => {
         this.year = moment().format('YYYY')
-        this.teamAchievementDetail2 = await this.uqs.webBuilder.SearchAchievementOfTeamDetail.table({ _manage: 0, _year: this.year, _month: '', _type: "day" });
-        this.teamAchievementDetail2.forEach(element => {
+        this.teamAchievementDetail = await this.uqs.webBuilder.SearchAchievementOfTeamDetail.table({ _manage: 0, _year: this.year, _month: '', _type: "day" });
+        this.teamAchievementDetail.forEach(element => {
             this.cApp.useUser(element.author);
         });
         this.openVPage(VTeamAchievementDetail)
@@ -168,8 +164,8 @@ export class CMe extends CUqBase {
      */
     showTeamAchievementMonDetail = async (param: any) => {
         this.year = moment().format('YYYY')
-        this.teamAchievementMonDetail2 = await this.uqs.webBuilder.SearchAchievementOfTeamDetail.table({ _manage: 0, _type: "month", _year: this.year, _month: param });
-        this.teamAchievementMonDetail2.forEach(v => {
+        this.teamAchievementMonDetail = await this.uqs.webBuilder.SearchAchievementOfTeamDetail.table({ _manage: 0, _type: "month", _year: this.year, _month: param });
+        this.teamAchievementMonDetail.forEach(v => {
             this.cApp.useUser(v.author);
         });
         this.openVPage(VTeamAchievementMonDetail, param)
@@ -180,8 +176,8 @@ export class CMe extends CUqBase {
      */
     showTeamAchievementPipeDetail = async (param: any) => {
         this.year = moment().format('YYYY')
-        this.teamAchievementMonDetail2 = await this.uqs.webBuilder.SearchAchievementOfTeamDetail.table({ _manage: 0, _type: "month", _year: this.year, _month: param });
-        this.teamAchievementMonDetail2.forEach(v => {
+        this.teamAchievementMonDetail = await this.uqs.webBuilder.SearchAchievementOfTeamDetail.table({ _manage: 0, _type: "month", _year: this.year, _month: param });
+        this.teamAchievementMonDetail.forEach(v => {
             this.cApp.useUser(v.author);
         });
         this.openVPage(VTeamMonthPipeDetail, param)
