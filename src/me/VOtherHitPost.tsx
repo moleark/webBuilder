@@ -34,8 +34,7 @@ export class VOtherHitPost extends VPage<CMe> {
     };
 
     private itemRow = observer((item: any) => {
-        let { user, cApp } = this.controller;
-        let { } = cApp.cPosts
+        let { user } = this.controller;
         if (!user) return;
         let { image, caption, discription, author, emphasis, web, agent, assist, openweb } = item;
         let divUser = user.id === author.id ?
