@@ -138,13 +138,13 @@ export class CMe extends CUqBase {
     /** 
      * 团队折线图
      * **/
-    getTeamAchievement2 = async () => {
+    getTeamAchievement = async () => {
         this.teamAchievementDay = await this.uqs.webBuilder.SearchAchievementOfTeamNew.table({ _manage: 0, _year: this.year, _type: "day" });
         this.teamAchievementMonthchart = await this.uqs.webBuilder.SearchAchievementOfTeamNew.table({ _manage: 0, _year: this.year, _type: "month" });
     }
-    showTeamAchievement2 = async () => {
+    showTeamAchievement = async () => {
         this.year = moment().format('YYYY')
-        await this.getTeamAchievement2()
+        await this.getTeamAchievement()
         await this.openVPage(VTeamAchievement);
     }
     /**
@@ -197,7 +197,7 @@ export class CMe extends CUqBase {
         this.closePage();
         let { post, source, postReadSum, date } = param;
         await this.uqs.webBuilder.hitOfManual.submit({ post: post, source: source, hit: postReadSum, hitdate: date });
-        await this.getTeamAchievement2()
+        await this.getTeamAchievement()
     };
     onPickedPost = (id: number) => {
         this.closePage();
