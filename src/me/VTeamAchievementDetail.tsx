@@ -4,7 +4,7 @@ import { CMe } from './CMe';
 import { setting } from '../configuration';
 import { observer } from 'mobx-react';
 import { observable } from 'mobx';
-import { Chart, LineAdvance } from 'bizcharts';
+import { Chart, LineAdvance, Slider } from 'bizcharts';
 
 /* eslint-disable */
 export class VTeamAchievementDetail extends VPage<CMe> {
@@ -56,6 +56,7 @@ export class VTeamAchievementDetail extends VPage<CMe> {
         })
 
         let header: any = <div> 日报明细</div>
+        let flag = false
         return <Page header={header} headerClassName={setting.pageHeaderCss} >
             <div className='pb-4'>
                 <div className="py-4 text-center text-muted">
@@ -63,18 +64,39 @@ export class VTeamAchievementDetail extends VPage<CMe> {
                 </div>
                 <Chart scale={{ date: { type: 'time' }, value: { min: 0 } }} autoFit={true} height={400} data={dataDayPubSumdetail} padding={[20, 10, 90, 40]}>
                     {this.Lineadvance}
+                    {/* <Slider start={0.5}
+                        formatter={(val, d, i) => {
+                            flag = !flag;
+                            return `${val}${flag ? "开始" : "结束"}`;
+                        }}
+                        handlerStyle={{ height: '4', }}
+                    /> */}
                 </Chart>
                 <div className="py-4 text-center text-muted">
                     <strong> 浏览量/人</strong>
                 </div>
                 <Chart scale={{ date: { type: 'time' }, value: { min: 0 } }} autoFit height={400} data={dataDayHitSumdetail} padding={[20, 10, 90, 40]}>
                     {this.Lineadvance}
+                    {/* <Slider start={0.5}
+                        formatter={(val, d, i) => {
+                            flag = !flag;
+                            return `${val}${flag ? "开始" : "结束"}`;
+                        }}
+                        handlerStyle={{ height: '4', }}
+                    /> */}
                 </Chart>
                 <div className="py-4 text-center text-muted">
                     <strong> 转化率/人</strong>
                 </div>
                 <Chart scale={{ date: { type: 'time' }, value: { min: 0 } }} autoFit height={400} data={dataDaypercentdetail} padding={[20, 10, 90, 40]}>
                     {this.Lineadvance}
+                    {/* <Slider start={0.5}
+                        formatter={(v, d, i) => {
+                            flag = !flag;
+                            return `${v}${flag ? "开始" : "结束"}`;
+                        }}
+                        handlerStyle={{ height: '4', }}
+                    /> */}
                 </Chart>
             </div>
         </Page >
