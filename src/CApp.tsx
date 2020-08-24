@@ -66,8 +66,6 @@ export class CApp extends CAppBase {
         let business = await this.uqs.webBuilder.SearchBusinessScope.table({});
         if (business.length === 1) {
             setting.BusinessScope = business[0].businessScope.id;
-        } else if (business.length > 1) {
-            setting.BusinessScope = 3;
         }
     }
 

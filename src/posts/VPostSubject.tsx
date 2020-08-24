@@ -3,6 +3,7 @@ import { VPage, Page, List } from "tonva";
 import { CPosts } from "./CPosts";
 import { observer } from 'mobx-react';
 import { consts } from 'consts';
+import { setting } from 'configuration';
 
 export class VPostSubject extends VPage<CPosts> {
 
@@ -13,7 +14,7 @@ export class VPostSubject extends VPage<CPosts> {
     private page = observer(() => {
         let { pagePostSubject, pickSubject } = this.controller;
         let right = (
-            <div className="d-flex align-items-center" onClick={() => pickSubject(0)}>
+            <div className="d-flex align-items-center" onClick={() => pickSubject("10000" + setting.BusinessScope)}>
                 <div>
                     <span className="mx-sm-2 iconfont icon-jiahao1 cursor-pointer" style={{ fontSize: "1.7rem", color: "white" }}></span>
                 </div>

@@ -35,7 +35,7 @@
         "react-hot-loader": "^4.5.3",
         "react-scripts": "3.3.0",
         "save": "^2.4.0",
-        "tonva": "^1.5.11",
+        "tonva": "^1.6.3",
         "typescript": "^3.7.3"
     },
     "scripts": {

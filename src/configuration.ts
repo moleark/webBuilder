@@ -20,7 +20,7 @@ export const setting = {
     previewUrl: "https://web.jkchemical.com",
     SALESREGION_CN: 1,
     CHINESE: 196,
-    BusinessScope: 1  //1：平台管理   2：空中课堂
+    BusinessScope: 1  //1：平台管理   2：空中课堂  3:BV网站
 };
 
 // 生产配置

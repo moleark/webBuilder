@@ -56,45 +56,52 @@ export class VMain extends VPage<CPosts> {
             </div>
         );
 
-        let column = <div className="d-flex justify-content-around py-4 small text-center"
-            style={{ background: "linear-gradient(rgba(23,106,184,.5),rgba(23,162,184,.5),rgba(23,184,184,.5))" }}>
-            <div className="m-1 p-3 cursor-pointer" onClick={showProductCatalog} >
-                <div className="py-3 my-1">
-                    <div className="mb-2 text-success"><i style={{ fontSize: "2rem" }} className="iconfont icon-chanpinmulu"></i></div>
-                    <div className="mx-3 p-2 font-weight-bold">产品目录</div>
-                </div>
+
+        let ProductCatalog = < div className="m-1 p-3 cursor-pointer" onClick={showProductCatalog} >
+            <div className="py-3 my-1">
+                <div className="mb-2 text-success"><i style={{ fontSize: "2rem" }} className="iconfont icon-chanpinmulu"></i></div>
+                <div className="mx-3 p-2 font-weight-bold">产品目录</div>
             </div>
-            <div className="m-1 p-3 cursor-pointer" onClick={() => showSubject({ name: "帖文栏目", id: 0 })} >
-                <div className="py-3 my-1 ">
-                    <div className="mb-2 text-primary"><i style={{ fontSize: "2rem" }} className="iconfont icon-mokuai"></i></div>
-                    <div className="mx-3 px-2 font-weight-bold">帖文栏目</div>
-                </div>
+        </div >;
+        let Subject = <div className="m-1 p-3 cursor-pointer" onClick={() => showSubject({ name: "帖文栏目", id: "10000" + setting.BusinessScope })} >
+            <div className="py-3 my-1 ">
+                <div className="mb-2 text-primary"><i style={{ fontSize: "2rem" }} className="iconfont icon-mokuai"></i></div>
+                <div className="mx-3 px-2 font-weight-bold">帖文栏目</div>
             </div>
-            <div className="m-1 p-3 cursor-pointer" onClick={() => showDomain({ name: '研究领域', id: 0 })} >
-                <div className="py-3 my-1 ">
-                    <div className="mb-2 text-danger"><i style={{ fontSize: "2rem" }} className="iconfont icon-yanjiulingyu"></i></div>
-                    <div className="mx-3 px-2 font-weight-bold">研究领域</div>
-                </div>
+        </div>;
+        let Domain = <div className="m-1 p-3 cursor-pointer" onClick={() => showDomain({ name: '研究领域', id: 0 })} >
+            <div className="py-3 my-1 ">
+                <div className="mb-2 text-danger"><i style={{ fontSize: "2rem" }} className="iconfont icon-yanjiulingyu"></i></div>
+                <div className="mx-3 px-2 font-weight-bold">研究领域</div>
             </div>
-            <div className="m-1 p-3 cursor-pointer" onClick={() => showModel()} >
-                <div className="py-3 my-1 ">
-                    <div className="mb-2 text-info"><i style={{ fontSize: "2rem" }} className="iconfont icon-mobanguanli"></i></div>
-                    <div className="mx-3 px-2 font-weight-bold">一周范文</div>
-                </div>
+        </div>;
+        let Model = <div className="m-1 p-3 cursor-pointer" onClick={() => showModel()} >
+            <div className="py-3 my-1 ">
+                <div className="mb-2 text-info"><i style={{ fontSize: "2rem" }} className="iconfont icon-mobanguanli"></i></div>
+                <div className="mx-3 px-2 font-weight-bold">一周范文</div>
             </div>
-            <div className="m-1 p-3 cursor-pointer" onClick={() => InformationCente()} >
-                <div className="py-3 my-1 ">
-                    <div className="mb-2 text-warning"><i style={{ fontSize: "2rem" }} className="iconfont icon-zixun"></i></div>
-                    <div className="mx-3 px-2 font-weight-bold">资讯中心</div>
-                </div>
+        </div>;
+        let Information = <div className="m-1 p-3 cursor-pointer" onClick={() => InformationCente()} >
+            <div className="py-3 my-1 ">
+                <div className="mb-2 text-warning"><i style={{ fontSize: "2rem" }} className="iconfont icon-zixun"></i></div>
+                <div className="mx-3 px-2 font-weight-bold">资讯中心</div>
             </div>
-        </div >
+        </div>;
+
+        let tools: any;
+        if (setting.BusinessScope === 1) {
+            tools = <>{ProductCatalog}{Subject}{Domain}{Model}{Information}</>
+        } else {
+            tools = <>{ProductCatalog}{Subject}{Domain}</>
+        }
+
         return (
-            <Page header={this.t('post')} headerClassName={consts.headerClass} right={right}
-                onScrollBottom={onScrollBottom}>
-                {(setting.BusinessScope !== 2) && column}
+            <Page header={this.t('post')} headerClassName={consts.headerClass} right={right} onScrollBottom={onScrollBottom}>
+                <div className="d-flex justify-content-around py-4 small text-center" style={{ background: "linear-gradient(rgba(23,106,184,.5),rgba(23,162,184,.5),rgba(23,184,184,.5))" }}>
+                    {tools}
+                </div>
                 <List before={""} none={none} items={pagePosts} item={{ render: this.renderItem }} />
-            </Page>
+            </Page >
         );
     });
 

@@ -82,7 +82,7 @@ export class VMe extends VPage<CMe> {
     }
 
     private page = observer(() => {
-        let { onSet, user, showCat, showTeamAchievement2 } = this.controller;
+        let { onSet, user, showCat, showTeamAchievement2, cApp } = this.controller;
         if (!user) return;// className="bg-white"
         return <div >
             <this.achievement />
@@ -90,6 +90,7 @@ export class VMe extends VPage<CMe> {
             {branch(this.t('team'), "icon-Group-", showTeamAchievement2)}
             {branch(this.t('set'), "icon-shezhi3", onSet)}
             {branch(this.t('图片分类'), "icon-Fill", () => showCat({ name: "图片分类", id: 0 }))}
+            {branch(this.t('栏目'), "icon-Fill", () => showCat({ name: "栏目", id: 0 }))}
         </div>
     })
 }
