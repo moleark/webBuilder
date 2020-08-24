@@ -3,7 +3,7 @@ import { VPage, Page } from 'tonva';
 import { CMe } from './CMe';
 import { setting } from '../configuration';
 import { observer } from 'mobx-react';
-import { Chart, LineAdvance } from 'bizcharts';
+import { Chart, LineAdvance, Slider, Legend } from 'bizcharts';
 
 export class VTeamAchievement extends VPage<CMe> {
     async open(param: any) {
@@ -96,15 +96,23 @@ export class VTeamAchievement extends VPage<CMe> {
         let right = <div onClick={addInputPostSum}>
             <span className="mx-sm-2 iconfont icon-jiahao1 cursor-pointer" style={{ fontSize: "1.7rem", color: "white" }}></span>
         </div>
+        let flag = false;
         return <Page header={'数据折线图'} headerClassName={setting.pageHeaderCss} right={right}>
+
             <div className='pb-4'>
                 <div className="py-4 text-center text-muted">
                     <strong> 贴文系统运行日报</strong>
                 </div>
                 <Chart scale={{ value: { min: 0 } }} autoFit height={400} data={dataDay} padding={[20, 10, 90, 40]}
-                    onPlotClick={this.handleClickDaydetail}>
+                    onPlotClick={this.handleClickDaydetail} legendName="month" >
                     {this.lineAdvance}
-
+                    <Slider start={0.5}
+                        formatter={(v, d, i) => {
+                            flag = !flag;
+                            return `${v}${flag ? "开始" : "结束"}`;
+                        }}
+                        handlerStyle={{ height: '5', }}
+                    />
                 </Chart>
 
                 <div className="py-4 text-center text-muted">
