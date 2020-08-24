@@ -110,7 +110,7 @@ export class VEdit extends VPage<CPosts> {
 
     private page = observer(() => {
 
-        let { current, cApp, showPostProductCatalog, showPostSubject, showPickClassroomType, showPostDomain, showPostProduct } = this.controller;
+        let { current, cApp, showPostProductCatalog, showPostSubject, showPostDomain, showPostProduct } = this.controller;
 
         let right = <div>
             <button type="button"
