@@ -4,7 +4,7 @@ import { CMe } from './CMe';
 import { setting } from '../configuration';
 import { observer } from 'mobx-react';
 import { observable } from 'mobx';
-import { Chart, LineAdvance, Slider } from 'bizcharts';
+import { Chart, LineAdvance } from 'bizcharts';
 
 /* eslint-disable */
 export class VTeamAchievementDetail extends VPage<CMe> {

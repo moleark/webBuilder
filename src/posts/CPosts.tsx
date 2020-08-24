@@ -33,6 +33,8 @@ import { VEditpostSort } from './VEditpostSort';
 import { VProductCatalogPostCount } from "./VProductCatalogPostCount";
 import { VDomainPostCount } from "./VDomainPostCount";
 import { VPostProduct } from "./VPostProduct";
+import { VSubjectEdit } from "./VSubjectEdit";
+import { VSubjectAdd } from "./VSubjectAdd";
 /* eslint-disable */
 export class CPosts extends CUqBase {
     @observable pageTemplate: QueryPager<any>;
@@ -304,6 +306,7 @@ export class CPosts extends CUqBase {
         this.pagePostSubject = await this.uqs.webBuilder.SearchPostSubject.table({ _post: this.current.id })
         this.openVPage(VPostSubject);
     }
+
     pickSubject = async (param: any) => {
         let pageSubject = new QueryPager(this.uqs.webBuilder.SearchSubject, 15, 100);
         pageSubject.first({ _parent: param })
@@ -337,6 +340,23 @@ export class CPosts extends CUqBase {
         return await this.vCall(VSubjectDetil, showsubpost);
     }
 
+    //栏目维护
+    showSubjectEdit = async (param: any) => {
+        let { id, name } = param;
+        let pageSubject = new QueryPager(this.uqs.webBuilder.SearchSubject, 15, 100);
+        pageSubject.first({ _parent: id })
+        let par = { pageSubject: pageSubject, name: name, parent: id };
+        this.openVPage(VSubjectEdit, par)
+    }
+
+    showSubjectAdd = async (param: any) => {
+        this.openVPage(VSubjectAdd, param);
+    }
+
+    saveSubject = async (id: any, parent: any, name: any, isValid: any) => {
+        let param = { name: name, parent: parent, isValid: isValid };
+        await this.uqs.webBuilder.Subject.save(id, param);
+    }
 
     //领域
     showPostDomain = async () => {
