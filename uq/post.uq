@@ -5,6 +5,7 @@ TUID POST (
     main discription char(200),
     main image ID Image,
     main author ID [$user],
+    main businessScope ID BusinessScope,
     template ID Template,
     content text(medium),
     emphasis tinyint default 0,
@@ -72,8 +73,7 @@ TUID  Subject (
     id,
     main name char(100),
     parent ID Subject,
-    isValid tinyint default 1,
-    stamp (create, update),
+    isValid tinyint default 1
 );
  
 MAP PostSubject(

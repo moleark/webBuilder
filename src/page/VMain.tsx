@@ -28,7 +28,9 @@ export class VMain extends VPage<CPage> {
 
         let { user, cApp, onPreviewPage } = this.controller;
         let { author, name, $update, titel } = item;
-        let divUser = user.id === author.id ? <span className="text-warning">[自己]</span> : cApp.renderUser(author.id);
+        let divUser: any;
+        if (author)
+            divUser = user.id === author.id ? <span className="text-warning">[自己]</span> : cApp.renderUser(author.id);
         return (
             <div className="p-1 cursor-pointer d-flex flex-column" onClick={() => onPreviewPage(item)}>
                 <div className="ml-3 small">
@@ -41,19 +43,6 @@ export class VMain extends VPage<CPage> {
                     </div>
                 </div>
             </div>
-            /*<div className="d-flex p-1 cursor-pointer" onClick={() => onPreviewPage(item)}>
-                <div className="col-9 d-flex">
-                    <div>
-                        <b>{name}</b>
-                        <div className="small py-1">{titel}</div>
-                    </div>
-                </div>
-                <div className="small col-3 text-muted text-right">
-                    <div className=" small pt-1"><EasyTime date={$update} /></div>
-                    <div className=" small pt-2 text-truncate">{divUser}</div>
-                </div>
-            </div>*/
         )
     });
-    // onClick={() => this.controller.showDetail(item.id)}
 }

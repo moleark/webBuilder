@@ -218,7 +218,6 @@ export class CMe extends CUqBase {
 
     showCat = async (param: any) => {
         let { id, name } = param;
-        // await this.searchCat("0");
         let pageCat = new QueryPager(this.uqs.webBuilder.SearchCat, 15, 30);
         pageCat.first({ parent: param });
         let pageCats = { pageCat, name, id };
@@ -248,7 +247,6 @@ export class CMe extends CUqBase {
     }
 
     render = observer(() => {
-
         return this.renderView(VMe);
     });
     tab = () => this.renderView(VMe);

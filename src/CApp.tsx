@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { UQs } from "./uqs";
 import { CMe } from "./me/CMe";
 import { VMain } from "ui/main";
@@ -10,7 +9,6 @@ import { CAppBase, IConstructor, UserCache } from "tonva";
 import { CTemplets } from "./templets/CTemplets";
 import { setting } from "configuration";
 import { CTag } from "tag/CTag";
-import { observer } from 'mobx-react';
 import { res } from 'res';
 
 export class CApp extends CAppBase {
@@ -68,8 +66,6 @@ export class CApp extends CAppBase {
         let business = await this.uqs.webBuilder.SearchBusinessScope.table({});
         if (business.length === 1) {
             setting.BusinessScope = business[0].businessScope.id;
-        } else if (business.length > 1) {
-            setting.BusinessScope = 3;
         }
     }
 

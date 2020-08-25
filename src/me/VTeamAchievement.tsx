@@ -3,7 +3,7 @@ import { VPage, Page } from 'tonva';
 import { CMe } from './CMe';
 import { setting } from '../configuration';
 import { observer } from 'mobx-react';
-import { Chart, LineAdvance, Slider, Legend } from 'bizcharts';
+import { Chart, LineAdvance, Slider } from 'bizcharts';
 
 export class VTeamAchievement extends VPage<CMe> {
     async open() {

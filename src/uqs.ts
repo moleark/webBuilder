@@ -94,7 +94,8 @@ export interface WebBuilder {
     PostProduct: Map;
     SearchPostProduct: Query;
     SearchRecommendProduct: Query;
-    hitOfManual: Action
+    hitOfManual: Action;
+    Subject: Tuid;
 }
 
 export interface UQs {

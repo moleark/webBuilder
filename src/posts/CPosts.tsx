@@ -33,6 +33,8 @@ import { VEditpostSort } from './VEditpostSort';
 import { VProductCatalogPostCount } from "./VProductCatalogPostCount";
 import { VDomainPostCount } from "./VDomainPostCount";
 import { VPostProduct } from "./VPostProduct";
+import { VSubjectEdit } from "./VSubjectEdit";
+import { VSubjectAdd } from "./VSubjectAdd";
 /* eslint-disable */
 export class CPosts extends CUqBase {
     @observable pageTemplate: QueryPager<any>;
@@ -94,8 +96,9 @@ export class CPosts extends CUqBase {
         });
 
         let Auser = this.isMyself ? nav.user : 0;
-        await this.pagePosts.first({ key: key, author: Auser, types: setting.BusinessScope });
+        await this.pagePosts.first({ key: key, author: Auser, businessScope: setting.BusinessScope });
     };
+
     /* posts模板查询*/
     searchTemplateKey = async (key: string) => {
         this.pageTemplate = new QueryPager(this.uqs.webBuilder.SearchTemplate, 15, 30);
@@ -110,8 +113,10 @@ export class CPosts extends CUqBase {
     // 保存Post
     saveItem = async (id: number, param: any) => {
         param.author = this.user.id;
-        let { caption, discription, image, template, content, emphasis } = param;
-        let par = { _caption: caption, _discription: discription, _image: image, _template: template, _content: content, _emphasis: emphasis };
+        param.businessScope = setting.BusinessScope;
+        let { caption, discription, image, template, content, emphasis, businessScope } = param;
+        let par = { _caption: caption, _discription: discription, _image: image, _template: template, _content: content, _emphasis: emphasis, _businessScope: businessScope };
+
         if (id) {
             await this.uqs.webBuilder.Post.save(id, param);
             let item = this.pagePosts.items.find(v => v.id === id);
@@ -124,7 +129,6 @@ export class CPosts extends CUqBase {
         } else {
             let ret = await this.uqs.webBuilder.AddPost.submit(par);
             param.isValid = 1;
-            // param.emphasis = 0;
             await this.uqs.webBuilder.Post.save(ret.id, param);
             param.id = ret.id;
             param.$create = new Date();
@@ -302,6 +306,7 @@ export class CPosts extends CUqBase {
         this.pagePostSubject = await this.uqs.webBuilder.SearchPostSubject.table({ _post: this.current.id })
         this.openVPage(VPostSubject);
     }
+
     pickSubject = async (param: any) => {
         let pageSubject = new QueryPager(this.uqs.webBuilder.SearchSubject, 15, 100);
         pageSubject.first({ _parent: param })
@@ -320,7 +325,6 @@ export class CPosts extends CUqBase {
 
     showSubject = async (param: any) => {
         let { name, id } = param;
-
         let pageSubject = new QueryPager(this.uqs.webBuilder.SearchSubject, 15, 100);
         pageSubject.first({ _parent: id });
 
@@ -336,6 +340,23 @@ export class CPosts extends CUqBase {
         return await this.vCall(VSubjectDetil, showsubpost);
     }
 
+    //栏目维护
+    showSubjectEdit = async (param: any) => {
+        let { id, name } = param;
+        let pageSubject = new QueryPager(this.uqs.webBuilder.SearchSubject, 15, 100);
+        pageSubject.first({ _parent: id })
+        let par = { pageSubject: pageSubject, name: name, parent: id };
+        this.openVPage(VSubjectEdit, par)
+    }
+
+    showSubjectAdd = async (param: any) => {
+        this.openVPage(VSubjectAdd, param);
+    }
+
+    saveSubject = async (id: any, parent: any, name: any, isValid: any) => {
+        let param = { name: name, parent: parent, isValid: isValid };
+        await this.uqs.webBuilder.Subject.save(id, param);
+    }
 
     //领域
     showPostDomain = async () => {
@@ -462,7 +483,7 @@ export class CPosts extends CUqBase {
         this.informationpagePosts.setEachPageItem((item: any, results: { [name: string]: any[] }) => {
             this.cApp.useUser(item.author);
         });
-        await this.informationpagePosts.first({ key: key, author: 0, types: setting.BusinessScope });
+        await this.informationpagePosts.first({ key: key, author: 0, businessScope: setting.BusinessScope });
     };
     //添加到资讯中心  
     addInformation = async (param: any) => {
