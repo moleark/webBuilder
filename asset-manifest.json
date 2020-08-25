@@ -1,23 +1,23 @@
 {
   "files": {
     "main.css": "./static/css/main.bfa6951a.chunk.css",
-    "main.js": "./static/js/main.7782c80a.chunk.js",
-    "main.js.map": "./static/js/main.7782c80a.chunk.js.map",
+    "main.js": "./static/js/main.36f58dda.chunk.js",
+    "main.js.map": "./static/js/main.36f58dda.chunk.js.map",
     "runtime-main.js": "./static/js/runtime-main.b6d86606.js",
     "runtime-main.js.map": "./static/js/runtime-main.b6d86606.js.map",
     "static/css/2.40364498.chunk.css": "./static/css/2.40364498.chunk.css",
-    "static/js/2.5997eee8.chunk.js": "./static/js/2.5997eee8.chunk.js",
-    "static/js/2.5997eee8.chunk.js.map": "./static/js/2.5997eee8.chunk.js.map",
+    "static/js/2.ba2c2fe8.chunk.js": "./static/js/2.ba2c2fe8.chunk.js",
+    "static/js/2.ba2c2fe8.chunk.js.map": "./static/js/2.ba2c2fe8.chunk.js.map",
     "static/js/3.14d544c8.chunk.js": "./static/js/3.14d544c8.chunk.js",
     "static/js/3.14d544c8.chunk.js.map": "./static/js/3.14d544c8.chunk.js.map",
     "static/js/4.64a614fa.chunk.js": "./static/js/4.64a614fa.chunk.js",
     "static/js/4.64a614fa.chunk.js.map": "./static/js/4.64a614fa.chunk.js.map",
     "index.html": "./index.html",
-    "precache-manifest.9c05631777dfa7017a6fd8cf70d01d0a.js": "./precache-manifest.9c05631777dfa7017a6fd8cf70d01d0a.js",
+    "precache-manifest.5ad54c7d8204194dfda39c26da1efe18.js": "./precache-manifest.5ad54c7d8204194dfda39c26da1efe18.js",
     "service-worker.js": "./service-worker.js",
     "static/css/2.40364498.chunk.css.map": "./static/css/2.40364498.chunk.css.map",
     "static/css/main.bfa6951a.chunk.css.map": "./static/css/main.bfa6951a.chunk.css.map",
-    "static/js/2.5997eee8.chunk.js.LICENSE": "./static/js/2.5997eee8.chunk.js.LICENSE",
+    "static/js/2.ba2c2fe8.chunk.js.LICENSE": "./static/js/2.ba2c2fe8.chunk.js.LICENSE",
     "static/media/index.css": "./static/media/element-icons.d2f69a92.woff",
     "static/media/font-awesome.min.css": "./static/media/fontawesome-webfont.fee66e71.woff",
     "static/media/iconfont.css": "./static/media/iconfont.f7ddb032.ttf",
@@ -26,8 +26,8 @@
   "entrypoints": [
     "static/js/runtime-main.b6d86606.js",
     "static/css/2.40364498.chunk.css",
-    "static/js/2.5997eee8.chunk.js",
+    "static/js/2.ba2c2fe8.chunk.js",
     "static/css/main.bfa6951a.chunk.css",
-    "static/js/main.7782c80a.chunk.js"
+    "static/js/main.36f58dda.chunk.js"
   ]
 }
