@@ -63,23 +63,35 @@ export class VTeamAchievementMonDetail extends VPage<CMe> {
                     <strong> 生产量/人</strong>
                 </div>
                 <Chart scale={{ date: { type: 'time' }, value: { min: 0 } }} autoFit height={400} data={dataMonPubSumdetail} padding={[20, 10, 90, 40]}>
-                    <Interval position="type*value" />
+                    {this.interval}
                 </Chart>
                 <div className="py-4 text-center text-muted">
                     <strong> 浏览量/人</strong>
                 </div>
                 <Chart scale={{ date: { type: 'time' }, value: { min: 0 } }} autoFit height={400} data={dataMonHitSumdetail} padding={[20, 10, 90, 40]}>
-                    <Interval position="type*value" />
+                    {this.interval}
                 </Chart>
                 <div className="py-4 text-center text-muted">
                     <strong> 转化率/人</strong>
                 </div>
                 <Chart scale={{ date: { type: 'time' }, value: { min: 0 } }} autoFit height={400} data={dataMonpercentdetail} padding={[20, 10, 90, 40]}>
-                    <Interval position="type*value" />
+                    {this.interval}
                 </Chart>
             </div>
         </Page >
     })
+    private interval = <Interval position="type*value"
+        label={
+            ['type*value', (type, value) => {
+                return {
+                    content: (originData) => {
+                        if (value !== 0) {
+                            return value;
+                        }
+                    },
+                };
+            }]}
+    />
 }
 
 /**

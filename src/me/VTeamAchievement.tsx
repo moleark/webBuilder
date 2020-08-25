@@ -6,12 +6,12 @@ import { observer } from 'mobx-react';
 import { Chart, LineAdvance, Slider, Legend } from 'bizcharts';
 
 export class VTeamAchievement extends VPage<CMe> {
-    async open(param: any) {
+    async open() {
         this.openPage(this.page);
     }
     private page = observer(() => {
 
-        let { teamAchievementDay, teamAchievementMonthchart, addInputPostSum } = this.controller;
+        let { teamAchievementDay, teamAchievementMonthchart, addInputPostSum, showTeamAchievementDetail } = this.controller;
         let dataDay: any = []
         teamAchievementDay.forEach(v => {
             let { day, postPubSum, postTranSum, postHitSum, percent } = v;
@@ -103,15 +103,16 @@ export class VTeamAchievement extends VPage<CMe> {
                 <div className="py-4 text-center text-muted">
                     <strong> 贴文系统运行日报</strong>
                 </div>
-                <Chart scale={{ value: { min: 0 } }} autoFit height={400} data={dataDay} padding={[20, 10, 90, 40]}
-                    onPlotClick={this.handleClickDaydetail} legendName="month" >
+                <Chart scale={{ value: { min: 0 } }} autoFit height={400} data={dataDay} padding={[20, 10, 130, 40]}
+                    onPlotClick={showTeamAchievementDetail}>
                     {this.lineAdvance}
-                    <Slider start={0.5}
+                    <Slider start={0.8}
                         formatter={(v, d, i) => {
                             flag = !flag;
-                            return `${v}${flag ? "开始" : "结束"}`;
+                            let v1 = v.substring(5)   //只获取日期的月和日
+                            return `${v1}${flag ? "" : ""}`;
                         }}
-                        handlerStyle={{ height: '5', }}
+                        handlerStyle={{ height: '6', }}
                     />
                 </Chart>
 
@@ -151,7 +152,7 @@ export class VTeamAchievement extends VPage<CMe> {
         position="date*value"
         color="type"
     />
-    private handleClickDaydetail = (e: any) => {
-        this.controller.showTeamAchievementDetail()
-    }
+    // private handleClickDaydetail = (e: any) => {
+    //     this.controller.showTeamAchievementDetail
+    // }
 }

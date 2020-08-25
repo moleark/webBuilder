@@ -30,12 +30,12 @@
         "mobx-react": "^6.1.3",
         "moment": "^2.24.0",
         "querystringify": "^2.1.1",
-        "react": "^16.10.2",
-        "react-dom": "^16.10.2",
+        "react": "^16.13.0",
+        "react-dom": "^16.13.0",
         "react-hot-loader": "^4.5.3",
         "react-scripts": "3.3.0",
         "save": "^2.4.0",
-        "tonva": "^1.5.11",
+        "tonva": "^1.6.3",
         "typescript": "^3.7.3"
     },
     "scripts": {

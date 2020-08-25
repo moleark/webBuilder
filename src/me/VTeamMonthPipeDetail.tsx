@@ -60,20 +60,32 @@ export class VTeamMonthPipeDetail extends VPage<CMe> {
         return <Page header={header} headerClassName={setting.pageHeaderCss} >
             <div className='pb-4'>
                 <Chart scale={{ date: { type: 'time' }, value: { min: 0 } }} autoFit height={400} data={datahitWebdetail} padding={[20, 10, 90, 40]}>
-                    <Interval position="type*value" />
+                    {this.interval}
                 </Chart>
                 <h3 className='p-3 small text-center'>网站浏览量/人</h3>
                 <Chart scale={{ date: { type: 'time' }, value: { min: 0 } }} autoFit height={400} data={datahitAgentdetail} padding={[20, 10, 90, 40]}>
-                    <Interval position="type*value" />
+                    {this.interval}
                 </Chart>
                 <h3 className='p-3 small text-center'>轻代理/人</h3>
                 <Chart scale={{ date: { type: 'time' }, value: { min: 0 } }} autoFit height={400} data={datahitAssistdetail} padding={[20, 10, 90, 40]}>
-                    <Interval position="type*value" />
+                    {this.interval}
                 </Chart>
                 <h3 className='p-3 small text-center'>销售助手/人</h3>
             </div>
         </Page >
     })
+    private interval = <Interval position="type*value"
+        label={
+            ['type*value', (type, value) => {
+                return {
+                    content: (originData) => {
+                        if (value !== 0) {
+                            return value;
+                        }
+                    },
+                };
+            }]}
+    />
 }
 
 /**

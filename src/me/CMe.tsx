@@ -34,6 +34,7 @@ export class CMe extends CUqBase {
     @observable teamAchievementDay: any[] = [{ month: "", year: "", postPubSum: 0, postTranSum: 0, postHitSum: 0 }];
     @observable teamAchievementMonthchart: any[] = [{ month: "", year: "", postPubSum: 0, postTranSum: 0, postHitSum: 0 }];
     @observable teamAchievementDetail: any[] = [{ month: "", year: "", postPubSum: 0, postTranSum: 0, postHitSum: 0 }];
+    @observable teamAchievementlist: any[] = [{ month: "", year: "", postPubSum: 0, postTranSum: 0, postHitSum: 0, name: '' }];
     @observable teamAchievementMonDetail: any[] = [{ month: "", year: "", postPubSum: 0, postTranSum: 0, postHitSum: 0 }];
     @observable pageCat: any;
     @observable currentCat: any;
@@ -156,6 +157,13 @@ export class CMe extends CUqBase {
         this.teamAchievementDetail.forEach(element => {
             this.cApp.useUser(element.author);
         });
+        this.teamAchievementlist = this.teamAchievementDetail.map(element => {
+            const obj = { ...element }
+            if (element.author && element.author.id) {
+                obj.name = this.cApp.renderUser(element.author.id);
+            }
+            return obj
+        })
         this.openVPage(VTeamAchievementDetail)
     }
 
