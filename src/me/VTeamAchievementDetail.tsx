@@ -21,21 +21,21 @@ export class VTeamAchievementDetail extends VPage<CMe> {
         teamAchievementlist.forEach(v => {
             let { day, postPubSum, postHitSum, percent, name } = v;
             if (name) {
-                dataDayPubSumdetail.unshift(
+                dataDayPubSumdetail.push(
                     {
                         date: day,
                         type: `${name}`,
                         value: postPubSum
                     },
                 )
-                dataDayHitSumdetail.unshift(
+                dataDayHitSumdetail.push(
                     {
                         date: day,
                         type: `${name}`,
                         value: postHitSum
                     },
                 )
-                dataDaypercentdetail.unshift(
+                dataDaypercentdetail.push(
                     {
                         date: day,
                         type: `${name}`,
