@@ -82,7 +82,6 @@ export class CMe extends CUqBase {
             // this.PageTotal = pageTotal.ret[0].PageTotal;
         }
         **/
-        await this.getteamAchievementDetail()
         await this.searchAchievementDetail();
         await this.searchTeam();
     };
@@ -147,6 +146,7 @@ export class CMe extends CUqBase {
     showTeamAchievement = async () => {
         this.year = moment().format('YYYY')
         await this.getTeamAchievement()
+        await this.getteamAchievementDetail()
         await this.openVPage(VTeamAchievement);
     }
     /**
