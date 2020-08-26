@@ -3,7 +3,7 @@ import { VPage, Page } from 'tonva';
 import { CMe } from './CMe';
 import { setting } from '../configuration';
 import { observer } from 'mobx-react';
-import { Chart, LineAdvance, Slider } from 'bizcharts';
+import { LineChart } from 'bizcharts';
 
 export class VTeamAchievement extends VPage<CMe> {
     async open() {
@@ -96,63 +96,99 @@ export class VTeamAchievement extends VPage<CMe> {
         let right = <div onClick={addInputPostSum}>
             <span className="mx-sm-2 iconfont icon-jiahao1 cursor-pointer" style={{ fontSize: "1.7rem", color: "white" }}></span>
         </div>
-        let flag = false;
         return <Page header={'数据折线图'} headerClassName={setting.pageHeaderCss} right={right}>
-
             <div className='pb-4'>
-                <div className="py-4 text-center text-muted">
-                    <strong> 贴文系统运行日报</strong>
-                </div>
-                <Chart scale={{ value: { min: 0 } }} autoFit height={400} data={dataDay} padding={[20, 10, 130, 40]}
-                    onPlotClick={showTeamAchievementDetail}>
-                    {this.lineAdvance}
-                    <Slider start={0.8}
-                        formatter={(v, d, i) => {
-                            flag = !flag;
-                            let v1 = v.substring(5)   //只获取日期的月和日
-                            return `${v1}${flag ? "" : ""}`;
-                        }}
-                        handlerStyle={{ height: '6', }}
-                    />
-                </Chart>
-
-                <div className="py-4 text-center text-muted">
-                    <strong> 贴文系统运行月报</strong>
-                </div>
-                <Chart scale={{ value: { min: 0 }, type: 'linear' }} autoFit height={400} data={dataMonth} padding={[20, 10, 50, 40]}
-                    onAxisClick={(e: any) => {
-                        let month = e.target.attrs.text;
-                        month = month.replace("月", "");
-                        if (month !== '0') {
-                            this.controller.showTeamAchievementMonDetail(month)
+                <LineChart forceFit height={400} padding={[60, 40, 50, 40]} smooth
+                    data={dataDay}
+                    title={{
+                        visible: true,
+                        alignTo: 'middle',
+                        text: '贴文系统运行日报',
+                    }}
+                    xField='date'
+                    yField='value'
+                    seriesField="type"
+                    interactions={[
+                        {
+                            type: 'slider',
+                            cfg: {
+                                start: 0.8,
+                                end: 1,
+                            },
+                        },
+                    ]}
+                    legend={{
+                        offsetY: 4,
+                        text: {
+                            style: {
+                                fontSize: 16,
+                                fill: 'grey',
+                            }
                         }
                     }}
-                >
-                    {this.lineAdvance}
-                </Chart>
-                <div className="py-4 text-center text-muted">
-                    <strong> 渠道报表</strong>
-                </div>
-                <Chart scale={{ value: { min: 0 } }} autoFit height={400} data={dataSource} padding={[20, 10, 50, 40]}
-                    onAxisClick={(e: any) => {
-                        let month = e.target.attrs.text
-                        month = month.replace("月", "");
-                        if (month !== '0') {
-                            this.controller.showTeamAchievementPipeDetail(month)
+                    events={{
+                        onLineClick: (event) => showTeamAchievementDetail()
+                    }}
+                />
+                <LineChart forceFit height={400} padding={[70, 10, 50, 40]} smooth
+                    data={dataMonth}
+                    title={{
+                        visible: true,
+                        alignTo: 'middle',
+                        text: '贴文系统运行月报',
+                    }}
+                    xField='date'
+                    yField='value'
+                    seriesField="type"
+                    legend={{
+                        offsetY: 4,
+                        text: {
+                            style: {
+                                fontSize: 16,
+                                fill: 'grey',
+                            }
                         }
-                    }}>
-                    {this.lineAdvance}
-                </Chart>
+                    }}
+                    events={{
+                        onAxisClick: (event) => {
+                            let month = event.target.attrs.text;
+                            month = month.replace("月", "");
+                            if (month !== '0') {
+                                this.controller.showTeamAchievementMonDetail(month)
+                            }
+                        }
+                    }}
+                />
+                <LineChart forceFit height={400} padding={[60, 10, 30, 40]} smooth
+                    data={dataSource}
+                    title={{
+                        visible: true,
+                        alignTo: 'middle',
+                        text: '渠道报表',
+                    }}
+                    xField='date'
+                    yField='value'
+                    seriesField="type"
+                    legend={{
+                        offsetY: 4,
+                        text: {
+                            style: {
+                                fontSize: 16,
+                                fill: 'grey',
+                            }
+                        }
+                    }}
+                    events={{
+                        onAxisClick: (event) => {
+                            let month = event.target.attrs.text;
+                            month = month.replace("月", "");
+                            if (month !== '0') {
+                                this.controller.showTeamAchievementPipeDetail(month)
+                            }
+                        }
+                    }}
+                />
             </div>
         </Page >
     })
-    private lineAdvance = <LineAdvance
-        shape="smooth"
-        area
-        position="date*value"
-        color="type"
-    />
-    // private handleClickDaydetail = (e: any) => {
-    //     this.controller.showTeamAchievementDetail
-    // }
 }

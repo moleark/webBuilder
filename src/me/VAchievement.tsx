@@ -3,7 +3,7 @@ import { VPage, Page, nav } from 'tonva';
 import { CMe } from './CMe';
 import { setting } from '../configuration';
 import { observer } from 'mobx-react';
-import { Chart, LineAdvance } from 'bizcharts';
+import { Chart, LineAdvance, LineChart } from 'bizcharts';
 /* eslint-disable */
 export class VAchievement extends VPage<CMe> {
 
@@ -60,19 +60,46 @@ export class VAchievement extends VPage<CMe> {
         })
         return <Page header={'业绩'} headerClassName={setting.pageHeaderCss}>
             <div className='pb-4'>
-                <div className="bg-white px-3 py-2 text-primary strong">
-                    <strong>  周报表</strong>
-                </div>
-                <Chart scale={{ value: { min: 0 } }} autoFit height={400} data={dataDay} padding={[20, 10, 90, 40]} >
-                    {this.lineAdvance}
-                </Chart>
-                <div className="bg-white px-3 py-2 text-primary strong">
-                    <strong>月报表</strong>
-                </div>
-                <Chart scale={{ value: { min: 0 }, type: 'linear' }} autoFit height={400} data={dataMonth} padding={[20, 10, 50, 40]}>
-                    {this.lineAdvance}
-                </Chart>
-                <h3 className='p-3 small text-center'>贴文系统运行月报</h3>
+                <LineChart forceFit height={400} padding={[40, 10, 50, 40]} smooth
+                    data={dataDay}
+                    title={{
+                        visible: true,
+                        alignTo: 'middle',
+                        text: '周报表',
+                    }}
+                    xField='date'
+                    yField='value'
+                    seriesField="type"
+                    legend={{
+                        offsetY: 4,
+                        text: {
+                            style: {
+                                fontSize: 16,
+                                fill: 'grey',
+                            }
+                        }
+                    }}
+                />
+                <LineChart forceFit height={400} padding={[50, 10, 50, 40]} smooth
+                    data={dataMonth}
+                    title={{
+                        visible: true,
+                        alignTo: 'middle',
+                        text: '月报表',
+                    }}
+                    xField='date'
+                    yField='value'
+                    seriesField="type"
+                    legend={{
+                        offsetY: 4,
+                        text: {
+                            style: {
+                                fontSize: 16,
+                                fill: 'grey',
+                            }
+                        }
+                    }}
+                />
             </div>
             <div className="footer small px-3 text-primary bg-white">
                 <div> 注：</div>
@@ -86,10 +113,4 @@ export class VAchievement extends VPage<CMe> {
             </div>
         </Page >
     })
-    private lineAdvance = <LineAdvance
-        shape="smooth"
-        area
-        position="date*value"
-        color="type"
-    />
 }
