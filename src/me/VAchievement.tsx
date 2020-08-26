@@ -3,7 +3,7 @@ import { VPage, Page, nav } from 'tonva';
 import { CMe } from './CMe';
 import { setting } from '../configuration';
 import { observer } from 'mobx-react';
-import { Chart, LineAdvance, LineChart } from 'bizcharts';
+import { LineChart } from 'bizcharts';
 /* eslint-disable */
 export class VAchievement extends VPage<CMe> {
 

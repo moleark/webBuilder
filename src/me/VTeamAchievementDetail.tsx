@@ -75,35 +75,36 @@ export class VTeamAchievementDetail extends VPage<CMe> {
                         }
                     }}
                 />
-                <LineChart forceFit height={400} padding={[150, 40, 30, 40]} smooth
-                    data={dataDayPubSumdetail}
-                    title={{
-                        visible: true,
-                        alignTo: 'middle',
-                        text: '生产量/人',
-                    }}
-                    xField='date'
-                    yField='value'
-                    seriesField="type"
-                    interactions={[
-                        {
-                            type: 'slider',
-                            cfg: {
-                                start: 0.8,
-                                end: 1,
+                <div className='py-3 my-3'>
+                    <LineChart forceFit height={400} padding={[150, 40, 30, 40]} smooth
+                        data={dataDayPubSumdetail}
+                        title={{
+                            visible: true,
+                            alignTo: 'middle',
+                            text: '生产量/人',
+                        }}
+                        xField='date'
+                        yField='value'
+                        seriesField="type"
+                        interactions={[
+                            {
+                                type: 'slider',
+                                cfg: {
+                                    start: 0.8,
+                                    end: 1,
+                                },
                             },
-                        },
-                    ]}
-                    legend={{
-                        offsetY: 6,
-                        text: {
-                            style: {
-                                fontSize: 16,
-                                fill: 'grey',
+                        ]}
+                        legend={{
+                            offsetY: 6,
+                            text: {
+                                style: {
+                                    fontSize: 16,
+                                    fill: 'grey',
+                                }
                             }
-                        }
-                    }}
-                />
+                        }} />
+                </div>
                 <LineChart forceFit height={400} padding={[140, 40, 30, 40]} smooth
                     data={dataDaypercentdetail}
                     title={{
