@@ -13,29 +13,29 @@ export class VTeamAchievementDetail extends VPage<CMe> {
     }
 
     private page = observer((param: any) => {
-        let { teamAchievementDetail, teamAchievementlist } = this.controller;
+        let { teamAchievementlist } = this.controller;
         let dataDayPubSumdetail: any = []
         let dataDayHitSumdetail: any = []
         let dataDaypercentdetail: any = []
 
         teamAchievementlist.forEach(v => {
-            let { day, postPubSum, postHitSum, percent, author, name } = v;
+            let { day, postPubSum, postHitSum, percent, name } = v;
             if (name) {
-                dataDayPubSumdetail.push(
+                dataDayPubSumdetail.unshift(
                     {
                         date: day,
                         type: `${name}`,
                         value: postPubSum
                     },
                 )
-                dataDayHitSumdetail.push(
+                dataDayHitSumdetail.unshift(
                     {
                         date: day,
                         type: `${name}`,
                         value: postHitSum
                     },
                 )
-                dataDaypercentdetail.push(
+                dataDaypercentdetail.unshift(
                     {
                         date: day,
                         type: `${name}`,

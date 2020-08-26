@@ -82,6 +82,7 @@ export class CMe extends CUqBase {
             // this.PageTotal = pageTotal.ret[0].PageTotal;
         }
         **/
+        await this.getteamAchievementDetail()
         await this.searchAchievementDetail();
         await this.searchTeam();
     };
@@ -151,7 +152,7 @@ export class CMe extends CUqBase {
     /**
      * 日报详细
      */
-    showTeamAchievementDetail = async () => {
+    getteamAchievementDetail = async () => {
         this.year = moment().format('YYYY')
         this.teamAchievementDetail = await this.uqs.webBuilder.SearchAchievementOfTeamDetail.table({ _manage: 0, _year: this.year, _month: '', _type: "day" });
         this.teamAchievementDetail.forEach(element => {
@@ -164,7 +165,10 @@ export class CMe extends CUqBase {
             }
             return obj
         })
-        this.openVPage(VTeamAchievementDetail)
+    }
+    showTeamAchievementDetail = async () => {
+        await this.getteamAchievementDetail()
+        await this.openVPage(VTeamAchievementDetail)
     }
 
     /**  
