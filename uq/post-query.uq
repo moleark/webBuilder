@@ -480,5 +480,6 @@ returns ret (
         	)
 	LIMIT 10;
     -/
+    /*CALL product.tv_GetProductCategoryLeafCache();*/
 };
  
