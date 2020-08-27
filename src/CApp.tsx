@@ -31,6 +31,7 @@ export class CApp extends CAppBase {
 
     protected async internalStart() {
         await this.uqs.webBuilder.hit.submit({});
+        await this.uqs.webBuilder.SearchRecommendProduct.query({ post: 30 })
         //根据网址判断是什么APP
         if (document.domain === setting.appUrlDomain) {
             setting.previewUrl = "https://web.jkchemical.com";
