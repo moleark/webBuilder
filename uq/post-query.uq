@@ -480,6 +480,9 @@ returns ret (
         	)
 	LIMIT 10;
     -/
-    /*CALL product.tv_GetProductCategoryLeafCache();*/
+    /*
+        CALL product.tv_GetProductCategoryLeafCache();
+        call webbuilder.tv_searchrecommendproduct(0);
+    */
 };
  
