@@ -75,6 +75,11 @@ TUID  Subject (
     parent ID Subject,
     isValid tinyint default 1
 );
+
+--默认栏目
+MAP  SubjectDefault(
+    subject ID Subject
+);
  
 MAP PostSubject(
     key post ID POST,
