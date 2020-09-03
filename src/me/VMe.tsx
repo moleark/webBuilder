@@ -91,7 +91,7 @@ export class VMe extends VPage<CMe> {
             {branch(this.t('set'), "icon-shezhi3", onSet)}
             {branch(this.t('图片分类'), "icon-Fill", () => showCat({ name: "图片分类", id: 0 }))}
             {branch(this.t('栏目'), "icon-Fill", () => cApp.cPosts.showSubjectEdit({ name: "栏目", id: 0 }))}
-            {branch(this.t('侧边栏'), "icon-lanmuguanli", () => this.controller.showSidebar())}
+            {branch(this.t('侧边栏栏目'), "icon-lanmuguanli", () => this.controller.showSidebar())}
         </div>
     })
 }
