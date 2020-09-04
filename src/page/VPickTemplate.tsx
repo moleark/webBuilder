@@ -40,7 +40,13 @@ export class VPickTemplate extends VPage<CPage> {
 
     private itemRow = observer((item: any) => {
         let { caption, author } = item;
-        let divUser = this.controller.cApp.renderUser(author.id);
+        let divUser: any;
+        if (author && author.id) {
+            divUser = author.id ?
+                <span className="text-warning">[自己]</span>
+                :
+                this.controller.cApp.renderUser(author.id);
+        }
         return <LMR className="px-3 py-2 text-muted border bg-white" right={divUser}>
             <b>{caption}</b>
         </LMR>;
