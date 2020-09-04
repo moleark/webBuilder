@@ -486,11 +486,14 @@ returns ret (
     */
 };
  
-QUERY SearchSubjectDefault()
+QUERY SearchSubjectDefault(
+    _businessScope ID BusinessScope
+)
 returns ret (
      subject ID Subject
 ){
 
     into ret select  subject
-    from    SubjectDefault;
+    from    SubjectDefault 
+    where   businessScope = _businessScope;
 };

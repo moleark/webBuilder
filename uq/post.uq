@@ -78,6 +78,7 @@ TUID  Subject (
 
 --默认栏目
 MAP  SubjectDefault(
+   key businessScope ID BusinessScope,
    key subject ID Subject
 );
  
