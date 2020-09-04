@@ -129,12 +129,24 @@ export class VMain extends VPage<CPosts> {
             }
         }
         let divUser: any;
+<<<<<<< HEAD
         if (author) {
+=======
+        if (author && author.id) {
+>>>>>>> 61fa1dc7bbd66ff1407a136ca851a71f7ada1f72
             divUser = user.id === author.id ?
                 <span className="text-warning">[自己]</span>
                 :
                 this.controller.cApp.renderUser(author.id);
         }
+<<<<<<< HEAD
+=======
+        // let divUser = user.id === author.id ?
+        //     <span className="text-warning">[自己]</span>
+        //     :
+        //     this.controller.cApp.renderUser(author.id);
+
+>>>>>>> 61fa1dc7bbd66ff1407a136ca851a71f7ada1f72
         let showImport = emphasis === 1 ?
             <FA className="text-danger ml-3 " name="star" /> : "";
         return (
