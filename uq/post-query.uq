@@ -486,3 +486,11 @@ returns ret (
     */
 };
  
+QUERY SearchSubjectDefault()
+returns ret (
+     subject ID Subject
+){
+
+    into ret select  subject
+    from    SubjectDefault;
+};

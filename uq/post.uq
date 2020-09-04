@@ -78,7 +78,7 @@ TUID  Subject (
 
 --默认栏目
 MAP  SubjectDefault(
-    subject ID Subject
+   key subject ID Subject
 );
  
 MAP PostSubject(

@@ -128,12 +128,13 @@ export class VMain extends VPage<CPosts> {
                 updated = cYear !== uYear || cMonth !== uMonth || cDate !== uDate;
             }
         }
-
-        let divUser = user.id === author.id ?
-            <span className="text-warning">[自己]</span>
-            :
-            this.controller.cApp.renderUser(author.id);
-
+        let divUser: any;
+        if (author) {
+            divUser = user.id === author.id ?
+                <span className="text-warning">[自己]</span>
+                :
+                this.controller.cApp.renderUser(author.id);
+        }
         let showImport = emphasis === 1 ?
             <FA className="text-danger ml-3 " name="star" /> : "";
         return (
