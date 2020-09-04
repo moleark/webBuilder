@@ -96,6 +96,10 @@ export interface WebBuilder {
     SearchRecommendProduct: Query;
     hitOfManual: Action;
     Subject: Tuid;
+
+    SubjectDefault: Map;
+    SearchSubjectDefault: Query;
+    DelSubjectDefault: Action;
 }
 
 export interface UQs {

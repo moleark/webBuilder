@@ -19,11 +19,13 @@ import { VTeamAchievementDetail } from "./VTeamAchievementDetail";
 import { VTeamAchievementMonDetail } from "./VTeamAchievementMonDetail";
 import { VTeamMonthPipeDetail } from "./VTeamMonthPipeDetail";
 import { VOtherHitPost } from './VOtherHitPost';
+import { VSidebarSubject } from './VSidebarSubject';
 /* eslint-disable */
 
 export class CMe extends CUqBase {
     @observable pageMedia: QueryPager<any>;
     @observable items: any[];
+    @observable pageSidebar: any;
     @observable current: any;
     @observable details: any;
     @observable pagePosts: any[];
@@ -250,6 +252,28 @@ export class CMe extends CUqBase {
         this.searchCat(this.currentCatParent);
     }
 
+    /**侧边栏目*/
+    getsubjectDefault = async () => {
+        this.pageSidebar = await this.uqs.webBuilder.SearchSubjectDefault.table({});
+    }
+    showSidebar = async () => {
+        await this.getsubjectDefault()
+        this.openVPage(VSidebarSubject);
+    }
+    /**添加栏目*/
+    onSubjectEdit = async (param: any) => {
+        await this.uqs.webBuilder.SubjectDefault.add({ subject: param.id, arr1: [] });
+        await this.getsubjectDefault()
+    };
+    /*删除栏目*/
+    delSubjectEdit = async (param: any) => {
+        await this.uqs.webBuilder.DelSubjectDefault.submit({ _subject: param.id, arr1: [{}] });
+        await this.getsubjectDefault()
+    }
+    /**选择栏目 */
+    selectSubject = async () => {
+        return await this.cApp.cPosts.showSelectSubjectEdit({ name: "栏目", id: 0 })
+    }
     render = observer(() => {
         return this.renderView(VMe);
     });

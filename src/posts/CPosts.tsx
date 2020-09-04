@@ -35,6 +35,7 @@ import { VDomainPostCount } from "./VDomainPostCount";
 import { VPostProduct } from "./VPostProduct";
 import { VSubjectEdit } from "./VSubjectEdit";
 import { VSubjectAdd } from "./VSubjectAdd";
+import { VSelectSubjectEdit } from "./VSelectSubjectEdit";
 /* eslint-disable */
 export class CPosts extends CUqBase {
     @observable pageTemplate: QueryPager<any>;
@@ -348,6 +349,14 @@ export class CPosts extends CUqBase {
         let par = { pageSubject: pageSubject, name: name, parent: id };
         this.openVPage(VSubjectEdit, par)
     }
+    showSelectSubjectEdit = async (param: any) => {
+        let { id, name } = param;
+        let pageSubject = new QueryPager(this.uqs.webBuilder.SearchSubject, 15, 100);
+        pageSubject.first({ _parent: id })
+        let par = { pageSubject: pageSubject, name: name, parent: id };
+        this.vCall(VSelectSubjectEdit, par)
+    }
+
 
     showSubjectAdd = async (param: any) => {
         this.openVPage(VSubjectAdd, param);
