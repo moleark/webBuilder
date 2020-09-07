@@ -20,12 +20,13 @@ import { VTeamAchievementMonDetail } from "./VTeamAchievementMonDetail";
 import { VTeamMonthPipeDetail } from "./VTeamMonthPipeDetail";
 import { VOtherHitPost } from './VOtherHitPost';
 import { VSidebarSubject } from './VSidebarSubject';
+import { setting } from "configuration";
 /* eslint-disable */
 
 export class CMe extends CUqBase {
     @observable pageMedia: QueryPager<any>;
     @observable items: any[];
-    @observable pageSidebar: any;
+    @observable pageSidebar: any[];
     @observable current: any;
     @observable details: any;
     @observable pagePosts: any[];
@@ -252,9 +253,9 @@ export class CMe extends CUqBase {
         this.searchCat(this.currentCatParent);
     }
 
-    /**侧边栏目*/
+    /**侧边栏目 */
     getsubjectDefault = async () => {
-        this.pageSidebar = await this.uqs.webBuilder.SearchSubjectDefault.table({});
+        this.pageSidebar = await this.uqs.webBuilder.SearchSubjectDefault.table({ _businessScope: setting.BusinessScope });
     }
     showSidebar = async () => {
         await this.getsubjectDefault()
@@ -262,17 +263,18 @@ export class CMe extends CUqBase {
     }
     /**添加栏目*/
     onSubjectEdit = async (param: any) => {
-        await this.uqs.webBuilder.SubjectDefault.add({ subject: param.id, arr1: [] });
+        await this.uqs.webBuilder.SubjectDefault.add({ businessScope: setting.BusinessScope, arr1: [{ subject: param.id }] });
         await this.getsubjectDefault()
+        this.closePage();
     };
     /*删除栏目*/
     delSubjectEdit = async (param: any) => {
-        await this.uqs.webBuilder.DelSubjectDefault.submit({ _subject: param.id, arr1: [{}] });
+        await this.uqs.webBuilder.DelSubjectDefault.submit({ _subject: param.id });
         await this.getsubjectDefault()
     }
     /**选择栏目 */
     selectSubject = async () => {
-        return await this.cApp.cPosts.showSelectSubjectEdit({ name: "栏目", id: 0 })
+        return await this.cApp.cPosts.showSelectSubjectEdit({ name: "栏目", id: "10000" + setting.BusinessScope })
     }
     render = observer(() => {
         return this.renderView(VMe);

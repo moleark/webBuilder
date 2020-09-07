@@ -43,7 +43,7 @@ export class VInformationPost extends VPage<CPosts> {
         let { image, caption, discription, author, emphasis, web, agent, assist, openweb } = item;
         let divUser: any;
         if (author && author.id) {
-            divUser = author.id ?
+            divUser = author.id === user.id ?
                 <span className="text-warning">[自己]</span>
                 :
                 this.controller.cApp.renderUser(author.id);
