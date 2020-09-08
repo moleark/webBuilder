@@ -12,7 +12,7 @@ export class VSlideShow extends VPage<CMedia> {
     private page = observer(() => {
 
         let { pageSlideShow, pickImage } = this.controller;
-        let right = <span onClick={pickImage} className="mx-sm-2 iconfont icon-jiahao1 cursor-pointer" style={{ fontSize: "1.7rem", color: "white" }}></span>
+        let right = <span onClick={pickImage} className="mx-2 iconfont icon-jiahao1 cursor-pointer" style={{ fontSize: "1.7rem", color: "white" }}></span>
         let { items, loading } = pageSlideShow;
         let divItems: any;
         if (!items) {

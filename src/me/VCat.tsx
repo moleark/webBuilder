@@ -17,7 +17,7 @@ export class VCat extends VPage<CMe> {
         let { name } = param;
         let { showAddCat } = this.controller;
         let right = <div onClick={() => showAddCat(param)}>
-            <span className="mx-sm-2 iconfont icon-jiahao1 cursor-pointer" style={{ fontSize: "1.7rem", color: "white" }}></span>
+            <span className="mx-2 iconfont icon-jiahao1 cursor-pointer" style={{ fontSize: "1.7rem", color: "white" }}></span>
         </div>;
         return <Page header={name} headerClassName={consts.headerClass}
             onScrollBottom={this.onScrollBottom} right={right}>

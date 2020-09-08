@@ -263,9 +263,9 @@ export class CMe extends CUqBase {
     }
     /**添加栏目*/
     onSubjectEdit = async (param: any) => {
-        await this.uqs.webBuilder.SubjectDefault.add({ businessScope: setting.BusinessScope, arr1: [{ subject: param.id }] });
+        this.closePage(param.type);
+        await this.uqs.webBuilder.SubjectDefault.add({ businessScope: setting.BusinessScope, arr1: [{ subject: param.id, type: null }] });
         await this.getsubjectDefault()
-        this.closePage();
     };
     /*删除栏目*/
     delSubjectEdit = async (param: any) => {
@@ -274,7 +274,7 @@ export class CMe extends CUqBase {
     }
     /**选择栏目 */
     selectSubject = async () => {
-        return await this.cApp.cPosts.showSelectSubjectEdit({ name: "栏目", id: "10000" + setting.BusinessScope })
+        return await this.cApp.cPosts.showSelectSubjectEdit({ name: "栏目", id: "10000" + setting.BusinessScope, type: 1 })
     }
     render = observer(() => {
         return this.renderView(VMe);

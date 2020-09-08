@@ -15,7 +15,7 @@ export class VPostProduct extends VPage<CPosts> {
         let right = (
             <div className="px-3" onClick={showProduct}>
                 <div>
-                    <span className="mx-sm-2 iconfont icon-jiahao1 cursor-pointer" style={{ fontSize: "1.7rem", color: "white" }}></span>
+                    <span className="mx-2 iconfont icon-jiahao1 cursor-pointer" style={{ fontSize: "1.7rem", color: "white" }}></span>
                 </div>
             </div>
         );

@@ -19,7 +19,7 @@ export class VSubjectEdit extends VPage<CPosts> {
 
     private page = observer(() => {
         let right = <div onClick={() => this.controller.showSubjectAdd({ parent: this.parent, name: "", id: -1 })}>
-            <span className="mx-sm-2 iconfont icon-jiahao1 cursor-pointer" style={{ fontSize: "1.7rem", color: "white" }}></span>
+            <span className="mx-2 iconfont icon-jiahao1 cursor-pointer" style={{ fontSize: "1.7rem", color: "white" }}></span>
         </div>;
 
         return (

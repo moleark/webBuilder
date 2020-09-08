@@ -44,7 +44,7 @@ export class VEditCat extends VPage<CMe> {
 
     private page = observer(() => {
         let right = <div>
-            <span className="mx-sm-2 iconfont icon-jiahao1 cursor-pointer" style={{ fontSize: "1.7rem", color: "white" }}></span>
+            <span className="mx-2 iconfont icon-jiahao1 cursor-pointer" style={{ fontSize: "1.7rem", color: "white" }}></span>
         </div>;
         return <Page header={this.capton} headerClassName={consts.headerClass} right={right}>
             <div className="mx-3">

@@ -46,7 +46,7 @@ export class VMain extends VPage<CPosts> {
                 {this.renderMeAllToggle()}
                 <SearchBox size="sm" onSearch={(key: string) => searchPostsKey(key, searchAuthor)} placeholder={this.t('searchpost')} />
                 <div onClick={onAdd}>
-                    <span className="mx-sm-2 iconfont icon-jiahao1 cursor-pointer" style={{ fontSize: "1.7rem", color: "white" }}></span>
+                    <span className="mx-sm-2 iconfont icon-jiahao1 cursor-pointer mr-2" style={{ fontSize: "1.7rem", color: "white" }}></span>
                 </div>
             </div>
         );

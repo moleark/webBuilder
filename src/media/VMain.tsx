@@ -21,7 +21,7 @@ export class VMain extends VPage<CMedia> {
                 onSearch={(key: string) => searchMadiaKey(key, 1)}
                 placeholder={this.t('searchpicture')} />
             <div onClick={onAddClick}>
-                <span className="ml-2 iconfont icon-jiahao1 mr-2"
+                <span className="mx-2 iconfont icon-jiahao1 "
                     style={{ fontSize: "26px", color: "white" }}>
                 </span>
             </div>

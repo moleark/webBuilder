@@ -16,7 +16,7 @@ export class VInformation extends VPage<CPosts> {
 
     private page = observer(() => {
         let { toaddPost, pageInformationPosts } = this.controller;
-        let right = <span className="mx-sm-2 iconfont icon-jiahao1 cursor-pointer"
+        let right = <span className="mx-2 iconfont icon-jiahao1 cursor-pointer"
             style={{ fontSize: "1.7rem", color: "white" }} onClick={toaddPost}></span>
 
         let none = (

@@ -350,10 +350,10 @@ export class CPosts extends CUqBase {
         this.openVPage(VSubjectEdit, par)
     }
     showSelectSubjectEdit = async (param: any) => {
-        let { id, name } = param;
+        let { id, name, type } = param;
         let pageSubject = new QueryPager(this.uqs.webBuilder.SearchSubject, 15, 100);
         pageSubject.first({ _parent: id })
-        let par = { pageSubject: pageSubject, name: name, parent: id };
+        let par = { pageSubject: pageSubject, name: name, parent: id, type: type };
         this.vCall(VSelectSubjectEdit, par)
     }
 

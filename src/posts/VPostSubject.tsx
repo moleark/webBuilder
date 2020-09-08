@@ -16,7 +16,7 @@ export class VPostSubject extends VPage<CPosts> {
         let right = (
             <div className="d-flex align-items-center" onClick={() => pickSubject("10000" + setting.BusinessScope)}>
                 <div>
-                    <span className="mx-sm-2 iconfont icon-jiahao1 cursor-pointer" style={{ fontSize: "1.7rem", color: "white" }}></span>
+                    <span className="mx-2 iconfont icon-jiahao1 cursor-pointer" style={{ fontSize: "1.7rem", color: "white" }}></span>
                 </div>
             </div>
         );
