@@ -4,6 +4,7 @@ import { VPage, Page, Widget, UiSchema, UiCustom, Form, Schema, Context, setRes 
 import { consts } from 'consts';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
+import { setting } from 'configuration';
 
 const res: { [prop: string]: string | any } = {
     sales: '销售助手',
@@ -45,21 +46,20 @@ class Discount extends Widget {
     }
 
     render = () => {
-        let list = [
-            { value: 1, title: tt('sales'), name: 'a', checked: this.value['1'] },
-            { value: 2, title: tt('agent'), name: 'a', checked: this.value['2'] },
-            // { value: 3, title: tt('privateSite'), name: 'a', checked: this.value['3'] },
-            { value: 3, title: tt('internationSite'), name: 'a', checked: this.value['3'] },
-            {
-                value: 4, title: tt('publicSite'), name: 'a', checked: this.value['4'],
-                subList: [
-                    { value: 5, title: 'a', name: 'a', checked: true },
-                    { value: 6, title: 'b', name: 'a', checked: false },
-                    { value: 7, title: 'c', name: 'a', checked: false },
-                    { value: 8, title: 'd', name: 'a', checked: false }
-                ]
-            }
-        ];
+        let list = [];
+        if (setting.BusinessScope === 1) {
+            list.push({ value: 1, title: tt('sales'), name: 'a', checked: this.value['1'] });
+            list.push({ value: 2, title: tt('agent'), name: 'a', checked: this.value['2'] });
+            list.push({ value: 4, title: tt('publicSite'), name: 'a', checked: this.value['4'] });
+        } else if (setting.BusinessScope === 2) {
+            list.push({
+                value: 5, title: tt('空中课堂'), name: 'a', checked: this.value['5']
+            });
+        } else if (setting.BusinessScope === 3) {
+            list.push({
+                value: 6, title: tt('BV网站'), name: 'a', checked: this.value['6']
+            });
+        }
 
         return <div className="form-control" style={{ height: 'auto' }}>
             {list.map((v, index) => {
@@ -112,23 +112,25 @@ export class VRelease extends VPage<CPosts>  {
         let { discount } = context.data;
         let arr = [];
         for (let i in discount) {
-            if (discount[i] === true) arr.push(Number(i))
+            if (discount[i] === true) arr.push(Number(i));
         }
-
         publishPost(arr, this.startdate, this.enddate);
     }
 
     private page = observer(() => {
         let def = {
             discount: {
-                "1": true,
-                "2": true,
-                "3": true,
-                "4": true
+                "1": false,
+                "2": false,
+                "3": false,
+                "4": false,
+                "5": false,
+                "6": false
             }
         };
 
         return <Page header={this.t('publish')} headerClassName={consts.headerClass} >
+
             <Form ref={v => this.form = v} className="my-3 mx-3"
                 schema={schema}
                 uiSchema={this.uiSchema}
@@ -136,7 +138,8 @@ export class VRelease extends VPage<CPosts>  {
                 requiredFlag={false}
                 fieldLabelSize={2}
                 formData={def} />
-            <form className="mx-3 my-3">
+
+            <form className=" w-100 px-3">
                 <div className="form-group row">
                     <label className="col-sm-2 col-form-label"></label>
                     <div className="col-sm-10">

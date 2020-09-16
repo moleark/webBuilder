@@ -17,10 +17,12 @@ TUID POST (
 /** 发布帖文记录 **/
 MAP PostPublish(
     key post ID POST,
-    web     smallint,
-    agent   smallint, 
-    assist  smallint, 
-    openweb smallint, 
+    web     smallint, --jk-web
+    agent   smallint, --轻代理
+    assist  smallint, --销售助手
+    openweb smallint, --国际网站
+    bvweb      smallint, --BV网站
+    classroom  smallint, --空中课堂
     operator ID [$user],
     startdate date,
     enddate date,
