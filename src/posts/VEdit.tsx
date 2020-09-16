@@ -96,12 +96,12 @@ export class VEdit extends VPage<CPosts> {
             <div className="btn-group btn-group-toggle" data-toggle="buttons">
                 <label className={classNames(cnButton, { active: this.isOn })}>
                     <input type="radio" name="options" value="general" defaultChecked={true} onChange={this.onOff} />
-                    <span className="d-inline d-sm-none">{this.t('普')}</span>
+                    <span className="d-inline d-sm-none">{this.t('general')}</span>
                     <span className="d-none d-sm-inline">{this.t('general')}</span>
                 </label>
                 <label className={classNames(cnButton, { active: !this.isOn })}>
                     <input type="radio" name="options" value="veryimport " defaultChecked={false} onChange={this.onOff} />
-                    <span className="d-inline d-sm-none">{this.t('重')}</span>
+                    <span className="d-inline d-sm-none">{this.t('veryimport')}</span>
                     <span className="d-none d-sm-inline">{this.t('veryimport')}</span>
                 </label>
 
