@@ -483,16 +483,16 @@ returns ret (
 
 	INSERT  INTO `_ret` SELECT  p.id, p.no, p.brand, p.origin, p.description, p.descriptionc, p.imageurl, pc.chemical
          	,pc.cas, pc.purity, b.name AS brandname, p.id as `$id`
-	FROM 	product$test.`tv_productcategoryleafcache` AS a
-            INNER JOIN product$test.tv_productproductcategorycache as pp ON a.leaf = pp.category
-            INNER JOIN product$test.tv_productx as p on p.id = pp.product
-            LEFT JOIN  product$test.tv_brand as b on p.$unit = b.$unit and p.brand = b.id
-            LEFT JOIN  product$test.tv_productchemical as pc on p.$unit = pc.$unit and p.id = pc.product
+	FROM 	product.`tv_productcategoryleafcache` AS a
+            INNER JOIN product.tv_productproductcategorycache as pp ON a.leaf = pp.category
+            INNER JOIN product.tv_productx as p on p.id = pp.product
+            LEFT JOIN  product.tv_brand as b on p.$unit = b.$unit and p.brand = b.id
+            LEFT JOIN  product.tv_productchemical as pc on p.$unit = pc.$unit and p.id = pc.product
 	WHERE 	pp.`$unit` = 24 AND pp.salesregion = 1
             AND (	
-                a.parent in ( SELECT productcategory FROM webbuilder$test.tv_postproductcatalog where post = `_post`) or 
-                a.leaf  in ( SELECT productcategory FROM webbuilder$test.tv_postproductcatalog where post = `_post` ) or
-                not exists (SELECT productcategory FROM webbuilder$test.tv_postproductcatalog where post = `_post`   )
+                a.parent in ( SELECT productcategory FROM webbuilder.tv_postproductcatalog where post = `_post`) or 
+                a.leaf  in ( SELECT productcategory FROM webbuilder.tv_postproductcatalog where post = `_post` ) or
+                not exists (SELECT productcategory FROM webbuilder.tv_postproductcatalog where post = `_post`   )
         	)
 	LIMIT 10;
     -/

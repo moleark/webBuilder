@@ -125,10 +125,10 @@ export class VEdit extends VPage<CPosts> {
                     uiSchema={this.uiSchema}
                     onItemChanged={this.onItemChanged}
                 />
-                {branch("目录", showPostProductCatalog)}
-                {branch("栏目", showPostSubject)}
-                {branch("领域", showPostDomain)}
-                {(setting.BusinessScope !== 2) && branch("产品", showPostProduct)}
+                {current.id && branch("目录", showPostProductCatalog)}
+                {current.id && branch("栏目", showPostSubject)}
+                {current.id && branch("领域", showPostDomain)}
+                {current.id && (setting.BusinessScope !== 2) && branch("产品", showPostProduct)}
                 <div className="bg-white py-2 d-flex justify-content-end cursor-pointer ">
                     {this.language()}{this.isimport()}
                 </div>
