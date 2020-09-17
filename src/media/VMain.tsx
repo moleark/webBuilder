@@ -38,7 +38,7 @@ export class VMain extends VPage<CMedia> {
         }
         else {
             divItems = items.map((v, index) => {
-                return this.renderItem(v, index)
+                return this.renderItem(v, index);
             });
         }
         return <Page header={this.t('其他文件')} headerClassName={consts.headerClass} right={right}

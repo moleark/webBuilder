@@ -111,10 +111,10 @@ export class VMain extends VPage<CPosts> {
     };
 
     private itemRow = observer((item: any) => {
-        let { user, showDetail } = this.controller;
+        let { user, showDetail, rendertagCatalogname, rendertagSubjectname, rendertagDomain } = this.controller;
         if (!user) return;
         let { image, caption, discription, author, $update, $create
-            , hits, sumHits, web, agent, assist, openweb, emphasis } = item;
+            , hits, sumHits, web, agent, assist, openweb, emphasis, id } = item;
         let $c: Date = $create, $u: Date = $update;
         let updated: boolean = false;
         if ($c && $u) {
@@ -135,17 +135,16 @@ export class VMain extends VPage<CPosts> {
                 :
                 this.controller.cApp.renderUser(author.id);
         }
-        // let divUser = user.id === author.id ?
-        //     <span className="text-warning">[自己]</span>
-        //     :
-        //     this.controller.cApp.renderUser(author.id);
 
+        let tagCatalogname = rendertagCatalogname(id);
+        let tagSubjectname = rendertagSubjectname(id)
+        let tagDomainname = rendertagDomain(id)
         let showImport = emphasis === 1 ?
             <FA className="text-danger ml-3 " name="star" /> : "";
         return (
             <div className="pl-2 pl-sm-3 pr-2 pr-sm-3 pt-2 pb-3 d-flex">
                 <div className="d-flex flex-fill cursor-pointer" onClick={() => showDetail(item.id)} >
-                    <div className="mr-1 w-5c w-min-5c h-5c h-min-5c">
+                    <div className="mr-1 w-5c w-min-5c h-5c h-min-5c d-flex align-items-center">
                         {tv(
                             image,
                             values => <div className="w-100 h-100 bg-center-img h-max-6c border rounded"
@@ -173,13 +172,24 @@ export class VMain extends VPage<CPosts> {
                                 {sumHits && sumHits > 0 && <>阅读<b>{sumHits}</b>次</>}{<span className="px-1"></span>}{sumHits >= hits && hits > 0 && <>周<b>{hits}</b>次</>}
                             </div>
                         </div>
-                        <div className="small pt-1 nowrap" style={{ overflow: "hidden" }}>
+                        <div className="small py-1 nowrap" style={{ overflow: "hidden" }}>
                             {(web + agent + assist + openweb) > 0 ? <span className=" text-muted">发布：</span> : <></>}
                             {agent === 1 ? <span style={{ borderRadius: "15%/48%" }} className="bg-success mr-1 text-white px-1">{this.t('agent')}</span> : <></>}
                             {assist === 1 ? <span style={{ borderRadius: "15%/48%" }} className="bg-warning mr-1 text-white px-1">{this.t('sales')}</span> : <></>}
                             {openweb === 1 ? <span style={{ borderRadius: "15%/48%" }} className="bg-info mr-1 text-white px-1">{this.t('publicSite')}</span> : <></>}
                             {web === 1 ? <span style={{ borderRadius: "15%/48%" }} className="bg-primary text-white px-1">{this.t('internationSite')}</span> : <></>}
                             {/* {web === 1 ? <span style={{ borderRadius: "15%/48%" }} className="bg-primary text-white px-1">{this.t('privateSite')}</span> : <></>} */}
+                        </div>
+                        <div className="bg-light ml-1 small text-secondary">
+                            <span className=" mr-1">
+                                {tagCatalogname}
+                            </span>
+                            <span className=" mr-1">
+                                {tagSubjectname}
+                            </span>
+                            <span className=" mr-1">
+                                {tagDomainname}
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -188,7 +198,8 @@ export class VMain extends VPage<CPosts> {
     });
 }
 
-/*
+/*  src\posts\VProductCatalogPostCount.tsx    PostProductCatalog  PostSubject  PostDomain
+
 <span className="d-none d-sm-inline">&ensp;</span>
 {this.t('preview')}
 <span className="d-none d-sm-inline">&ensp;</span>

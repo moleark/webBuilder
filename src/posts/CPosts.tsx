@@ -6,7 +6,7 @@ import { observer } from "mobx-react";
 import { VMain } from "./VMain";
 import { VShow } from "./VShow";
 import { VEdit } from "./VEdit";
-import { Context, nav, QueryPager } from "tonva";
+import { Context, nav, QueryPager, } from "tonva";
 import { VPickImage } from "./VPickImage";
 import { VPickTemplate } from "./VPickTemplate";
 import { VRelease } from "./VRelease";
@@ -36,6 +36,9 @@ import { VPostProduct } from "./VPostProduct";
 import { VSubjectEdit } from "./VSubjectEdit";
 import { VSubjectAdd } from "./VSubjectAdd";
 import { VSelectSubjectEdit } from "./VSelectSubjectEdit";
+import { VTagCatalogname } from "./VTagCatalogname";
+import { VTagSubjectname } from "./VTagSubjectname";
+import { VTagDomainname } from "./VTagDomainname";
 /* eslint-disable */
 export class CPosts extends CUqBase {
     @observable pageTemplate: QueryPager<any>;
@@ -512,8 +515,31 @@ export class CPosts extends CUqBase {
     editPostShow = async (param: any) => {
         this.openVPage(VEditpostSort, param);
     }
+    /**目录标签 */
+    rendertagCatalogname = (postId: number) => {
+        return this.renderView(VTagCatalogname, postId);
+    }
 
+    getTagName = async (postId: any) => {
+        let result = await this.uqs.webBuilder.PostProductCatalog.query({ post: postId });
+        return result.ret
+    }
+    /**栏目标签 */
+    rendertagSubjectname = (postId: number) => {
+        return this.renderView(VTagSubjectname, postId);
+    }
+    getTagSubName = async (postId: any) => {
+        let result = await this.uqs.webBuilder.PostSubject.query({ post: postId });
+        return result.ret
+    }
+    /**领域标签 */
+    rendertagDomain = (postId: number) => {
+        return this.renderView(VTagDomainname, postId);
+    }
 
-
+    getTagDomainName = async (postId: any) => {
+        let result = await this.uqs.webBuilder.PostDomain.query({ post: postId });
+        return result.ret
+    }
 
 }

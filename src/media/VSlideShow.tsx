@@ -24,7 +24,7 @@ export class VSlideShow extends VPage<CMedia> {
                 </div>;
         } else {
             divItems = items.map((v, index) => {
-                return this.renderItem(v, index)
+                return this.renderItem(v, index);
             });
         }
 

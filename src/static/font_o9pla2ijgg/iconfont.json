@@ -6,6 +6,41 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "745112",
+      "name": "标签",
+      "font_class": "biaoqian3",
+      "unicode": "e611",
+      "unicode_decimal": 58897
+    },
+    {
+      "icon_id": "1524043",
+      "name": "标签",
+      "font_class": "biaoqian4",
+      "unicode": "e636",
+      "unicode_decimal": 58934
+    },
+    {
+      "icon_id": "819349",
+      "name": "标签",
+      "font_class": "biaoqian1",
+      "unicode": "e632",
+      "unicode_decimal": 58930
+    },
+    {
+      "icon_id": "10122425",
+      "name": "标签",
+      "font_class": "biaoqian2",
+      "unicode": "e604",
+      "unicode_decimal": 58884
+    },
+    {
+      "icon_id": "1159889",
+      "name": "标签",
+      "font_class": "biaoqian",
+      "unicode": "e61d",
+      "unicode_decimal": 58909
+    },
+    {
       "icon_id": "8075496",
       "name": "视频",
       "font_class": "shipin",

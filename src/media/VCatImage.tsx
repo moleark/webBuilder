@@ -38,7 +38,7 @@ export class VCatImage extends VPage<CMedia> {
         }
         else {
             divItems = items.map((v, index) => {
-                return this.renderItem(v, index)
+                return this.renderItem(v, index);
             });
         }
         return <Page header={this.t('picture')} headerClassName={consts.headerClass} right={right} onScrollBottom={this.onScrollBottom}>

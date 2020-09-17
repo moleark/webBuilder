@@ -32,7 +32,7 @@ export class VPickImage extends VPage<CMedia> {
                 </div>;
         } else {
             divItems = items.map((v, index) => {
-                return this.renderItem(v, index)
+                return this.renderItem(v, index);
             });
         }
         return <Page header={this.t('selectpicture')} headerClassName={consts.headerClass} right={right}>
