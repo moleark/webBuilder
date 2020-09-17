@@ -29,8 +29,11 @@ export class VTagCatalogname extends View<CPosts> {
 
     private content = observer((param: any): any => {
         this.inittagtname(param.postId);
-        if (this.tagtname === '')
-            return null;
-        return <span className=" small p-2" >{this.Tagname}<>&nbsp;</></span>;
+        if (this.Tagname === '') {
+            return <span className=" small p-2" >{this.Tagname}<>&nbsp;</></span>;
+        } else {
+            return <span className=" small p-2" ><i className="iconfont icon-biaoqian3 small text-secondary"></i><>&nbsp;</>{this.Tagname}<>&nbsp;</></span>;
+        }
+
     })
 }

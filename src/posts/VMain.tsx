@@ -139,6 +139,21 @@ export class VMain extends VPage<CPosts> {
         let tagCatalogname = rendertagCatalogname(id);
         let tagSubjectname = rendertagSubjectname(id)
         let tagDomainname = rendertagDomain(id)
+        // let divs: any;
+        // if ({ tagCatalogname } !== null || { tagSubjectname } !== null || { tagDomainname } !== null) {
+        //     divs = <div>
+        //         <i className="iconfont icon-biaoqian3 small text-secondary"></i>
+        //         <span className=" mr-1">
+        //             {tagCatalogname}
+        //         </span>
+        //         <span className=" mr-1">
+        //             {tagSubjectname}
+        //         </span>
+        //         <span className=" mr-1">
+        //             {tagDomainname}
+        //         </span>
+        //     </div>
+        // }
         let showImport = emphasis === 1 ?
             <FA className="text-danger ml-3 " name="star" /> : "";
         return (
@@ -181,6 +196,8 @@ export class VMain extends VPage<CPosts> {
                             {bvweb === 1 ? <span style={{ borderRadius: "15%/48%" }} className="bg-primary text-white px-1">{this.t('BV网站')}</span> : <></>}
                         </div>
                         <div className="bg-light ml-1 small text-secondary">
+                            {/* <i className="iconfont icon-biaoqian3 small text-secondary"></i> */}
+                            {/* {divs} */}
                             <span className=" mr-1">
                                 {tagCatalogname}
                             </span>
