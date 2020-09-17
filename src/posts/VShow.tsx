@@ -6,6 +6,7 @@ import { observer } from 'mobx-react';
 import { consts } from 'consts';
 import { VSourceCode } from './VSourceCode';
 import copy from 'copy-to-clipboard';
+import { setting } from 'configuration';
 
 /* eslint-disable */
 export class VShow extends VPage<CPosts> {
@@ -26,7 +27,7 @@ export class VShow extends VPage<CPosts> {
     private page = observer(() => {
         let { current, onShowRelease, onGrade } = this.controller;
         let { id, author } = current;
-        let leftPath = "https://web.jkchemical.com/post/" + id;
+        let leftPath = setting.previewUrl + id;
         //let date = <span><EasyTime date={$update} /></span>;
         let isMe = Tuid.equ(author, this.controller.user.id);
         let meright = isMe && <>
@@ -64,7 +65,7 @@ export class VShow extends VPage<CPosts> {
         return <Page header={this.t('preview')} headerClassName={consts.headerClass} right={right} >
             <iframe
                 ref={this.refIframe}
-                src={"https://web.jkchemical.com/post/" + id}
+                src={leftPath}
                 className="w-100 position-relative" frameBorder={0}>
             </iframe>
 

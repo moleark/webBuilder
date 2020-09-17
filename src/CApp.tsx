@@ -32,14 +32,19 @@ export class CApp extends CAppBase {
     protected async internalStart() {
         await this.uqs.webBuilder.hit.submit({});
         await this.uqs.webBuilder.SearchRecommendProduct.query({ post: 30 })
-        //根据网址判断是什么APP
-        if (document.domain === setting.appUrlDomain) {
-            setting.previewUrl = "https://web.jkchemical.com";
-        } else {
-            setting.previewUrl = "https://tv.jkchemical.com/jk-web";
-        }
-
         await this.getBusiness();
+
+        //根据网址判断是什么APP
+        if (setting.BusinessScope === 3) {
+            setting.previewUrl = "https://c.jkchemical.com/bio-vanguard/blog/";
+        }
+        else {
+            if (document.domain === setting.appUrlDomain) {
+                setting.previewUrl = "https://web.jkchemical.com/post/";
+            } else {
+                setting.previewUrl = "https://c.jkchemical.com/jk-web/post/";
+            }
+        }
 
         this.setRes(res);
 
