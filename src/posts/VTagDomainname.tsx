@@ -19,7 +19,7 @@ export class VTagDomainname extends View<CPosts> {
         this.initTagName(param.postId);
         if (this.tagName === undefined)
             return null;
-        return <span className=" small p-2" >{this.tagName.map((e: any) => { return tv(e.domain, v => v.name) })}<>&nbsp;</></span>;
+        return <>{this.tagName.map((e: any) => { return <span className="small" > {tv(e.domain, v => v.name)}</span> })} </>;
 
     })
 }

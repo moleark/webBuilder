@@ -20,6 +20,6 @@ export class VTagSubjectname extends View<CPosts> {
         this.inittagName(param.postId);
         if (this.tagName === undefined)
             return null;
-        return <span className=" small p-2" >{this.tagName.map((e: any) => tv(e.subject, v => v.name))}<>&nbsp;</></span>;
+        return <>{this.tagName.map((e: any) => { return <span className="small" > {tv(e.subject, v => v.name)}</span> })} </>;
     })
 }

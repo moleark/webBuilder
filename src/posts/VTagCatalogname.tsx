@@ -7,33 +7,21 @@ export class VTagCatalogname extends View<CPosts> {
 
 
     @observable private tagtname: any;
-    @observable private Tagname: any;
+    @observable private Tagname: any[];
     render(postId: any): JSX.Element {
         return <this.content postId={postId} />;
     }
 
     private inittagtname = async (postId: any) => {
-        if (this.tagtname === undefined)
-            this.tagtname = await this.controller.getTagName(postId);
-        let tagnames = '';
-        if (this.tagtname.length > 0) {
-            for (let i = 0; i < this.tagtname.length; i++) {
-                tagnames += this.tagtname[i].name + '  ';
-            }
-        }
-
-        this.Tagname = tagnames
-        return this.Tagname;
-
+        if (this.Tagname === undefined)
+            this.Tagname = await this.controller.getTagName(postId);
     }
 
     private content = observer((param: any): any => {
         this.inittagtname(param.postId);
-        if (this.Tagname === '') {
-            return <span className=" small p-2" >{this.Tagname}<>&nbsp;</></span>;
-        } else {
-            return <span className=" small p-2" ><i className="iconfont icon-biaoqian3 small text-secondary"></i><>&nbsp;</>{this.Tagname}<>&nbsp;</></span>;
-        }
+        if (this.Tagname === undefined)
+            return null;
+        return <> {this.Tagname.map((e: any) => { return <span className="small" > {e.name}</span> })} </>;
 
     })
 }
