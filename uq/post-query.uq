@@ -15,23 +15,26 @@ PAGE (
 	[$create] DATETIME,
     isValid tinyint,
     emphasis tinyint,
+    language smallint,
 	hits int,
 	sumHits int,
     web     smallint,
     agent   smallint, 
     assist  smallint, 
-    openweb smallint
+    openweb smallint,
+    bvweb smallint
 ) {
     var key2 char(102);
     set key2 = concat('%', key, '%');
 
     PAGE select p.id, p.caption, p.discription, p.image, p.author
-		, p.template, p.[$update], p.[$create],p.isValid, p.emphasis
-		, c.hits, c.sumHits
-		, ifnull(ph.web, 0) as web
-		, ifnull(ph.agent,0) as agent
-		, ifnull( ph.assist,0) as assist
-		, ifnull( ph.openweb ,0) as openweb
+            , p.template, p.[$update], p.[$create], p.isValid, p.emphasis, p.language
+            , c.hits, c.sumHits
+            , ifnull(ph.web, 0) as web
+            , ifnull(ph.agent,0) as agent
+            , ifnull( ph.assist,0) as assist
+            , ifnull( ph.openweb ,0) as openweb
+            , ifnull( ph.bvweb ,0) as bvweb
     from    POST as p
             left join PostPublish as ph on p.id = ph.post
 			left join Hot as c on p.id=c.post
@@ -62,6 +65,7 @@ PAGE (
     publishdate DATETIME,
     isValid tinyint,
     emphasis tinyint,
+    language smallint,
 	hits int,
 	sumHits int
 ) {
@@ -70,7 +74,7 @@ PAGE (
 
     PAGE select unix_timestamp(ph.update) as id,p.id as post, p.caption, p.discription, p.image, p.author, p.template
                 , p.[$update], p.[$create], ph.update as publishdate
-                , p.isValid, p.emphasis, c.hits, c.sumHits
+                , p.isValid, p.emphasis, p.language, c.hits, c.sumHits
     from    POST as p
             join PostPublish as ph on p.id = ph.post
             left join Hot as c on p.id=c.post
@@ -142,21 +146,24 @@ PAGE (
     publishdate DATETIME,
     isValid tinyint,
     emphasis tinyint,
+    language smallint,
 	hits int,
 	sumHits int,
     web     smallint,
     agent   smallint, 
     assist  smallint, 
-    openweb smallint
+    openweb smallint,
+    bvweb   smallint
 ) {
 
     PAGE select unix_timestamp(ph.update) as id, p.id as post, p.caption, p.discription, p.image, p.author
             , p.template, p.[$update], p.[$create], ph.update as publishdate
-            ,p.isValid, p.emphasis, c.hits, c.sumHits
+            , p.isValid, p.emphasis, p.language, c.hits, c.sumHits
             , ifnull(ph.web, 0) as web
             , ifnull(ph.agent,0) as agent
             , ifnull( ph.assist,0) as assist
             , ifnull( ph.openweb ,0) as openweb
+            , ifnull( ph.bvweb ,0) as bvweb
     from    POST as p
             join PostProductCatalog as pp on pp.post = p.id and pp.productCategory = productCategory
             left join PostPublish as ph on p.id = ph.post
@@ -228,21 +235,24 @@ PAGE (
     publishdate DATETIME,
     isValid tinyint,
     emphasis tinyint,
+    language smallint,
 	hits int,
 	sumHits int,
     web     smallint,
     agent   smallint, 
     assist  smallint, 
-    openweb smallint
+    openweb smallint,
+    bvweb smallint
 ) {
 
     PAGE select unix_timestamp(ph.update) as id, p.id as post, p.caption, p.discription, p.image, p.author
             , p.template, p.[$update], p.[$create], ph.update as publishdate
-            ,p.isValid, p.emphasis, c.hits, c.sumHits
+            ,p.isValid, p.emphasis, p.language, c.hits, c.sumHits
             , ifnull(ph.web, 0) as web
             , ifnull(ph.agent,0) as agent
             , ifnull( ph.assist,0) as assist
             , ifnull( ph.openweb ,0) as openweb
+            , ifnull( ph.bvweb ,0) as bvweb
     from    POST as p
             join PostSubject as pp on pp.post = p.id and pp.subject = subject
             left join PostPublish as ph on p.id = ph.post
@@ -365,12 +375,14 @@ PAGE (
     publishdate DATETIME,
     isValid tinyint,
     emphasis tinyint,
+    language smallint,
 	hits int,
 	sumHits int,
     web     smallint,
     agent   smallint, 
     assist  smallint, 
-    openweb smallint
+    openweb smallint,
+    bvweb   smallint
 ) {
 
     var key2 char(102);
@@ -378,11 +390,12 @@ PAGE (
 
     PAGE select  unix_timestamp(ph.update)  as id , p.id as post, p.caption, p.discription, p.image, p.author
             , p.template, p.[$update], p.[$create], ph.update as publishdate
-            , p.isValid, p.emphasis, c.hits, c.sumHits
+            , p.isValid, p.emphasis, p.language, c.hits, c.sumHits
             , ifnull(ph.web, 0) as web
             , ifnull(ph.agent,0) as agent
             , ifnull( ph.assist,0) as assist
             , ifnull( ph.openweb ,0) as openweb
+            , ifnull( ph.bvweb ,0) as bvweb
     from    POST as p
             join PostDomain as pp on pp.post = p.id 
             left join PostPublish as ph on p.id = ph.post
@@ -422,20 +435,23 @@ PAGE (
     publishdate DATETIME,
     isValid tinyint,
     emphasis tinyint,
+    language smallint,
     web     smallint,
     agent   smallint, 
     assist  smallint, 
     openweb smallint, 
+    bvweb   smallint, 
     sort int
 ) {
  
     PAGE select pp.sort as id, p.id as post, p.caption, p.discription, p.image, p.author
             , p.[$update], p.[$create], ph.update as publishdate
-            , p.isValid, p.emphasis
+            , p.isValid, p.emphasis, p.language
             , ifnull(ph.web, 0) as web
             , ifnull(ph.agent,0) as agent
             , ifnull( ph.assist,0) as assist
             , ifnull( ph.openweb ,0) as openweb
+            , ifnull( ph.bvweb ,0) as bvweb
             , pp.sort
     from    POST as p
             join InformationPost as pp on pp.post = p.id 
@@ -467,16 +483,16 @@ returns ret (
 
 	INSERT  INTO `_ret` SELECT  p.id, p.no, p.brand, p.origin, p.description, p.descriptionc, p.imageurl, pc.chemical
          	,pc.cas, pc.purity, b.name AS brandname, p.id as `$id`
-	FROM 	product.`tv_productcategoryleafcache` AS a
-            INNER JOIN product.tv_productproductcategorycache as pp ON a.leaf = pp.category
-            INNER JOIN product.tv_productx as p on p.id = pp.product
-            LEFT JOIN  product.tv_brand as b on p.$unit = b.$unit and p.brand = b.id
-            LEFT JOIN  product.tv_productchemical as pc on p.$unit = pc.$unit and p.id = pc.product
+	FROM 	product$test.`tv_productcategoryleafcache` AS a
+            INNER JOIN product$test.tv_productproductcategorycache as pp ON a.leaf = pp.category
+            INNER JOIN product$test.tv_productx as p on p.id = pp.product
+            LEFT JOIN  product$test.tv_brand as b on p.$unit = b.$unit and p.brand = b.id
+            LEFT JOIN  product$test.tv_productchemical as pc on p.$unit = pc.$unit and p.id = pc.product
 	WHERE 	pp.`$unit` = 24 AND pp.salesregion = 1
             AND (	
-                a.parent in ( SELECT productcategory FROM webbuilder.tv_postproductcatalog where post = `_post`) or 
-                a.leaf  in ( SELECT productcategory FROM webbuilder.tv_postproductcatalog where post = `_post` ) or
-                not exists (SELECT productcategory FROM webbuilder.tv_postproductcatalog where post = `_post`   )
+                a.parent in ( SELECT productcategory FROM webbuilder$test.tv_postproductcatalog where post = `_post`) or 
+                a.leaf  in ( SELECT productcategory FROM webbuilder$test.tv_postproductcatalog where post = `_post` ) or
+                not exists (SELECT productcategory FROM webbuilder$test.tv_postproductcatalog where post = `_post`   )
         	)
 	LIMIT 10;
     -/

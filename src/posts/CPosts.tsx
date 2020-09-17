@@ -115,8 +115,8 @@ export class CPosts extends CUqBase {
     saveItem = async (id: number, param: any) => {
         param.author = this.user.id;
         param.businessScope = setting.BusinessScope;
-        let { caption, discription, image, template, content, emphasis, businessScope } = param;
-        let par = { _caption: caption, _discription: discription, _image: image, _template: template, _content: content, _emphasis: emphasis, _businessScope: businessScope };
+        let { caption, discription, image, template, content, emphasis, businessScope, language } = param;
+        let par = { _caption: caption, _discription: discription, _image: image, _template: template, _content: content, _emphasis: emphasis, _businessScope: businessScope, _language: language };
 
         if (id) {
             await this.uqs.webBuilder.Post.save(id, param);

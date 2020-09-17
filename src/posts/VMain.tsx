@@ -114,7 +114,7 @@ export class VMain extends VPage<CPosts> {
         let { user, showDetail } = this.controller;
         if (!user) return;
         let { image, caption, discription, author, $update, $create
-            , hits, sumHits, web, agent, assist, openweb, emphasis } = item;
+            , hits, sumHits, web, agent, assist, openweb, bvweb, emphasis } = item;
         let $c: Date = $create, $u: Date = $update;
         let updated: boolean = false;
         if ($c && $u) {
@@ -179,7 +179,7 @@ export class VMain extends VPage<CPosts> {
                             {assist === 1 ? <span style={{ borderRadius: "15%/48%" }} className="bg-warning mr-1 text-white px-1">{this.t('sales')}</span> : <></>}
                             {openweb === 1 ? <span style={{ borderRadius: "15%/48%" }} className="bg-info mr-1 text-white px-1">{this.t('publicSite')}</span> : <></>}
                             {web === 1 ? <span style={{ borderRadius: "15%/48%" }} className="bg-primary text-white px-1">{this.t('internationSite')}</span> : <></>}
-                            {/* {web === 1 ? <span style={{ borderRadius: "15%/48%" }} className="bg-primary text-white px-1">{this.t('privateSite')}</span> : <></>} */}
+                            {bvweb === 1 ? <span style={{ borderRadius: "15%/48%" }} className="bg-primary text-white px-1">{this.t('BV网站')}</span> : <></>}
                         </div>
                     </div>
                 </div>
