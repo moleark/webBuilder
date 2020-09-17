@@ -68,7 +68,8 @@ ACTION AddPost(
     _image ID Image,
     _template ID Template,
     _content text,
-    _emphasis tinyint
+    _emphasis tinyint,
+    _language smallint
 ) RETURNS ret (
     id ID
 ) {
@@ -76,7 +77,7 @@ ACTION AddPost(
     
     TUID POST into postId set
         caption = _caption, discription = _discription, image = _image, 
-        author = $user, template = _template, content = _content, isValid = 1, emphasis = _emphasis;
+        author = $user, template = _template, content = _content, isValid = 1, emphasis = _emphasis, language = _language;
     into ret select postId as id;
 };
 

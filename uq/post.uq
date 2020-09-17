@@ -6,6 +6,7 @@ TUID POST (
     main image ID Image,
     main author ID [$user],
     main businessScope ID BusinessScope,
+    main language smallint,
     template ID Template,
     content text(medium),
     emphasis tinyint default 0,
