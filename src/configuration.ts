@@ -16,7 +16,7 @@ export const setting = {
     sharelogo: "https://agent.jkchemical.com/sharelogo.png",
     logo: logo,
     pageHeaderCss: "bg-primary",
-    appUrlDomain: "cs.jkchemical.com",
+    appUrlDomain: "web.jkchemical.com",
     previewUrl: "https://web.jkchemical.com",
     SALESREGION_CN: 1,
     CHINESE: 196,
