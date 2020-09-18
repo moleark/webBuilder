@@ -50,7 +50,8 @@ PAGE (
 QUERY SearchPostPublish( 
     key char(100),
     domain ID Domain,
-    publish int
+    publish int,
+    language smallint
 )
 PAGE (
     id bigint desc,
@@ -78,7 +79,8 @@ PAGE (
     from    POST as p
             join PostPublish as ph on p.id = ph.post
             left join Hot as c on p.id=c.post
-    where  unix_timestamp(ph.update) < $pageStart and p.isValid = 1 
+    where   unix_timestamp(ph.update) < $pageStart and p.isValid = 1 
+            and p.language = language
             and (
                 publish = 0
                 or (publish = 1 and ph.web = 1  )
