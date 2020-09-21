@@ -36,7 +36,7 @@ export class CApp extends CAppBase {
 
         //根据网址判断是什么APP
         if (setting.BusinessScope === 3) {
-            setting.previewUrl = "https://c.jkchemical.com/bio-vanguard/blog/";
+            setting.previewUrl = "https://bio-vanguard.com/blog/";
         }
         else {
             if (document.domain === setting.appUrlDomain) {
