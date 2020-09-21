@@ -85,7 +85,7 @@ export class VAddFile extends VPage<CMedia> {
             </div>;
         }
 
-        return <Page header={this.t('上传文件')} headerClassName={consts.headerClass}>
+        return <Page header={this.t('uploadfiles')} headerClassName={consts.headerClass}>
             <div className="mx-3">
                 <Form ref={v => this.form = v} className="my-3"
                     formData={this.media}

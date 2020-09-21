@@ -20,7 +20,7 @@ export class VMain extends VPage<CApp> {
                 onShown: cPosts.loadList, notify: undefined/*store.homeCount*/
             },
             {
-                name: 'picture-o', label: this.t('文件'), icon: 'vcard', content: cMedia.tab,
+                name: 'picture-o', label: this.t('file'), icon: 'vcard', content: cMedia.tab,
                 onScrollBottom: cMedia.onScrollBottom,
                 onShown: cMedia.loadList
             },

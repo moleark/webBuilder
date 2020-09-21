@@ -19,7 +19,7 @@ export class VPostProductCatalog extends VPage<CPosts> {
                 </div>
             </div>
         );
-        return <Page headerClassName={consts.headerClass} header={this.t('贴文目录')} right={right}>
+        return <Page headerClassName={consts.headerClass} header={this.t('postcatalog')} right={right}>
             {pagePostProductCatalogExplain.length > 0 && < List before={""} none="无" items={pagePostProductCatalogExplain} item={{ render: this.renderItemExplain }} />}
             {pagePostProductCatalog.length > 0 && <List before={""} none="无" className="mt-1" items={pagePostProductCatalog} item={{ render: this.renderItem }} />}
 

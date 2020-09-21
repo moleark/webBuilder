@@ -25,7 +25,7 @@ export class VOtherHitPost extends VPage<CMe> {
                 <SearchBox size="sm" onSearch={(key: string) => informationsearchPostsKey(key, "")} placeholder={this.t('searchpost')} />
             </div>
         );
-        return <Page header={'选择贴文'} back="close" right={right} onScrollBottom={onScrollBottoms}>
+        return <Page header={this.t('selectpost')} back="close" right={right} onScrollBottom={onScrollBottoms}>
             <List before={""} none={none} items={informationpagePosts} item={{ render: this.renderItem }} />
         </Page>;
     });

@@ -41,17 +41,17 @@ export class VMain extends VPage<CMedia> {
                 return this.renderItem(v, index);
             });
         }
-        return <Page header={this.t('其他文件')} headerClassName={consts.headerClass} right={right}
+        return <Page header={this.t('file')} headerClassName={consts.headerClass} right={right}
             onScrollBottom={onScrollBottom}>
 
             <LMR className="bg-white py-3 my-1" right={<i className=" px-2 iconfont icon-more"></i>} onClick={() => showCat({ name: "图片分类", id: 0 })} >
-                <div className="mx-3 px-2 font-weight-bold">图片分类</div>
+                <div className="mx-3 px-2 font-weight-bold">{this.t('pictureclassify')}</div>
             </LMR>
             <LMR className="bg-white py-3 my-1" right={<i className=" px-2 iconfont icon-more"></i>} onClick={showSlideShow} >
-                <div className="mx-3 px-2 font-weight-bold">轮播图</div>
+                <div className="mx-3 px-2 font-weight-bold">{this.t('slideshow')}</div>
             </LMR>
             <LMR className="bg-white py-3 my-1" right={<i className=" px-2 iconfont icon-more"></i>} onClick={showOtherMedia} >
-                <div className="mx-3 px-2 font-weight-bold">其他文件</div>
+                <div className="mx-3 px-2 font-weight-bold">{this.t('otherfile')}</div>
             </LMR>
 
             <div className="mx-3">

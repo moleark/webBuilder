@@ -96,7 +96,7 @@ export class VTeamAchievement extends VPage<CMe> {
         let right = <div onClick={addInputPostSum}>
             <span className="mx-2 iconfont icon-jiahao1 cursor-pointer" style={{ fontSize: "1.7rem", color: "white" }}></span>
         </div>
-        return <Page header={'数据折线图'} headerClassName={setting.pageHeaderCss} right={right}>
+        return <Page header={this.t('team')} headerClassName={setting.pageHeaderCss} right={right}>
             <div className='pb-4'>
                 <LineChart forceFit height={400} padding={[60, 40, 50, 40]} smooth
                     data={dataDay}

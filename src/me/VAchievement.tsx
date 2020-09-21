@@ -58,7 +58,7 @@ export class VAchievement extends VPage<CMe> {
                 }
             )
         })
-        return <Page header={'业绩'} headerClassName={setting.pageHeaderCss}>
+        return <Page header={this.t('performance')} headerClassName={setting.pageHeaderCss}>
             <div className='pb-4'>
                 <LineChart forceFit height={400} padding={[40, 10, 50, 40]} smooth
                     data={dataDay}

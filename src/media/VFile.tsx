@@ -15,7 +15,7 @@ export class VFile extends VPage<CMedia> {
         let { pageFile, searchMadiaKey, addAddFile, onScrollBottom } = this.controller;
 
         let right = <div className="w-19c d-flex">
-            <SearchBox className="w-80 mt-1 mr-2" size='sm' onSearch={(key: string) => searchMadiaKey(key, 2)} placeholder={this.t('搜索文件')} />
+            <SearchBox className="w-80 mt-1 mr-2" size='sm' onSearch={(key: string) => searchMadiaKey(key, 2)} placeholder={this.t('searchfile')} />
             <div onClick={addAddFile}>
                 <span className="ml-2 iconfont icon-jiahao1 mr-2"
                     style={{ fontSize: "26px", color: "white" }}>
@@ -29,7 +29,7 @@ export class VFile extends VPage<CMedia> {
             </div>
         );
 
-        return <Page header={this.t('文件')} headerClassName={consts.headerClass} right={right} onScrollBottom={onScrollBottom}>
+        return <Page header={this.t('file')} headerClassName={consts.headerClass} right={right} onScrollBottom={onScrollBottom}>
             <List before={""} none={none} items={pageFile} item={{ render: this.renderItem }} />
         </Page>;
     })

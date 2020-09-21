@@ -17,7 +17,7 @@ export class VPickClassroomType extends VPage<CPosts> {
 
     private page = observer(() => {
         return (
-            <Page header={this.t('类型')} headerClassName={consts.headerClass} >
+            <Page header={this.t('type')} headerClassName={consts.headerClass} >
                 <List before={""} none="无" items={this.lidddts} item={{ render: this.renderItem }} />
             </Page>
         );

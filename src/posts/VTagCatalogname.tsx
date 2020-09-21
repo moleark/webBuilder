@@ -19,9 +19,18 @@ export class VTagCatalogname extends View<CPosts> {
 
     private content = observer((param: any): any => {
         this.inittagtname(param.postId);
-        if (this.Tagname === undefined)
+        if (this.Tagname === undefined) {
             return null;
-        return <> {this.Tagname.map((e: any) => { return <span className="small" > {e.name}</span> })} </>;
+        } else {
+            if (this.Tagname.length === 0) {
+                return null
+            } else {
+                return <span className="small"> 目录：{this.Tagname.map((e: any) => {
+                    return <span className="small bg-light mr-1" >{e.name}</span>
+                })} </span>;
+            }
 
+        }
     })
+
 }

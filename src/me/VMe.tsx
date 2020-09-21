@@ -89,9 +89,9 @@ export class VMe extends VPage<CMe> {
             <this.meInfo />
             {branch(this.t('team'), "icon-Group-", showTeamAchievement)}
             {branch(this.t('set'), "icon-shezhi3", onSet)}
-            {branch(this.t('图片分类'), "icon-Fill", () => showCat({ name: "图片分类", id: 0 }))}
-            {branch(this.t('栏目'), "icon-fenlei", () => cApp.cPosts.showSubjectEdit({ name: "栏目", id: 0 }))}
-            {branch(this.t('侧边栏目'), "icon-lanmuguanli", () => this.controller.showSidebar())}
+            {branch(this.t('pictureclassify'), "icon-Fill", () => showCat({ name: "图片分类", id: 0 }))}
+            {branch(this.t('subject'), "icon-fenlei", () => cApp.cPosts.showSubjectEdit({ name: "栏目", id: 0 }))}
+            {branch(this.t('sidesubject'), "icon-lanmuguanli", () => this.controller.showSidebar())}
         </div>
     })
 }

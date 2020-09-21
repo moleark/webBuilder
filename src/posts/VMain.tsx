@@ -41,15 +41,15 @@ export class VMain extends VPage<CPosts> {
 
     private page = observer(() => {
         let { pagePosts, onAdd, searchPostsKey, showProductCatalog, showSubject, onScrollBottom, showDomain, showModel, InformationCente, searchAuthor } = this.controller;
-        let right = (
-            <div className="d-flex align-items-center">
-                {this.renderMeAllToggle()}
-                <SearchBox size="sm" onSearch={(key: string) => searchPostsKey(key, searchAuthor)} placeholder={this.t('searchpost')} />
-                <div onClick={onAdd}>
-                    <span className="mx-sm-2 iconfont icon-jiahao1 cursor-pointer mr-2" style={{ fontSize: "1.7rem", color: "white" }}></span>
-                </div>
+        let search = <div className="d-flex w-100">
+            <div className='pt-2 ml-2' style={{ width: '4rem' }}>{this.t('post')}</div>
+            {this.renderMeAllToggle()}
+            <SearchBox className='w-100 pt-1' size="sm" onSearch={(key: string) => searchPostsKey(key, searchAuthor)} placeholder={this.t('searchpost')} />
+            <div onClick={onAdd}>
+                <span className="mx-sm-2 iconfont icon-jiahao1 cursor-pointer mr-2" style={{ fontSize: "1.7rem", color: "white" }}></span>
             </div>
-        );
+        </div>;
+
         let none = (
             <div className="my-3 mx-2">
                 <span className="text-muted small">[{this.t('noposts')}]</span>
@@ -57,34 +57,34 @@ export class VMain extends VPage<CPosts> {
         );
 
 
-        let ProductCatalog = < div className="m-1 p-3 cursor-pointer" onClick={showProductCatalog} >
+        let ProductCatalog = < div className="m-1 cursor-pointer" onClick={showProductCatalog} >
             <div className="py-3 my-1">
                 <div className="mb-2 text-success"><i style={{ fontSize: "2rem" }} className="iconfont icon-chanpinmulu"></i></div>
-                <div className="mx-3 p-2 font-weight-bold">产品目录</div>
+                <div className="mx-3 p-2 font-weight-bold">{this.t('productcatalog')}</div>
             </div>
         </div >;
-        let Subject = <div className="m-1 p-3 cursor-pointer" onClick={() => showSubject({ name: "帖文栏目", id: "10000" + setting.BusinessScope })} >
+        let Subject = <div className="m-1 cursor-pointer" onClick={() => showSubject({ name: "帖文栏目", id: "10000" + setting.BusinessScope })} >
             <div className="py-3 my-1 ">
                 <div className="mb-2 text-primary"><i style={{ fontSize: "2rem" }} className="iconfont icon-mokuai"></i></div>
-                <div className="mx-3 px-2 font-weight-bold">帖文栏目</div>
+                <div className="mx-3 px-2 font-weight-bold">{this.t('postsubject')}</div>
             </div>
         </div>;
-        let Domain = <div className="m-1 p-3 cursor-pointer" onClick={() => showDomain({ name: '研究领域', id: 0 })} >
+        let Domain = <div className="m-1 cursor-pointer" onClick={() => showDomain({ name: '研究领域', id: 0 })} >
             <div className="py-3 my-1 ">
                 <div className="mb-2 text-danger"><i style={{ fontSize: "2rem" }} className="iconfont icon-yanjiulingyu"></i></div>
-                <div className="mx-3 px-2 font-weight-bold">研究领域</div>
+                <div className="mx-3 px-2 font-weight-bold">{this.t('researchdomain')}</div>
             </div>
         </div>;
-        let Model = <div className="m-1 p-3 cursor-pointer" onClick={() => showModel()} >
+        let Model = <div className="m-1 cursor-pointer" onClick={() => showModel()} >
             <div className="py-3 my-1 ">
                 <div className="mb-2 text-info"><i style={{ fontSize: "2rem" }} className="iconfont icon-mobanguanli"></i></div>
-                <div className="mx-3 px-2 font-weight-bold">一周范文</div>
+                <div className="mx-3 px-2 font-weight-bold">{this.t('weekpost')}</div>
             </div>
         </div>;
-        let Information = <div className="m-1 p-3 cursor-pointer" onClick={() => InformationCente()} >
+        let Information = <div className="m-1 cursor-pointer" onClick={() => InformationCente()} >
             <div className="py-3 my-1 ">
                 <div className="mb-2 text-warning"><i style={{ fontSize: "2rem" }} className="iconfont icon-zixun"></i></div>
-                <div className="mx-3 px-2 font-weight-bold">资讯中心</div>
+                <div className="mx-3 px-2 font-weight-bold">{this.t('informationcenter')}</div>
             </div>
         </div>;
 
@@ -96,8 +96,8 @@ export class VMain extends VPage<CPosts> {
         }
 
         return (
-            <Page header={this.t('post')} headerClassName={consts.headerClass} right={right} onScrollBottom={onScrollBottom}>
-                <div className="d-flex justify-content-around py-4 small text-center" style={{ background: "linear-gradient(rgba(23,106,184,.5),rgba(23,162,184,.5),rgba(23,184,184,.5))" }}>
+            <Page header={search} headerClassName={consts.headerClass} onScrollBottom={onScrollBottom}>
+                <div className="d-flex justify-content-around py-4 small text-center px-2" style={{ background: "linear-gradient(rgba(23,106,184,.5),rgba(23,162,184,.5),rgba(23,184,184,.5))" }}>
                     {tools}
                 </div>
                 <List before={""} none={none} items={pagePosts} item={{ render: this.renderItem }} />
@@ -139,26 +139,12 @@ export class VMain extends VPage<CPosts> {
         let tagCatalogname = rendertagCatalogname(id);
         let tagSubjectname = rendertagSubjectname(id)
         let tagDomainname = rendertagDomain(id)
-        // let divs: any;
-        // if ({ tagCatalogname } !== null || { tagSubjectname } !== null || { tagDomainname } !== null) {
-        //     divs = <div>
-        //         <i className="iconfont icon-biaoqian3 small text-secondary"></i>
-        //         <span className=" mr-1">
-        //             {tagCatalogname}
-        //         </span>
-        //         <span className=" mr-1">
-        //             {tagSubjectname}
-        //         </span>
-        //         <span className=" mr-1">
-        //             {tagDomainname}
-        //         </span>
-        //     </div>
-        // }
+
         let showImport = emphasis === 1 ?
             <FA className="text-danger ml-3 " name="star" /> : "";
         return (
             <div className="pl-2 pl-sm-3 pr-2 pr-sm-3 pt-2 pb-3 d-flex">
-                <div className="d-flex flex-fill cursor-pointer" onClick={() => showDetail(item.id)} >
+                <div className="d-flex flex-fill cursor-pointer" onClick={() => showDetail(id)} >
                     <div className="mr-1 w-5c w-min-5c h-5c h-min-5c d-flex align-items-center">
                         {tv(
                             image,
@@ -195,18 +181,11 @@ export class VMain extends VPage<CPosts> {
                             {web === 1 ? <span style={{ borderRadius: "15%/48%" }} className="bg-primary text-white px-1">{this.t('internationSite')}</span> : <></>}
                             {bvweb === 1 ? <span style={{ borderRadius: "15%/48%" }} className="bg-primary text-white px-1">{this.t('BV网站')}</span> : <></>}
                         </div>
-                        <div className="bg-light ml-1 small text-secondary">
+                        <div className="ml-1 small text-secondary">
                             {/* <i className="iconfont icon-biaoqian3 small text-secondary"></i> */}
-                            {/* {divs} */}
-                            <span className=" mr-1">
-                                {tagCatalogname}
-                            </span>
-                            <span className=" mr-1">
-                                {tagSubjectname}
-                            </span>
-                            <span className=" mr-1">
-                                {tagDomainname}
-                            </span>
+                            {tagCatalogname}
+                            {tagSubjectname}
+                            {tagDomainname}
                         </div>
                     </div>
                 </div>

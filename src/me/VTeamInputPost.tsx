@@ -52,7 +52,7 @@ export class VTeamInputPost extends VPage<CMe> {
     ];
 
     private page = observer(() => {
-        return <Page header={'编辑录入'} headerClassName={consts.headerClass}>
+        return <Page header={this.t('editorentering')} headerClassName={consts.headerClass}>
             <div className="mx-3">
                 <Form ref={v => this.form = v} className="my-3"
                     formData={''}

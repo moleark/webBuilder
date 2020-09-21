@@ -24,7 +24,7 @@ export class VInformation extends VPage<CPosts> {
                 <span className="text-muted small">[{this.t('noposts')}]</span>
             </div>
         );
-        return <Page header='资讯中心' headerClassName={consts.headerClass} right={right}>
+        return <Page header={this.t('informationcenter')} headerClassName={consts.headerClass} right={right}>
             <List before={""} none={none} items={pageInformationPosts} item={{ render: this.renderItem }} />
         </Page>;
     });

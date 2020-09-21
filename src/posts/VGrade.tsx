@@ -16,7 +16,7 @@ export class VGrade extends VPage<CPosts> {
     private page = observer(() => {
         let { evaluate, ratioA, ratioB, ratioC, ratioD, ratioE } = this.controller;
         let value: number;
-        return <Page header='评价' headerClassName={consts.headerClass}>
+        return <Page header={this.t('estimate')} headerClassName={consts.headerClass}>
             <div className="intro-block">
                 <div className="block d-flex align-items-centerd-flex px-3 py-2 bg-white align-items-center cursor-pointer">
                     <span className="wrapper mr-2">

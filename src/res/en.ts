@@ -3,6 +3,11 @@ export const en = {
     noposts: 'None',
     editorpost: 'Edit',
     searchpost: 'Search post',
+    postsort: 'Post Sort',
+    postdomain: 'PostDomain',
+    postproduct: 'PostProduct',
+    postcatalog: 'PostCatalog',
+    selectpost: 'Select Post',
     postdetailed: 'Detail',
     title: 'Title',
     describe: 'Describe',
@@ -25,10 +30,13 @@ export const en = {
     picture: 'Picture',
     searchpicture: 'Search picture',
     selectpicture: 'Select picture',
-    editorpicture: 'Editor picture',
+    editorpicture: 'EditorPic',
     nopicture: 'No picture',
     uploadpicture: 'Upload picture',
     uploadfile: 'Upload audio',
+    pictureclassify: 'Picture Classify',
+    slideshow: 'Slide Show',
+    setslideshow: 'Set Slide',
 
     template: 'Template',
     selecttemplate: 'Select template',
@@ -64,8 +72,31 @@ export const en = {
     editor: 'Editor',
     pleaseselect: 'Please select',
 
-    veryimport: 'Very Import',
-    general: 'General'
+    important: 'Important',
+    general: 'General',
+
+    file: 'File',
+    otherfile: 'Other File',
+    searchfile: 'searchfile',
+    uploadfiles: 'UploadFile',
+
+    productcatalog: 'Product Catalog',
+    postsubject: 'Post Subject',
+    researchdomain: 'Research Domain',
+    weekpost: 'Week Post',
+    informationcenter: 'Information Center',
+
+    subject: 'Subject',
+    sidesubject: 'Sidesubject',
+
+    type: 'Type',
+    classify: 'Classify',
+    performance: 'Performance',
+    editorentering: 'Editorentering',
+
+    postPubSum: 'postPubSum',
+    postTranSum: 'postTranSum',
+    postHitSum: 'postHitSum',
 }
 
 export const zh = {
@@ -75,6 +106,11 @@ export const zh = {
     editorpost: '编辑帖文',
     searchpost: '搜索帖文',
     postdetailed: '帖文明细',
+    postdomain: '贴文领域',
+    postsort: '贴文排序',
+    postproduct: '贴文产品',
+    postcatalog: '贴文目录',
+    selectpost: '选择贴文',
     title: '标题',
     describe: '描述',
     content: '内容',
@@ -100,6 +136,10 @@ export const zh = {
     nopicture: '无图片',
     uploadpicture: '上传图片',
     uploadaudio: '上传音频',
+    pictureclassify: '图片分类',
+    slideshow: '轮播图',
+    setslideshow: '设为轮播图',
+
 
     template: '模板',
     selecttemplate: '选择模板',
@@ -139,8 +179,32 @@ export const zh = {
     editor: '编辑',
     pleaseselect: '请选择',
 
+
     timepublish: "时间发布",
 
-    veryimport: "重要",
-    general: "普通"
+    important: "重要",
+    general: "普通",
+
+    file: '文件',
+    otherfile: '其他文件',
+    searchfile: '搜索文件',
+    uploadfiles: '上传文件',
+
+    productcatalog: '产品目录',
+    postsubject: '贴文栏目',
+    researchdomain: '研究领域',
+    weekpost: '一周范文',
+    informationcenter: '资讯中心',
+
+    subject: '栏目',
+    sidesubject: '侧边栏目',
+
+    type: '类型',
+    classify: '分类',
+    performance: '业绩',
+    editorentering: '编辑录入',
+
+    postPubSum: '发布量',
+    postTranSum: '转发量',
+    postHitSum: '浏览量',
 }

@@ -17,9 +17,24 @@ export class VTagDomainname extends View<CPosts> {
 
     private content = observer((param: any): any => {
         this.initTagName(param.postId);
-        if (this.tagName === undefined)
+        if (this.tagName === undefined) {
             return null;
-        return <>{this.tagName.map((e: any) => { return <span className="small" > {tv(e.domain, v => v.name)}</span> })} </>;
+        } else {
+            if (this.tagName.length === 0) {
+                return null
+            } else {
+                return <span className="small"> 领域：{this.tagName.map((e: any) => {
+                    return <span className="small bg-light mr-1" > {tv(e.domain, v => v.name)}</span>
+                })} </span>;
+            }
 
+        }
+        /** 
+        if (this.tagName === undefined) {
+            return null;
+        } else {
+            return <span>{this.tagName.map((e: any) => { return <span className="small bg-light" >{tv(e.domain, v => v.name)}</span> })} </span>;
+        }
+        */
     })
 }

@@ -56,11 +56,11 @@ export class VChangeNames extends VPage<CMedia> {
         let right = <div>
             <button type="button"
                 className="btn btn-sm btn-success mr-3"
-                onClick={this.setSlideShow} >{this.t('设为轮播图')}
+                onClick={this.setSlideShow} >{this.t(this.t('setslideshow'))}
             </button>
             <button type="button"
                 className="btn btn-sm btn-success mr-3"
-                onClick={() => showPickCat("0")} >{this.t('分类')}
+                onClick={() => showPickCat("0")} >{this.t(this.t('classify'))}
             </button>
             <button type="button"
                 className="btn btn-sm btn-success mr-3"

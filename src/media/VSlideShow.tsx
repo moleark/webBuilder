@@ -28,7 +28,7 @@ export class VSlideShow extends VPage<CMedia> {
             });
         }
 
-        return <Page header={this.t('轮播图')} headerClassName={consts.headerClass} right={right}>
+        return <Page header={this.t('slideshow')} headerClassName={consts.headerClass} right={right}>
             <div className="mx-3">
                 <div className="row row-cols-2 row-cols-sm-3 row-cols-md-4">
                     {divItems}

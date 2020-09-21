@@ -20,7 +20,7 @@ export class VPostSubject extends VPage<CPosts> {
                 </div>
             </div>
         );
-        return <Page headerClassName={consts.headerClass} header={this.t('贴文目录')} right={right}>
+        return <Page headerClassName={consts.headerClass} header={this.t('postcatalog')} right={right}>
             {pagePostSubject.length > 0 && <List before={""} none="无" items={pagePostSubject} item={{ render: this.renderItem }} />}
         </Page>
     });

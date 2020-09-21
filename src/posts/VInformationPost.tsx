@@ -28,7 +28,7 @@ export class VInformationPost extends VPage<CPosts> {
                 <SearchBox size="sm" onSearch={(key: string) => informationsearchPostsKey(key, "")} placeholder={this.t('searchpost')} />
             </div>
         );
-        return <Page header={'选择贴文'} headerClassName={consts.headerClass} right={right} onScrollBottom={onScrollBottoms}>
+        return <Page header={this.t('selectpost')} headerClassName={consts.headerClass} right={right} onScrollBottom={onScrollBottoms}>
             <List before={""} none={none} items={informationpagePosts} item={{ render: this.renderItem }} />
         </Page>;
     });

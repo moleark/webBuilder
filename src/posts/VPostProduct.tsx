@@ -19,7 +19,7 @@ export class VPostProduct extends VPage<CPosts> {
                 </div>
             </div>
         );
-        return <Page headerClassName={consts.headerClass} header={this.t('贴文产品')} right={right}>
+        return <Page headerClassName={consts.headerClass} header={this.t('postproduct')} right={right}>
             {pagePostProdut.length > 0 && <List before={""} none="无" className="mt-1" items={pagePostProdut} item={{ render: this.renderItem }} />}
         </Page >
     });

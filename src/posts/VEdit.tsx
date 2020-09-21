@@ -79,8 +79,8 @@ export class VEdit extends VPage<CPosts> {
                 </label>
                 <label className={classNames(cnButton, { active: !this.isOn })}>
                     <input type="radio" name="options" value="veryimport " defaultChecked={false} onChange={this.onOff} />
-                    <span className="d-inline d-sm-none">{this.t('veryimport')}</span>
-                    <span className="d-none d-sm-inline">{this.t('veryimport')}</span>
+                    <span className="d-inline d-sm-none">{this.t('important')}</span>
+                    <span className="d-none d-sm-inline">{this.t('important')}</span>
                 </label>
             </div>
         </div>

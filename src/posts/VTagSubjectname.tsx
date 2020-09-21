@@ -18,8 +18,24 @@ export class VTagSubjectname extends View<CPosts> {
 
     private content = observer((param: any): any => {
         this.inittagName(param.postId);
-        if (this.tagName === undefined)
+        if (this.tagName === undefined) {
             return null;
-        return <>{this.tagName.map((e: any) => { return <span className="small" > {tv(e.subject, v => v.name)}</span> })} </>;
+        } else {
+            if (this.tagName.length === 0) {
+                return null
+            } else {
+                return <span className="small"> 栏目：{this.tagName.map((e: any) => {
+                    return <span className="small bg-light mr-1" > {tv(e.subject, v => v.name)}</span>
+                })} </span>;
+            }
+
+        }
+        /**
+        if (this.tagName === undefined) {
+            return null;
+        } else {
+            return <>{this.tagName.map((e: any) => { return <span className="small bg-light" > {tv(e.subject, v => v.name)}</span> })} </>;
+        } 
+        */
     })
 }

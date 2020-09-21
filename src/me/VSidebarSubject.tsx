@@ -14,7 +14,7 @@ export class VSidebarSubject extends VPage<CMe> {
     private page = observer(() => {
         let { selectSubject, pageSidebar } = this.controller;
         let right = <span onClick={selectSubject} className="mx-2 iconfont icon-jiahao1 cursor-pointer" style={{ fontSize: "1.7rem", color: "white" }}></span>
-        return <Page header={this.t('侧边栏目')} headerClassName={consts.headerClass} right={right}>
+        return <Page header={this.t('sidesubject')} headerClassName={consts.headerClass} right={right}>
             <List before={""} none="无" items={pageSidebar} item={{ render: this.renderItem }} />
         </Page>;
     })

@@ -19,7 +19,7 @@ export class VPostDomain extends VPage<CPosts> {
                 </div>
             </div>
         );
-        return <Page headerClassName={consts.headerClass} header={this.t('贴文领域')} right={right}>
+        return <Page headerClassName={consts.headerClass} header={this.t('postdomain')} right={right}>
             {pagePostDomain.length > 0 && <List before={""} none="无" items={pagePostDomain} item={{ render: this.renderItem }} />}
         </Page>
     });

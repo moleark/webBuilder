@@ -12,7 +12,7 @@ export class VPublish extends VPage<CPage>  {
     private page = observer(() => {
 
         let right = <button className="mr-2 btn btn-sm btn-success">
-            <FA name="pencil-square-o" /> {this.t('保存')}
+            <FA name="pencil-square-o" /> {this.t('save')}
         </button>;
         return <Page header={this.t('publish')} headerClassName={consts.headerClass} right={right} >
             <List items={this.controller.pageWebsite} item={{ render: this.renderItem }} />
