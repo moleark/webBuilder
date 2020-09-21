@@ -8,14 +8,14 @@ import classNames from "classnames";
 import { observable } from 'mobx';
 export class VEdit extends VPage<CPosts> {
 
-    @observable isOn: boolean = false;
-    @observable isOnLanguage: boolean = false;
+    @observable isOn: boolean;
+    @observable isOnLanguage: boolean;
     private textarea: HTMLTextAreaElement;
     async open() {
         let { current } = this.controller;
         let { emphasis, language } = current;
-        this.isOn = emphasis === 0;
-        this.isOnLanguage = language === 0;
+        this.isOn = emphasis === 1;
+        this.isOnLanguage = language === 1;
         this.openPage(this.page);
     }
 
@@ -23,8 +23,8 @@ export class VEdit extends VPage<CPosts> {
         let { current } = this.controller;
         let id = current && current.id;
         current.content = this.textarea.value;
-        current.emphasis = this.isOn ? 0 : 1;
-        current.language = this.isOnLanguage ? 0 : 1;
+        current.emphasis = this.isOn ? 1 : 0;
+        current.language = this.isOnLanguage ? 1 : 0;
 
         await this.controller.saveItem(id, current);
         this.closePage();
@@ -66,19 +66,19 @@ export class VEdit extends VPage<CPosts> {
         return <this.page />
     }
     private onOff = (evt: React.ChangeEvent<HTMLInputElement>) => {
-        this.isOn = evt.currentTarget.value === 'general';
+        this.isOn = evt.currentTarget.value === 'veryimport';
     }
     private isimport() {
         let cnButton = ['btn', 'btn-outline-primary', 'btn-sm', 'text-nowrap'];
         return <div className="px-sm-2 d-flex align-items-center">
             <div className="btn-group btn-group-toggle" data-toggle="buttons">
-                <label className={classNames(cnButton, { active: this.isOn })}>
-                    <input type="radio" name="options" value="general" defaultChecked={true} onChange={this.onOff} />
+                <label className={classNames(cnButton, { active: !this.isOn })}>
+                    <input type="radio" name="options" value="general" defaultChecked={false} onChange={this.onOff} />
                     <span className="d-inline d-sm-none">{this.t('general')}</span>
                     <span className="d-none d-sm-inline">{this.t('general')}</span>
                 </label>
-                <label className={classNames(cnButton, { active: !this.isOn })}>
-                    <input type="radio" name="options" value="veryimport " defaultChecked={false} onChange={this.onOff} />
+                <label className={classNames(cnButton, { active: this.isOn })}>
+                    <input type="radio" name="options" value="veryimport" defaultChecked={true} onChange={this.onOff} />
                     <span className="d-inline d-sm-none">{this.t('veryimport')}</span>
                     <span className="d-none d-sm-inline">{this.t('veryimport')}</span>
                 </label>
@@ -87,20 +87,20 @@ export class VEdit extends VPage<CPosts> {
     }
 
     private onOffLanguage = (evt: React.ChangeEvent<HTMLInputElement>) => {
-        this.isOnLanguage = evt.currentTarget.value === 'general';
+        this.isOnLanguage = evt.currentTarget.value === 'veryimport';
     }
     private language() {
         let cnButton = ['btn', 'btn-outline-primary', 'btn-sm', 'text-nowrap'];
         return <div className="px-sm-2 d-flex align-items-center">
             <div className="btn-group btn-group-toggle mx-2" data-toggle="buttons">
-                <label className={classNames(cnButton, { active: this.isOnLanguage })}>
-                    <input type="radio" name="options" value="general" defaultChecked={true} onChange={this.onOffLanguage} />
-                    <span className="d-inline d-sm-none">{this.t('中文')}</span>
+                <label className={classNames(cnButton, { active: !this.isOnLanguage })}>
+                    <input type="radio" name="options" value="general" onChange={this.onOffLanguage} />
+                    <span className="d-inline d-sm-none">{this.t('中')}</span>
                     <span className="d-none d-sm-inline">{this.t('中文')}</span>
                 </label>
-                <label className={classNames(cnButton, { active: !this.isOnLanguage })}>
-                    <input type="radio" name="options" value="veryimport " defaultChecked={false} onChange={this.onOffLanguage} />
-                    <span className="d-inline d-sm-none">{this.t('英文')}</span>
+                <label className={classNames(cnButton, { active: this.isOnLanguage })}>
+                    <input type="radio" name="options" value="veryimport" onChange={this.onOffLanguage} />
+                    <span className="d-inline d-sm-none">{this.t('英')}</span>
                     <span className="d-none d-sm-inline">{this.t('英文')}</span>
                 </label>
             </div>
