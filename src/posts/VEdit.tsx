@@ -95,13 +95,13 @@ export class VEdit extends VPage<CPosts> {
             <div className="btn-group btn-group-toggle mx-2" data-toggle="buttons">
                 <label className={classNames(cnButton, { active: !this.isOnLanguage })}>
                     <input type="radio" name="options" value="general" onChange={this.onOffLanguage} />
-                    <span className="d-inline d-sm-none">{this.t('中')}</span>
-                    <span className="d-none d-sm-inline">{this.t('中文')}</span>
+                    <span className="d-inline d-sm-none">{this.t('ch')}</span>
+                    <span className="d-none d-sm-inline">{this.t('ch')}</span>
                 </label>
                 <label className={classNames(cnButton, { active: this.isOnLanguage })}>
                     <input type="radio" name="options" value="veryimport" onChange={this.onOffLanguage} />
-                    <span className="d-inline d-sm-none">{this.t('英')}</span>
-                    <span className="d-none d-sm-inline">{this.t('英文')}</span>
+                    <span className="d-inline d-sm-none">{this.t('en')}</span>
+                    <span className="d-none d-sm-inline">{this.t('en')}</span>
                 </label>
             </div>
         </div>

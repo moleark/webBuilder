@@ -17,7 +17,7 @@ export class VEditCat extends VPage<CMe> {
     private uiSchema: UiSchema = {
         items: {
             name: { widget: 'text', label: '名称', placeholder: '请填写图片分类名称', rows: 8 } as UiInputItem,
-            submit: { widget: 'button', label: '提交' }
+            submit: { widget: 'button', label: (this.t('submit')) }
         }
     };
 

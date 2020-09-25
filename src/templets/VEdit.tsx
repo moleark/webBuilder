@@ -28,7 +28,7 @@ export class VEdit extends VPage<CTemplets> {
             caption: { widget: 'text', label: '标题' },
             content: { widget: 'textarea', label: 'PC模板', placeholder: '请填写模板内容', rows: 8 } as UiInputItem,
             contentModule: { widget: 'textarea', label: '移动端模板', placeholder: '请填写模板内容', rows: 8 } as UiInputItem,
-            submit: { widget: 'button', label: '提交' }
+            submit: { widget: 'button', label: (this.t('submit')) }
         }
     };
 
@@ -48,7 +48,7 @@ export class VEdit extends VPage<CTemplets> {
             <span className="iconfont  mx-3 icon-tianjia" style={{ fontSize: "20px", color: "#ffffff" }}></span>
         </div>;
         */
-        return <Page header="编辑模板" headerClassName={consts.headerClass}>
+        return <Page header={this.t('editortemplate')} headerClassName={consts.headerClass}>
             <div className="mx-3">
                 <Form ref={v => this.form = v} className="my-3"
                     formData={this.templet}
@@ -59,7 +59,7 @@ export class VEdit extends VPage<CTemplets> {
                 />
             </div>
             <div className="text-content" style={{ textAlign: "center" }}>
-                <button type="button" className="col-12 btn btn-primary mx-2" onClick={this.onClickSaveButton} >保存</button>
+                <button type="button" className="col-12 btn btn-primary mx-2" onClick={this.onClickSaveButton} >{this.t('save')}</button>
             </div>
         </Page>
     })

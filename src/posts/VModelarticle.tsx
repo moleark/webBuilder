@@ -11,7 +11,7 @@ export class VModelarticle extends VPage<CPosts> {
         this.openPage(this.page);
     }
     private page = observer((param: any) => {
-        return <Page header="一周范文">
+        return <Page header={this.t('weekpost')}>
             <List before={""} none="没有" items={this.hotlist} item={{ render: this.renderItem }} />
         </Page >;
 

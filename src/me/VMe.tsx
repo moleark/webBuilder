@@ -71,11 +71,11 @@ export class VMe extends VPage<CMe> {
                     <span className="h1">{postHitSum ? postHitSum : "0"}</span>
                     <small> 次</small>
                 </div>
-                <h6 className="text-warning"><small>浏览量</small></h6>
+                <h6 className="text-warning"><small>{this.t('postHitSum')}</small></h6>
             </div >
             <div className="d-flex justify-content-around">
-                {this.divTag('发布量', postPubSum, 1)}
-                {this.divTag('转发量', postTranSum, 2)}
+                {this.divTag((this.t('postPubSum')), postPubSum, 1)}
+                {this.divTag((this.t('postTranSum')), postTranSum, 2)}
             </div>
             <div className="my-4"></div>
         </div>
@@ -89,8 +89,8 @@ export class VMe extends VPage<CMe> {
             <this.meInfo />
             {branch(this.t('team'), "icon-Group-", showTeamAchievement)}
             {branch(this.t('set'), "icon-shezhi3", onSet)}
-            {branch(this.t('pictureclassify'), "icon-Fill", () => showCat({ name: "图片分类", id: 0 }))}
-            {branch(this.t('subject'), "icon-fenlei", () => cApp.cPosts.showSubjectEdit({ name: "栏目", id: 0 }))}
+            {branch(this.t('pictureclassify'), "icon-Fill", () => showCat({ name: (this.t('pictureclassify')), id: 0 }))}
+            {branch(this.t('subject'), "icon-fenlei", () => cApp.cPosts.showSubjectEdit({ name: (this.t('subject')), id: 0 }))}
             {branch(this.t('sidesubject'), "icon-lanmuguanli", () => this.controller.showSidebar())}
         </div>
     })

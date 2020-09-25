@@ -77,7 +77,7 @@ export class VTeamInputPost extends VPage<CMe> {
             </div>
             <div className="text-content pt-4 mx-4 px-4" style={{ textAlign: "center" }}>
                 <button type="button" className="btn btn-primary  py-2 w-100"
-                    onClick={this.onAdd} >提交</button>
+                    onClick={this.onAdd} >{this.t('submit')}</button>
             </div>
         </Page >
     })

@@ -77,7 +77,7 @@ export class VChangeNames extends VPage<CMedia> {
                     onItemChanged={this.onItemChanged}
                 />
                 <div className="py-2 my-1 text-primary" >
-                    <strong>类型</strong>
+                    <strong>{this.t('type')}</strong>
                 </div>
                 <List before={""} none={"无"} items={pageImageCat} item={{ render: this.renderItem }} />
             </div>

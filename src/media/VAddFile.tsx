@@ -81,7 +81,7 @@ export class VAddFile extends VPage<CMedia> {
         }
         else {
             image = <div className="text-content text-center">
-                <button className="btn btn-primary mr-3" onClick={this.onUploadFilePDF}>{this.t('上传文件')}</button>
+                <button className="btn btn-primary mr-3" onClick={this.onUploadFilePDF}>{this.t('uploadfiles')}</button>
             </div>;
         }
 

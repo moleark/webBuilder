@@ -28,7 +28,7 @@ export class VGrade extends VPage<CPosts> {
                     />
                     <div className="flex-fill d-flex justify-content-end">
 
-                        <button onClick={() => { value == undefined ? alert('请选择您的评分') : evaluate(value) }} type="button" className="btn-sm btn btn-primary">提交</button>
+                        <button onClick={() => { value == undefined ? alert('请选择您的评分') : evaluate(value) }} type="button" className="btn-sm btn btn-primary">{this.t('submit')}</button>
                     </div>
                 </div>
 

@@ -63,13 +63,13 @@ export class VMain extends VPage<CPosts> {
                 <div className="mx-3 p-2 font-weight-bold">{this.t('productcatalog')}</div>
             </div>
         </div >;
-        let Subject = <div className="m-1 cursor-pointer" onClick={() => showSubject({ name: "帖文栏目", id: "10000" + setting.BusinessScope })} >
+        let Subject = <div className="m-1 cursor-pointer" onClick={() => showSubject({ name: (this.t('postsubject')), id: "10000" + setting.BusinessScope })} >
             <div className="py-3 my-1 ">
                 <div className="mb-2 text-primary"><i style={{ fontSize: "2rem" }} className="iconfont icon-mokuai"></i></div>
                 <div className="mx-3 px-2 font-weight-bold">{this.t('postsubject')}</div>
             </div>
         </div>;
-        let Domain = <div className="m-1 cursor-pointer" onClick={() => showDomain({ name: '研究领域', id: 0 })} >
+        let Domain = <div className="m-1 cursor-pointer" onClick={() => showDomain({ name: (this.t('researchdomain')), id: 0 })} >
             <div className="py-3 my-1 ">
                 <div className="mb-2 text-danger"><i style={{ fontSize: "2rem" }} className="iconfont icon-yanjiulingyu"></i></div>
                 <div className="mx-3 px-2 font-weight-bold">{this.t('researchdomain')}</div>

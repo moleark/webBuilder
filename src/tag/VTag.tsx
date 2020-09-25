@@ -40,14 +40,14 @@ export class VTag extends VPage<CTag> {
                     wrapClassName: "tagSingle"
                 } as UiTagMulti,
                 submit: {
-                    label: "提交",
+                    label: (this.t('submit')),
                     widget: "button",
                     className: "btn btn-primary"
                 } as UiButton
             }
         };
         return (
-            <Page header="标签" headerClassName={consts.headerClass}>
+            <Page header={this.t('tag')} headerClassName={consts.headerClass}>
                 <Form
                     className="p-3"
                     schema={this.schema}

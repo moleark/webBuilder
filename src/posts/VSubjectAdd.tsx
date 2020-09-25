@@ -6,7 +6,7 @@ import { CPosts } from './CPosts';
 import { observable } from 'mobx';
 
 export class VSubjectAdd extends VPage<CPosts> {
-    @observable capton: any = "栏目";
+    @observable capton: any = (this.t('subject'));
     private form: Form;
     private subject: any;
     async open(subject: any) {
@@ -17,7 +17,7 @@ export class VSubjectAdd extends VPage<CPosts> {
     private uiSchema: UiSchema = {
         items: {
             name: { widget: 'text', label: '名称', placeholder: '请填写栏目名称', rows: 8 } as UiInputItem,
-            submit: { widget: 'button', label: '提交' }
+            submit: { widget: 'button', label: (this.t('submit')) }
         }
     };
 

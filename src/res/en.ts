@@ -1,4 +1,6 @@
 export const en = {
+    en: 'En',
+    ch: 'Ch',
     post: 'Post',
     noposts: 'None',
     editorpost: 'Edit',
@@ -40,6 +42,7 @@ export const en = {
 
     template: 'Template',
     selecttemplate: 'Select template',
+    editortemplate: 'EditorTemplate',
     notemplate: 'No template',
     preview: 'Preview',
 
@@ -54,6 +57,7 @@ export const en = {
     me: 'Me',
     tag: 'Tag',
     set: 'Set',
+    team: 'Team',
     logout: 'Logout',
     about: 'About',
     password: 'Password',
@@ -101,6 +105,9 @@ export const en = {
 
 export const zh = {
 
+    en: '英文',
+    ch: '中文',
+
     post: '帖文',
     noposts: '无帖文',
     editorpost: '编辑帖文',
@@ -143,6 +150,7 @@ export const zh = {
 
     template: '模板',
     selecttemplate: '选择模板',
+    editortemplate: '编辑模板',
     notemplate: '无模板',
     preview: '预览',
     link: '链接',
