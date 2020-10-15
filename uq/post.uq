@@ -31,6 +31,13 @@ MAP PostPublish(
 );
 
 
+--贴文状态
+MAP PostStatus(
+    key post ID POST,
+    status smallint --1 编辑中 2 待审核 3 待发布  4 已发布
+);
+
+
 /** 发布帖文记录--产品 **/
 MAP PostPublishProduct(
     key product ID ProductX,
@@ -109,3 +116,4 @@ MAP PostProduct(
     key post ID POST,
     key product ID ProductX,
 );
+

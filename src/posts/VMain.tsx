@@ -9,6 +9,7 @@ import { setting } from "configuration";
 
 export class VMain extends VPage<CPosts> {
     @observable private isMes: boolean = true;
+    @observable private status: number = 1;
 
     async open() { }
 
@@ -18,7 +19,12 @@ export class VMain extends VPage<CPosts> {
 
     private onMeAll = (evt: React.ChangeEvent<HTMLInputElement>) => {
         this.isMes = evt.currentTarget.value === 'me';
-        this.controller.setMe(this.isMes)
+        this.controller.setMe(this.isMes, this.status)
+    }
+
+    private onStatus = (val: number) => {
+        this.status = val;
+        this.controller.setMe(this.isMes, this.status)
     }
 
     private renderMeAllToggle() {
@@ -39,8 +45,21 @@ export class VMain extends VPage<CPosts> {
         </div>
     }
 
+    private renderStatus() {
+
+        let isSelect = "text-primary col-md-2";
+        let notSelect = "col-md-2";
+        return <div className="d-flex  text-center small justify-content-between cursor-pointer px-4 pt-4 pb-2" >
+            <div className={this.status === 1 ? isSelect : notSelect} onClick={() => this.onStatus(1)}><strong>编辑中</strong></div>
+            <div className={this.status === 2 ? isSelect : notSelect} onClick={() => this.onStatus(2)}><strong>待审核</strong></div>
+            <div className={this.status === 3 ? isSelect : notSelect} onClick={() => this.onStatus(3)}><strong>被驳回</strong></div>
+            <div className={this.status === 4 ? isSelect : notSelect} onClick={() => this.onStatus(4)}><strong>待发布</strong></div>
+            <div className={this.status === 5 ? isSelect : notSelect} onClick={() => this.onStatus(5)}><strong>已发布</strong></div>
+        </div>
+    }
+
     private page = observer(() => {
-        let { pagePosts, onAdd, searchPostsKey, showProductCatalog, showSubject, onScrollBottom, showDomain, showModel, InformationCente, searchAuthor } = this.controller;
+        let { pagePosts, onAdd, searchPostsKey, showProductCatalog, showSubject, onScrollBottom, showDomain, showModel, showApproval, searchAuthor } = this.controller;
         let search = <div className="d-flex w-100">
             <div className='pt-2 ml-2' style={{ width: '4rem' }}>{this.t('post')}</div>
             {this.renderMeAllToggle()}
@@ -81,12 +100,12 @@ export class VMain extends VPage<CPosts> {
                 <div className="mx-3 px-2 font-weight-bold">{this.t('weekpost')}</div>
             </div>
         </div>;
-        let Information = <div className="m-1 cursor-pointer" onClick={() => InformationCente()} >
+        let Information = <div className="m-1 cursor-pointer" onClick={() => showApproval()}>
             <div className="py-3 my-1 ">
-                <div className="mb-2 text-warning"><i style={{ fontSize: "2rem" }} className="iconfont icon-zixun"></i></div>
-                <div className="mx-3 px-2 font-weight-bold">{this.t('informationcenter')}</div>
+                <div className="mb-2 text-warning"><i style={{ fontSize: "2rem" }} className="iconfont icon-iconfontyijiantuiguang"></i></div>
+                <div className="mx-3 px-2 font-weight-bold">{this.t('待审核')}</div>
             </div>
-        </div>;
+        </div >;
 
         let tools: any;
         if (setting.BusinessScope === 1) {
@@ -100,8 +119,9 @@ export class VMain extends VPage<CPosts> {
                 <div className="d-flex justify-content-around py-4 small text-center px-2" style={{ background: "linear-gradient(rgba(23,106,184,.5),rgba(23,162,184,.5),rgba(23,184,184,.5))" }}>
                     {tools}
                 </div>
+                {this.renderStatus()}
                 <List before={""} none={none} items={pagePosts} item={{ render: this.renderItem }} />
-            </Page >
+            </Page>
         );
     });
 
@@ -181,8 +201,7 @@ export class VMain extends VPage<CPosts> {
                             {web === 1 ? <span style={{ borderRadius: "15%/48%" }} className="bg-primary text-white px-1">{this.t('internationSite')}</span> : <></>}
                             {bvweb === 1 ? <span style={{ borderRadius: "15%/48%" }} className="bg-primary text-white px-1">{this.t('BV网站')}</span> : <></>}
                         </div>
-                        <div className="ml-1 small text-secondary">
-                            {/* <i className="iconfont icon-biaoqian3 small text-secondary"></i> */}
+                        <div>
                             {tagCatalogname}
                             {tagSubjectname}
                             {tagDomainname}

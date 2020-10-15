@@ -25,7 +25,7 @@ export class VShow extends VPage<CPosts> {
     }
 
     private page = observer(() => {
-        let { current, onShowRelease, onGrade } = this.controller;
+        let { current, onShowRelease, onGrade, onApply } = this.controller;
         let { id, author } = current;
         let leftPath = setting.previewUrl + id;
         //let date = <span><EasyTime date={$update} /></span>;
@@ -45,6 +45,9 @@ export class VShow extends VPage<CPosts> {
             </button>
             <button className="mr-2 btn btn-sm btn-success" onClick={() => this.openVPage(VSourceCode)}>
                 <FA name="code px-1" />{this.t('sourcecode')}
+            </button>
+            <button className="mr-2 btn btn-sm btn-success" onClick={() => onApply(current)}>
+                <FA name="hand-paper-o px-1" />{this.t('申请')}
             </button>
             {meright}
         </div>

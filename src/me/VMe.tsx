@@ -92,9 +92,11 @@ export class VMe extends VPage<CMe> {
             {branch(this.t('pictureclassify'), "icon-Fill", () => showCat({ name: (this.t('pictureclassify')), id: 0 }))}
             {branch(this.t('subject'), "icon-fenlei", () => cApp.cPosts.showSubjectEdit({ name: (this.t('subject')), id: 0 }))}
             {branch(this.t('sidesubject'), "icon-lanmuguanli", () => this.controller.showSidebar())}
+            {branch(this.t('informationcenter'), "iconfont icon-zixun", () => this.controller.cApp.cPosts.InformationCente())}
         </div>
     })
 }
+
 
 
 function branch(name: string, icon: string, action: any): JSX.Element {

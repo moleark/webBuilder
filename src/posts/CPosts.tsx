@@ -39,6 +39,7 @@ import { VSelectSubjectEdit } from "./VSelectSubjectEdit";
 import { VTagCatalogname } from "./VTagCatalogname";
 import { VTagSubjectname } from "./VTagSubjectname";
 import { VTagDomainname } from "./VTagDomainname";
+import { VApproval } from "./VApproval";
 /* eslint-disable */
 export class CPosts extends CUqBase {
     @observable pageTemplate: QueryPager<any>;
@@ -52,6 +53,7 @@ export class CPosts extends CUqBase {
     @observable selectPosts: QueryPager<any>;
     @observable pageInformationPosts: QueryPager<any>;
     @observable informationpagePosts: QueryPager<any>;
+    @observable approvalpagePosts: QueryPager<any>;
     @observable current: any;
     @observable postProduct: any;
     @observable ratioA: any;
@@ -69,6 +71,7 @@ export class CPosts extends CUqBase {
     @observable isMyself: boolean = true;
     @observable searchKey: any;
     @observable searchAuthor: any;
+    @observable status: number = 1;
 
     protected async internalStart(param: any) {
         this.setRes({
@@ -81,7 +84,8 @@ export class CPosts extends CUqBase {
         });
     }
 
-    setMe(isMe: boolean) {
+    setMe(isMe: boolean, status: number) {
+        this.status = status;
         this.isMyself = isMe;
         this.searchPostsKey(this.searchKey, this.isMyself ? nav.user : 0);
     }
@@ -100,7 +104,7 @@ export class CPosts extends CUqBase {
         });
 
         let Auser = this.isMyself ? nav.user : 0;
-        await this.pagePosts.first({ key: key, author: Auser, businessScope: setting.BusinessScope });
+        await this.pagePosts.first({ key: key, author: Auser, businessScope: setting.BusinessScope, status: this.status });
     };
 
     /* posts模板查询*/
@@ -151,6 +155,23 @@ export class CPosts extends CUqBase {
         this.current = { caption: "", discription: "", content: "", image: undefined, template: undefined };
         this.openVPage(VEdit);
     };
+
+    //审批
+    onApply = async (post: any) => {
+        await this.uqs.webBuilder.PostStatus.add({ post: post.id, status: 2 });
+    };
+
+    showApproval = async () => {
+        this.approvalpagePosts = new QueryPager(this.uqs.webBuilder.SearchPost, 15, 30);
+        await this.approvalpagePosts.first({ key: "", author: 0, businessScope: setting.BusinessScope, status: 2 });
+        this.openVPage(VApproval);
+    };
+
+    onApproval = async (post: any, status: number) => {
+        await this.uqs.webBuilder.PostStatus.add({ post: post.id, status: status });
+        await this.showApproval();
+    };
+
 
     renderLabel() {
         return this.renderView(VPickTemplate);
@@ -495,7 +516,7 @@ export class CPosts extends CUqBase {
         this.informationpagePosts.setEachPageItem((item: any, results: { [name: string]: any[] }) => {
             this.cApp.useUser(item.author);
         });
-        await this.informationpagePosts.first({ key: key, author: 0, businessScope: setting.BusinessScope });
+        await this.informationpagePosts.first({ key: key, author: 0, businessScope: setting.BusinessScope, status: this.status });
     };
     //添加到资讯中心  
     addInformation = async (param: any) => {

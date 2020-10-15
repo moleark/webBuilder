@@ -100,6 +100,7 @@ export interface WebBuilder {
     SubjectDefault: Map;
     SearchSubjectDefault: Query;
     DelSubjectDefault: Action;
+    PostStatus: Map;
 }
 
 export interface UQs {

@@ -30,6 +30,8 @@ ACTION PublishPost(
         if  exists( select 1 from PostPublish where post = _post ){
             BOOK PostPublish at(_post) set web=_web, agent=_agent, assist=_assist, openweb=_openweb, bvweb = _bvweb, classroom = _classroom
                 , operator = $user, startdate = _startDate, enddate = _endDate;
+
+            BOOK PostStatus at(_post) set status = 5;
      
         } else {
             var alldate char(20);
@@ -41,6 +43,8 @@ ACTION PublishPost(
     } else {
         BOOK PostPublish at(_post) set web=_web, agent=_agent, assist=_assist, openweb=_openweb, bvweb = _bvweb, classroom = _classroom
             , operator = $user, startdate = _startDate, enddate = _endDate;
+
+        BOOK PostStatus at(_post) set status = 4;
     };
 
 };
