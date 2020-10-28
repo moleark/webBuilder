@@ -82,6 +82,9 @@ ACTION AddPost(
     TUID POST into postId set
         caption = _caption, discription = _discription, image = _image, 
         author = $user, template = _template, content = _content, isValid = 1, emphasis = _emphasis, language = _language;
+    
+    BOOK PostStatus at(postId) set status = 1;
+
     into ret select postId as id;
 };
 
