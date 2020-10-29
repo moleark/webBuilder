@@ -101,6 +101,7 @@ export const en = {
     postPubSum: 'postPubSum',
     postTranSum: 'postTranSum',
     postHitSum: 'postHitSum',
+    checkpending: "CheckPending"
 }
 
 export const zh = {
@@ -215,4 +216,5 @@ export const zh = {
     postPubSum: '发布量',
     postTranSum: '转发量',
     postHitSum: '浏览量',
+    checkpending: "待审核"
 }

@@ -23,7 +23,7 @@ export class VApproval extends VPage<CPosts> {
                 <span className="text-muted small">[{this.t('noposts')}]</span>
             </div>
         );
-        return <Page header={this.t('informationcenter')} headerClassName={consts.headerClass} right={right}>
+        return <Page header={this.t('checkpending')} headerClassName={consts.headerClass} right={right}>
             <List before={""} none={none} items={approvalpagePosts} item={{ render: this.renderItem }} />
         </Page>;
     });
@@ -80,7 +80,7 @@ export class VApproval extends VPage<CPosts> {
                             )
                         )}
                     </div>
-                    <div className="d-flex flex-column  col-md-10">
+                    <div className="d-flex flex-column  col-md-10" onClick={() => showDetail(id)}>
                         <div className="ml-1"><b>{caption}</b></div>
                         <div className="small ml-1 text-muted py-2 flex-fill">{discription}</div>
                         <div className="small d-flex ml-1">

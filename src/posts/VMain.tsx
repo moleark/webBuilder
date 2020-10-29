@@ -103,7 +103,7 @@ export class VMain extends VPage<CPosts> {
         let Information = <div className="m-1 cursor-pointer" onClick={() => showApproval()}>
             <div className="py-3 my-1 ">
                 <div className="mb-2 text-warning"><i style={{ fontSize: "2rem" }} className="iconfont icon-iconfontyijiantuiguang"></i></div>
-                <div className="mx-3 px-2 font-weight-bold">{this.t('待审核')}</div>
+                <div className="mx-3 px-2 font-weight-bold">{this.t('checkpending')}</div>
             </div>
         </div >;
 
