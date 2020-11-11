@@ -492,7 +492,11 @@ returns ret (
             INNER JOIN product.tv_productproductcategorycache as pp ON a.leaf = pp.category
             INNER JOIN product.tv_productx as p on p.id = pp.product
             LEFT JOIN  product.tv_brand as b on p.$unit = b.$unit and p.brand = b.id
-            LEFT JOIN  product.tv_productchemical as pc on p.$unit = pc.$unit and p.id = pc.product
+            LEFT JOIN  ( 
+				SELECT	a.product,  a.cas,  a.purity ,  a.$unit, a.chemical
+				FROM    product.tv_productchemical AS a
+				WHERE 	a.chemical = ( SELECT MAX( b.chemical ) FROM 	product.tv_productchemical AS b WHERE a.$unit = b.$unit AND a.product = b.product )
+         ) AS pc on p.$unit = pc.$unit and p.id = pc.product
 	WHERE 	pp.`$unit` = 24 AND pp.salesregion = 1
             AND (	
                 a.parent in ( SELECT productcategory FROM webbuilder.tv_postproductcatalog where post = `_post`) or 
