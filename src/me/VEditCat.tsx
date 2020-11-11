@@ -39,6 +39,7 @@ export class VEditCat extends VPage<CMe> {
         } else {
             await saveCat(this.cat.id, this.cat.parent, name, 1);
         }
+
         this.closePage(2);
         showCat({ name: (this.t('pictureclassify')), id: 0 })
     }

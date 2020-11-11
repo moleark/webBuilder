@@ -226,8 +226,8 @@ export class CMe extends CUqBase {
     showCat = async (param: any) => {
         let { id, name } = param;
         let pageCat = new QueryPager(this.uqs.webBuilder.SearchCat, 15, 30);
-        pageCat.first({ parent: param });
-        let pageCats = { pageCat, name, id };
+        pageCat.first({ parent: id });
+        let pageCats = { pageCat: pageCat, name: name, parent: id };
         this.openVPage(VCat, pageCats)
     }
 
@@ -237,21 +237,28 @@ export class CMe extends CUqBase {
         this.pageCat.first({ parent: parent });
     };
 
-    showAddCat = async (id: any) => {
-        this.currentCat = { id: null, name: null, isValid: 1 };
-        this.openVPage(VEditCat, this.currentCat);
+    showAddCat = async (param: any) => {
+        this.openVPage(VEditCat, param);
     }
 
     showEditCat = async (item: any) => {
-        this.currentCat = item;
-        this.openVPage(VEditCat, item);
+        let { id, name, parent } = item;
+        if (parent !== undefined) {
+            let par = item;
+            this.openVPage(VEditCat, par);
+        } else {
+            let par = { parent: '0', name, id }
+            this.openVPage(VEditCat, par);
+        }
+
     }
 
     saveCat = async (id: any, parent: any, name: any, isValid: any) => {
-        let param = { parent: this.currentCatParent, name: name, isValid: isValid };
+        let param = { parent: parent, name: name, isValid: isValid };
         await this.uqs.webBuilder.IMGCat.save(id, param);
         this.searchCat(this.currentCatParent);
     }
+
 
     /**侧边栏目 */
     getsubjectDefault = async () => {

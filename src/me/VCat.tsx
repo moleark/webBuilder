@@ -7,16 +7,20 @@ import { CMe } from "./CMe";
 
 export class VCat extends VPage<CMe> {
     @observable pageCat: any;
+    @observable name: any;
+    @observable parent: any
 
     async open(param: any) {
         this.pageCat = param.pageCat;
+        this.name = param.name;
+        this.parent = param.parent;
         this.openPage(this.page, param);
     }
 
     private page = observer((param: any) => {
         let { name } = param;
         let { showAddCat } = this.controller;
-        let right = <div onClick={() => showAddCat(param)}>
+        let right = <div onClick={() => showAddCat({ parent: this.parent, name: "", id: -1 })}>
             <span className="mx-2 iconfont icon-jiahao1 cursor-pointer" style={{ fontSize: "1.7rem", color: "white" }}></span>
         </div>;
         return <Page header={name} headerClassName={consts.headerClass}
