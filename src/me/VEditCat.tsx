@@ -32,14 +32,15 @@ export class VEditCat extends VPage<CMe> {
     }
 
     private onFormButtonClick = async (names: string, context: Context) => {
-        let { saveCat } = this.controller;
+        let { saveCat, showCat } = this.controller;
         let { name } = context.form.data;
         if (this.cat.id === -1) {
             await saveCat(null, this.cat.parent, name, 1);
         } else {
             await saveCat(this.cat.id, this.cat.parent, name, 1);
         }
-        this.closePage();
+        this.closePage(2);
+        showCat({ name: (this.t('pictureclassify')), id: 0 })
     }
 
     private page = observer(() => {

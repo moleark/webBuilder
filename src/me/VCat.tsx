@@ -31,9 +31,11 @@ export class VCat extends VPage<CMe> {
     // }
 
     private delCat = async (model: any) => {
-        let { saveCat } = this.controller;
+        let { saveCat, showCat } = this.controller;
         let { id, name } = model;
         await saveCat(id, id, name, 0);
+        this.closePage()
+        showCat({ name: (this.t('pictureclassify')), id: 0 })
     }
 
 
@@ -41,6 +43,7 @@ export class VCat extends VPage<CMe> {
         await this.controller.pageMedia.more();
     }
     private renderItem = (item: any, index: number) => {
+        let a = { item }
         return (
             <div className="pl-2 pl-sm-3 pr-2 pr-sm-3 py-3 d-flex justify-content-between">
                 <div className="mx-2 small" >

@@ -239,12 +239,12 @@ export class CMe extends CUqBase {
 
     showAddCat = async (id: any) => {
         this.currentCat = { id: null, name: null, isValid: 1 };
-        this.openVPage(VEditCat);
+        this.openVPage(VEditCat, this.currentCat);
     }
 
     showEditCat = async (item: any) => {
         this.currentCat = item;
-        this.openVPage(VEditCat);
+        this.openVPage(VEditCat, item);
     }
 
     saveCat = async (id: any, parent: any, name: any, isValid: any) => {
