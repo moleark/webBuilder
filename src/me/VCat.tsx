@@ -20,7 +20,7 @@ export class VCat extends VPage<CMe> {
     private page = observer((param: any) => {
         let { name } = param;
         let { showAddCat } = this.controller;
-        let right = <div onClick={() => showAddCat({ parent: this.parent, name: "", id: -1 })}>
+        let right = <div onClick={() => showAddCat({ parent: this.parent, name: name, id: -1 })}>
             <span className="mx-2 iconfont icon-jiahao1 cursor-pointer" style={{ fontSize: "1.7rem", color: "white" }}></span>
         </div>;
         return <Page header={name} headerClassName={consts.headerClass}
@@ -39,7 +39,7 @@ export class VCat extends VPage<CMe> {
         let { id, name } = model;
         await saveCat(id, id, name, 0);
         this.closePage()
-        showCat({ name: (this.t('pictureclassify')), id: 0 })
+        showCat({ name: this.name, id: this.parent })
     }
 
 
@@ -47,7 +47,9 @@ export class VCat extends VPage<CMe> {
         await this.controller.pageMedia.more();
     }
     private renderItem = (item: any, index: number) => {
-        let a = { item }
+        let parentName = this.name;
+        let parentId = this.parent;
+        let param = { parentName, parentId, item }
         return (
             <div className="pl-2 pl-sm-3 pr-2 pr-sm-3 py-3 d-flex justify-content-between">
                 <div className="mx-2 small" >
@@ -59,7 +61,7 @@ export class VCat extends VPage<CMe> {
                             删 除
                 </span>
                     </div>
-                    <div className="text-right w-7c" onClick={() => this.controller.showEditCat(item)} >
+                    <div className="text-right w-7c" onClick={() => this.controller.showEditCat(param)} >
                         <span className="p-2 small pl-4 text-primary cursor-pointer">
                             编 辑
                 </span>

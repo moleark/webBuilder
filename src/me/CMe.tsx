@@ -232,23 +232,24 @@ export class CMe extends CUqBase {
     }
 
     searchCat = async (parent: string) => {
-        this.currentCatParent = parent;
         this.pageCat = new QueryPager(this.uqs.webBuilder.SearchCat, 15, 30);
         this.pageCat.first({ parent: parent });
     };
 
     showAddCat = async (param: any) => {
-        this.openVPage(VEditCat, param);
+        let params = { item: param, parentName: '', parentId: '' }
+        this.openVPage(VEditCat, params);
     }
 
-    showEditCat = async (item: any) => {
+    showEditCat = async (param: any) => {
+        let { parentName, parentId, item } = param
         let { id, name, parent } = item;
         if (parent !== undefined) {
-            let par = item;
-            this.openVPage(VEditCat, par);
+            this.openVPage(VEditCat, param);
         } else {
-            let par = { parent: '0', name, id }
-            this.openVPage(VEditCat, par);
+            let item = { parent: '0', name, id }
+            let parm = { item, parentName, parentId }
+            this.openVPage(VEditCat, parm);
         }
 
     }
@@ -256,7 +257,6 @@ export class CMe extends CUqBase {
     saveCat = async (id: any, parent: any, name: any, isValid: any) => {
         let param = { parent: parent, name: name, isValid: isValid };
         await this.uqs.webBuilder.IMGCat.save(id, param);
-        this.searchCat(this.currentCatParent);
     }
 
 
