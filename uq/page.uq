@@ -35,37 +35,40 @@ History WebPageHistory (
     description char(100)
 );
 
-
- History PageBrowsingHistory(
+-- 页面浏览记录
+History PageBrowsingHistory(
     date,
     WebPage ID,
     ipAddress char(20),
 );
 
- History PostBrowsingHistory(
+-- 贴文浏览记录， 没有使用
+History PostBrowsingHistory(
     date,
     POST ID,
     ipAddress char(20)
 );
 
-
+-- 网页访问总次数，没有使用
 BOOK PageBrowsing(
     key id ID WebPage,
     totalBrowsing bigint
 );
 
+-- 贴文访问总次数，没有使用
 BOOK PostBrowsing(
     key id ID POST,
     totalBrowsing bigint
 );
 
+-- 没有使用
 BOOK TotalBrowsing(
     key user ID [$user],
     PostTotal bigint,
     PageTotal bigint
 );
 
-
+-- 没有使用
 TUID Website  (
     id,
     main name char(100),
@@ -73,7 +76,7 @@ TUID Website  (
     stamp (create, update)
 );
 
-
+-- 没有使用
 MAP WebPageWebsite (
    key website ID Website,
    key webPage ID WebPage

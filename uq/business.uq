@@ -5,6 +5,7 @@ TUID  BusinessScope  (
     main name char(100)
 );
 
+/** 使用人的权限设置 **/
 MAP WebUserBusinessScope(
     key webuser ID [$user],
     key businessScope ID BusinessScope

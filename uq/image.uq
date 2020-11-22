@@ -1,3 +1,4 @@
+-- 图片文件，其他如PFD/音视频文件等也放在这个表中
 TUID IMAGE (
     id,
     main caption char(100),
@@ -13,6 +14,7 @@ TUID MadiaType (
     main name char(50)
 );
 
+-- 使用者为方便管理，自行建立类别，自行分类
 TUID IMGCat (
     id,
     main parent ID IMGCat,
@@ -20,6 +22,7 @@ TUID IMGCat (
     main isValid tinyint default 1
 );
 
+-- 
 MAP ImageCat (
     key image ID IMAGE,
     key cat ID IMGCat

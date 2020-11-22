@@ -5,12 +5,12 @@ TUID POST (
     main discription char(200),
     main image ID Image,
     main author ID [$user],
-    main businessScope ID BusinessScope,
+    main businessScope ID BusinessScope,  -- 用来划分权限 
     main language smallint,
-    template ID Template,
+    template ID Template,  -- 不再使用，现在使用统一的一个模版，写死在代码中，参看：jk-web中的post.ts
     content text(medium),
-    emphasis tinyint default 0,
-    isValid tinyint default 1,
+    emphasis tinyint default 0,  -- 没有使用
+    isValid tinyint default 1,  -- 删除时设置为0
     stamp (create, update),
 );
 
@@ -39,6 +39,7 @@ MAP PostStatus(
 
 
 /** 发布帖文记录--产品 **/
+-- 贴文和产品关联，已经不再使用； 
 MAP PostPublishProduct(
     key product ID ProductX,
     key post ID POST,
@@ -46,7 +47,7 @@ MAP PostPublishProduct(
     update DATETIME
 );
 
-/** 帖文 目录节点 **/
+/** 帖文 和 目录节点 关联 **/
 MAP PostProductCatalog(
     key post ID POST,
     key productCategory ID ProductCategory,
@@ -54,6 +55,7 @@ MAP PostProductCatalog(
 );
 
 /** 帖文 目录节点说明 **/
+-- 没有用
 MAP PostProductCatalogExplain (
     key post ID POST,
     key productCategory ID ProductCategory,
@@ -61,6 +63,7 @@ MAP PostProductCatalogExplain (
 );
 
 /** 评价 **/
+-- 没有使用，结构也不对
 BOOK PostEvaluate (
     key post ID POST,
     GradeA int,
@@ -71,6 +74,7 @@ BOOK PostEvaluate (
 );
 
 /** 访问记录 **/
+-- 没有使用
 History PostEvaluateRecord (
     date,
     post ID POST,
@@ -78,7 +82,7 @@ History PostEvaluateRecord (
     grade int
 );
 
---栏目
+-- 栏目，对应网站界面菜单
 TUID  Subject (
     id,
     main name char(100),
@@ -86,34 +90,32 @@ TUID  Subject (
     isValid tinyint default 1
 );
 
---默认栏目
+-- 默认显示的栏目 
 MAP  SubjectDefault(
    key businessScope ID BusinessScope,
    key subject ID Subject
 );
- 
+
+-- 贴文和栏目的关联表
 MAP PostSubject(
     key post ID POST,
     key subject ID Subject
 );
 
-
---研究领域
+-- 贴文和研究领域的关联表
 MAP PostDomain(
     key post ID POST,
     key domain ID Domain
 );
 
-
---资讯中心
+-- 显示在网站“资讯中心”中的贴文
 MAP InformationPost(
     key post ID POST,
     key sort int
 );
  
---产品
+-- 贴文附加的产品列表
 MAP PostProduct(
     key post ID POST,
     key product ID ProductX,
 );
-
