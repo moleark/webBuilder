@@ -1,5 +1,5 @@
 TUID ip (
-    id small,
+    id big,
     ip varchar(20),
     unique (ip),
 );
