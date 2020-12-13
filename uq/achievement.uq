@@ -141,17 +141,23 @@ returns ret  (
     hitOther    int     --post访问次数--其他
 ) {
     if(_type = 'day'){
-        into ret select year, month, day, sum(ifnull(a.postPubSum,0)) as postPubSum , sum( ifnull(a.postTranSum,0)) as postTranSum, sum(ifnull(a.postHitSum,0)) as postHitSum
-                , case  when ifnull(sum(a.postTranSum),0 )= 0 or ifnull(sum(a.postHitSum),0 )= 0  then 0.0 else sum(a.postHitSum) / sum(a.postTranSum)  end as percent
+        into ret select year, month, day, sum(ifnull(a.postPubSum,0)) as postPubSum
+                , sum( ifnull(a.postTranSum,0)) as postTranSum, sum(ifnull(a.postHitSum,0)) as postHitSum
+                , case when ifnull(sum(a.postTranSum), 0) = 0 or ifnull(sum(a.postHitSum), 0) = 0 then 0.0 
+                else sum(a.postHitSum) / sum(a.postTranSum)  end as percent
+                , sum(a.hitWeb) as hitWeb, sum(a.hitAgent) as hitAgent, sum(a.hitAssist) as hitAssist
+                , sum(a.hitEmail) as hitEmail, sum(a.hitOther) as hitOther
         from    Achievement as a 
         where   a.year = _year
         group by a.year as year, a.month as month, a.date as day
         order by  day ;
 
     } else if(_type = 'month') {
-        into ret select year, month, 'all' as day, sum(ifnull(a.postPubSum,0)) as postPubSum , sum( ifnull(a.postTranSum,0)) as postTranSum, sum(ifnull(a.postHitSum,0)) as postHitSum
-                , case  when ifnull(sum(a.postTranSum),0 )= 0 or ifnull(sum(a.postHitSum),0 )= 0  then 0.0 else sum(a.postHitSum) / sum(a.postTranSum)  end as percent
-                , sum(a.hitWeb) as hitWeb, sum(a.hitAgent) as hitAgent, sum(a.hitAssist) as hitAssist, sum( a.hitEmail ) as hitEmail,  sum(a.hitOther) as hitOther
+        into ret select year, month, 'all' as day, sum(ifnull(a.postPubSum,0)) as postPubSum
+                , sum( ifnull(a.postTranSum,0)) as postTranSum, sum(ifnull(a.postHitSum,0)) as postHitSum
+                , case when ifnull(sum(a.postTranSum), 0) = 0 or ifnull(sum(a.postHitSum), 0) = 0 then 0.0 else sum(a.postHitSum) / sum(a.postTranSum) end as percent
+                , sum(a.hitWeb) as hitWeb, sum(a.hitAgent) as hitAgent, sum(a.hitAssist) as hitAssist
+                , sum(a.hitEmail) as hitEmail, sum(a.hitOther) as hitOther
         from    Achievement as a 
         where   a.year = _year
         group by a.year, a.month

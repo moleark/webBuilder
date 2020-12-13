@@ -2,14 +2,14 @@
 TUID POST (
     id,
     main caption char(100),
-    main discription char(200),
+    main discription char(200),     -- 好像没看到在哪儿使用
     main image ID Image,
     main author ID [$user],
     main businessScope ID BusinessScope,  -- 用来划分权限 
     main language smallint,
     template ID Template,  -- 不再使用，现在使用统一的一个模版，写死在代码中，参看：jk-web中的post.ts
     content text(medium),
-    emphasis tinyint default 0,  -- 没有使用
+    emphasis tinyint default 0,  -- 是否重点贴文 
     isValid tinyint default 1,  -- 删除时设置为0
     stamp (create, update),
 );
@@ -87,7 +87,8 @@ TUID  Subject (
     id,
     main name char(100),
     parent ID Subject,
-    isValid tinyint default 1
+    isValid tinyint default 1,
+    stamp (create, update),
 );
 
 -- 默认显示的栏目 

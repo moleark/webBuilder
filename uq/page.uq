@@ -1,15 +1,16 @@
 -- 页面
 TUID WebPage (
     id,
-    main name char(100),
-    main titel char(100),
+    main name char(100),    -- 用在url path中
+    main titel char(100),   -- 标题
     main template ID Template,
     main discription char(200),
     main author ID [$user],
-    stamp (create, update)
+    stamp (create, update),
+    unique(name),
 );
 
---页面分支
+--页面分支 这个实际上应该是Band
 TUID BRANCH (
     id,
     main content text,
