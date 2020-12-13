@@ -25,45 +25,41 @@ export class VShow extends VPage<CPosts> {
     }
 
     private page = observer(() => {
-        let { current, onShowRelease, onGrade, onApply } = this.controller;
+        let { current, user, onShowRelease, onGrade, onApply } = this.controller;
         let { id, author } = current;
         let leftPath = setting.previewUrl + id;
-        //let date = <span><EasyTime date={$update} /></span>;
-        let isMe = Tuid.equ(author, this.controller.user.id);
-        let meright = isMe && <>
-            <button className="mr-2 btn btn-sm btn-success" onClick={() => this.openVPage(VEdit)}>
-                <FA name="pencil-square-o" /> {this.t('editor')}
-            </button>
-            <button className="mr-2 btn btn-sm btn-info" onClick={() => onShowRelease()}>
-                <FA name="external-link" /> {this.t('publish')}
-            </button>
-        </>;
-
-        let right = isMe ? <div className="d-flex align-items-center">
+        let isMe = Tuid.equ(author, user.id);
+        let buttons = [
             <button className="mr-2 btn btn-sm btn-success" onClick={(e) => this.copyClick(e, leftPath)}>
                 {this.t('copy')}
-            </button>
+            </button>,
             <button className="mr-2 btn btn-sm btn-success" onClick={() => this.openVPage(VSourceCode)}>
                 <FA name="code px-1" />{this.t('sourcecode')}
             </button>
-            <button className="mr-2 btn btn-sm btn-success" onClick={() => onApply(current)}>
-                <FA name="hand-paper-o px-1" />{this.t('申请')}
-            </button>
-            {meright}
-        </div>
-            :
-            <div className="d-flex align-items-center">
-                <button className="mr-2 btn btn-sm btn-success" onClick={(e) => this.copyClick(e, leftPath)}>
-                    {this.t('copy')}
+        ];
+        if (isMe) {
+            buttons.push(
+                <button className="mr-2 btn btn-sm btn-success" onClick={() => onApply(current)}>
+                    <FA name="hand-paper-o px-1" />{this.t('申请')}
+                </button>,
+                <button className="mr-2 btn btn-sm btn-success" onClick={() => this.openVPage(VEdit)}>
+                    <FA name="pencil-square-o" /> {this.t('editor')}
+                </button>,
+                <button className="mr-2 btn btn-sm btn-info" onClick={() => onShowRelease()}>
+                    <FA name="external-link" /> {this.t('publish')}
                 </button>
+            );
+        } else {
+            buttons.push(
                 <button className="mr-2 btn btn-sm btn-success" onClick={() => onGrade()}>
                     {this.t('estimate')}
                 </button>
-                <button className="mr-2 btn btn-sm btn-success" onClick={() => this.openVPage(VSourceCode)}>
-                    <FA name="code px-1" />{this.t('sourcecode')}
-                </button>
-                {meright}
-            </div>
+            );
+        }
+
+        let right = <div className="d-flex align-items-center">
+            {buttons}
+        </div>
 
         return <Page header={this.t('preview')} headerClassName={consts.headerClass} right={right} >
             <iframe
@@ -71,7 +67,6 @@ export class VShow extends VPage<CPosts> {
                 src={leftPath}
                 className="w-100 position-relative" frameBorder={0}>
             </iframe>
-
         </Page>;
     });
 

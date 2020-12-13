@@ -13,10 +13,12 @@ export class VMain extends VPage<CPage> {
     }
 
     private page = observer(() => {
-        let { onAdd, searchwebPage } = this.controller;
-        let right = <div onClick={onAdd}><span className="iconfont icon-jiahao1 mr-2 cursor-pointer" style={{ fontSize: "26px", color: "white" }}></span></div>
+        let { onAdd, searchWebPage } = this.controller;
+        let right = <div onClick={onAdd}>
+            <span className="iconfont icon-jiahao1 mr-2 cursor-pointer" style={{ fontSize: "26px", color: "white" }}></span>
+        </div>
         return <Page header={this.t('page')} headerClassName={consts.headerClass} right={right} >
-            <List items={searchwebPage} item={{ render: this.renderItem }} />
+            <List items={searchWebPage} item={{ render: this.renderItem }} />
         </Page>;
     });
 
@@ -25,14 +27,13 @@ export class VMain extends VPage<CPage> {
     }
 
     private itemRow = observer((item: any) => {
-
-        let { user, cApp, onPreviewPage } = this.controller;
+        let { user, cApp, showPreviewPage } = this.controller;
         let { author, name, $update, titel } = item;
         let divUser: any;
         if (author)
             divUser = user.id === author.id ? <span className="text-warning">[自己]</span> : cApp.renderUser(author.id);
         return (
-            <div className="p-1 cursor-pointer d-flex flex-column" onClick={() => onPreviewPage(item)}>
+            <div className="p-1 cursor-pointer d-flex flex-column" onClick={() => showPreviewPage(item)}>
                 <div className="ml-3 small">
                     <b>{name}</b>
                 </div>

@@ -2,9 +2,10 @@ import * as React from 'react';
 import { CPage } from './CPage';
 import { consts } from 'consts';
 import { observer } from 'mobx-react';
-import { VPage, Page, Form, UiSchema, UiInputItem, UiIdItem, Schema, Context, tv } from 'tonva';
+import { VPage, Page, Form, UiSchema, UiInputItem, UiIdItem, Schema, Context, tv, UiTextItem } from 'tonva';
 
 export class VEditPage extends VPage<CPage> {
+
     private form: Form;
     async open() {
         this.openPage(this.page);
@@ -18,7 +19,7 @@ export class VEditPage extends VPage<CPage> {
     private onFormButtonClick = async (name: string, context: Context) => {
         let { current } = this.controller;
         let id = current && current.id;
-        await this.controller.saveItem(id, context.form.data);
+        await this.controller.saveWebPage(id, context.form.data);
         this.closePage();
     }
 
@@ -31,20 +32,16 @@ export class VEditPage extends VPage<CPage> {
 
     private uiSchema: UiSchema = {
         items: {
-            titel: { widget: 'text', label: this.t('titel') },
-
+            titel: { widget: 'text', label: this.t('title'), placeholder: this.t('title') } as UiTextItem,
             discription: {
                 widget: 'textarea', label: this.t('describe'), placeholder: this.t('describe'), rows: 3
             } as UiInputItem,
-
             name: {
                 widget: 'textarea', label: this.t('name'), placeholder: this.t('name'), rows: 3
             } as UiInputItem,
-
             template: {
                 widget: 'id', label: this.t('templete'), pickId: this.controller.pickTemplate, Templet: this.templateContent
             } as UiIdItem,
-
             submit: { widget: 'button', label: this.t('submit') }
         }
     };

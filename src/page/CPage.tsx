@@ -16,7 +16,7 @@ import { VPublish } from "./VPublish";
 export class CPage extends CUqBase {
     @observable pageTemplate: QueryPager<any>;
     @observable searchBranch: QueryPager<any>;
-    @observable searchwebPage: QueryPager<any>;
+    @observable searchWebPage: QueryPager<any>;
     @observable items: any[];
     @observable itemsModule: any[];
     @observable currentModule: any;
@@ -30,11 +30,11 @@ export class CPage extends CUqBase {
 
     /* 网页查询*/
     searchPageKey = async (key: string, author: any) => {
-        this.searchwebPage = new QueryPager(this.uqs.webBuilder.SearchWebPage, 15, 30);
-        this.searchwebPage.setEachPageItem((item: any, results: { [name: string]: any[] }) => {
+        this.searchWebPage = new QueryPager(this.uqs.webBuilder.SearchWebPage, 15, 30);
+        this.searchWebPage.setEachPageItem((item: any, results: { [name: string]: any[] }) => {
             this.cApp.useUser(item.author);
         });
-        this.searchwebPage.first({ key: key, author: author });
+        this.searchWebPage.first({ key: key, author: author });
     };
 
     // 模板查询
@@ -58,7 +58,7 @@ export class CPage extends CUqBase {
     };
 
     // 保存网页
-    saveItem = async (id: number, param: any) => {
+    saveWebPage = async (id: number, param: any) => {
         param.author = this.user.id;
         let ret = await this.uqs.webBuilder.WebPage.save(id, param);
         if (id) {
@@ -121,7 +121,7 @@ export class CPage extends CUqBase {
         this.returnCall(this.uqs.webBuilder.Template.boxId(id));
     };
 
-    onPreviewPage = async (param: any) => {
+    showPreviewPage = async (param: any) => {
         let { id, name } = param;
         this.current = await this.uqs.webBuilder.WebPage.load(id);
         let result = await this.uqs.webBuilder.SearchPrivateBranch.query({ _page: id });

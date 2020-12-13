@@ -48,7 +48,6 @@ export class VEdit extends VPage<CPosts> {
             discription: {
                 widget: 'textarea', label: this.t('describe'), placeholder: this.t('describe'), rows: 3
             } as UiInputItem,
-
             image: {
                 widget: 'id', label: this.t('picture'), pickId: this.controller.pickImage, Templet: this.imageContent
             } as UiIdItem,
@@ -65,10 +64,12 @@ export class VEdit extends VPage<CPosts> {
     render(): JSX.Element {
         return <this.page />
     }
+
     private onOff = (evt: React.ChangeEvent<HTMLInputElement>) => {
         this.isOn = evt.currentTarget.value === 'veryimport';
     }
-    private isimport() {
+
+    private isImportant() {
         let cnButton = ['btn', 'btn-outline-primary', 'btn-sm', 'text-nowrap'];
         return <div className="px-sm-2 d-flex align-items-center">
             <div className="btn-group btn-group-toggle" data-toggle="buttons">
@@ -130,7 +131,7 @@ export class VEdit extends VPage<CPosts> {
                 {current.id && branch("领域", showPostDomain)}
                 {current.id && (setting.BusinessScope !== 2) && branch("产品", showPostProduct)}
                 <div className="bg-white py-2 d-flex justify-content-end cursor-pointer ">
-                    {this.language()}{this.isimport()}
+                    {this.language()}{this.isImportant()}
                 </div>
             </div >
         </Page >

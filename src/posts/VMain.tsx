@@ -46,10 +46,9 @@ export class VMain extends VPage<CPosts> {
     }
 
     private renderStatus() {
-
         let isSelect = "text-primary col-md-2";
         let notSelect = "col-md-2";
-        return <div className="d-flex  text-center small justify-content-between cursor-pointer px-4 pt-4 pb-2" >
+        return <div className="d-flex text-center small justify-content-between cursor-pointer px-4 pt-4 pb-2" >
             <div className={this.status === 1 ? isSelect : notSelect} onClick={() => this.onStatus(1)}><strong>编辑中</strong></div>
             <div className={this.status === 2 ? isSelect : notSelect} onClick={() => this.onStatus(2)}><strong>待审核</strong></div>
             <div className={this.status === 3 ? isSelect : notSelect} onClick={() => this.onStatus(3)}><strong>被驳回</strong></div>
@@ -59,7 +58,8 @@ export class VMain extends VPage<CPosts> {
     }
 
     private page = observer(() => {
-        let { pagePosts, onAdd, searchPostsKey, showProductCatalog, showSubject, onScrollBottom, showDomain, showModel, showApproval, searchAuthor } = this.controller;
+        let { pagePosts, onAdd, searchPostsKey, showProductCatalog, showSubject, onScrollBottom,
+            showDomain, showModel, showApproval, searchAuthor } = this.controller;
         let search = <div className="d-flex w-100">
             <div className='pt-2 ml-2' style={{ width: '4rem' }}>{this.t('post')}</div>
             {this.renderMeAllToggle()}
@@ -75,37 +75,41 @@ export class VMain extends VPage<CPosts> {
             </div>
         );
 
-
-        let ProductCatalog = < div className="m-1 cursor-pointer" onClick={showProductCatalog} >
+        let ProductCatalog = <div className="m-1 cursor-pointer" onClick={showProductCatalog} >
             <div className="py-3 my-1">
                 <div className="mb-2 text-success"><i style={{ fontSize: "2rem" }} className="iconfont icon-chanpinmulu"></i></div>
                 <div className="mx-3 p-2 font-weight-bold">{this.t('productcatalog')}</div>
             </div>
         </div >;
-        let Subject = <div className="m-1 cursor-pointer" onClick={() => showSubject({ name: (this.t('postsubject')), id: "10000" + setting.BusinessScope })} >
+        let Subject = <div className="m-1 cursor-pointer"
+            onClick={() => showSubject({ name: (this.t('postsubject')), id: "10000" + setting.BusinessScope })} >
             <div className="py-3 my-1 ">
                 <div className="mb-2 text-primary"><i style={{ fontSize: "2rem" }} className="iconfont icon-mokuai"></i></div>
                 <div className="mx-3 px-2 font-weight-bold">{this.t('postsubject')}</div>
             </div>
         </div>;
+
         let Domain = <div className="m-1 cursor-pointer" onClick={() => showDomain({ name: (this.t('researchdomain')), id: 0 })} >
             <div className="py-3 my-1 ">
                 <div className="mb-2 text-danger"><i style={{ fontSize: "2rem" }} className="iconfont icon-yanjiulingyu"></i></div>
                 <div className="mx-3 px-2 font-weight-bold">{this.t('researchdomain')}</div>
             </div>
         </div>;
+
         let Model = <div className="m-1 cursor-pointer" onClick={() => showModel()} >
             <div className="py-3 my-1 ">
                 <div className="mb-2 text-info"><i style={{ fontSize: "2rem" }} className="iconfont icon-mobanguanli"></i></div>
                 <div className="mx-3 px-2 font-weight-bold">{this.t('weekpost')}</div>
             </div>
         </div>;
+
         let Information = <div className="m-1 cursor-pointer" onClick={() => showApproval()}>
             <div className="py-3 my-1 ">
-                <div className="mb-2 text-warning"><i style={{ fontSize: "2rem" }} className="iconfont icon-iconfontyijiantuiguang"></i></div>
+                <div className="mb-2 text-warning"><i style={{ fontSize: "2rem" }}
+                    className="iconfont icon-iconfontyijiantuiguang"></i></div>
                 <div className="mx-3 px-2 font-weight-bold">{this.t('checkpending')}</div>
             </div>
-        </div >;
+        </div>;
 
         let tools: any;
         if (setting.BusinessScope === 1) {
@@ -114,15 +118,14 @@ export class VMain extends VPage<CPosts> {
             tools = <>{ProductCatalog}{Subject}{Domain}</>
         }
 
-        return (
-            <Page header={search} headerClassName={consts.headerClass} onScrollBottom={onScrollBottom}>
-                <div className="d-flex justify-content-around py-4 small text-center px-2" style={{ background: "linear-gradient(rgba(23,106,184,.5),rgba(23,162,184,.5),rgba(23,184,184,.5))" }}>
-                    {tools}
-                </div>
-                {this.renderStatus()}
-                <List before={""} none={none} items={pagePosts} item={{ render: this.renderItem }} />
-            </Page>
-        );
+        return <Page header={search} headerClassName={consts.headerClass} onScrollBottom={onScrollBottom}>
+            <div className="d-flex justify-content-around py-4 small text-center px-2"
+                style={{ background: "linear-gradient(rgba(23,106,184,.5),rgba(23,162,184,.5),rgba(23,184,184,.5))" }}>
+                {tools}
+            </div>
+            {this.renderStatus()}
+            <List before={""} none={none} items={pagePosts} item={{ render: this.renderItem }} />
+        </Page>
     });
 
 
@@ -135,6 +138,7 @@ export class VMain extends VPage<CPosts> {
         if (!user) return;
         let { image, caption, discription, author, $update, $create
             , hits, sumHits, web, agent, assist, openweb, bvweb, emphasis, id } = item;
+
         let $c: Date = $create, $u: Date = $update;
         let updated: boolean = false;
         if ($c && $u) {
@@ -148,6 +152,7 @@ export class VMain extends VPage<CPosts> {
                 updated = cYear !== uYear || cMonth !== uMonth || cDate !== uDate;
             }
         }
+
         let divUser: any;
         if (author && author.id) {
             divUser = user.id === author.id ?
@@ -161,7 +166,7 @@ export class VMain extends VPage<CPosts> {
         let tagDomainname = rendertagDomain(id)
 
         let showImport = emphasis === 1 ?
-            <FA className="text-danger ml-3 " name="star" /> : "";
+            <FA className="text-danger ml-3" name="star" /> : "";
         return (
             <div className="pl-2 pl-sm-3 pr-2 pr-sm-3 pt-2 pb-3 d-flex">
                 <div className="d-flex flex-fill cursor-pointer" onClick={() => showDetail(id)} >

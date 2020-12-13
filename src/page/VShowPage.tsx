@@ -10,6 +10,7 @@ export class VShowPage extends VPage<CPage> {
     async open() {
         this.openPage(this.page);
     }
+
     private page = observer(() => {
         let { current, onRedact, itemsModule, onCommonalityModule, ondisplay, lock } = this.controller;
         let { titel, name, template, discription } = current;
@@ -18,6 +19,7 @@ export class VShowPage extends VPage<CPage> {
             else if (m.sort > n.sort) return 1
             else return 0
         });
+
         let addModule = <div className="d-flex" style={{ color: '#0066cc' }}>
             <div onClick={() => onCommonalityModule()}><span className="iconfont icon-tubiao106 mr-2" style={{ fontSize: "24px" }}></span></div>
             <div onClick={onRedact}><span className="iconfont icon-icon--tianjia mr-2" style={{ fontSize: "24px" }}></span></div>
@@ -55,6 +57,7 @@ export class VShowPage extends VPage<CPage> {
             }
         </Page>;
     })
+
     private itemClick = (item: any) => {
         console.log(item, 'item')
         this.controller.showDetailModule(item);
