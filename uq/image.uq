@@ -14,7 +14,7 @@ TUID MadiaType (
     main name char(50)
 );
 
--- 使用者为方便管理，自行建立类别，自行分类
+-- 使用者为方便管理，自行建立的图片类别，自行分类
 TUID IMGCat (
     id,
     main parent ID IMGCat,

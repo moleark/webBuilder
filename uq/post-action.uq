@@ -64,7 +64,9 @@ ACTION TransmitPost(
 };
 
 
-/** 搜索发布帖文*/
+/*
+ * 新建贴文
+*/
 ACTION AddPost(
     _id ID POST,
     _caption char(100),
