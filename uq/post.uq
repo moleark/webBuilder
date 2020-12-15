@@ -55,7 +55,6 @@ MAP PostProductCatalog(
 );
 
 /** 帖文 目录节点说明 **/
--- 没有用
 MAP PostProductCatalogExplain (
     key post ID POST,
     key productCategory ID ProductCategory,
@@ -119,4 +118,10 @@ MAP InformationPost(
 MAP PostProduct(
     key post ID POST,
     key product ID ProductX,
+);
+ 
+-- 将Post作为Page对待（即可以通过指定的url访问） 
+MAP PostPage (
+    key post ID POST,
+    url char(256) not null, 
 );

@@ -65,7 +65,7 @@ ACTION TransmitPost(
 
 
 /*
- * 新建贴文
+ * 新建贴文，这个应该作废，用原生API代替
 */
 ACTION AddPost(
     _id ID POST,
