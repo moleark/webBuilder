@@ -6,6 +6,7 @@ import { CPosts } from "./CPosts";
 import classNames from "classnames";
 import { observable } from "mobx";
 import { setting } from "configuration";
+import { VWebsiteName } from "./VWebsiteName";
 
 export class VMain extends VPage<CPosts> {
     @observable private isMes: boolean = true;
@@ -167,6 +168,7 @@ export class VMain extends VPage<CPosts> {
 
         let showImport = emphasis === 1 ?
             <FA className="text-danger ml-3" name="star" /> : "";
+        let publicWebUI = this.renderVm(VWebsiteName, item);
         return (
             <div className="pl-2 pl-sm-3 pr-2 pr-sm-3 pt-2 pb-3 d-flex">
                 <div className="d-flex flex-fill cursor-pointer" onClick={() => showDetail(id)} >
@@ -199,14 +201,7 @@ export class VMain extends VPage<CPosts> {
                                 {<span className="px-1"></span>}{sumHits >= hits && hits > 0 && <>周<b>{hits}</b>次</>}
                             </div>
                         </div>
-                        <div className="small py-1 nowrap" style={{ overflow: "hidden" }}>
-                            {(web + agent + assist + openweb) > 0 ? <span className=" text-muted">发布：</span> : <></>}
-                            {agent === 1 ? <span className="bg-success rounded-pill mr-1 text-white px-1">{this.t('agent')}</span> : <></>}
-                            {assist === 1 ? <span className="bg-warning rounded-pill mr-1 text-white px-1">{this.t('sales')}</span> : <></>}
-                            {openweb === 1 ? <span className="bg-info rounded-pill mr-1 text-white px-1">{this.t('publicSite')}</span> : <></>}
-                            {web === 1 ? <span className="bg-primary rounded-pill text-white px-1">{this.t('internationSite')}</span> : <></>}
-                            {bvweb === 1 ? <span className="bg-primary rounded-pill text-white px-1">{this.t('BV网站')}</span> : <></>}
-                        </div>
+                        {publicWebUI}
                         <div>
                             {tagCatalogname}
                             {tagSubjectname}

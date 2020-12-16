@@ -40,6 +40,7 @@ import { VTagCatalogname } from "./VTagCatalogname";
 import { VTagSubjectname } from "./VTagSubjectname";
 import { VTagDomainname } from "./VTagDomainname";
 import { VApproval } from "./VApproval";
+import { VWebsiteName } from "./VWebsiteName";
 
 /* eslint-disable */
 export class CPosts extends CUqBase {
@@ -621,5 +622,8 @@ export class CPosts extends CUqBase {
     getTagDomainName = async (postId: any) => {
         let result = await this.uqs.webBuilder.PostDomain.query({ post: postId });
         return result.ret
+    }
+    renderPublicWeb = (item: any) => {
+        return this.renderView(VWebsiteName, item)
     }
 }

@@ -34,7 +34,7 @@ export class VOtherHitPost extends VPage<CMe> {
     };
 
     private itemRow = observer((item: any) => {
-        let { user } = this.controller;
+        let { user, cApp } = this.controller;
         if (!user) return;
         let { image, caption, discription, author, emphasis, web, agent, assist, openweb } = item;
         let divUser: any;
@@ -42,10 +42,11 @@ export class VOtherHitPost extends VPage<CMe> {
             divUser = user.id === author.id ?
                 <span className="text-warning">[自己]</span>
                 :
-                this.controller.cApp.renderUser(author.id);
+                cApp.renderUser(author.id);
         }
         let showImport = emphasis === 1 ?
-            <FA className="text-danger ml-3 " name="star" /> : null
+            <FA className="text-danger ml-3 " name="star" /> : null;
+        let publicWebUI = cApp.cPosts.renderPublicWeb(item);
         return (
             <div className="pl-2 pl-sm-3 pr-2 pr-sm-3 pt-2 pb-3 d-flex">
                 <div className="d-flex flex-fill cursor-pointer"
@@ -73,13 +74,7 @@ export class VOtherHitPost extends VPage<CMe> {
                                 {showImport}
                             </div>
                         </div>
-                        <div className="small pt-1 nowrap" style={{ overflow: "hidden" }}>
-                            {(web + agent + assist + openweb) > 0 ? <span className=" text-muted">发布：</span> : <></>}
-                            {agent === 1 ? <span style={{ borderRadius: "15%/48%" }} className="bg-success mr-1 text-white px-1">{this.t('agent')}</span> : <></>}
-                            {assist === 1 ? <span style={{ borderRadius: "15%/48%" }} className="bg-warning mr-1 text-white px-1">{this.t('sales')}</span> : <></>}
-                            {openweb === 1 ? <span style={{ borderRadius: "15%/48%" }} className="bg-info mr-1 text-white px-1">{this.t('publicSite')}</span> : <></>}
-                            {web === 1 ? <span style={{ borderRadius: "15%/48%" }} className="bg-primary text-white px-1">{this.t('internationSite')}</span> : <></>}
-                        </div>
+                        {publicWebUI}
                     </div>
                 </div>
             </div>

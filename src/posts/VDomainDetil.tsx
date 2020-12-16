@@ -4,6 +4,7 @@ import { VPage, Page, List, tv, FA, EasyTime, SearchBox } from "tonva";
 import { consts } from "consts";
 import { CPosts } from "./CPosts";
 import { observable } from "mobx";
+import { VWebsiteName } from "./VWebsiteName";
 
 export class VDomainDetil extends VPage<CPosts> {
     @observable name: any;
@@ -68,7 +69,8 @@ export class VDomainDetil extends VPage<CPosts> {
                 this.controller.cApp.renderUser(author.id);
         }
         let showImport = emphasis === 1 ?
-            <FA className="text-danger ml-3 " name="star" /> : null
+            <FA className="text-danger ml-3 " name="star" /> : null;
+        let publicWebUI = this.renderVm(VWebsiteName, item);
         return (
             <div className="pl-2 pl-sm-3 pr-2 pr-sm-3 pt-2 pb-3 d-flex">
                 <div className="d-flex flex-fill cursor-pointer" onClick={() => showDetail(item.post.id)} >
@@ -100,14 +102,7 @@ export class VDomainDetil extends VPage<CPosts> {
                                 {sumHits && sumHits > 0 && <>阅读<b>{sumHits}</b>次</>}{<span className="px-1"></span>}{sumHits >= hits && hits > 0 && <>周<b>{hits}</b>次</>}
                             </div>
                         </div>
-                        <div className="small pt-1 nowrap" style={{ overflow: "hidden" }}>
-                            {(web + agent + assist + openweb) > 0 ? <span className=" text-muted">发布：</span> : <></>}
-                            {agent === 1 ? <span style={{ borderRadius: "15%/48%" }} className="bg-success mr-1 text-white px-1">{this.t('agent')}</span> : <></>}
-                            {assist === 1 ? <span style={{ borderRadius: "15%/48%" }} className="bg-warning mr-1 text-white px-1">{this.t('sales')}</span> : <></>}
-                            {openweb === 1 ? <span style={{ borderRadius: "15%/48%" }} className="bg-info mr-1 text-white px-1">{this.t('publicSite')}</span> : <></>}
-                            {web === 1 ? <span style={{ borderRadius: "15%/48%" }} className="bg-primary text-white px-1">{this.t('internationSite')}</span> : <></>}
-                            {/* {web === 1 ? <span style={{ borderRadius: "15%/48%" }} className="bg-primary text-white px-1">{this.t('privateSite')}</span> : <></>} */}
-                        </div>
+                        {publicWebUI}
                     </div>
                 </div>
             </div>
