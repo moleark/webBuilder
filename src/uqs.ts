@@ -23,7 +23,9 @@ export interface WebBuilder {
     Template: Tuid;
     Image: Tuid;
     Post: Tuid;
-    AddPost: Action;
+
+    // AddPost: Action;  用原生API代替
+
     SearchPost: Query;
     SearchTemplate: Query;
     SearchImage: Query;
@@ -49,38 +51,50 @@ export interface WebBuilder {
     AddPostResearchField: Action;
     SearchPostResearchField: Query;
     SearchAchievement: Query;
+
     PostProductCatalog: Map;
     AddPostProductCatalog: Action;
     AddPostProductCatalogExplain: Action;
     SearchProductCategoryPost: Query;
+
+    Subject: Tuid;
+    SubjectDefault: Map;
+    PostSubject: Map;
     SearchSubject: Query;
     AddPostSubject: Action;
     DelPostSubject: Action;
     SearchSubjectPost: Query;
     SearchPostSubject: Query;
+
     SearchPostCatalog: Query;
     SearchPostCatalogExplain: Query;
     PostProductCatalogExplain: Map;
-    PostSubject: Map;
+
     SearchAchievementOfTeam: Query;
     SearchAchievementOfTeamDetail: Query;
     SearchAchievementOfTeamNew: Query;
+
     ImageCat: Map;
     SearchImageCat: Query;
     SearchCatImage: Query;
     SearchCat: Query;
+
     SlideShow: Map;
     UpdateSlideShow: Action;
     DeleteSlideShow: Action;
     SearchSlideShow: Query;
+
     IMGCat: Tuid;
+
     SearchBusinessScope: Query;
     ClassroomType: Tuid;
     PostClassroomType: Map;
+
     PostDomain: Map;
     AddPostDomain: Action;
     SearchPostDomain: Query;
     SearchDomainPost: Query;
+
     WebPageWebsite: Map;
     Website: Tuid;
     hotPosts: Query;
@@ -95,12 +109,12 @@ export interface WebBuilder {
     SearchPostProduct: Query;
     SearchRecommendProduct: Query;
     hitOfManual: Action;
-    Subject: Tuid;
 
-    SubjectDefault: Map;
     SearchSubjectDefault: Query;
     DelSubjectDefault: Action;
+
     PostStatus: Map;
+    PostPage: Map;
 }
 
 export interface UQs {

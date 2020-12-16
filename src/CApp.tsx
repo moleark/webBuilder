@@ -7,7 +7,7 @@ import { CPosts } from "./posts/CPosts";
 import { CMedia } from "./media/CMedia";
 import { CAppBase, IConstructor, UserCache } from "tonva";
 import { CTemplets } from "./templets/CTemplets";
-import { setting } from "configuration";
+import { GLOABLE, setting } from "configuration";
 import { CTag } from "tag/CTag";
 import { res } from 'res';
 
@@ -36,14 +36,7 @@ export class CApp extends CAppBase {
 
         //根据网址判断是什么APP
         if (setting.BusinessScope === 3) {
-            setting.previewUrl = "https://bio-vanguard.com/blog/";
-        }
-        else {
-            if (document.domain === setting.appUrlDomain) {
-                setting.previewUrl = "https://web.jkchemical.com/post/";
-            } else {
-                setting.previewUrl = "https://c.jkchemical.com/jk-web/post/";
-            }
+            GLOABLE.PAGEPREVIEWROOTURL = "https://bio-vanguard.com/blog/";
         }
 
         this.setRes(res);
@@ -69,9 +62,9 @@ export class CApp extends CAppBase {
     }
 
     getBusiness = async () => {
-        let business = await this.uqs.webBuilder.SearchBusinessScope.table({});
-        if (business.length === 1) {
-            setting.BusinessScope = business[0].businessScope.id;
+        let business = await this.uqs.webBuilder.SearchBusinessScope.obj({});
+        if (business) {
+            setting.BusinessScope = business.businessScope.id;
         }
     }
 

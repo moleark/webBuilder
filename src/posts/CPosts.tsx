@@ -10,7 +10,7 @@ import { Context, nav, QueryPager, } from "tonva";
 import { VPickImage } from "./VPickImage";
 import { VPickTemplate } from "./VPickTemplate";
 import { VRelease } from "./VRelease";
-import { setting, MadiaType } from "configuration";
+import { setting, MadiaType, GLOABLE } from "configuration";
 import { VPickProduct } from "./VPickProduct";
 import { VGrade } from "./VGrade";
 import { VPickProductCatalog } from "./VPickProductCatalog";
@@ -40,6 +40,7 @@ import { VTagCatalogname } from "./VTagCatalogname";
 import { VTagSubjectname } from "./VTagSubjectname";
 import { VTagDomainname } from "./VTagDomainname";
 import { VApproval } from "./VApproval";
+
 /* eslint-disable */
 export class CPosts extends CUqBase {
     @observable pageTemplate: QueryPager<any>;
@@ -119,14 +120,29 @@ export class CPosts extends CUqBase {
     };
 
     // 保存Post
-    saveItem = async (id: number, param: any) => {
+    savePost = async (id: number, param: any) => {
+
+        let { uqs } = this;
+        let { webBuilder } = uqs;
+        let { Post, PostPage, PostStatus } = webBuilder;
         param.author = this.user.id;
         param.businessScope = setting.BusinessScope;
-        let { caption, discription, image, template, content, emphasis, businessScope, language } = param;
-        let par = { _caption: caption, _discription: discription, _image: image, _template: template, _content: content, _emphasis: emphasis, _businessScope: businessScope, _language: language };
+        let { url } = param;
+
+        async function setUrl(url: string) {
+            if (url) {
+                await PostPage.add({ post: id, url: url });
+                fetch(GLOABLE.JKWEB + "/addroute", {
+                    method: 'POST',
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ pagePath: url })
+                })
+            }
+        }
 
         if (id) {
-            await this.uqs.webBuilder.Post.save(id, param);
+            await Post.save(id, param);
+            await setUrl(url);
             let item = this.pagePosts.items.find(v => v.id === id);
             if (item !== undefined) {
                 _.merge(item, param);
@@ -135,9 +151,19 @@ export class CPosts extends CUqBase {
             this.current = item;
             this.closePage();
         } else {
+            /*
+            let par = {
+                _caption: caption, _discription: discription, _image: image,
+                _template: template, _content: content, _emphasis: emphasis,
+                _businessScope: businessScope, _language: language
+            };
+            // TODO: 这个AddPost Action是没有必要的吧？
             let ret = await this.uqs.webBuilder.AddPost.submit(par);
+            */
             param.isValid = 1;
-            await this.uqs.webBuilder.Post.save(ret.id, param);
+            let ret: any = await this.uqs.webBuilder.Post.save(undefined, param);
+            await PostStatus.add({ post: ret.id, status: 1 });
+            await setUrl(url);
             param.id = ret.id;
             param.$create = new Date();
             param.$update = new Date();
@@ -151,12 +177,27 @@ export class CPosts extends CUqBase {
         return this.renderView(VMain);
     });
 
+    /**
+     * 
+     */
     onAdd = () => {
         this.current = { caption: "", discription: "", content: "", image: undefined, template: undefined };
         this.openVPage(VEdit);
     };
 
-    //审批
+    showEdit = async () => {
+        let { current, uqs } = this;
+        let postPage = await uqs.webBuilder.PostPage.obj({ post: current.id });
+        if (postPage) {
+            current.url = postPage.url;
+        }
+        this.openVPage(VEdit);
+    };
+
+    /**
+     * 申请（上级）审批post 
+     * @param post 
+     */
     onApply = async (post: any) => {
         await this.uqs.webBuilder.PostStatus.add({ post: post.id, status: 2 });
     };
@@ -182,7 +223,11 @@ export class CPosts extends CUqBase {
     };
 
     showDetail = async (id: number) => {
-        this.current = await this.uqs.webBuilder.Post.load(id);
+        let { Post, PostPage } = this.uqs.webBuilder;
+        this.current = await Post.load(id);
+        let postPage = await PostPage.obj({ post: id });
+        if (postPage)
+            this.current.url = postPage.url;
         this.openVPage(VShow);
     };
 
@@ -255,13 +300,9 @@ export class CPosts extends CUqBase {
         this.closePage(2);
     };
 
-    onPreviewPost = (id: number) => {
-        window.open(setting.previewUrl + id, "_blank");
-        console.log(setting.previewUrl + id, 'aa')
-    };
-
-
-    /* 产品目录*/
+    /**
+     * 显示贴文相关的目录节点 
+     */
     showPostProductCatalog = async () => {
         let { webBuilder } = this.uqs;
         this.pagePostProductCatalog = await webBuilder.SearchPostCatalog.table({ _post: this.current.id });
@@ -270,7 +311,8 @@ export class CPosts extends CUqBase {
     }
 
     pickProductCatalog = async (): Promise<any> => {
-        let results = await this.uqs.product.GetRootCategory.query({ salesRegion: setting.SALESREGION_CN, language: setting.CHINESE });
+        let { SALESREGION_CN, CHINESE } = GLOABLE;
+        let results = await this.uqs.product.GetRootCategory.query({ salesRegion: SALESREGION_CN, language: CHINESE });
         return await this.vCall(VPickProductCatalog, results.first);
     };
 
@@ -299,21 +341,24 @@ export class CPosts extends CUqBase {
     }
 
     searchProductCatalogChildrenKey = async (key: string) => {
+        let { SALESREGION_CN, CHINESE } = GLOABLE;
         let results = await this.uqs.product.GetChildrenCategory
-            .query({ parent: key, salesRegion: setting.SALESREGION_CN, language: setting.CHINESE });
+            .query({ parent: key, salesRegion: SALESREGION_CN, language: CHINESE });
         this.openVPage(VPickProductCatalog, results.first)
     };
 
     showProductCatalog = async () => {
-        let results = await this.uqs.product.GetRootCategory.query({ salesRegion: setting.SALESREGION_CN, language: setting.CHINESE });
+        let { SALESREGION_CN, CHINESE } = GLOABLE;
+        let results = await this.uqs.product.GetRootCategory.query({ salesRegion: SALESREGION_CN, language: CHINESE });
         let param = { data: results.first, name: "产品目录" };
         this.openVPage(VProductCatalog, param);
     }
 
     searchProductCatalogChildrenKeys = async (param: any) => {
-        let { productCategory, name } = param
+        let { productCategory, name } = param;
+        let { SALESREGION_CN, CHINESE } = GLOABLE;
         let results = await this.uqs.product.GetChildrenCategory
-            .query({ parent: productCategory.id, salesRegion: setting.SALESREGION_CN, language: setting.CHINESE });
+            .query({ parent: productCategory.id, salesRegion: SALESREGION_CN, language: CHINESE });
         this.openVPage(VProductCatalog, { data: results.first, childdata: results.secend, name: name })
     };
 

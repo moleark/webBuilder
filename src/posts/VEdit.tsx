@@ -11,7 +11,9 @@ export class VEdit extends VPage<CPosts> {
     @observable isOn: boolean;
     @observable isOnLanguage: boolean;
     private textarea: HTMLTextAreaElement;
+
     async open() {
+
         let { current } = this.controller;
         let { emphasis, language } = current;
         this.isOn = emphasis === 1;
@@ -20,13 +22,14 @@ export class VEdit extends VPage<CPosts> {
     }
 
     private onClickSaveButton = async () => {
+
         let { current } = this.controller;
         let id = current && current.id;
         current.content = this.textarea.value;
         current.emphasis = this.isOn ? 1 : 0;
         current.language = this.isOnLanguage ? 1 : 0;
 
-        await this.controller.saveItem(id, current);
+        await this.controller.savePost(id, current);
         this.closePage();
     }
 
@@ -44,13 +47,20 @@ export class VEdit extends VPage<CPosts> {
 
     private uiSchema: UiSchema = {
         items: {
-            caption: { widget: 'text', label: this.t('title') },
+            caption: { widget: 'text', label: this.t('title'), placeholder: this.t('title') } as UiInputItem,
             discription: {
                 widget: 'textarea', label: this.t('describe'), placeholder: this.t('describe'), rows: 3
             } as UiInputItem,
             image: {
                 widget: 'id', label: this.t('picture'), pickId: this.controller.pickImage, Templet: this.imageContent
             } as UiIdItem,
+            url: {
+                widget: 'text', label: this.t('url'), placeholder: this.t('url'),
+                rules: (value: string) => {
+                    if ((value && !/^\/[\w-\/]+$/.test(value)))
+                        return 'url必须以/开头，其后只允许出现数字、字母、连字符-或斜杠/';
+                }
+            } as UiInputItem,
             submit: { widget: 'button', label: this.t('submit') }
         }
     };
@@ -59,6 +69,7 @@ export class VEdit extends VPage<CPosts> {
         { name: 'caption', type: 'string', required: true },
         { name: 'discription', type: 'string', required: false },
         { name: 'image', type: 'id', required: true },
+        { name: 'url', type: 'string', required: true },
     ];
 
     render(): JSX.Element {

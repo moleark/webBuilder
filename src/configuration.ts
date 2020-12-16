@@ -1,8 +1,9 @@
-import { AppConfig } from "tonva";
+import { AppConfig, env } from "tonva";
 import logo from "../src/static/images/logo.png";
+
 export const appConfig: AppConfig = {
     appName: "百灵威系统工程部/webBuilder",
-    version: "1.0.10",
+    version: "1.0.60",
     tvs: {},
     oem: "百灵威"
 };
@@ -10,16 +11,8 @@ export const appConfig: AppConfig = {
 /* eslint-disable */
 export const setting = {
     appName: "内容管理",
-    url: "http://agent.jkchemical.com",
-    carturl: "http://shop.jkchemical.com",
-    downloadAppurl: "http://agent.jkchemical.com/download/jk-agent.apk",
-    sharelogo: "https://agent.jkchemical.com/sharelogo.png",
     logo: logo,
     pageHeaderCss: "bg-primary",
-    appUrlDomain: "cs.jkchemical.com",
-    previewUrl: "https://web.jkchemical.com",
-    SALESREGION_CN: 1,
-    CHINESE: 196,
     BusinessScope: 1  //1：平台管理   2：空中课堂  3:BV网站
 };
 
@@ -27,14 +20,22 @@ export const setting = {
 const GLOABLE_PRODUCTION = {
     CHINA: 44,
     CHINESE: 196,
-    SALESREGION_CN: 1
+    SALESREGION_CN: 1,
+    POSTPREVIEWROOTURL: "https://web.jkchemical.com/post/",
+    PAGEPREVIEWROOTURL: "https://web.jkchemical.com",
+    JKWEB: "https://web.jkchemical.com",
+    BVSITE: "https://bio-vanguard.com"
 };
 
 // 测试环境配置
 const GLOABLE_TEST = {
     CHINA: 43,
     CHINESE: 197,
-    SALESREGION_CN: 4
+    SALESREGION_CN: 4,
+    POSTPREVIEWROOTURL: "https://c.jkchemical.com/jk-web/post/",
+    PAGEPREVIEWROOTURL: "https://c.jkchemical.com/jk-web",
+    JKWEB: "https://c.jkchemical.com/jk-web",
+    BVSITE: "https://bio-vanguard.com"
 };
 
 // 生产配置
@@ -45,5 +46,5 @@ const MadiaType = {
     NOTIMAGE: 0
 };
 
-// export { GLOABLE_PRODUCTION as GLOABLE };
-export { GLOABLE_TEST as GLOABLE, MadiaType };
+const GLOABLE = env.testing ? GLOABLE_TEST : GLOABLE_PRODUCTION;
+export { GLOABLE, MadiaType };
