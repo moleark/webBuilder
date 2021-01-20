@@ -174,5 +174,5 @@ ACTION UpdateSlideShow(
 ACTION DeleteSlideShow(
     _image ID IMAGE
 ){
-     delete from  SlideShow  where image = _image;
+     delete t from SlideShow as t where t.image = _image;
 };

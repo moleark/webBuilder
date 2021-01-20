@@ -134,8 +134,8 @@ Action AddPostProductCatalogExplain(
     _productCategory ID ProductCategory,
     _name char(50)
 ) {
-    delete from  PostProductCatalogExplain where productCategory= _productCategory;
-    BOOK  PostProductCatalogExplain at(_post, _productCategory) set name= _name;  
+    delete t from PostProductCatalogExplain as t where t.productCategory = _productCategory;
+    BOOK PostProductCatalogExplain at(_post, _productCategory) set name = _name;  
 };
 
 Action AddPostSubject(
@@ -149,7 +149,7 @@ Action DelPostSubject(
     _post ID POST,
     _subject ID Subject
 ) {
-    delete from PostSubject where post = _post and subject = _subject;
+    delete t from PostSubject as t where t.post = _post and t.subject = _subject;
 };
 
 
@@ -164,7 +164,7 @@ Action AddInformationPost(
     _post ID POST,
     _sort int 
 ) {
-    delete from InformationPost where post = _post;
+    delete t from InformationPost as t where t.post = _post;
     BOOK InformationPost at( _post ,_sort);
 };
 
@@ -172,7 +172,7 @@ Action AddInformationPost(
 Action DelSubjectDefault( 
     _subject ID Subject
 ){
-   delete from SubjectDefault where subject = _subject;
+   delete t from SubjectDefault as t where t.subject = _subject;
 };
 
 
