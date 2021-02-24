@@ -1,5 +1,5 @@
 
-/** 搜索发布帖文*/
+/** 发布帖文*/
 ACTION PublishPost(
     _post ID POST , 
     _startDate Date,
@@ -26,13 +26,12 @@ ACTION PublishPost(
         }
     }
  
-    if( _web = 1 or _agent = 1 or _assist = 1 or _openweb = 1 or _bvweb = 1 or _classroom = 1 ){
-        if  exists( select 1 from PostPublish where post = _post ){
+    if(_web = 1 or _agent = 1 or _assist = 1 or _openweb = 1 or _bvweb = 1 or _classroom = 1){
+        if exists( select 1 from PostPublish where post = _post ){
             BOOK PostPublish at(_post) set web=_web, agent=_agent, assist=_assist, openweb=_openweb, bvweb = _bvweb, classroom = _classroom
                 , operator = $user, startdate = _startDate, enddate = _endDate;
 
             BOOK PostStatus at(_post) set status = 5;
-     
         } else {
             var alldate char(20);
             set alldate =CONCAT( year( now() ), '-' , month( now() ), '-', day( now() ) );
@@ -46,7 +45,6 @@ ACTION PublishPost(
 
         BOOK PostStatus at(_post) set status = 4;
     };
-
 };
 
 
@@ -157,7 +155,7 @@ Action AddPostDomain(
     _post ID POST,
     _domain ID Domain
 ) {
-    BOOK PostDomain at( _post ,_domain);
+    BOOK PostDomain at( _post, _domain);
 };
 
 Action AddInformationPost(

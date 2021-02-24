@@ -18,23 +18,23 @@ TUID POST (
 /** 发布帖文记录 **/
 MAP PostPublish(
     key post ID POST,
-    web     smallint, --jk-web
-    agent   smallint, --轻代理
-    assist  smallint, --销售助手
-    openweb smallint, --国际网站
-    bvweb      smallint, --BV网站
-    classroom  smallint, --空中课堂
-    operator ID [$user],
-    startdate date,
-    enddate date,
-    update DATETIME
+    web     smallint, -- jk-web
+    agent   smallint, -- 轻代理
+    assist  smallint, -- 销售助手
+    openweb smallint, -- 国际网站
+    bvweb      smallint, -- BV网站
+    classroom  smallint, -- 空中课堂
+    operator ID [$user],    -- 发布人
+    startdate date,         -- 上线时间
+    enddate date,           -- 下线时间
+    update DATETIME         -- 好像是初次发布时间
 );
 
 
---贴文状态
+-- 贴文状态
 MAP PostStatus(
     key post ID POST,
-    status smallint --1 编辑中 2 待审核 3 待发布  4 已发布
+    status smallint -- 1:编辑中; 2:待审核; 3:待发布; 4:已发布; 5:重复发布?
 );
 
 
