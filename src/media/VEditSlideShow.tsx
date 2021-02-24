@@ -26,8 +26,8 @@ export class VEditSlideShow extends VPage<CMedia> {
 
     private uiSchema: UiSchema = {
         items: {
-            caption: { widget: 'text', label: this.t('标题') } as UiInputItem,
-            description: { widget: 'text', label: this.t('说明') } as UiInputItem,
+            caption: { widget: 'text', label: this.t('标题'), discription: "如需设置颜色，请按照下面格式填写:<span style='color: 要设置的颜色'>标题本身</span>" } as UiInputItem,
+            description: { widget: 'text', label: this.t('说明'), discription: "如需设置颜色，请按照下面格式填写:<span style='color: 要设置的颜色'>说明本身</span>" } as UiInputItem,
             src: { widget: 'text', label: this.t('链接') } as UiInputItem,
             types: { widget: 'checkbox', label: this.t('是否发布') } as UiInputItem,
             sort: { widget: 'updown', label: this.t('排序') } as UiInputItem,

@@ -24,8 +24,7 @@ export class VMain extends VPage<CApp> {
                 onScrollBottom: cMedia.onScrollBottom,
                 onShown: cMedia.loadList
             },
-            //{ name: 'templet', label: '模板', icon: 'vcard', content: cTemplets.tab, onShown: cTemplets.loadList },
-            { name: 'page', label: this.t('page'), icon: 'tasks', content: cPage.tab, onShown: cPage.loadList },
+            // { name: 'page', label: this.t('page'), icon: 'tasks', content: cPage.tab, onShown: cPage.loadList },
             { name: 'me', label: this.t('me'), icon: 'user', content: cMe.tab, onShown: cMe.loadList },
         ].map(v => {
             let { name, label, icon, content, notify, onShown, onScrollBottom } = v;
