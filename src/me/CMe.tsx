@@ -225,33 +225,27 @@ export class CMe extends CUqBase {
 
     showCat = async (param: any) => {
         let { id, name } = param;
-        let pageCat = new QueryPager(this.uqs.webBuilder.SearchCat, 15, 30);
-        pageCat.first({ parent: id });
-        let pageCats = { pageCat: pageCat, name: name, parent: id };
+        await this.searchCat(param)
+        let pageCats = { pageCat: this.pageCat, name: name, parent: id };
         this.openVPage(VCat, pageCats)
     }
 
-    searchCat = async (parent: string) => {
+    searchCat = async (param: any) => {
+        let { id, name } = param;
         this.pageCat = new QueryPager(this.uqs.webBuilder.SearchCat, 15, 30);
-        this.pageCat.first({ parent: parent });
+        this.pageCat.first({ parent: id });
     };
 
-    showAddCat = async (param: any) => {
-        let params = { item: param, parentName: '', parentId: '' }
-        this.openVPage(VEditCat, params);
-    }
 
     showEditCat = async (param: any) => {
-        let { parentName, parentId, item } = param
-        let { id, name, parent } = item;
+        let { id, name, parent } = param;
+        let par;
         if (parent !== undefined) {
-            this.openVPage(VEditCat, param);
+            par = param;
         } else {
-            let item = { parent: '0', name, id }
-            let parm = { item, parentName, parentId }
-            this.openVPage(VEditCat, parm);
+            par = { ...param, parent: '0' }
         }
-
+        this.openVPage(VEditCat, par);
     }
 
     saveCat = async (id: any, parent: any, name: any, isValid: any) => {

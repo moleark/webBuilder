@@ -61,7 +61,7 @@ export class VSlideShow extends VPage<CMedia> {
         return <div key={index} className="col px-3 py-2 border-bottom border-dark">
             <div className="text-info bg-light p-2 d-flex text-nowrap cursor-pointer border-bottom">
                 <div className="d-flex flex-fill"  >
-                    <div className="overflow-hidden flex-fill small">{caption}</div>
+                    <div className="overflow-hidden flex-fill small" dangerouslySetInnerHTML={{ __html: caption }}></div>
                     <div className="iconfont icon-shanchu pl-1" onClick={() => delSlideShow(image)} ></div>
                 </div>
             </div>

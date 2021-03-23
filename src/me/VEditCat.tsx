@@ -8,15 +8,17 @@ import { CMe } from "./CMe";
 export class VEditCat extends VPage<CMe> {
     @observable capton: any = "图片分类";
     private form: Form;
-    private cat: any;
+    private id: any;
     @observable name: any;
-    @observable parent: any
+    @observable parent: any;
+    @observable parentName: any;
     async open(cat: any) {
-        let { item, parentName, parentId } = cat
-        this.cat = item;
-        this.name = parentName;
-        this.parent = parentId;
-        this.openPage(this.page);
+        let { id, name, parent, parentName } = cat
+        this.id = id;
+        this.name = name;
+        this.parent = parent;
+        this.parentName = parentName;
+        this.openPage(this.page, cat);
     }
 
     private uiSchema: UiSchema = {
@@ -40,31 +42,28 @@ export class VEditCat extends VPage<CMe> {
         let { saveCat, showCat } = this.controller;
         let { name } = context.form.data;
         this.closePage(2);
-        if (this.cat.id === -1) {
-            await saveCat(null, this.cat.parent, name, 1);
-            showCat({ name: this.cat.name, id: this.cat.parent })
-        } else {
-            await saveCat(this.cat.id, this.cat.parent, name, 1);
-            showCat({ name: this.name, id: this.parent })
-        }
-
+        if (this.id === -1)
+            await saveCat(null, this.parent, name, 1);
+        else
+            await saveCat(this.id, this.parent, name, 1);
+        showCat({ name: this.parentName, id: this.parent })
 
     }
 
-    private page = observer(() => {
+    private page = observer((cat) => {
         let right = <div>
             <span className="mx-2 iconfont icon-jiahao1 cursor-pointer" style={{ fontSize: "1.7rem", color: "white" }}></span>
         </div>;
         return <Page header={this.capton} headerClassName={consts.headerClass} right={right}>
             <div className="mx-3">
-                {(this.cat.id === -1) ? <Form ref={v => this.form = v} className="my-3"
+                {(this.id === -1) ? <Form ref={v => this.form = v} className="my-3"
                     formData={''}
                     schema={this.schema}
                     uiSchema={this.uiSchema}
                     onButtonClick={this.onFormButtonClick}
                     requiredFlag={true}
                 /> : <Form ref={v => this.form = v} className="my-3"
-                    formData={this.cat}
+                    formData={cat}
                     schema={this.schema}
                     uiSchema={this.uiSchema}
                     onButtonClick={this.onFormButtonClick}

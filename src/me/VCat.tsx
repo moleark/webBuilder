@@ -19,8 +19,8 @@ export class VCat extends VPage<CMe> {
 
     private page = observer((param: any) => {
         let { name } = param;
-        let { showAddCat } = this.controller;
-        let right = <div onClick={() => showAddCat({ parent: this.parent, name: name, id: -1 })}>
+        let { showEditCat } = this.controller;
+        let right = <div onClick={() => showEditCat({ parent: this.parent, name: name, id: -1 })}>
             <span className="mx-2 iconfont icon-jiahao1 cursor-pointer" style={{ fontSize: "1.7rem", color: "white" }}></span>
         </div>;
         return <Page header={name} headerClassName={consts.headerClass}
@@ -29,27 +29,19 @@ export class VCat extends VPage<CMe> {
         </Page>;
     })
 
-    // nextCart = async (item: any) => {
-    //     await this.controller.searchCat(item);
-    //     // this.capton = item.name;
-    // }
-
     private delCat = async (model: any) => {
         let { saveCat, showCat } = this.controller;
         let { id, name } = model;
-        await saveCat(id, id, name, 0);
+        await saveCat(id, this.parent, name, 0);
         this.closePage()
         showCat({ name: this.name, id: this.parent })
     }
-
 
     private onScrollBottom = async () => {
         await this.controller.pageMedia.more();
     }
     private renderItem = (item: any, index: number) => {
-        let parentName = this.name;
-        let parentId = this.parent;
-        let param = { parentName, parentId, item }
+        let items = { ...item, parentName: this.name }
         return (
             <div className="pl-2 pl-sm-3 pr-2 pr-sm-3 py-3 d-flex justify-content-between">
                 <div className="mx-2 small" >
@@ -61,7 +53,7 @@ export class VCat extends VPage<CMe> {
                             删 除
                 </span>
                     </div>
-                    <div className="text-right w-7c" onClick={() => this.controller.showEditCat(param)} >
+                    <div className="text-right w-7c" onClick={() => this.controller.showEditCat(items)} >
                         <span className="p-2 small pl-4 text-primary cursor-pointer">
                             编 辑
                 </span>
