@@ -47,14 +47,14 @@ MAP PostPublishProduct(
     update DATETIME
 );
 
-/** 帖文 和 目录节点 关联 **/
+/** 帖文 和 目录节点 关联(显示在目录节点页面左侧的贴文列表) **/
 MAP PostProductCatalog(
     key post ID POST,
     key productCategory ID ProductCategory,
     name char(50)
 );
 
-/** 帖文 目录节点说明 **/
+/** 帖文: 目录节点说明 **/
 MAP PostProductCatalogExplain (
     key post ID POST,
     key productCategory ID ProductCategory,
@@ -114,7 +114,7 @@ MAP InformationPost(
     key sort int
 );
  
--- 贴文附加的产品列表
+-- 贴文附加的产品(即显示在贴文尾部的产品)列表
 MAP PostProduct(
     key post ID POST,
     key product ID ProductX,
@@ -124,4 +124,10 @@ MAP PostProduct(
 MAP PostPage (
     key post ID POST,
     url char(256) not null, 
+);
+
+-- “产品详情”贴文：介绍产品详细信息的贴文
+MAP ProductDescriptionPost(
+    key product ID ProductX,
+    key post ID POST,
 );
