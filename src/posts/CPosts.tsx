@@ -68,7 +68,7 @@ export class CPosts extends CUqBase {
     @observable pagePostProductCatalogExplain: any;
     @observable pagePostSubject: any;
     @observable pagePostDomain: any;
-    @observable pagePostProdut: any;
+    @observable pagePostProduct: any;
 
     @observable isMyself: boolean = true;
     @observable searchKey: any;
@@ -514,10 +514,15 @@ export class CPosts extends CUqBase {
         await this.searchPostProduct();
         this.openVPage(VPostProduct);
     }
-    //搜索贴文产品列表
+
+    /**
+     * 搜索贴文产品列表
+     */
     searchPostProduct = async () => {
-        this.pagePostProdut = await this.uqs.webBuilder.SearchPostProduct.table({ _post: this.current.id });
+        // this.pagePostProduct = await this.uqs.webBuilder.SearchPostProduct.table({ _post: this.current.id });
+        this.pagePostProduct = await this.uqs.webBuilder.PostProduct.table({ post: this.current.id });
     };
+
     //显示产品页面
     showProduct = async (param: any) => {
         await this.searchProduct(undefined);

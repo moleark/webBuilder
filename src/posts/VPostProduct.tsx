@@ -11,7 +11,7 @@ export class VPostProduct extends VPage<CPosts> {
     }
 
     private page = observer(() => {
-        let { showProduct, pagePostProdut } = this.controller;
+        let { showProduct, pagePostProduct } = this.controller;
         let right = (
             <div className="px-3" onClick={showProduct}>
                 <div>
@@ -20,7 +20,7 @@ export class VPostProduct extends VPage<CPosts> {
             </div>
         );
         return <Page headerClassName={consts.headerClass} header={this.t('postproduct')} right={right}>
-            {pagePostProdut.length > 0 && <List before={""} none="无" className="mt-1" items={pagePostProdut} item={{ render: this.renderItem }} />}
+            <List before={""} none="无" className="mt-1" items={pagePostProduct} item={{ render: this.renderItem }} />
         </Page >
     });
 

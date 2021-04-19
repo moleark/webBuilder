@@ -30,12 +30,5 @@ export class VTagSubjectname extends View<CPosts> {
             }
 
         }
-        /**
-        if (this.tagName === undefined) {
-            return null;
-        } else {
-            return <>{this.tagName.map((e: any) => { return <span className="small bg-light" > {tv(e.subject, v => v.name)}</span> })} </>;
-        } 
-        */
     })
 }

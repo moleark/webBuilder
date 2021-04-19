@@ -7,9 +7,6 @@ export class VMain extends VPage<CApp> {
     async open(param?: any) {
         this.openPage(this.render);
     }
-    // opensrc = () => {
-    //     window.open(setting.downloadAppurl);
-    // }
 
     render = (param?: any): JSX.Element => {
         let { cMe, cPosts, cMedia, cPage } = this.controller;
@@ -24,7 +21,6 @@ export class VMain extends VPage<CApp> {
                 onScrollBottom: cMedia.onScrollBottom,
                 onShown: cMedia.loadList
             },
-            // { name: 'page', label: this.t('page'), icon: 'tasks', content: cPage.tab, onShown: cPage.loadList },
             { name: 'me', label: this.t('me'), icon: 'user', content: cMe.tab, onShown: cMe.loadList },
         ].map(v => {
             let { name, label, icon, content, notify, onShown, onScrollBottom } = v;
@@ -38,9 +34,5 @@ export class VMain extends VPage<CApp> {
             }
         });
         return <RootTabs tabs={faceTabs} />;
-        /*		
-                <Page header={false} headerClassName={"bg-info"} tabsProps={{ tabs: faceTabs }}>
-                </Page>;
-        */
     }
 }

@@ -76,28 +76,28 @@ export class VMain extends VPage<CPosts> {
             </div>
         );
 
-        let ProductCatalog = <div className="m-1 cursor-pointer" onClick={showProductCatalog} >
+        let ProductCatalog = <div className="m-1 cursor-pointer" onClick={showProductCatalog}>
             <div className="py-3 my-1">
                 <div className="mb-2 text-success"><i style={{ fontSize: "2rem" }} className="iconfont icon-chanpinmulu"></i></div>
                 <div className="mx-3 p-2 font-weight-bold">{this.t('productcatalog')}</div>
             </div>
-        </div >;
+        </div>;
         let Subject = <div className="m-1 cursor-pointer"
-            onClick={() => showSubject({ name: (this.t('postsubject')), id: "10000" + setting.BusinessScope })} >
+            onClick={() => showSubject({ name: (this.t('postsubject')), id: "10000" + setting.BusinessScope })}>
             <div className="py-3 my-1 ">
                 <div className="mb-2 text-primary"><i style={{ fontSize: "2rem" }} className="iconfont icon-mokuai"></i></div>
                 <div className="mx-3 px-2 font-weight-bold">{this.t('postsubject')}</div>
             </div>
         </div>;
 
-        let Domain = <div className="m-1 cursor-pointer" onClick={() => showDomain({ name: (this.t('researchdomain')), id: 0 })} >
+        let Domain = <div className="m-1 cursor-pointer" onClick={() => showDomain({ name: (this.t('researchdomain')), id: 0 })}>
             <div className="py-3 my-1 ">
                 <div className="mb-2 text-danger"><i style={{ fontSize: "2rem" }} className="iconfont icon-yanjiulingyu"></i></div>
                 <div className="mx-3 px-2 font-weight-bold">{this.t('researchdomain')}</div>
             </div>
         </div>;
 
-        let Model = <div className="m-1 cursor-pointer" onClick={() => showModel()} >
+        let Model = <div className="m-1 cursor-pointer" onClick={() => showModel()}>
             <div className="py-3 my-1 ">
                 <div className="mb-2 text-info"><i style={{ fontSize: "2rem" }} className="iconfont icon-mobanguanli"></i></div>
                 <div className="mx-3 px-2 font-weight-bold">{this.t('weekpost')}</div>
@@ -213,36 +213,3 @@ export class VMain extends VPage<CPosts> {
         );
     });
 }
-
-/*  src\posts\VProductCatalogPostCount.tsx    PostProductCatalog  PostSubject  PostDomain
-
-<span className="d-none d-sm-inline">&ensp;</span>
-{this.t('preview')}
-<span className="d-none d-sm-inline">&ensp;</span>
-<div
-    className="d-flex cursor-pointer justify-content-center"
-    onClick={e => this.onBtn()}
->
-    <strong className={classNames("small text-right")}>
-        {this.t('me')}
-    </strong>
-    <div
-        className="mx-2"
-        style={{ width: "40px", height: "18px", backgroundColor: "rgb(211, 209, 209)",  borderRadius: "20px" }}
-    >
-        {this.controller.isMe ? (
-            <div
-                style={{ border: "1px solid #007bff",  width: "20px", height: "18px", backgroundColor: "#007bff", borderRadius: "100%"}}
-            ></div>
-        ) : (
-                <div
-                    style={{ border: "1px solid #007bff", width: "20px", height: "18px", backgroundColor: "#007bff", borderRadius: "100%" }}
-                ></div>
-            )}
-    </div>
-    <strong className={classNames("small")}>
-        {this.t('all')}
-    </strong>
-</div>
-
-*/
