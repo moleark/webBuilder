@@ -76,49 +76,24 @@ export class VMain extends VPage<CPosts> {
             </div>
         );
 
-        let ProductCatalog = <div className="m-1 cursor-pointer" onClick={showProductCatalog}>
-            <div className="py-3 my-1">
-                <div className="mb-2 text-success"><i style={{ fontSize: "2rem" }} className="iconfont icon-chanpinmulu"></i></div>
-                <div className="mx-3 p-2 font-weight-bold">{this.t('productcatalog')}</div>
-            </div>
-        </div>;
-        let Subject = <div className="m-1 cursor-pointer"
-            onClick={() => showSubject({ name: (this.t('postsubject')), id: "10000" + setting.BusinessScope })}>
-            <div className="py-3 my-1 ">
-                <div className="mb-2 text-primary"><i style={{ fontSize: "2rem" }} className="iconfont icon-mokuai"></i></div>
-                <div className="mx-3 px-2 font-weight-bold">{this.t('postsubject')}</div>
-            </div>
-        </div>;
-
-        let Domain = <div className="m-1 cursor-pointer" onClick={() => showDomain({ name: (this.t('researchdomain')), id: 0 })}>
-            <div className="py-3 my-1 ">
-                <div className="mb-2 text-danger"><i style={{ fontSize: "2rem" }} className="iconfont icon-yanjiulingyu"></i></div>
-                <div className="mx-3 px-2 font-weight-bold">{this.t('researchdomain')}</div>
-            </div>
-        </div>;
-
-        let Model = <div className="m-1 cursor-pointer" onClick={() => showModel()}>
-            <div className="py-3 my-1 ">
-                <div className="mb-2 text-info"><i style={{ fontSize: "2rem" }} className="iconfont icon-mobanguanli"></i></div>
-                <div className="mx-3 px-2 font-weight-bold">{this.t('weekpost')}</div>
-            </div>
-        </div>;
-
-        let Information = <div className="m-1 cursor-pointer" onClick={() => showApproval()}>
-            <div className="py-3 my-1 ">
-                <div className="mb-2 text-warning"><i style={{ fontSize: "2rem" }}
-                    className="iconfont icon-iconfontyijiantuiguang"></i></div>
-                <div className="mx-3 px-2 font-weight-bold">{this.t('checkpending')}</div>
-            </div>
-        </div>;
-
         let tools: any;
         if (setting.BusinessScope === 1) {
-            tools = <>{ProductCatalog}{Subject}{Domain}{Model}{Information}</>
+            tools = <>
+                {divModel(showProductCatalog, "text-success", "icon-chanpinmulu", this.t('productcatalog'))}
+                {divModel(() => showSubject({ name: (this.t('postsubject')), id: "10000" + setting.BusinessScope }),
+                    "text-primary", "icon-mokuai", this.t('postsubject'))}
+                {divModel(() => showDomain({ name: (this.t('researchdomain')), id: 0 }), "text-danger", "icon-yanjiulingyu", this.t('researchdomain'))}
+                {divModel(() => showModel(), "text-info", "icon-mobanguanli", this.t('weekpost'))}
+                {divModel(() => showApproval(), "text-warning", "icon-iconfontyijiantuiguang", this.t('checkpending'))}
+            </>
         } else {
-            tools = <>{ProductCatalog}{Subject}{Domain}</>
+            tools = <>
+                {divModel(showProductCatalog, "text-success", "icon-chanpinmulu", this.t('productcatalog'))}
+                {divModel(() => showSubject({ name: (this.t('postsubject')), id: "10000" + setting.BusinessScope }),
+                    "text-primary", "icon-mokuai", this.t('postsubject'))}
+                {divModel(() => showDomain({ name: (this.t('researchdomain')), id: 0 }), "text-danger", "icon-yanjiulingyu", this.t('researchdomain'))}
+            </>
         }
-
         return <Page header={search} headerClassName={consts.headerClass} onScrollBottom={onScrollBottom}>
             <div className="d-flex justify-content-around py-4 small text-center px-2"
                 style={{ background: "linear-gradient(rgba(23,106,184,.5),rgba(23,162,184,.5),rgba(23,184,184,.5))" }}>
@@ -138,7 +113,7 @@ export class VMain extends VPage<CPosts> {
         let { user, showDetail, rendertagCatalogname, rendertagSubjectname, rendertagDomain } = this.controller;
         if (!user) return;
         let { image, caption, discription, author, $update, $create
-            , hits, sumHits, web, agent, assist, openweb, bvweb, emphasis, id } = item;
+            , hits, sumHits, emphasis, id } = item;
 
         let $c: Date = $create, $u: Date = $update;
         let updated: boolean = false;
@@ -212,4 +187,14 @@ export class VMain extends VPage<CPosts> {
             </div>
         );
     });
+}
+function divModel(action: any, textColor: string, icon: string, title: any) {
+    let textCo = 'mb-2 ' + textColor;
+    let icons = 'iconfont ' + icon;
+    return <div className="m-1 cursor-pointer" onClick={action} >
+        <div className="py-3 my-1 ">
+            <div className={textCo}><i style={{ fontSize: "2rem" }} className={icons}></i></div>
+            <div className="mx-3 px-2 font-weight-bold">{title}</div>
+        </div>
+    </div >;
 }
