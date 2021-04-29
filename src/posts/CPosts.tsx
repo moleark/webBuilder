@@ -69,7 +69,7 @@ export class CPosts extends CUqBase {
     @observable pagePostSubject: any;
     @observable pagePostDomain: any;
     @observable pagePostProduct: any;
-
+    @observable postProductType: number = 1;/* 关联产品的类型,1:帖文下推荐产品;2.产品应用信息 */
     @observable isMyself: boolean = true;
     @observable searchKey: any;
     @observable searchAuthor: any;
@@ -511,6 +511,7 @@ export class CPosts extends CUqBase {
     //贴文产品
     //显示贴文产品列表
     showPostProduct = async () => {
+        this.postProductType = 1;
         await this.searchPostProduct();
         this.openVPage(VPostProduct);
     }
@@ -520,7 +521,11 @@ export class CPosts extends CUqBase {
      */
     searchPostProduct = async () => {
         // this.pagePostProduct = await this.uqs.webBuilder.SearchPostProduct.table({ _post: this.current.id });
-        this.pagePostProduct = await this.uqs.webBuilder.PostProduct.table({ post: this.current.id });
+        /* this.pagePostProduct = await this.uqs.webBuilder.PostProduct.table({ post: this.current.id }); */
+        let res: any;
+        if (this.postProductType === 1) res = await this.uqs.webBuilder.PostProduct.table({ post: this.current.id });
+        if (this.postProductType === 2) res = await this.uqs.webBuilder.getProdoctDescription.table({ post: this.current.id });
+        this.pagePostProduct = res || [];
     };
 
     //显示产品页面
@@ -535,12 +540,14 @@ export class CPosts extends CUqBase {
     };
     //添加产品
     onPickedProduct = async (id: any) => {
-        await this.uqs.webBuilder.PostProduct.add({ post: this.current.id, arr1: [{ product: id }] });
+        if (this.postProductType === 1) await this.uqs.webBuilder.PostProduct.add({ post: this.current.id, arr1: [{ product: id }] });
+        if (this.postProductType === 2) await this.uqs.webBuilder.ProductDescriptionPost.add({ product: id, arr1: [{ post: this.current.id }] });
         this.searchPostProduct();
     };
     //删除产品
     delPostProduct = async (param: any) => {
-        await this.uqs.webBuilder.PostProduct.del({ post: this.current.id, arr1: [{ product: param.product }] });
+        if (this.postProductType === 1) await this.uqs.webBuilder.PostProduct.del({ post: this.current.id, arr1: [{ product: param.product }] });
+        if (this.postProductType === 2) await this.uqs.webBuilder.ProductDescriptionPost.del({ product: param.product, arr1: [{ post: this.current.id }] });
         await this.searchPostProduct();
     }
 

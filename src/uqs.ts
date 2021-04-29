@@ -106,6 +106,8 @@ export interface WebBuilder {
     SearchDomainPostCount: Query;
 
     PostProduct: Map;
+    ProductDescriptionPost: Map;
+    getProdoctDescription: Query;
     SearchPostProduct: Query;
     SearchRecommendProduct: Query;
     hitOfManual: Action;

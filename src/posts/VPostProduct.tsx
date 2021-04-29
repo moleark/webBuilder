@@ -3,6 +3,7 @@ import { VPage, Page, List, tv } from "tonva";
 import { CPosts } from "./CPosts";
 import { observer } from 'mobx-react';
 import { consts } from 'consts';
+import classNames from 'classnames';
 
 export class VPostProduct extends VPage<CPosts> {
 
@@ -11,7 +12,11 @@ export class VPostProduct extends VPage<CPosts> {
     }
 
     private page = observer(() => {
-        let { showProduct, pagePostProduct } = this.controller;
+        let { showProduct, searchPostProduct, pagePostProduct, postProductType } = this.controller;
+        let changeProductType = async (type: number) => {
+            this.controller.postProductType = type;
+            await searchPostProduct();
+        };
         let right = (
             <div className="px-3" onClick={showProduct}>
                 <div>
@@ -19,7 +24,16 @@ export class VPostProduct extends VPage<CPosts> {
                 </div>
             </div>
         );
+        let checkPostProductTypeUI: JSX.Element = <div className="text-center py-2">
+            {
+                [{type:1, desc:"帖文附加产品"},{type:2, desc:"产品应用"}].map((el: any) => {
+                    return <button onClick={()=>{changeProductType(el.type) }}
+                        className={classNames("btn btn-sm", postProductType === el.type ? "btn-primary" : "btn-outline-primary")}>{el.desc}</button>
+                })
+            }
+        </div>;
         return <Page headerClassName={consts.headerClass} header={this.t('postproduct')} right={right}>
+            {checkPostProductTypeUI}
             <List before={""} none="无" className="mt-1" items={pagePostProduct} item={{ render: this.renderItem }} />
         </Page >
     });
