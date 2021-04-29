@@ -522,3 +522,13 @@ returns ret (
     from    SubjectDefault 
     where   businessScope = _businessScope;
 };
+
+
+QUERY getProdoctDescription(post ID Post) 
+returns ret (
+    product ID ProductX
+) {
+    into ret select a.product
+    from    ProductDescriptionPost as a
+    where   a.post = post;
+};

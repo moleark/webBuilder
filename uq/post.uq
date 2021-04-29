@@ -130,4 +130,5 @@ MAP PostPage (
 MAP ProductDescriptionPost(
     key product ID ProductX,
     key post ID POST,
+    index idx_post,
 );
