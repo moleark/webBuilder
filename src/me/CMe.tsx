@@ -141,19 +141,22 @@ export class CMe extends CUqBase {
 
     /** 
      * 团队折线图
-     * **/
+    **/
     getTeamAchievement = async () => {
-        this.teamAchievementDay = await this.uqs.webBuilder.SearchAchievementOfTeamNew.table({ _manage: 0, _year: this.year, _type: "day" });
-        this.teamAchievementMonthchart = await this.uqs.webBuilder.SearchAchievementOfTeamNew.table({ _manage: 0, _year: this.year, _type: "month" });
+        let { webBuilder } = this.uqs;
+        this.teamAchievementDay = await webBuilder.SearchAchievementOfTeamNew.table({ _manage: 0, _year: this.year, _type: "day" });
+        this.teamAchievementMonthchart = await webBuilder.SearchAchievementOfTeamNew.table({ _manage: 0, _year: this.year, _type: "month" });
     }
+
     showTeamAchievement = async () => {
         this.year = moment().format('YYYY')
         await this.getTeamAchievement()
         await this.getteamAchievementDetail()
         await this.openVPage(VTeamAchievement);
     }
+
     /**
-     * 日报详细
+     * 获取每人每天的统计数据（发帖数/转发数/生产数等等） 
      */
     getteamAchievementDetail = async () => {
         this.year = moment().format('YYYY')
@@ -169,6 +172,10 @@ export class CMe extends CUqBase {
             return obj
         })
     }
+
+    /**
+     * 显示每人每天的统计数据（发帖数/转发数/生产数等等） 
+     */
     showTeamAchievementDetail = async () => {
         await this.getteamAchievementDetail()
         await this.openVPage(VTeamAchievementDetail)

@@ -2,7 +2,7 @@ import { Tuid, Map, Query, Action, Sheet, Book, Tag } from "tonva";
 
 export interface UqHr {
     employee: Tuid;
-    SearchEmployeeByid: Query;
+    WebUserEmployee: Map;
     SearchTeam: Query;
 }
 
@@ -70,7 +70,6 @@ export interface WebBuilder {
     SearchPostCatalogExplain: Query;
     PostProductCatalogExplain: Map;
 
-    SearchAchievementOfTeam: Query;
     SearchAchievementOfTeamDetail: Query;
     SearchAchievementOfTeamNew: Query;
 

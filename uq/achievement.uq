@@ -59,7 +59,10 @@ returns ret  (
         group by year(a.date) as yeara;
     } 
 };
- 
+
+/*
+ * 已作废
+*/ 
 QUERY SearchAchievementOfTeam(
     _manage ID [$user],
     _year int,
@@ -141,6 +144,7 @@ returns ret  (
     hitOther    int     --post访问次数--其他
 ) {
     if(_type = 'day'){
+        -- 某年每日发帖数 / 转发数 / 访问数 等等
         into ret select year, month, day, sum(ifnull(a.postPubSum,0)) as postPubSum
                 , sum( ifnull(a.postTranSum,0)) as postTranSum, sum(ifnull(a.postHitSum,0)) as postHitSum
                 , case when ifnull(sum(a.postTranSum), 0) = 0 or ifnull(sum(a.postHitSum), 0) = 0 then 0.0 
@@ -151,8 +155,8 @@ returns ret  (
         where   a.year = _year
         group by a.year as year, a.month as month, a.date as day
         order by  day ;
-
     } else if(_type = 'month') {
+        -- 某年每月发帖数 / 转发数 / 访问数 等等
         into ret select year, month, 'all' as day, sum(ifnull(a.postPubSum,0)) as postPubSum
                 , sum( ifnull(a.postTranSum,0)) as postTranSum, sum(ifnull(a.postHitSum,0)) as postHitSum
                 , case when ifnull(sum(a.postTranSum), 0) = 0 or ifnull(sum(a.postHitSum), 0) = 0 then 0.0 else sum(a.postHitSum) / sum(a.postTranSum) end as percent
@@ -188,7 +192,7 @@ returns ret (
     hitOther    int     --post访问次数--其他
 ) {
      if(_type='day'){
-        
+        -- 某年每人每日发帖数 / 转发数 / 访问数 等等
         into ret  select year, month, day, author, sum(ifnull(a.postPubSum,0)) as postPubSum , sum( ifnull(a.postTranSum,0)) as postTranSum, sum(ifnull(a.postHitSum,0)) as postHitSum
                 , case  when ifnull(sum(a.postTranSum),0 )= 0 or ifnull(sum(a.postHitSum),0 )= 0  then 0.0 else sum(a.postHitSum) / sum(a.postTranSum)  end as percent
                 , sum(a.hitWeb) as hitWeb, sum(a.hitAgent) as hitAgent, sum(a.hitAssist) as hitAssist, sum( a.hitEmail ) as hitEmail,  sum(a.hitOther) as hitOther
@@ -196,9 +200,8 @@ returns ret (
         where   a.year = _year
         group by a.year as year, a.month as month, a.date as day, a.user as author
         order by day;
-
     } else if(_type='month'){
-
+        -- 某年每人每月发帖数 / 转发数 / 访问数 等等
         into ret  select year, month, 'all' as day, author, sum(ifnull(a.postPubSum,0)) as postPubSum , sum( ifnull(a.postTranSum,0)) as postTranSum, sum(ifnull(a.postHitSum,0)) as postHitSum
                 , case  when ifnull(sum(a.postTranSum),0 )= 0 or ifnull(sum(a.postHitSum),0 )= 0  then 0.0 else sum(a.postHitSum) / sum(a.postTranSum)  end as percent
                 , sum(a.hitWeb) as hitWeb, sum(a.hitAgent) as hitAgent, sum(a.hitAssist) as hitAssist, sum( a.hitEmail ) as hitEmail,  sum(a.hitOther) as hitOther
