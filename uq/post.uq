@@ -34,7 +34,7 @@ MAP PostPublish(
 -- 贴文状态
 MAP PostStatus(
     key post ID POST,
-    status smallint -- 1:编辑中; 2:待审核; 3:待发布; 4:已发布; 5:重复发布?
+    status smallint -- 1:编辑中; 2:待审核; 3.审核被驳回；4:待发布; 5:已发布或重复发布
 );
 
 
