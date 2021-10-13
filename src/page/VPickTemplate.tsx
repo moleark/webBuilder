@@ -16,7 +16,7 @@ export class VPickTemplate extends VPage<CPage> {
     private page = observer(() => {
         let { pageTemplate, searchTemplateKey } = this.controller;
 
-        let right = <SearchBox className="w-80 mt-2 mr-2"
+        let right = <SearchBox allowEmptySearch className="w-80 mt-2 mr-2"
             size='sm'
             onSearch={(key: string) => searchTemplateKey(key)}
             placeholder={this.t('templete')} />;

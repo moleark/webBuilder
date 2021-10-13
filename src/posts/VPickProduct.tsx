@@ -15,7 +15,7 @@ export class VPickProduct extends VPage<CPosts> {
         let none = <div className="my-3 mx-2 text-warning">
         </div>;
         let right = <SearchBox className="w-80 mt-1"
-            size='sm'
+            size='sm' allowEmptySearch
             onSearch={(key: string) => searchProduct(key)}
             placeholder={this.t('pleaseselect')} />;
         return <Page headerClassName={consts.headerClass} header={this.t('selectproduct')} right={right} >

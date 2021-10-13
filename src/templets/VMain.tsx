@@ -16,7 +16,7 @@ export class VMain extends VPage<CTemplets> {
         let { pageTemplate, searchTemplateKey } = this.controller;
         let right = <div className="w-19c d-flex">
             <SearchBox className="w-80 mt-1 mr-2"
-                size='sm'
+                size='sm' allowEmptySearch
                 onSearch={(key: string) => searchTemplateKey(key)}
                 placeholder="请输入模板标题" />
             <div onClick={this.onAddClick}>

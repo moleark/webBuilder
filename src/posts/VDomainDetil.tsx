@@ -24,7 +24,7 @@ export class VDomainDetil extends VPage<CPosts> {
         );
         let right = (
             <div className="d-flex align-items-center">
-                <SearchBox size="sm" onSearch={(key: string) => showDomainPost_Search(this.domain, key)} placeholder={this.t('searchpost')} />
+                <SearchBox allowEmptySearch size="sm" onSearch={(key: string) => showDomainPost_Search(this.domain, key)} placeholder={this.t('searchpost')} />
             </div>
         );
         return (

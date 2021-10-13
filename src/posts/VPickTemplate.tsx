@@ -18,7 +18,7 @@ export class VPickTemplate extends VPage<CPosts> {
         let { pageTemplate, searchTemplateKey } = this.controller;
 
         let right = <SearchBox className="w-80 mt-2 mr-2"
-            size='sm'
+            size='sm' allowEmptySearch
             onSearch={(key: string) => searchTemplateKey(key)}
             placeholder={this.t('selecttemplate')} />;
         let none = <div className="my-3 mx-2 text-warning">

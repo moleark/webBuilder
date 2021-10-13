@@ -64,7 +64,7 @@ export class VMain extends VPage<CPosts> {
         let search = <div className="d-flex w-100">
             <div className='pt-2 ml-2' style={{ width: '4rem' }}>{this.t('post')}</div>
             {this.renderMeAllToggle()}
-            <SearchBox className='w-100 pt-1' size="sm" onSearch={(key: string) => searchPostsKey(key, searchAuthor)} placeholder={this.t('searchpost')} />
+            <SearchBox allowEmptySearch className='w-100 pt-1' size="sm" onSearch={(key: string) => searchPostsKey(key, searchAuthor)} placeholder={this.t('searchpost')} />
             <div onClick={onAdd}>
                 <span className="mx-sm-2 iconfont icon-jiahao1 cursor-pointer mr-2" style={{ fontSize: "1.7rem", color: "white" }}></span>
             </div>

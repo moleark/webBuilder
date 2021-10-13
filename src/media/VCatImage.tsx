@@ -16,7 +16,7 @@ export class VCatImage extends VPage<CMedia> {
     private page = observer(() => {
         let { pageCatImage, searchCatImage, onAddClick } = this.controller;
         let right = <div className="w-19c d-flex">
-            <SearchBox className="w-80 mt-1 mr-2"
+            <SearchBox className="w-80 mt-1 mr-2" allowEmptySearch
                 size='sm'
                 onSearch={(key: string) => searchCatImage(key, this.cat)}
                 placeholder={this.t('searchpicture')} />

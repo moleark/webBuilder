@@ -26,7 +26,7 @@ export class VInformationPost extends VPage<CPosts> {
         );
         let right = (
             <div className="d-flex align-items-center mr-1">
-                <SearchBox size="sm" onSearch={(key: string) => informationsearchPostsKey(key, "")} placeholder={this.t('searchpost')} />
+                <SearchBox allowEmptySearch size="sm" onSearch={(key: string) => informationsearchPostsKey(key, "")} placeholder={this.t('searchpost')} />
             </div>
         );
         return <Page header={this.t('selectpost')} headerClassName={consts.headerClass} right={right} onScrollBottom={onScrollBottoms}>

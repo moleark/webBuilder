@@ -15,7 +15,7 @@ export class VFile extends VPage<CMedia> {
         let { pageFile, searchMadiaKey, addAddFile, onScrollBottom } = this.controller;
 
         let right = <div className="w-19c d-flex">
-            <SearchBox className="w-80 mt-1 mr-2" size='sm' onSearch={(key: string) => searchMadiaKey(key, 2)} placeholder={this.t('searchfile')} />
+            <SearchBox allowEmptySearch className="w-80 mt-1 mr-2" size='sm' onSearch={(key: string) => searchMadiaKey(key, 2)} placeholder={this.t('searchfile')} />
             <div onClick={addAddFile}>
                 <span className="ml-2 iconfont icon-jiahao1 mr-2"
                     style={{ fontSize: "26px", color: "white" }}>
