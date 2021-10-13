@@ -3,7 +3,7 @@ import logo from "../src/static/images/logo.png";
 
 export const appConfig: AppConfig = {
     appName: "百灵威系统工程部/webBuilder",
-    version: "1.0.71",
+    version: "1.0.72",
     tvs: {},
     oem: "百灵威"
 };
