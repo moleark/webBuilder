@@ -16,9 +16,11 @@ ACTION AddPostResearchField(
     _tag Text
 ) {
     delete t from PostResearchField as t where t.post = _post;
+    /*
     foreach (var t smallint of TAGS _tag) {
-        book PostResearchField at( _post, t);
+        book PostResearchField at(_post, t);
     }
+    */
 };
 
 QUERY SearchPostResearchField(
@@ -31,29 +33,3 @@ RETURNS ret (
      from PostResearchField 
      where post = _post;
 };
-
-
-/**
-QUERY a ver 1.0 (
- p1 int,
- tags char(100)
-)
-RETURNS ret (
-    scoreItem ID ScoreItem,
-    role ID Role,
- test1Tag TAG Test1,
-) {
- TABLE tagsTab1 (t1 SMALLINT);
- TABLE tagsTab2 (t1 SMALLINT);
-
- Text tags into tagsTab1;
-
- foreach (var t smallint of TAGS tags) {
-  into tagsTab2 select t as t1;
- }
-
- into ret select scoreItem, role, test1Tag 
-  from RoleScoreItem 
-  where scoreItem=1 and role=1 and test1Tag=1;
-};
-**/
