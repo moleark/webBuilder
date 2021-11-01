@@ -76,6 +76,40 @@ PAGE (
     var key2 char(102);
     set key2 = concat('%', key, '%');
 
+    /-mysql
+    DROP TEMPORARY TABLE IF EXISTS `_$page_product`;
+    CREATE TEMPORARY TABLE `_$page_post` (`id` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY, `post` BIGINT NOT NULL) ENGINE=MyISAM;
+    insert  into `_$page_post`( post )
+    select  p.`id` as `id`
+    from    `tv_post` as p
+            inner join `tv_postpublish` as ph on ph.post = p.id
+    where   p.isValid = 1 and p.`language` = `_language`
+            and (
+                `_publish` = 0
+                or (`_publish` = 1 and ph.web = 1)
+                or (`_publish` = 2 and ph.agent = 1  )
+                or (`_publish` = 3 and ph.assist = 1  )
+                or (`_publish` = 4 and ph.openweb = 1  )
+            )
+            and (p.discription like `_key2_1` or p.caption like `_key2_1` or `_key2_1` is null)
+            and (
+                exists(select 1 from tv_postdomain as pd where pd.post = p.id and pd.domain = domain)
+                or `_domain` = ''
+            )
+    order by ph.update desc;
+
+    INSERT INTO `_$page`(`id`, `post`, `caption`, `discription`, `image`, `author`, `template`, `$update`, `$create`
+        , `publishdate`, `isValid`, `emphasis`, `language`, `hits`, `sumHits`)
+    select  pp.`id`, pp.`post`, p.`caption`, p.`discription`, p.`image`, p.`author`, p.`template`, p.`$update`, p.`$create`
+        , ph.`update` as publishdate, p.`isValid`, p.`emphasis`, p.`language`, c.`hits`, c.`sumHits`
+    from    `_$page_post` as pp
+            inner join tv_post p on p.id = pp.post
+            inner join tv_postpublish ph on ph.post = p.id
+            left join tv_hot as c on c.post = p.id
+    order by pp.id
+    limit `_$pagesize`;
+    -/
+    /*
     PAGE select unix_timestamp(ph.update) as id,p.id as post, p.caption, p.discription, p.image, p.author, p.template
                 , p.[$update], p.[$create], ph.update as publishdate
                 , p.isValid, p.emphasis, p.language, c.hits, c.sumHits
@@ -98,6 +132,7 @@ PAGE (
             )
     order by unix_timestamp(ph.update) desc
     limit $pageSize;
+    */
 };
 
 
