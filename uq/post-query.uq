@@ -77,7 +77,7 @@ PAGE (
     set key2 = concat('%', key, '%');
 
     /-mysql
-    DROP TEMPORARY TABLE IF EXISTS `_$page_product`;
+    DROP TEMPORARY TABLE IF EXISTS `_$page_post`;
     CREATE TEMPORARY TABLE `_$page_post` (`id` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY, `post` BIGINT NOT NULL) ENGINE=MyISAM;
     insert  into `_$page_post`( post )
     select  p.`id` as `id`
